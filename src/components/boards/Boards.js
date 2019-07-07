@@ -5,7 +5,7 @@ import { fetchBoards, createBoard } from '../../actions/boards'
 import AddBoard from './AddBoard'
 
 class Boards extends React.Component {
-  state = {itemEditable: false}
+  state = {}
   componentDidMount() {
     this.props.fetchBoards()
   }
@@ -17,15 +17,6 @@ class Boards extends React.Component {
     return ''
   }
 
-  removeEdit(){
-    this.setState({itemEditable: false})
-  }
-
-  showEdit() {
-    this.setState({itemEditable: true})
-    console.log('true')
-  }
-
   renderBoards() {
     return this.props.boards.map(board => {
       return (
@@ -35,32 +26,17 @@ class Boards extends React.Component {
       )
     })
   }
-  
-  renderNewBoard(){
-    if (this.state.itemEditable === true){
-      return <AddBoard removeEdit={()=>this.removeEdit()}/>
-    }
-
-    if (this.state.itemEditable === false){
-      return (
-        <div onClick={()=>this.showEdit()} className="selectable item"><i className="icon plus" />New</div>
-      )
-    }
-  }
-
-  
-
 
   render() {
     return (
-      <div style={{ position: "fixed" }} className="ui vertical menu">
-        <div className="item">
-          <div className="header">Boards</div>
-          <div className="menu">
-            {this.renderBoards()}
-            {this.renderNewBoard()}
+      <div style={{position: "fixed"}} className="leftMenu header">Boards<hr/>
+        <div style={{ margin: '0' }} className="ui secondary text menu">
+          <div className="item">
+            <div className="menu">
+              {this.renderBoards()}
+              <AddBoard />
+            </div>
           </div>
-          
         </div>
       </div>
     )

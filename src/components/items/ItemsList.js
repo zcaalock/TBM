@@ -14,7 +14,7 @@ class ItemsList extends React.Component {
     }
     const {title} = this.props.board
     return (
-      <div style={{marginLeft: '250px'}}>
+      <div style={{marginLeft: '150px'}}>
         <h1>{title}</h1>        
       </div>
     )

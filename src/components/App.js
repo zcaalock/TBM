@@ -6,7 +6,7 @@ import ItemsList from './items/ItemsList'
 
 const App = () => {
   return (
-    <div className="container">
+    <div style={{margin: '10px'}} className="container">
       <Router history={history}>
         <div>
         <Boards />
