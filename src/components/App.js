@@ -2,7 +2,7 @@ import React from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import Boards from '../components/boards/Boards'
 import history from '../history'
-import ItemsList from './items/ItemsList'
+import ItemsMain from './items/ItemsMain'
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <div>
         <Boards />
         <Switch>          
-          <Route path="/boards/:id" component={ItemsList}/>
+          <Route path="/boards/:id" component={ItemsMain}/>
         </Switch>
         </div>
       </Router>

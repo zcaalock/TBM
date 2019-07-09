@@ -8,6 +8,7 @@ class Boards extends React.Component {
   state = {}
   componentDidMount() {
     this.props.fetchBoards()
+    this.setState({ itemSelected: null })
   }
 
   selectedCheck(id) {
@@ -20,7 +21,13 @@ class Boards extends React.Component {
   renderBoards() {
     return this.props.boards.map(board => {
       return (
-        <Link onClick={() => { this.setState({ itemSelected: board.id }) }} to={`/boards/${board.id}`} className={`item ${this.selectedCheck(board.id)}`} key={board.id}>
+        <Link
+          onClick={() => { this.setState({ itemSelected: board.id }) }}
+          to={`/boards/${board.id}`}
+          className={`item ${this.selectedCheck(board.id)}`}
+          key={board.id}
+          style={{ paddingLeft: '0' }}
+        >
           {board.title}
         </Link>
       )
@@ -29,10 +36,13 @@ class Boards extends React.Component {
 
   render() {
     return (
-      <div style={{position: "fixed"}} className="leftMenu header">Boards<hr/>
-        <div style={{ margin: '0' }} className="ui secondary text menu">
-          <div className="item">
-            <div className="menu">
+
+      <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
+        <div className='item leftMenu-main'><h3>Task Manager</h3></div>
+        <div className="ui secondary text menu">
+          <div className="item" style={{ width: '150px' }}>
+            <div className="menu" style={{ width: '100%' }}>
+              <div className="header item" style={{ paddingLeft: '0', paddingBottom: '10px' }}>Boards</div>
               {this.renderBoards()}
               <AddBoard />
             </div>
@@ -45,9 +55,9 @@ class Boards extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+
   return {
     boards: Object.values(state.boards)
-
   }
 }
 

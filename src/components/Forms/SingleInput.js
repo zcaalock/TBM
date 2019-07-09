@@ -8,19 +8,18 @@ class SingleInput extends React.Component {
     if (touched && error) {
       return (
         <div className="ui floating error message">
-          <div className="header">{error}</div>
+          <div>{error}</div>
         </div>
       )
     }
   }
 
 
-  renderImput = ({ input, label, meta }) => {
+  renderImput = ({ input, meta }) => {    
     const className = `field ${meta.error && meta.touched ? 'error' : ''}`
     return (
-      <div className={className}>
-        <label>{label}</label>
-        <input {...input} autoComplete="off" />
+      <div style={this.props.propStyle} className={className}>        
+        <input placeholder="Enter name..." autoFocus={true} style={this.props.propChildStyle} {...input} autoComplete="off" />
         {this.renderError(meta)}
       </div>
     )
@@ -30,11 +29,22 @@ class SingleInput extends React.Component {
     this.props.onSubmit(formValues)
   }
 
+  Cancel = (event) =>{
+    
+    if(event.keyCode===27){
+      this.props.removeEdit()
+    }
+  }
+
   render() {
 
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-        <Field className="ui small input" name="title" component={this.renderImput} />
+      <form 
+      onBlur={()=>this.props.removeEdit()}
+      onKeyDown={this.Cancel} 
+      onSubmit={this.props.handleSubmit(this.onSubmit)} 
+      className="ui form error">
+        <Field name="title" component={this.renderImput} />
       </form>
     )
   }
