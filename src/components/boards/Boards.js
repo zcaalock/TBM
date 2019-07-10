@@ -5,14 +5,13 @@ import { fetchBoards, createBoard } from '../../actions/boards'
 import AddBoard from './AddBoard'
 
 class Boards extends React.Component {
-  state = {}
+  
   componentDidMount() {
-    this.props.fetchBoards()
-    this.setState({ itemSelected: null })
+    this.props.fetchBoards()    
   }
 
-  selectedCheck(id) {
-    if (id === this.state.itemSelected) {
+  selectedCheck(id) {    
+    if (id === Number(this.props.appState.id)) {      
       return 'active'
     }
     return ''
@@ -21,13 +20,11 @@ class Boards extends React.Component {
   renderBoards() {
     return this.props.boards.map(board => {
       return (
-        <Link
-          onClick={() => { this.setState({ itemSelected: board.id }) }}
+        <Link          
           to={`/boards/${board.id}`}
           className={`item ${this.selectedCheck(board.id)}`}
           key={board.id}
-          style={{ paddingLeft: '0' }}
-        >
+          style={{ paddingLeft: '0' }}>
           {board.title}
         </Link>
       )
@@ -57,7 +54,8 @@ class Boards extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    boards: Object.values(state.boards)
+    boards: Object.values(state.boards), 
+    appState: state.appState
   }
 }
 

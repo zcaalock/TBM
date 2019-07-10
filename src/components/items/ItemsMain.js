@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fetchBoard, deleteBoard, editBoard } from '../../actions/boards'
+import { editState } from '../../actions/appState'
 
 import Header from './Header'
 
 class ItemsMain extends React.Component {
   componentDidMount() {
     this.props.fetchBoard(this.props.match.params.id)
+    
 
   }
 
@@ -15,6 +17,7 @@ class ItemsMain extends React.Component {
       return <div></div>
     }
     const { title } = this.props.board
+    this.props.editState(this.props.match.params.id, 'id') //selected board to appState
     return (
       <div className="article" >
       <Header board={this.props.board} delete={()=>{this.props.deleteBoard(this.props.board.id)}} title={title}/>
@@ -34,4 +37,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBoard, deleteBoard, editBoard })(ItemsMain)
+export default connect(mapStateToProps, { fetchBoard, deleteBoard, editBoard, editState })(ItemsMain)
