@@ -16,7 +16,7 @@ class Header extends React.Component {
   render() {
     return (
 
-      <div className="head-vertical-segment" style={{}}>
+      <div className="head-vertical-segment" style={{width: '70%'}}>
         <div style={{ float: 'left' }}>
           
           <EditBoardName 

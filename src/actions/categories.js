@@ -1,3 +1,4 @@
+import history from '../history'
 import categories from '../apis/server'
 import * as types from './types'
 
@@ -19,5 +20,13 @@ export const fetchCategories = () => async dispatch => {
 export const editCategory = (id, formValues) => async dispatch => {
   const responce = await categories.patch(`/categories/${id}`, formValues)
   dispatch({type: types.EDIT_CATEGORY, payload: responce.data})
+  
+}
+
+export const deleteCategory = (id, boardId) => async dispatch => {
+  await categories.delete(`/categories/${id}`)
+  dispatch({type: types.DELETE_CATEGORY, payload: id})
+  history.push(`/boards/${boardId}`)
+  //history.push('/')
   
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import DeleteCategory from './DeleteCategory'
 
 class HeaderIcons extends React.Component {
   render() {
@@ -22,15 +23,9 @@ class HeaderIcons extends React.Component {
             paddingRight: '10px'
           }}>
           <i className=" archive icon" />
-        </div>
-        <div
-          //onClick={() => { this.props.delete() }}
-          className="articleIcon"
-          data-position="bottom center"
-          data-tooltip="Delete"
-          style={{ display: 'inline-block' }}>
-          <i className=" trash icon" />
-        </div>
+        </div>        
+          <DeleteCategory
+          categoryId={this.props.categoryId} />        
       </div>
     )
   }

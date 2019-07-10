@@ -32,7 +32,7 @@ class Header extends React.Component {
   }
   render() {
     return (
-      <div style={{}} className="categories ui secondary text menu" >
+      <div style={{width:'69.1%'}} className="categories ui secondary text menu" >
         <div className="menu" style={{ width: '100%' }}>
           <div
             onMouseLeave={() => this.hideIcon()}
@@ -53,6 +53,7 @@ class Header extends React.Component {
         <div className="header item" style={{ float: 'right' }}>
           <HeaderIcons
             showEdit={() => this.showEdit()}
+            categoryId={this.props.categoryKey}
           />
         </div>
       </div>

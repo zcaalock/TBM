@@ -14,6 +14,7 @@ export const EDIT_STATE = 'EDIT_STATE'
 export const CREATE_CATEGORY = 'CREATE_CATEGORY'
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const EDIT_CATEGORY = 'EDIT_CATEGORY'
+export const DELETE_CATEGORY = 'DELETE_CATEGORY'
 
 // pulses
 

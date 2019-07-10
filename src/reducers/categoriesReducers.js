@@ -13,8 +13,8 @@ export default (state = {}, action) => {
     case types.EDIT_CATEGORY:
       return {...state, [action.payload.id]: action.payload}
       
-    // case types.DELETE_BOARD:
-    //   return _.omit(state, action.payload)
+     case types.DELETE_CATEGORY:
+       return _.omit(state, action.payload)
 
     case types.FETCH_CATEGORIES:
       return {...state, ..._.mapKeys(action.payload, 'id')}

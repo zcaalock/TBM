@@ -67,7 +67,7 @@ class AddCategory extends React.Component {
   render() {
     console.log('add category state: ', this.props)
     return (
-      <div style={{ width: '100%' }} className="categories ui secondary text menu" >
+      <div style={{ width: '69.1%' }} className="categories ui secondary text menu" >
         <div className="menu" style={{ width: '100%' }}>          
           {this.renderNewCategory()}
         </div>

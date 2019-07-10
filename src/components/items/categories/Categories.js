@@ -25,6 +25,7 @@ class Categories extends React.Component {
     if (this.state && this.state[id] === true) {
       return (
         <Table
+          
           collapse={() => this.collapse(category.id)}
           categoryKey={category.id}
           categoryTitle={category.title} 
