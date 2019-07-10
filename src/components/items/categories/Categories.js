@@ -3,27 +3,36 @@ import { connect } from 'react-redux'
 import { fetchCategories } from '../../../actions/categories'
 
 import Header from './Header'
-import Table from './Table'
+import Table from '../pulses/Table'
 
 class Categories extends React.Component {
-
-  state = { id : false}
 
   componentDidMount() {
     this.props.fetchCategories()
   }
 
-  renderColapsingMenu(category){
-    if(this.state.id===true){
-      return <Header categoryKey={category.id} categoryTitle={category.title} />
-    } return <Table categoryKey={category.id} categoryTitle={category.title}/>
+  expand(id){    
+    this.setState({[id]:true})
+  }
+
+  collapse(id){
+    this.setState({[id]:false})
+  }
+
+  renderColapsingMenu(category, id){
+    
+    
+    if(this.state && this.state[id] === true ){
+      return <Table collapse={()=>this.collapse(category.id)} categoryKey={category.id} categoryTitle={category.title}/>
+      
+    } return <Header expand={()=>this.expand(category.id)} categoryKey={category.id} categoryTitle={category.title} />
   }
 
   renderCategories() {
     return this.props.categories.map(category => {
       if (category.boardId === Number(this.props.appState.id)) {
         return (
-          <div>{this.renderColapsingMenu(category)}</div>
+          <div key={category.id}>{this.renderColapsingMenu(category, category.id)}</div>
         )
       }
     })
