@@ -1,4 +1,4 @@
-import boards from '../apis/boards'
+import boards from '../apis/server'
 import history from '../history'
 import * as types from './types'
 

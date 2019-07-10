@@ -4,6 +4,7 @@ import { fetchBoard, deleteBoard, editBoard } from '../../actions/boards'
 import { editState } from '../../actions/appState'
 
 import Header from './Header'
+import Body from './Body'
 
 class ItemsMain extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class ItemsMain extends React.Component {
     return (
       <div className="article" >
       <Header board={this.props.board} delete={()=>{this.props.deleteBoard(this.props.board.id)}} title={title}/>
+      <Body/>
       </div>
     )
   }

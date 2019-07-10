@@ -13,3 +13,7 @@ export const EDIT_STATE = 'EDIT_STATE'
 // categories
 
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
+
+// pulses
+
+export const FETCH_PULSES = 'FETCH_PULSES'

@@ -43,3 +43,9 @@
 .articleIcon:hover {
   color: black !important
 }
+
+.categories {
+  background-color: #bcbdbd26 !important;
+  border-radius: 4px !important;
+  margin: 0.5em -.1em !important;
+}
