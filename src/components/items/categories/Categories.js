@@ -11,21 +11,33 @@ class Categories extends React.Component {
     this.props.fetchCategories()
   }
 
-  expand(id){    
-    this.setState({[id]:true})
+  expand(id) {
+    this.setState({ [id]: true })
   }
 
-  collapse(id){
-    this.setState({[id]:false})
+  collapse(id) {
+    this.setState({ [id]: false })
   }
 
-  renderColapsingMenu(category, id){
-    
-    
-    if(this.state && this.state[id] === true ){
-      return <Table collapse={()=>this.collapse(category.id)} categoryKey={category.id} categoryTitle={category.title}/>
-      
-    } return <Header expand={()=>this.expand(category.id)} categoryKey={category.id} categoryTitle={category.title} />
+  renderColapsingMenu(category, id) {
+
+
+    if (this.state && this.state[id] === true) {
+      return (
+        <Table
+          collapse={() => this.collapse(category.id)}
+          categoryKey={category.id}
+          categoryTitle={category.title} 
+          category={category} />
+          
+      )
+    } return (
+      <Header
+        expandCollapse={() => this.expand(category.id)}
+        categoryKey={category.id}
+        categoryTitle={category.title}
+        category={category} />
+    )
   }
 
   renderCategories() {

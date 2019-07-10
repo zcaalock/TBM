@@ -7,11 +7,11 @@ export default (state = {}, action) => {
     // case types.FETCH_BOARD:
     //   return {...state, [action.payload.id]: action.payload}
     
-    // case types.CREATE_BOARD:
-    //   return {...state, [action.payload.id]: action.payload}
+    case types.CREATE_CATEGORY:
+       return {...state, [action.payload.id]: action.payload}
 
-    // case types.EDIT_BOARD:
-    //   return {...state, [action.payload.id]: action.payload}
+    case types.EDIT_CATEGORY:
+      return {...state, [action.payload.id]: action.payload}
       
     // case types.DELETE_BOARD:
     //   return _.omit(state, action.payload)

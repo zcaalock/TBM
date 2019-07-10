@@ -10,8 +10,7 @@ class Tbody extends React.Component {
 
   renderPulses() {
     const id= Number(this.props.categoryId)
-    const pulses = _.filter(this.props.pulses, {categoryId: id})
-    console.log('category id: ', pulses)
+    const pulses = _.filter(this.props.pulses, {categoryId: id})    
     return pulses.map(pulse => {
       return (
         <tr key={pulse.id}>

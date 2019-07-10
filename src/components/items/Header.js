@@ -1,5 +1,5 @@
 import React from 'react'
-import EditBoardName from './EditBoardName'
+import EditBoardName from '../boards/EditBoardName'
 
 class Header extends React.Component {
   state = { itemEditable: false }
@@ -12,9 +12,6 @@ class Header extends React.Component {
   showEdit() {
     this.setState({ itemEditable: true })
   }
-
-
-
 
   render() {
     return (

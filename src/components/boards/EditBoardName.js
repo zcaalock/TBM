@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { editBoard } from '../../actions/boards'
 import SingleInput from '../Forms/SingleInput'
 
-class AddBoard extends React.Component {
+class EditBoardName extends React.Component {
   
     
 
@@ -40,4 +40,4 @@ class AddBoard extends React.Component {
   }
 }
 
-export default connect(null, { editBoard })(AddBoard)
+export default connect(null, { editBoard })(EditBoardName)
