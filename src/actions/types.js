@@ -21,3 +21,6 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY'
 export const CREATE_PULSE = 'CREATE_PULSE'
 export const FETCH_PULSES = 'FETCH_PULSES'
 export const EDIT_PULSE = 'EDIT_PULSE'
+
+// users
+export const FETCH_USERS = 'FETCH_USERS'

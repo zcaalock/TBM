@@ -15,6 +15,7 @@ export const fetchPulses = () => async dispatch => {
 }
 
 export const editPulse = (id, formValues) => async dispatch => {
+  console.log("edit pulse: ", id, formValues)
   const responce = await pulses.patch(`/pulses/${id}`, formValues)
   dispatch({type: types.EDIT_PULSE, payload: responce.data})
   

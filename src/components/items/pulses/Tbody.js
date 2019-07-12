@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchPulses } from '../../../actions/pulses'
 import PulseName from './Tbody/PulseName'
+import UserName from './Tbody/UserName'
 
 class Tbody extends React.Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class Tbody extends React.Component {
           <td style={{ paddingLeft: '10px', width: '60%' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
-          <td data-label="Age">{pulse.userInitials}</td>
+          <td data-label="Age" style={{overflow: "visible"}}><UserName pulse={pulse}/></td>
           <td data-label="Job">{pulse.status}</td>
         </tr>)
     })
