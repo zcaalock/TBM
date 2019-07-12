@@ -5,7 +5,6 @@ import { editBoard } from '../../actions/boards'
 import SingleInput from '../Forms/SingleInput'
 
 class EditBoardName extends React.Component {
-  
     
 
   onSubmit = (formValues) => {

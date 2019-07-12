@@ -15,7 +15,7 @@ class Table extends React.Component {
           categoryKey={this.props.categoryKey}
           categoryTitle={this.props.categoryTitle}
           category={this.props.category} />
-        <table className="ui very basic table" style={{}}>
+        <table className="ui very basic table" style={{paddingLeft: '15px'}}>
           <Thead />
           <Tbody categoryId={this.props.categoryKey} />
         </table>

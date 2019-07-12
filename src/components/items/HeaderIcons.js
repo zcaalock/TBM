@@ -10,7 +10,7 @@ class HeaderIcons extends React.Component {
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Edit"
-          style={{ display: 'inline-block' }}>
+          style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>
         <div
@@ -20,7 +20,8 @@ class HeaderIcons extends React.Component {
           style={{
             display: 'inline-block',
             paddingLeft: '10px',
-            paddingRight: '10px'
+            paddingRight: '10px',
+            cursor: 'pointer'
           }}>
           <i className=" archive icon" />
         </div>        

@@ -1,5 +1,5 @@
 import React from 'react'
-import EditBoardName from '../leftMenu/EditBoardName'
+import EditBoardName from './EditBoardName'
 import HeaderIcons from './HeaderIcons'
 
 

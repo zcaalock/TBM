@@ -5,7 +5,7 @@
 .head-vertical-segment{
   position: relative;    
     margin: 0em;    
-    padding: 20px;
+    padding-top: 20px;
     padding-bottom: 42px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
@@ -50,3 +50,11 @@
   margin: 0.5em -.1em !important;
 }
 
+.tableRow {
+  padding-left: 10px !important;
+  cursor: pointer;
+}
+
+.tableRow:hover {
+  background-color: rgb(250, 250, 250)!important
+}

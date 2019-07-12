@@ -38,7 +38,7 @@ class Header extends React.Component {
             onMouseLeave={() => this.hideIcon()}
             onMouseEnter={() => this.showIcon()}
             onClick={() => this.props.expandCollapse()}
-            className="header item" style={{}}>
+            className="header item" style={{cursor: 'pointer'}}>
             {this.showHover()}
             {/* {this.props.categoryTitle} */}
             <EditHeaderName

@@ -30,7 +30,7 @@ class DeleteBoard extends React.Component {
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block' }}>
+        style={{ display: 'inline-block',cursor: 'pointer' }}>
         <i className=" trash icon" />        
       </div>
     )

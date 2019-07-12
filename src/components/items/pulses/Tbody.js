@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchPulses } from '../../../actions/pulses'
+import Content from './Tbody/Content'
 
 class Tbody extends React.Component {
   componentDidMount() {
@@ -13,8 +14,8 @@ class Tbody extends React.Component {
     const pulses = _.filter(this.props.pulses, {categoryId: id})    
     return pulses.map(pulse => {
       return (
-        <tr key={pulse.id}>
-        <td data-label="Name">{pulse.content}</td>
+        <tr key={pulse.id} className='tableRow'>
+        <td style={{paddingLeft: '10px'}} data-label="Name"><Content content={pulse.content}/></td>
         <td data-label="Age">{pulse.userInitials}</td>
         <td data-label="Job">{pulse.status}</td>
       </tr> )
