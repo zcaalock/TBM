@@ -7,8 +7,8 @@ import Table from '../pulses/Table'
 
 class Categories extends React.Component {
 
-  componentDidMount() {
-    this.props.fetchCategories()
+  componentDidMount(id) {
+    this.props.fetchCategories()    
   }
 
   expand(id) {

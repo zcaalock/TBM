@@ -10,8 +10,8 @@ export default (state = {}, action) => {
     // case types.CREATE_BOARD:
     //   return {...state, [action.payload.id]: action.payload}
 
-    // case types.EDIT_BOARD:
-    //   return {...state, [action.payload.id]: action.payload}
+     case types.EDIT_PULSE:
+       return {...state, [action.payload.id]: action.payload}
       
     // case types.DELETE_BOARD:
     //   return _.omit(state, action.payload)

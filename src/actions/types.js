@@ -19,3 +19,4 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY'
 // pulses
 
 export const FETCH_PULSES = 'FETCH_PULSES'
+export const EDIT_PULSE = 'EDIT_PULSE'
