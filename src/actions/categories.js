@@ -7,7 +7,7 @@ export const createCategory = (formValues, id) => {
   return async (dispatch) => {    
     const responce = await categories.post('/categories', {...formValues, boardId: id})
     dispatch({type: types.CREATE_CATEGORY, payload: responce.data})
-    console.log('create category: ',responce.data)    
+    //console.log('create category: ',responce.data)    
   }
 }
 

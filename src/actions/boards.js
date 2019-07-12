@@ -6,7 +6,7 @@ export const createBoard = (formValues) => {
   return async (dispatch) => {    
     const responce = await boards.post('/boards', {...formValues})
     dispatch({type: types.CREATE_BOARD, payload: responce.data})
-    console.log('create board: ',responce.data)
+    //console.log('create board: ',responce.data)
     history.push(`/boards/${responce.data.id}`)
   }
 }

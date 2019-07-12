@@ -20,8 +20,8 @@ class EditCategoryName extends React.Component {
     if (this.props.editState.itemEditable === true) {
       return (
         <SingleInput 
-        propStyle={{}} 
-        propChildStyle={{ padding: '5px' }}
+        propStyle={{padding: '0'}} 
+        propChildStyle={{ padding: '5px'}}
         initialValues={_.pick(this.props.category, 'title')} 
         removeEdit={()=>this.props.removeEdit()} 
         onSubmit={this.onSubmit} />

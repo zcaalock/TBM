@@ -1,35 +1,35 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import {deleteCategory} from '../../../actions/categories'
-import { fetchPulses} from '../../../actions/pulses'
+import {deleteBoard} from '../../actions/boards'
+import {fetchCategories} from '../../actions/categories'
 
-class DeleteCategory extends React.Component {
+
+class DeleteBoard extends React.Component {
 
   componentDidMount() {
-    this.props.fetchPulses()
+    this.props.fetchCategories()
     
   }
 
   renderDelete(){
-    //console.log('pulses: ', this.props.pulses)
+    //console.log('categories: ', this.props.categories)
     //console.log('categoryId:', this.props.categoryId)
-    const puls = _.filter(this.props.pulses, {categoryId: this.props.categoryId})  
-    //console.log('puls: ', this.props.boardId)
-    if (puls.length>0){
+    const board = _.filter(this.props.categories, {boardId: Number(this.props.boardId)})  
+    console.log('categories: ', board)
+    if (board.length>0){
       return (
         <div
-        //onClick={() => { this.props.delete() }}
-        
+        //onClick={() => { this.props.delete() }}        
         data-position="bottom left"
-        data-tooltip="Remove all pulses before delete"
+        data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
         <i className=" trash icon" style={{color: '#bcbdbd26'}} />        
       </div>
       )
     } return (
       <div
-        onClick={() => { this.props.deleteCategory(this.props.categoryId, Number(this.props.boardId)) }}
+        onClick={() => this.props.deleteBoard(Number(this.props.boardId))}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
@@ -53,9 +53,9 @@ class DeleteCategory extends React.Component {
 }
 const mapStateToProps = (state)=>{
   return{
-    pulses: Object.values(state.pulses),
+    categories: Object.values(state.categories),
     boardId: state.appState.id    
   }
 }
 
-export default connect(mapStateToProps, { fetchPulses, deleteCategory }) (DeleteCategory)
+export default connect(mapStateToProps, { fetchCategories, deleteBoard }) (DeleteBoard)

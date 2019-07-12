@@ -18,7 +18,14 @@ class EditBoardName extends React.Component {
   renderNewBoard() {
     
     if (this.props.editState.itemEditable === true) {
-      return <SingleInput propStyle={{marginTop: '-10px', marginLeft: '-5px'}} initialValues={_.pick(this.props.board, 'title')} removeEdit={()=>this.props.removeEdit()} onSubmit={this.onSubmit} />
+      return (
+        <SingleInput 
+        propStyle={{marginTop: '-2px', marginLeft: '-5px', padding: '0px'}}
+        propChildStyle={{ padding: '5px'}} 
+        initialValues={_.pick(this.props.board, 'title')} 
+        removeEdit={()=>this.props.removeEdit()} 
+        onSubmit={this.onSubmit} />
+      )
     }
 
     if (this.props.editState.itemEditable === false) {
