@@ -5,10 +5,12 @@ export const FETCH_BOARD = 'FETCH_BOARD'
 export const DELETE_BOARD = 'DELETE_BOARD'
 export const EDIT_BOARD = 'EDIT_BOARD'
 
-
 // appState 
-
 export const EDIT_STATE = 'EDIT_STATE'
+
+//status
+export const FETCH_STATUS = 'FETCH_STATUS'
+
 
 // categories
 export const CREATE_CATEGORY = 'CREATE_CATEGORY'
@@ -17,7 +19,6 @@ export const EDIT_CATEGORY = 'EDIT_CATEGORY'
 export const DELETE_CATEGORY = 'DELETE_CATEGORY'
 
 // pulses
-
 export const CREATE_PULSE = 'CREATE_PULSE'
 export const FETCH_PULSES = 'FETCH_PULSES'
 export const EDIT_PULSE = 'EDIT_PULSE'

@@ -5,6 +5,7 @@ import categoriesReducers from './categoriesReducers'
 import pulsesReducers from './pulsesReducers'
 import usersReducers from './usersReducers'
 import { reducer as formReducer } from 'redux-form'
+import statusReducers from './statusReducers'
 
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   pulses: pulsesReducers,
   users: usersReducers,
   appState: appStateReducers,
+  status: statusReducers,
   form: formReducer
   
 })
