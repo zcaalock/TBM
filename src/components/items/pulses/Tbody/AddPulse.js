@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCategory } from '../../../actions/categories'
-import SingleInput from '../../Forms/SingleInput'
+import { createPulse } from '../../../../actions/pulses'
+import SingleInput from '../../../Forms/SingleInput'
 
-class AddCategory extends React.Component {
+class AddPulse extends React.Component {
   state = { isHovering: false, itemEditable: false }
 
   removeEdit() {
@@ -25,22 +25,23 @@ class AddCategory extends React.Component {
   showHover() {
     if (this.state.isHovering === true) {
       return (
-        <div data-position="bottom center"
-        data-tooltip="Create category">
-          <i className="plus icon"  />
+        <div 
+          data-position="bottom center"
+          data-tooltip="Create pulse">
+          <i className="plus icon" />
         </div>)
     }
   }
 
   onSubmit = (formValues) => {
-    this.props.createCategory(formValues, Number(this.props.boardID))
+    this.props.createPulse(formValues, Number(this.props.categoryId)) 
     this.removeEdit()
   }
 
-  renderNewCategory() {
+  renderNewPulse() {
     if (this.state.itemEditable === true) {
       return (
-        <div className="articleIcon header item">
+        <div style={{ width: '100%' }}>
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
@@ -52,12 +53,12 @@ class AddCategory extends React.Component {
 
     if (this.state.itemEditable === false) {
       return (
-        <div className="articleIcon header item"
+        <div style={{ width: '100%' }}
           onMouseLeave={() => this.hideIcon()}
           onMouseEnter={() => this.showIcon()}
           onClick={() => this.showEdit()}>
-          {this.showHover()}
-          New
+          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
+          <div style={{display: 'inline-block'}}>New</div>
         </div>
       )
     }
@@ -68,20 +69,18 @@ class AddCategory extends React.Component {
   render() {
     //console.log('add category state: ', this.props)
     return (
-      <div style={{}} className="categories ui secondary text menu" >
-        <div className="menu" style={{ width: '100%' }}>          
-          {this.renderNewCategory()}
-        </div>
-      </div>
+      <tfoot>
+        <tr  >
+          <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
+            {this.renderNewPulse()}
+          </td>
+          <td colSpan="2">
+          </td>
+        </tr>
+      </tfoot>
     )
   }
 }
 
-const mapStateToProps = (state) => {
 
-  return {
-    boardID: state.appState.id
-  }
-}
-
-export default connect(mapStateToProps, { createCategory })(AddCategory)
+export default connect(null, { createPulse })(AddPulse)

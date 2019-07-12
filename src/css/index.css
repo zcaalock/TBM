@@ -58,3 +58,11 @@
 .tableRow:hover {
   background-color: rgb(250, 250, 250)!important
 }
+
+.tableNewPulse {
+  color: #F5F5F5 !important;
+}
+
+.tableNewPulse:hover {
+  color: black !important;
+}
