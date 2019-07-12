@@ -37,14 +37,12 @@ class DeleteCategory extends React.Component {
         <i className=" trash icon" />        
       </div>
     )
-
   }
 
   render() {
       
     return (
-      <>
-        
+      <>        
         {this.renderDelete()}
       </>
 

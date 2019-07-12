@@ -20,7 +20,7 @@ class ItemsMain extends React.Component {
     const { title } = this.props.board
     this.props.editState(this.props.match.params.id, 'id') //selected board to appState
     return (
-      <div className="article" >
+      <div className="article" style={{display: 'inline-block', minWidth: '60%'}} >
       <Header board={this.props.board} delete={()=>{this.props.deleteBoard(this.props.board.id)}} title={title}/>
       <Body/>
       </div>

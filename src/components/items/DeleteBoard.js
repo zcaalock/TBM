@@ -12,11 +12,8 @@ class DeleteBoard extends React.Component {
     
   }
 
-  renderDelete(){
-    //console.log('categories: ', this.props.categories)
-    //console.log('categoryId:', this.props.categoryId)
-    const board = _.filter(this.props.categories, {boardId: Number(this.props.boardId)})  
-    console.log('categories: ', board)
+  renderDelete(){    
+    const board = _.filter(this.props.categories, {boardId: Number(this.props.boardId)})    
     if (board.length>0){
       return (
         <div

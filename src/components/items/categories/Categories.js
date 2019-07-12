@@ -47,7 +47,7 @@ class Categories extends React.Component {
         return (
           <div key={category.id}>{this.renderColapsingMenu(category, category.id)}</div>
         )
-      }
+      } return null
     })
   }
 

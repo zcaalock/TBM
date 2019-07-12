@@ -1,8 +1,9 @@
 import React from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
-import Boards from '../components/boards/Boards'
+import Boards from '../components/leftMenu/Boards'
 import history from '../history'
 import ItemsMain from './items/ItemsMain'
+import Details from './rightDetails/Details'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Switch>          
           <Route path="/boards/:id" component={ItemsMain}/>
         </Switch>
+        <Details/>
         </div>
       </Router>
     </div>

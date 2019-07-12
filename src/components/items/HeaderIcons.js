@@ -5,14 +5,14 @@ class HeaderIcons extends React.Component {
   render() {
     return (
       <div>
-        {/* <div
+        <div
           onClick={() => { this.props.showEdit() }}
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Edit"
           style={{ display: 'inline-block' }}>
           <i className=" edit icon" />
-        </div> */}
+        </div>
         <div
           className="articleIcon"
           data-position="bottom center"

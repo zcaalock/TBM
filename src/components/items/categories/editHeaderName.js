@@ -4,15 +4,12 @@ import { connect } from 'react-redux'
 import { editCategory } from '../../../actions/categories'
 import SingleInput from '../../Forms/SingleInput'
 
-class EditCategoryName extends React.Component {
-  
-    
+class EditCategoryName extends React.Component {    
 
   onSubmit = (formValues) => {
     this.props.editCategory(this.props.category.id, formValues)
     this.props.removeEdit()
-  }
-  
+  }  
  
 
   renderEditCategory() {
