@@ -36,13 +36,16 @@ class PulseName extends React.Component {
 
   render() {
     return (
-      <div
+      <div        
+        onDoubleClick={()=>this.showEdit()}>
+        <div 
         onMouseEnter={() => this.showIcon() }
         onMouseLeave={() => this.hideIcon() }
-        onDoubleClick={()=>this.showEdit()}
-      >
-        <div style={{ display: 'inline-block' }}>{this.renderIcon()}</div>
-        <div style={{ display: 'inline-block' }}>
+        style={{ display: 'inline-block' }}>{this.renderIcon()}</div>
+        <div 
+        onMouseEnter={() => this.showIcon() }
+        onMouseLeave={() => this.hideIcon() }
+        style={{ display: 'inline-block' }}>
           <EditPulseName
             pulse={this.props.pulse}
             editState={this.state}

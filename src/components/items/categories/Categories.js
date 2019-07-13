@@ -1,14 +1,18 @@
 import React from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchCategories } from '../../../actions/categories'
+import { fetchPulses } from '../../../actions/pulses'
 
 import Header from './Header'
 import Table from '../pulses/Table'
+import ProgressBar from '../../Forms/ProgressBar'
 
 class Categories extends React.Component {
 
   componentDidMount(id) {
-    this.props.fetchCategories()    
+    this.props.fetchCategories()
+    this.props.fetchPulses()    
   }
 
   expand(id) {
@@ -17,6 +21,17 @@ class Categories extends React.Component {
 
   collapse(id) {
     this.setState({ [id]: false })
+  }
+
+  renderProgressBar(id){
+    const pulses = _.filter(this.props.pulses, {categoryId: id})
+    const checked = _.filter(this.props.pulses, {categoryId: id, status:'Done'})
+    
+    if (pulses.length>0) {
+      const value = checked.length / pulses.length
+      //console.log('value: ', value)
+      return <ProgressBar size={'tiny'} value={value*100} />
+    } 
   }
 
   renderColapsingMenu(category, id) {
@@ -29,7 +44,8 @@ class Categories extends React.Component {
           collapse={() => this.collapse(category.id)}
           categoryKey={category.id}
           categoryTitle={category.title} 
-          category={category} />
+          category={category}
+          boardId={this.props.appState.id} />
           
       )
     } return (
@@ -45,7 +61,9 @@ class Categories extends React.Component {
     return this.props.categories.map(category => {
       if (category.boardId === Number(this.props.appState.id)) {
         return (
-          <div key={category.id}>{this.renderColapsingMenu(category, category.id)}</div>
+          <div key={category.id}>
+            {this.renderProgressBar(category.id)}
+          {this.renderColapsingMenu(category, category.id)}</div>
         )
       } return null
     })
@@ -54,7 +72,11 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <div>{this.renderCategories()}</div>
+      
+      <div>
+        
+      {this.renderCategories()}
+      </div>
     )
   }
 }
@@ -63,8 +85,9 @@ const mapStateToProps = (state) => {
 
   return {
     categories: Object.values(state.categories),
+    pulses: Object.values(state.pulses),
     appState: state.appState
   }
 }
 
-export default connect(mapStateToProps, { fetchCategories })(Categories)
+export default connect(mapStateToProps, { fetchCategories, fetchPulses })(Categories)

@@ -2,11 +2,11 @@ import pulses from '../apis/server'
 import history from '../history'
 import * as types from './types'
 
-export const createPulse = (formValues, id) => {
+export const createPulse = (formValues, categoryId, boardId) => {
   return async (dispatch) => {    
-    const responce = await pulses.post('/pulses', {...formValues, categoryId: id, userInitials: '', status: ''})
+    const responce = await pulses.post('/pulses', {...formValues, categoryId: categoryId, userInitials: '', status: ''})
     dispatch({type: types.CREATE_PULSE, payload: responce.data})
-    history.push(`/boards/${id}/pulses/${responce.data.id}`)
+    history.push(`/boards/${boardId}/pulses/${responce.data.id}`)
     //console.log('create category: ',responce.data)    
   }
 }

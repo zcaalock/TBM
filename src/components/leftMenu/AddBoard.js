@@ -25,12 +25,19 @@ class AddBoard extends React.Component {
   showHover() {
     if (this.state.isHovering === true) {
       return (
-        <div 
+        <div
+          style={{ cursor: 'pointer' }}
           data-position="bottom center"
           data-tooltip="Create pulse">
           <i className="plus icon" />
         </div>)
     }
+  }
+
+  onSubmit = (formValues) => {
+    this.props.createBoard(formValues) 
+    this.removeEdit()
+
   }
 
   renderNewBoard() {
@@ -45,14 +52,14 @@ class AddBoard extends React.Component {
     if (this.state.itemEditable === false) {
       return (
         <div
-          onBlur={()=> this.removeEdit()}
+          onBlur={() => this.removeEdit()}
           onClick={() => this.showEdit()}
           onMouseLeave={() => this.hideIcon()}
           onMouseEnter={() => this.showIcon()}
-          className="tableNewDetail" style={{paddingTop: '5px'}}
+          className="tableNewDetail" style={{ paddingTop: '5px' }}
         >
-          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>New</div>
+          <div style={{ display: 'inline-block' }}>{this.showHover()}</div>
+          <div style={{ display: 'inline-block' }}>New</div>
           {/* <div >New</div>
           <div style={{ position: 'absolute', right: "0px" }}><i className="icon plus" /></div> */}
         </div>

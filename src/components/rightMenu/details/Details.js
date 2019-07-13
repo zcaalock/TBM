@@ -35,8 +35,7 @@ class Details extends React.Component {
     return false
   }
 
-
-
+  
   renderDetails() {
     const id = Number(this.props.pulseId)
     const details = _.filter(this.props.details, { pulseId: id })
@@ -73,7 +72,7 @@ class Details extends React.Component {
 
   render() {
     return (
-      <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%' }}>
+      <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%', paddingLeft: '10px' }}>
         {this.renderDetails()}
       </div>
     )

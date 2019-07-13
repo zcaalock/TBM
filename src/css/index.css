@@ -97,3 +97,13 @@
   color: black !important;
 }
 
+.login{
+  position: absolute;
+  width:  330px;
+  
+  top: calc(50% - 100px);
+  left: calc(50% - 135px);
+  padding: 25px;
+  
+  background-color: #bcbdbd26
+}

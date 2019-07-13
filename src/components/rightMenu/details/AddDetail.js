@@ -71,7 +71,7 @@ class AddDetail extends React.Component {
     //console.log('add category state: ', this.props)
     return (
       <div style={{}} className="tableNewDetail" >
-        <div className="menu" style={{ width: '100%' }}>          
+        <div className="menu" style={{ width: '100%', paddingLeft: '37px' }}>          
           {this.renderNewDetail()}
         </div>
       </div>

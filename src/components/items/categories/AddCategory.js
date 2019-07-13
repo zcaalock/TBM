@@ -25,9 +25,11 @@ class AddCategory extends React.Component {
   showHover() {
     if (this.state.isHovering === true) {
       return (
-        <div data-position="bottom center"
-        data-tooltip="Create category">
-          <i className="plus icon"  />
+        <div
+          style={{ cursor: 'pointer' }}
+          data-position="bottom center"
+          data-tooltip="Create category">
+          <i className="plus icon" />
         </div>)
     }
   }
@@ -69,7 +71,7 @@ class AddCategory extends React.Component {
     //console.log('add category state: ', this.props)
     return (
       <div style={{}} className="categories ui secondary text menu" >
-        <div className="menu" style={{ width: '100%' }}>          
+        <div className="menu" style={{ width: '100%', backgroundColor: 'white' }}>
           {this.renderNewCategory()}
         </div>
       </div>
