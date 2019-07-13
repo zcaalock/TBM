@@ -4,14 +4,7 @@ import { createBoard } from '../../actions/boards'
 import SingleInput from '../Forms/SingleInput'
 
 class AddBoard extends React.Component {
-  state = { itemEditable: false }
-
-
-
-  onSubmit = (formValues) => {
-    this.props.createBoard(formValues)
-    this.removeEdit()
-  }
+  state = { isHovering: false, itemEditable: false }
 
   removeEdit() {
     this.setState({ itemEditable: false })
@@ -19,6 +12,25 @@ class AddBoard extends React.Component {
 
   showEdit() {
     this.setState({ itemEditable: true })
+  }
+
+  hideIcon() {
+    this.setState({ isHovering: false })
+  }
+
+  showIcon() {
+    this.setState({ isHovering: true })
+  }
+
+  showHover() {
+    if (this.state.isHovering === true) {
+      return (
+        <div 
+          data-position="bottom center"
+          data-tooltip="Create pulse">
+          <i className="plus icon" />
+        </div>)
+    }
   }
 
   renderNewBoard() {
@@ -35,10 +47,14 @@ class AddBoard extends React.Component {
         <div
           onBlur={()=> this.removeEdit()}
           onClick={() => this.showEdit()}
-          className="selectable item"
+          onMouseLeave={() => this.hideIcon()}
+          onMouseEnter={() => this.showIcon()}
+          className="tableNewDetail" style={{paddingTop: '5px'}}
         >
-          <div >New</div>
-          <div style={{ position: 'absolute', right: "0px" }}><i className="icon plus" /></div>
+          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
+          <div style={{display: 'inline-block'}}>New</div>
+          {/* <div >New</div>
+          <div style={{ position: 'absolute', right: "0px" }}><i className="icon plus" /></div> */}
         </div>
       )
     }

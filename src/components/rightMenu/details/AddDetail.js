@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPulse } from '../../../../actions/pulses'
-import SingleInput from '../../../Forms/SingleInput'
+import { createDetail } from '../../../actions/details'
+import SingleInput from '../../Forms/SingleInput'
 
-class AddPulse extends React.Component {
+class AddDetail extends React.Component {
   state = { isHovering: false, itemEditable: false }
 
   removeEdit() {
@@ -25,24 +25,22 @@ class AddPulse extends React.Component {
   showHover() {
     if (this.state.isHovering === true) {
       return (
-        <div 
-          data-position="bottom center"
-          data-tooltip="Create pulse">
-          <i className="plus icon" />
+        <div data-position="bottom center"
+        data-tooltip="Add item">
+          <i className="plus icon"  />
         </div>)
     }
   }
 
   onSubmit = (formValues) => {
-    this.props.createPulse(formValues, Number(this.props.categoryId)) 
+    this.props.createDetail(formValues, Number(this.props.pulseId))
     this.removeEdit()
-
   }
 
-  renderNewPulse() {
+  renderNewDetail() {
     if (this.state.itemEditable === true) {
       return (
-        <div style={{ width: '100%' }}>
+        <div className="">
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
@@ -54,32 +52,38 @@ class AddPulse extends React.Component {
 
     if (this.state.itemEditable === false) {
       return (
-        <div style={{ width: '100%' }}
+        <div className=""
           onMouseLeave={() => this.hideIcon()}
           onMouseEnter={() => this.showIcon()}
-          onClick={() => this.showEdit()}>
-          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>New</div>
+          onDoubleClick={() => this.showEdit()}>
+          <div style={{cursor: 'pointer'}}>
+            <div onClick={() => this.showEdit()} style={{display: 'inline-block'}}>{this.showHover()}</div>
+            <div style={{display: 'inline-block'}}>New</div>
+          </div>         
         </div>
       )
     }
   }
 
+
+
   render() {
     //console.log('add category state: ', this.props)
     return (
-      <tfoot>
-        <tr  >
-          <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
-            {this.renderNewPulse()}
-          </td>
-          <td colSpan="2">
-          </td>
-        </tr>
-      </tfoot>
+      <div style={{}} className="tableNewDetail" >
+        <div className="menu" style={{ width: '100%' }}>          
+          {this.renderNewDetail()}
+        </div>
+      </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
 
-export default connect(null, { createPulse })(AddPulse)
+  return {
+    boardID: state.appState.id
+  }
+}
+
+export default connect(mapStateToProps, { createDetail })(AddDetail)

@@ -23,6 +23,14 @@ export const CREATE_PULSE = 'CREATE_PULSE'
 export const FETCH_PULSES = 'FETCH_PULSES'
 export const FETCH_PULSE = 'FETCH_PULSE'
 export const EDIT_PULSE = 'EDIT_PULSE'
+export const DELETE_PULSE = 'DELETE_PULSE'
+
+//details
+export const CREATE_DETAIL = 'CREATE_DETAIL'
+export const FETCH_DETAILS = 'FETCH_DETAILS'
+export const FETCH_DETAIL = 'FETCH_DETAIL'
+export const EDIT_DETAIL = 'EDIT_DETAIL'
+export const DELETE_DETAIL = 'DELETE_DETAIL'
 
 // users
 export const FETCH_USERS = 'FETCH_USERS'

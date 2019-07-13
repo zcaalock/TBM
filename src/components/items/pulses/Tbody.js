@@ -21,6 +21,7 @@ class Tbody extends React.Component {
     const id = Number(this.props.categoryId)
     const pulses = _.filter(this.props.pulses, { categoryId: id })
     return pulses.map(pulse => {
+      //console.log('pulse: ', pulse)
       return (
         <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px', width: '60%' }} data-label="Name">

@@ -38,9 +38,15 @@
 }
 
 .rightMenu{
-  background-color: #bcbdbd26;
+  background-color: #bcbdbd26;  
   margin-left: 40px !important;;
   height: 98%;
+  width: calc(40% - 270px)
+}
+
+.rightMenu-header{
+  padding-bottom: 20px;
+  border-bottom: 1px solid #DDDDDD !important;
 }
 
 
@@ -74,3 +80,20 @@
 .tableNewPulse:hover {
   color: black !important;
 }
+
+.tableNewDetail {
+  color: #eae6e6 !important;
+}
+
+.tableNewDetail:hover {
+  color: black !important;
+}
+
+.blackHover{
+  
+}
+
+.blackHover:hover {
+  color: black !important;
+}
+
