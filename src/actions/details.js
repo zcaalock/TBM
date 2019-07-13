@@ -22,3 +22,8 @@ export const editDetail = (id, formValues) => async dispatch => {
   dispatch({type: types.EDIT_DETAIL, payload: responce.data})
   
 }
+
+export const deleteDetail = (id) => async dispatch => {
+  await details.delete(`/details/${id}`)
+  dispatch({type: types.DELETE_DETAIL, payload: id})  
+}
