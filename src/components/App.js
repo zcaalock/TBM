@@ -11,10 +11,10 @@ const App = () => {
       <Router history={history}>
         <div>
         <Boards />
-        <Switch>          
+        <Route >          
           <Route path="/boards/:id" component={ItemsMain}/>
-        </Switch>
-        <Details/>
+          <Route path="/boards/:id/pulses/:id" component={Details}/>
+        </Route>        
         </div>
       </Router>
     </div>

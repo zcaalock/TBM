@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import history from '../../../history'
 import { fetchPulses } from '../../../actions/pulses'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
@@ -11,12 +12,17 @@ class Tbody extends React.Component {
     this.props.fetchPulses()
   }
 
+  goLink(id) {
+    history.push(`/boards/${this.props.appState.id}/pulses/${Number(id)}`)
+    //console.log('select', id)
+  }
+
   renderPulses() {
     const id = Number(this.props.categoryId)
     const pulses = _.filter(this.props.pulses, { categoryId: id })
     return pulses.map(pulse => {
       return (
-        <tr key={pulse.id} className='tableRow'>
+        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px', width: '60%' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
@@ -26,7 +32,8 @@ class Tbody extends React.Component {
           <td data-label="Status" style={{ overflow: "visible", width: '20%' }}>
             <Status pulse={pulse} />
           </td>
-        </tr>)
+        </tr>
+      )
     })
   }
 
@@ -42,7 +49,8 @@ class Tbody extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    pulses: Object.values(state.pulses)
+    pulses: Object.values(state.pulses),
+    appState: state.appState
 
   }
 }

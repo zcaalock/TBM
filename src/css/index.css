@@ -14,8 +14,9 @@
 
 
 .selectable{  
-  color: #F5F5F5 !important;
+  color: #eae6e6 !important;
   cursor: pointer;
+  padding-left: 0px !important;
   
 }
 
@@ -27,12 +28,19 @@
 }
 
 .leftMenu{  
-  background-color: #bcbdbd26
+  background-color: #bcbdbd26;
+  
 }
 
 .leftMenu-main{
   border-bottom: 1px solid #DDDDDD !important;
   padding-bottom: 20px;
+}
+
+.rightMenu{
+  background-color: #bcbdbd26;
+  margin-left: 40px !important;;
+  height: 98%;
 }
 
 

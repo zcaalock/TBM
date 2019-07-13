@@ -1,13 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import history from '../../history'
 import { fetchBoards, createBoard } from '../../actions/boards'
+import { editState } from '../../actions/appState'
 import AddBoard from './AddBoard'
 
 class Boards extends React.Component {
   
   componentDidMount() {
     this.props.fetchBoards()    
+  }
+
+  goLink() {
+    history.push(`/boards/`)
+    //console.log('select', id)
   }
 
   selectedCheck(id) {    
@@ -35,7 +42,7 @@ class Boards extends React.Component {
     return (
 
       <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
-        <div className='item leftMenu-main'><h3>Task Manager</h3></div>
+        <div data-position="bottom center" data-tooltip="Go to main page" style={{cursor: "pointer"}} onClick={()=>{this.goLink(); this.props.editState('', 'id')}} className='item leftMenu-main'><h3>Task Manager</h3></div>
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
             <div className="menu" style={{ width: '100%' }}>
@@ -59,4 +66,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBoards, createBoard })(Boards)
+export default connect(mapStateToProps, { fetchBoards, createBoard, editState })(Boards)
