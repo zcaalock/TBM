@@ -10,7 +10,7 @@ import ProgressBar from '../../Forms/ProgressBar'
 
 class Categories extends React.Component {
 
-  componentDidMount(id) {
+  componentDidMount() {
     this.props.fetchCategories()
     this.props.fetchPulses()    
   }

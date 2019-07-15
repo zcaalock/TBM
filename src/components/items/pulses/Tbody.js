@@ -38,7 +38,7 @@ class Tbody extends React.Component {
       //console.log('pulse: ', pulse)
       return (
         <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id)}>
-          <td style={{ paddingLeft: '10px', width: '70%' }} data-label="Name">
+          <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
           <td data-label="LeadPerson" style={{ overflow: "visible", width: '10%' }}>

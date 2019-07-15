@@ -10,7 +10,7 @@ class Thead extends React.Component {
     return (
       <thead>
         <tr>
-          <th style={{paddingLeft: '10px', width: '70%' }}>Name</th>
+          <th style={{paddingLeft: '10px', width: '' }}>Name</th>
           <th style={{width: '10%' }}>Lead Person</th>
           <th style={{width: '10%' }}>Status</th>
           <th style={{width: '10%' }}>Status</th>
