@@ -19,6 +19,10 @@ class Boards extends React.Component {
     //console.log('select', id)
   }
 
+  goBoards(){
+    history.push('/boards')
+  }
+
   handleHover() {
     this.setState({ isHovering: !this.state.isHovering })
   }
@@ -67,7 +71,7 @@ class Boards extends React.Component {
           <div className="item" style={{ width: '150px' }}>
             <div              
               className="menu" style={{ width: '100%' }}>
-              <div className="header item" style={{ paddingLeft: '0', paddingBottom: '10px' }}>Boards</div>
+              <div onClick={()=>this.goBoards()} className="header item" style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>Boards</div>
               {this.renderBoards()}
               <AddBoard />
             </div>

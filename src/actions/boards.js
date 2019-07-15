@@ -30,6 +30,6 @@ export const editBoard = (id, formValues) => async dispatch => {
 export const deleteBoard = (id) => async dispatch => {
   await boards.delete(`/boards/${id}`)
   dispatch({type: types.DELETE_BOARD, payload: id})
-  history.push('/')
+  history.push('/boards/')
   
 }

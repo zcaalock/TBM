@@ -27,8 +27,8 @@ class AddBoard extends React.Component {
       return (
         <div
           style={{ cursor: 'pointer' }}
-          data-position="bottom center"
-          data-tooltip="Create pulse">
+          data-position="right center"
+          data-tooltip="Create board">
           <i className="plus icon" />
         </div>)
     }

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
-import Boards from '../components/leftMenu/Boards'
+import LeftMenu from './leftMenu/LeftMenu'
+import Boards from './middle/Boards'
 import history from '../history'
 import ItemsMain from './items/ItemsMain'
 import Details from './rightMenu/Details'
-import LandingPage from './landingPage/LandingPage'
+import LandingPage from './middle/LandingPage'
 
 const App = () => {
   return (
@@ -13,8 +14,8 @@ const App = () => {
         <div>
           <Route >
             <Route path="/" exact component={LandingPage}/>
-            <Route path="/boards" component={Boards} />
-            <Route path="/boards/:id" component={ItemsMain} />
+            <Route path="/boards" exact component={(props)=>(<><LeftMenu {...props}/> <Boards {...props}/></>)} />
+            <Route path="/boards/:id" component={(props)=>(<><LeftMenu {...props}/> <ItemsMain {...props}/></>)} />
             <Route path="/boards/:id/pulses/:id" component={Details} />
           </Route>
         </div>
