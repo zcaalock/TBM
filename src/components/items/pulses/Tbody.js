@@ -44,7 +44,7 @@ class Tbody extends React.Component {
           <td data-label="LeadPerson" style={{ overflow: "visible", width: '10%' }}>
             <LeadPerson pulse={pulse} />
           </td>
-          <td data-label="Status" style={{ overflow: "visible", width: '10%' }}>
+          <td data-label="Status" style={{ overflow: "visible", width: '100px' }}>
             <Status pulse={pulse} />
           </td>
           <td style={{wdth: '10%'}}>

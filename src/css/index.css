@@ -21,14 +21,14 @@
   .article{
     margin-left: 220px;
     display: inline-block;
-    width: 40%    
+    width: 50%    
   }
   .rightMenu{
     background-color: #bcbdbd26;  
     margin-left: 40px !important;;
     height: 98%;
     min-width: 240px;
-    width: calc(60% - 270px);
+    width: calc(50% - 270px);
     
     
   }
