@@ -2,7 +2,7 @@
   .article{
     margin-left: 220px;
     display: inline-block;
-    width: 70%
+    width: calc(80% - 270px);
     
   }
 
@@ -11,7 +11,7 @@
     margin-left: 40px !important;;
     height: 98%;
     min-width: 240px;
-    width: calc(30% - 270px);
+    width: 20%
     
     
   }
@@ -21,14 +21,14 @@
   .article{
     margin-left: 220px;
     display: inline-block;
-    width: 50%    
+    width: calc(70% - 270px);    
   }
   .rightMenu{
     background-color: #bcbdbd26;  
     margin-left: 40px !important;;
     height: 98%;
     min-width: 240px;
-    width: calc(50% - 270px);
+    width: 30%
     
     
   }
