@@ -24,9 +24,8 @@ exports.getUsers = functions.https.onRequest((req, res) => {
 
 exports.createUser = functions.https.onRequest((req, res) => {
   const newUser = {
-    body: req.body.body,
-    userHandle: req.bofy.userHandle,
-    createAt: admin.firestore.Timestamp.fromDate(new Date())
+    userInitials: req.body.userInitials,
+    title: req.body.title    
   }
 
   admin.firestore()
