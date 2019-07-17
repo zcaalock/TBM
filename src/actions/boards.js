@@ -3,28 +3,32 @@ import history from '../history'
 import * as types from './types'
 
 export const createBoard = (formValues) => {
+  //console.log('create board: ',{...formValues})
   return async (dispatch) => {    
     const responce = await boards.post('/boards', {...formValues})
-    dispatch({type: types.CREATE_BOARD, payload: responce.data.boards})
     //console.log('create board: ',responce.data)
-    history.push(`/boards/${responce.data.boards.id}`)
+    await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
+    
+    await history.push(`/boards/${responce.data.board.id}`)
+    await console.log('responce: ',responce.data.board.id )
   }
 }
 
 export const fetchBoards = () => async dispatch => {
   const responce = await boards.get('/boards')
-  dispatch({type: types.FETCH_BOARDS, payload: responce.data.boards})
-  console.log(responce)
+  console.log('fetch boards: ', responce.data)  
+  dispatch({type: types.FETCH_BOARDS, payload: responce.data})
+  
 }
 
 export const fetchBoard = (id) => async dispatch => {
   const responce = await boards.get(`/boards/${id}`)
-  dispatch({type: types.FETCH_BOARD, payload: responce.data.boards})
+  dispatch({type: types.FETCH_BOARD, payload: responce.data})
 }
 
 export const editBoard = (id, formValues) => async dispatch => {
   const responce = await boards.patch(`/boards/${id}`, formValues)
-  dispatch({type: types.EDIT_BOARD, payload: responce.data.boards})
+  dispatch({type: types.EDIT_BOARD, payload: responce.data})
   
 }
 
