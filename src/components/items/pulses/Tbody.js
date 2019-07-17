@@ -26,7 +26,7 @@ class Tbody extends React.Component {
     
     if (details.length>0) {
       const value = checked.length / details.length
-      console.log('value: ', value)
+      //console.log('value: ', value)
       return <ProgressBar value={value*100} />
     } 
   }

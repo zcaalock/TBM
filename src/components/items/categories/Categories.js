@@ -58,7 +58,9 @@ class Categories extends React.Component {
   }
 
   renderCategories() {
-    return this.props.categories.map(category => {
+    var sort = _.sortBy(this.props.categories, 'id')
+    //console.log('sort: ', sort)
+    return sort.map(category => {
       if (category.boardId === Number(this.props.appState.id)) {
         return (
           <div key={category.id}>

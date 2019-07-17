@@ -3,14 +3,13 @@ import history from '../history'
 import * as types from './types'
 
 export const createBoard = (formValues) => {
-  //console.log('create board: ',{...formValues})
+  console.log('create board: ',{...formValues})
   return async (dispatch) => {    
     const responce = await boards.post('/boards', {...formValues})
     //console.log('create board: ',responce.data)
     await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
-    
     await history.push(`/boards/${responce.data.board.id}`)
-    await console.log('responce: ',responce.data.board.id )
+    //await console.log('responce: ',responce.data.board.id )
   }
 }
 

@@ -30,6 +30,7 @@ class UserName extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  //console.log('status list: ', state.status)
   return {
     status: Object.values(state.status)
   }

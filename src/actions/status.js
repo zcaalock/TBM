@@ -3,5 +3,5 @@ import * as types from './types'
 
 export const fetchStatus = () => async dispatch => {
   const responce = await status.get('/status')
-  dispatch({type: types.FETCH_STATUS, payload: responce.data.status})
+  await dispatch({type: types.FETCH_STATUS, payload: responce.data})
 }

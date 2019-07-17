@@ -13,13 +13,13 @@ export const createDetail = (formValues, id) => {
 
 export const fetchDetails = () => async dispatch => {
   const responce = await details.get('/details')
-  dispatch({type: types.FETCH_DETAILS, payload: responce.data.details})
+  dispatch({type: types.FETCH_DETAILS, payload: responce.data})
 }
 
 export const editDetail = (id, formValues) => async dispatch => {
   //console.log("edit pulse: ", id, formValues)
   const responce = await details.patch(`/details/${id}`, formValues)
-  dispatch({type: types.EDIT_DETAIL, payload: responce.data.details})
+  dispatch({type: types.EDIT_DETAIL, payload: responce.data})
   
 }
 

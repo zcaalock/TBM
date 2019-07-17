@@ -5,15 +5,17 @@ import React from 'react'
 class DropDrownMenu extends React.Component {
 
   renderDropDown() {
-
-    
+    //console.log('values: ', this.props.values)
+    if(!this.props.values){
+      return <div>loading...</div>
+    }
     return this.props.values.map(value => {
       //console.log(c)   
-      //console.log('title: ', value)
+      //console.log('dropdown value: ', value)
       return (
         
         <Dropdown.Item
-          key={value.title}
+          key={value.id}
           name={value.title}
           onClick={() => this.props.onSave(value.title)}>
           {value.title}

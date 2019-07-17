@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import history from '../../history'
@@ -41,7 +42,8 @@ class Boards extends React.Component {
   }
 
   renderBoards() {
-    return this.props.boards.map(board => {
+    var sort = _.sortBy(this.props.boards, 'id')
+    return sort.map(board => {
       return (
         <Link
           to={`/boards/${board.id}`}
