@@ -1,0 +1,68 @@
+[debug] [2019-07-17T12:46:45.871Z] ----------------------------------------------------------------------
+[debug] [2019-07-17T12:46:45.877Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-07-17T12:46:45.878Z] CLI Version:   7.1.0
+[debug] [2019-07-17T12:46:45.878Z] Platform:      win32
+[debug] [2019-07-17T12:46:45.878Z] Node Version:  v10.16.0
+[debug] [2019-07-17T12:46:45.880Z] Time:          Wed Jul 17 2019 14:46:45 GMT+0200 (GMT+02:00)
+[debug] [2019-07-17T12:46:45.880Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-17T12:46:45.906Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-17T12:46:45.908Z] > authorizing via signed-in user
+[debug] [2019-07-17T12:46:45.908Z] [iam] checking project quickstart-1561998550467 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-07-17T12:46:45.908Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/quickstart-1561998550467:testIamPermissions  
+
+[debug] [2019-07-17T12:46:46.828Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-17T12:46:46.833Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/quickstart-1561998550467  
+ 
+[debug] [2019-07-17T12:46:47.091Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'quickstart-1561998550467'...
+[info] 
+[info] i  deploying functions, hosting
+[debug] [2019-07-17T12:46:54.203Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.1.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2019-07-17T12:46:54.206Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/quickstart-1561998550467/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2019-07-17T12:46:54.208Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/quickstart-1561998550467/services/runtimeconfig.googleapis.com  
+ 
+[debug] [2019-07-17T12:46:55.107Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-17T12:46:55.138Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2019-07-17T12:46:55.138Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/quickstart-1561998550467/adminSdkConfig  
+ 
+[debug] [2019-07-17T12:46:55.413Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-17T12:46:55.522Z] TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received type undefined
+    at validateString (internal/validators.js:125:11)
+    at Object.resolve (path.js:161:7)
+    at resolveProjectPath (C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\projectPath.js:6:17)
+    at C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\hosting\prepare.js:46:36
+    at arrayEach (C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:516:11)
+    at Function.forEach (C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:9342:14)
+    at module.exports (C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\hosting\prepare.js:29:7)
+    at _chain (C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:22:40)
+    at C:\Users\alek\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:25:20
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[error] 
+[error] Error: An unexpected error has occurred.
