@@ -11,21 +11,25 @@ const {getDetails} = require('./handlers/details')
 const {getPulses} = require('./handlers/pulses')
 const {signup, login} = require('./handlers/users')
 
-//get Routes
-app.get('/users', getUsers) //TODO adjust user list in pulses
+//boards routes
 app.get('/boards', getBoards)
+app.post('/boards', FBAuth, postBoard)
+
+//categories routes
 app.get('/categories', getCategories)
+app.post('/categories', FBAuth, postCategory)
+
+
+//other routes
 app.get('/details', getDetails)
 app.get('/pulses', getPulses)
 app.get('/status', getStatus)
 
-//post routes
-app.post('/boards', FBAuth, postBoard)
-app.post('/categories', FBAuth, postCategory)
 
-//signup routes
+//users routes
 app.post('/signup', signup)
 app.post('/login', login)
+app.get('/users', getUsers) //TODO adjust user list in pulses
 
 exports.api = functions.region('europe-west2').https.onRequest(app)
 
