@@ -20,7 +20,7 @@ class Boards extends React.Component {
     //console.log('select', id)
   }
 
-  goBoards(){
+  goBoards() {
     history.push('/boards')
   }
 
@@ -42,6 +42,13 @@ class Boards extends React.Component {
   }
 
   renderBoards() {
+    if (this.props.boards.length === 0) {
+      return (
+        <div className="ui active inline loader">          
+        </div>
+        
+      )
+    }
     var sort = _.sortBy(this.props.boards, 'id')
     return sort.map(board => {
       return (
@@ -56,24 +63,26 @@ class Boards extends React.Component {
     })
   }
 
-  render() {
+  render() {    
+    
+
     return (
 
       <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
         <div
-        onMouseEnter={() => this.handleHover()}
-        onMouseLeave={() => this.handleHover()} 
+          onMouseEnter={() => this.handleHover()}
+          onMouseLeave={() => this.handleHover()}
           //data-position="bottom center"
-        // data-tooltip="Go to main page" 
-         style={{ cursor: "pointer" }} 
-         onClick={() => { this.goLink(); this.props.editState('', 'id') }} 
-         className='item leftMenu-main'>{this.renderLogOut()}</div>
-               
+          // data-tooltip="Go to main page" 
+          style={{ cursor: "pointer" }}
+          onClick={() => { this.goLink(); this.props.editState('', 'id') }}
+          className='item leftMenu-main'>{this.renderLogOut()}</div>
+
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
-            <div              
+            <div
               className="menu" style={{ width: '100%' }}>
-              <div onClick={()=>this.goBoards()} className="header item" style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>Boards</div>
+              <div onClick={() => this.goBoards()} className="header item" style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>Boards</div>
               {this.renderBoards()}
               <AddBoard />
             </div>

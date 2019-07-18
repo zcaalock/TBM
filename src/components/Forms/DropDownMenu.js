@@ -7,7 +7,7 @@ class DropDrownMenu extends React.Component {
   renderDropDown() {
     //console.log('values: ', this.props.values)
     if(!this.props.values){
-      return <div>loading...</div>
+      return <div class="ui active inline loader"></div>
     }
     return this.props.values.map(value => {
       //console.log(c)   
