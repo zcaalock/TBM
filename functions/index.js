@@ -4,12 +4,11 @@ const app = require('express')()
 const FBAuth = require('./util/fbAuth')
 
 const {getBoards, postBoard} = require('./handlers/boards')
-const {getUsers} = require('./handlers/users')
 const {getStatus} = require('./handlers/status')
 const {getCategories, postCategory} = require('./handlers/categories')
 const {getDetails} = require('./handlers/details')
 const {getPulses} = require('./handlers/pulses')
-const {signup, login} = require('./handlers/users')
+const {signup, login, getUsers, uploadImage} = require('./handlers/users')
 
 //boards routes
 app.get('/boards', getBoards)
@@ -29,6 +28,8 @@ app.get('/status', getStatus)
 //users routes
 app.post('/signup', signup)
 app.post('/login', login)
+app.post('/user/image', FBAuth, uploadImage)
+
 app.get('/users', getUsers) //TODO adjust user list in pulses
 
 exports.api = functions.region('europe-west2').https.onRequest(app)
