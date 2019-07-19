@@ -69,7 +69,7 @@ class Categories extends React.Component {
 
 
   render() {
-    console.log('fetch categories: ', this.props.categories)
+    //console.log('fetch categories: ', this.props.categories)
     return (
       <div>
         {this.renderCategories()}

@@ -13,8 +13,10 @@ exports.getBoards = (req, res) => {
           boards.push({
             id: doc.id,
             title: doc.data().title,
+            
             //userHandle: doc.data().userHandle,
-            createdAt: doc.data().createdAt
+            createdAt: doc.data().createdAt,
+            editedAt: doc.data().editedAt
           });
         })
         return res.json(boards)
@@ -81,12 +83,12 @@ exports.patchBoard = (req, res) => {
       res.json({
         board: {
           title: updateDocument.title,
-          //userHandle: newBoard.userHandle
-          id: req.params.id,
+          //userHandle: 
+          id: req.params.id, //this is wrong
           createdAt: boardData.createdAt,
           editedAt: updateDocument.editedAt
         },
-        message: `document ${req.params.id} edited successfuly`
+        message: `Board ${req.params.id} edited successfuly`
       })
     })
     .catch(err => {

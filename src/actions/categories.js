@@ -20,8 +20,9 @@ export const fetchCategories = () => async dispatch => {
 }
 
 export const editCategory = (id, formValues) => async dispatch => {
-  const responce = await categories.patch(`/categories/${id}`, formValues)
-  dispatch({type: types.EDIT_CATEGORY, payload: responce.data})
+  const responce = await categories.patch(`/category/${id}`, formValues)
+  console.log('category responce: ', responce.data.category)
+  dispatch({type: types.EDIT_CATEGORY, payload: responce.data.category})
   
 }
 
