@@ -12,7 +12,7 @@ class Categories extends React.Component {
 
   componentDidMount() {
     this.props.fetchCategories()
-    this.props.fetchPulses()    
+    this.props.fetchPulses()
   }
 
   expand(id) {
@@ -23,30 +23,26 @@ class Categories extends React.Component {
     this.setState({ [id]: false })
   }
 
-  renderProgressBar(id){
-    const pulses = _.filter(this.props.pulses, {categoryId: id})
-    const checked = _.filter(this.props.pulses, {categoryId: id, status:'Done'})
-    
-    if (pulses.length>0) {
+  renderProgressBar(id) {
+    const pulses = _.filter(this.props.pulses, { categoryId: id })
+    const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done' })
+
+    if (pulses.length > 0) {
       const value = checked.length / pulses.length
       //console.log('value: ', value)
-      return <ProgressBar size={'tiny'} value={value*100} />
-    } 
+      return <ProgressBar size={'tiny'} value={value * 100} />
+    }
   }
 
   renderColapsingMenu(category, id) {
-
-
     if (this.state && this.state[id] === true) {
       return (
         <Table
-          
           collapse={() => this.collapse(category.id)}
           categoryKey={category.id}
-          categoryTitle={category.title} 
+          categoryTitle={category.title}
           category={category}
           boardId={this.props.appState.id} />
-          
       )
     } return (
       <Header
@@ -58,14 +54,14 @@ class Categories extends React.Component {
   }
 
   renderCategories() {
-    var sort = _.sortBy(this.props.categories, 'id')
+    //var sort = _.sortBy(this.props.categories, 'id')
     //console.log('sort: ', sort)
-    return sort.map(category => {
-      if (category.boardId === Number(this.props.appState.id)) {
+    return this.props.categories.map(category => {
+      if (category.boardId === this.props.appState.id) {
         return (
           <div key={category.id}>
             {this.renderProgressBar(category.id)}
-          {this.renderColapsingMenu(category, category.id)}</div>
+            {this.renderColapsingMenu(category, category.id)}</div>
         )
       } return null
     })
@@ -73,11 +69,10 @@ class Categories extends React.Component {
 
 
   render() {
+    console.log('fetch categories: ', this.props.categories)
     return (
-      
       <div>
-        
-      {this.renderCategories()}
+        {this.renderCategories()}
       </div>
     )
   }

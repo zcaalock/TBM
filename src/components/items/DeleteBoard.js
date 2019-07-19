@@ -13,7 +13,7 @@ class DeleteBoard extends React.Component {
   }
 
   renderDelete(){    
-    const board = _.filter(this.props.categories, {boardId: Number(this.props.boardId)})    
+    const board = _.filter(this.props.categories, {boardId: this.props.boardId})    
     if (board.length>0){
       return (
         <div
@@ -26,7 +26,7 @@ class DeleteBoard extends React.Component {
       )
     } return (
       <div
-        onClick={() => this.props.deleteBoard(Number(this.props.boardId))}
+        onClick={() => this.props.deleteBoard(this.props.boardId)}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"

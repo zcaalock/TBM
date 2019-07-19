@@ -4,8 +4,9 @@ import * as types from './types'
 
 
 export const createCategory = (formValues, id) => {
+  console.log('board id:', id)
   return async (dispatch) => {    
-    const responce = await categories.post('/categories', {...formValues, boardId: id})
+    const responce = await categories.post('/category', {...formValues, boardId: id})
     dispatch({type: types.CREATE_CATEGORY, payload: responce.data.category})
     //history.push(`/boards/${id}`)
     //console.log('create category: ',id)    

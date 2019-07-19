@@ -33,7 +33,7 @@ class AddDetail extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    this.props.createDetail(formValues, Number(this.props.pulseId))
+    this.props.createDetail(formValues, this.props.pulseId)
     this.removeEdit()
   }
 

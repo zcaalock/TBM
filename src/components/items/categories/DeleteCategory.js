@@ -29,7 +29,7 @@ class DeleteCategory extends React.Component {
       )
     } return (
       <div
-        onClick={() => { this.props.deleteCategory(this.props.categoryId, Number(this.props.boardId)) }}
+        onClick={() => { this.props.deleteCategory(this.props.categoryId, this.props.boardId) }}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"

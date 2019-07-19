@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import history from '../../history'
@@ -35,7 +34,7 @@ class Boards extends React.Component {
   }
 
   selectedCheck(id) {
-    if (id === Number(this.props.appState.id)) {
+    if (id === this.props.appState.id) {
       return 'active'
     }
     return ''
@@ -49,8 +48,8 @@ class Boards extends React.Component {
         
       )
     }
-    var sort = _.sortBy(this.props.boards, 'id')
-    return sort.map(board => {
+    //var sort = _.sortBy(this.props.boards, 'createdAt')
+    return this.props.boards.map(board => {
       return (
         <Link
           to={`/boards/${board.id}`}

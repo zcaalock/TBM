@@ -35,7 +35,7 @@ class AddCategory extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    this.props.createCategory(formValues, Number(this.props.boardID))
+    this.props.createCategory(formValues, this.props.boardID)
     this.removeEdit()
   }
 

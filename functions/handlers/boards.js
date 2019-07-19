@@ -1,16 +1,21 @@
 const cors = require('cors')({ origin: true });
-const {db} = require('../util/admin')
+const { db } = require('../util/admin')
 
 exports.getBoards = (req, res) => {
   cors(req, res, () => {
     db
       .collection('boards')
-      .orderBy('id', 'desc')
+      .orderBy('createdAt')
       .get()
       .then(data => {
         let boards = [];
-        data.forEach(doc => {
-          boards.push(doc.data());
+        data.forEach((doc) => {
+          boards.push({
+            id: doc.id,
+            title: doc.data().title,
+            //userHandle: doc.data().userHandle,
+            createdAt: doc.data().createdAt
+          });
         })
         return res.json(boards)
       })
@@ -20,16 +25,14 @@ exports.getBoards = (req, res) => {
 
 exports.postBoard = (req, res) => {
   cors(req, res, () => {
-    
-    if(req.body.title.trim() === '') {
-      return res.status(400).json({body: 'field must not be empty'})
+
+    if (req.body.title.trim() === '') {
+      return res.status(400).json({ body: 'field must not be empty' })
     }
-    
-    const now = Date.now()
+
     const newBoard = {
-      id: now,
       title: req.body.title,
-      userHandle: req.user.handle,
+      //userHandle: req.user.handle,
       createdAt: new Date().toISOString()
     }
     db
@@ -37,7 +40,12 @@ exports.postBoard = (req, res) => {
       .add(newBoard)
       .then(doc => {
         res.json({
-          board: newBoard,
+          board: {
+            title: newBoard.title,
+            //userHandle: newBoard.userHandle
+            id: doc.id,
+            createdAt: newBoard.createdAt
+          },
           message: `document ${doc.id} created successfuly`
         })
       })
@@ -49,20 +57,20 @@ exports.postBoard = (req, res) => {
 }
 
 exports.deleteBoard = (req, res) => {
-  const document = db.doc(`/screams/${req.params.id}`)
+  const document = db.doc(`/boards/${req.params.id}`)
   document.get()
     .then(doc => {
-      if(!doc.exists){
-        return res.status(404).json({error: 'Board not found'})
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Board not found' })
       } else {
         return document.delete()
       }
     })
-    .then(()=>{
-      res.json({message: 'Board deleted successfuly'})
+    .then(() => {
+      res.json({ message: 'Board deleted successfuly' })
     })
-    .catch((err)=> {
+    .catch((err) => {
       console.error(err)
-      return res.status(500).json({error: err.code})
+      return res.status(500).json({ error: err.code })
     })
 }

@@ -12,12 +12,12 @@ const { signup, login, getUsers, uploadImage, addUserDetails } = require('./hand
 
 //boards routes
 app.get('/boards', getBoards)
-app.post('/boards', FBAuth, postBoard)
-app.delete('./boards/:boardId', FBAuth, deleteBoard)
+app.post('/board', postBoard)
+app.delete('/board/:id', deleteBoard)
 
 //categories routes
 app.get('/categories', getCategories)
-app.post('/categories', FBAuth, postCategory)
+app.post('/category', postCategory)
 
 
 //other routes

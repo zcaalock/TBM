@@ -4,11 +4,19 @@ const {db} = require('../util/admin')
 exports.getCategories = (req, res) => {
   cors(req, res, () => {
     db
-      .collection('categories').get()
+      .collection('categories')
+      .orderBy('createdAt')
+      .get()
       .then(data => {
         let categories = [];
         data.forEach(doc => {
-          categories.push(doc.data());
+          categories.push({
+            id: doc.id,
+            title: doc.data().title,
+            boardId: doc.data().boardId,
+            //userHandle: doc.data().userHandle,
+            createdAt: doc.data().createdAt
+          });
         })
         return res.json(categories)
       })
@@ -18,12 +26,15 @@ exports.getCategories = (req, res) => {
 
 exports.postCategory = (req, res) => {
   cors(req, res, () => {
-    const now = Date.now()
+    
+    if (req.body.title.trim() === '') {
+      return res.status(400).json({ body: 'field must not be empty' })
+    }     
+    
     const newCategory = {
-      id: now,
       title: req.body.title,
       boardId: req.body.boardId,
-      userHandle: req.user.handle,
+      //userHandle: req.user.handle,
       createdAt: new Date().toISOString()
     }
     db
@@ -31,7 +42,13 @@ exports.postCategory = (req, res) => {
       .add(newCategory)
       .then(doc => {
         res.json({
-          category: newCategory,
+          category: {
+            title: newBoard.title,
+            //userHandle: newBoard.userHandle
+            id: doc.id,
+            boardId: newCategory.boardId,
+            createdAt: newCategory.createdAt
+          },
           message: `document ${doc.id} created successfuly`
         })
       })

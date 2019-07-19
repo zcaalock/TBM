@@ -37,7 +37,7 @@ class Details extends React.Component {
 
   
   renderDetails() {
-    const id = Number(this.props.pulseId)
+    const id = this.props.pulseId
     const details = _.filter(this.props.details, { pulseId: id })
 
     return details.map(detail => {
