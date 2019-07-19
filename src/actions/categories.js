@@ -27,7 +27,7 @@ export const editCategory = (id, formValues) => async dispatch => {
 }
 
 export const deleteCategory = (id, boardId) => async dispatch => {
-  await categories.delete(`/categories/${id}`)
+  await categories.delete(`/category/${id}`)
   dispatch({type: types.DELETE_CATEGORY, payload: id})
   history.push(`/boards/${boardId}`)
   //history.push('/')

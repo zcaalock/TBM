@@ -99,3 +99,22 @@ exports.patchCategory = (req, res) => {
       console.error(err)
     })
 }
+
+exports.deleteCategory = (req, res) => {
+  const document = db.doc(`/categories/${req.params.id}`)
+  document.get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'Category not found' })
+      } else {
+        return document.delete()
+      }
+    })
+    .then(() => {
+      res.json({ message: 'Category deleted successfuly' })
+    })
+    .catch((err) => {
+      console.error(err)
+      return res.status(500).json({ error: err.code })
+    })
+}
