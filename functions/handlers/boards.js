@@ -47,3 +47,22 @@ exports.postBoard = (req, res) => {
       })
   })
 }
+
+exports.deleteBoard = (req, res) => {
+  const document = db.doc(`/screams/${req.params.id}`)
+  document.get()
+    .then(doc => {
+      if(!doc.exists){
+        return res.status(404).json({error: 'Board not found'})
+      } else {
+        return document.delete()
+      }
+    })
+    .then(()=>{
+      res.json({message: 'Board deleted successfuly'})
+    })
+    .catch((err)=> {
+      console.error(err)
+      return res.status(500).json({error: err.code})
+    })
+}

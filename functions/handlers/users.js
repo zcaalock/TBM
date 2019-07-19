@@ -6,7 +6,7 @@ const firebaseConfig = require('../util/firebaseConfig')
 
 firebase.initializeApp(firebaseConfig)
 
-const { validateSignupData, validateLoginData } = require('../util/validators')
+const { validateSignupData, validateLoginData, reduceUserDetails } = require('../util/validators')
 
 exports.signup = (req, res) => {
   cors(req, res, () => {
@@ -87,21 +87,20 @@ exports.login = (req, res) => {
     })
 }
 
-exports.getUsers = (req, res) => {
-  cors(req, res, () => {
-    db
-      .collection('users').get()
-      .then(data => {
-        let users = [];
-        data.forEach(doc => {
-          users.push(doc.data());
-        })
-        return res.json(users)
-      })
-      .catch(err => console.error(err))
-  })
+//add user details
+exports.addUserDetails = (req, res) => {
+ let userDetails = reduceUserDetails(req.body)
+ db.doc(`/users/${req.user.handle}`).update(userDetails)
+ .then(()=> {
+   return res.json({message: 'Details added successfully'})
+ })
+ .catch(err => {
+   console.error(err)
+   return res.status(500).json({error: err.code})
+ })
 }
 
+//upload profile image
 exports.uploadImage = (req, res) => {
   const BusBoy = require('busboy')
   const path = require('path')
@@ -147,6 +146,23 @@ exports.uploadImage = (req, res) => {
       })
   })
   busboy.end(req.rawBody)
+}
+
+
+
+exports.getUsers = (req, res) => {
+  cors(req, res, () => {
+    db
+      .collection('users').get()
+      .then(data => {
+        let users = [];
+        data.forEach(doc => {
+          users.push(doc.data());
+        })
+        return res.json(users)
+      })
+      .catch(err => console.error(err))
+  })
 }
 
 
