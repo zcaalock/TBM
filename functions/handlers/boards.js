@@ -56,6 +56,45 @@ exports.postBoard = (req, res) => {
   })
 }
 
+exports.patchBoard = (req, res) => {
+  const updateDocument = {
+    title: req.body.title,
+    editedAt: new Date().toISOString()
+  }
+  const boardDocument = db.doc(`/boards/${req.params.id}`)
+  let boardData
+
+  boardDocument.get()
+    .then(doc => {
+      if(doc.exists){
+        boardData = doc.data()
+        boardData.id = doc.id
+        return updateDocument
+      } else {
+        return res.status(404).json({error: 'Board not found'})
+      }
+    })
+    .then(()=>{
+      return boardDocument.update(updateDocument)
+    })
+    .then(() => {
+      res.json({
+        board: {
+          title: updateDocument.title,
+          //userHandle: newBoard.userHandle
+          id: req.params.id,
+          createdAt: boardData.createdAt,
+          editedAt: updateDocument.editedAt
+        },
+        message: `document ${req.params.id} edited successfuly`
+      })
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'something went wrong' })
+      console.error(err)
+    })
+}
+
 exports.deleteBoard = (req, res) => {
   const document = db.doc(`/boards/${req.params.id}`)
   document.get()

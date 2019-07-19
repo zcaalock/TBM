@@ -24,8 +24,8 @@ export const fetchBoard = (id) => async dispatch => {
 }
 
 export const editBoard = (id, formValues) => async dispatch => {
-  const responce = await boards.patch(`/boards/${id}`, formValues)
-  dispatch({type: types.EDIT_BOARD, payload: responce.data})
+  const responce = await boards.patch(`/board/${id}`, formValues)
+  dispatch({type: types.EDIT_BOARD, payload: responce.data.board})
   
 }
 
