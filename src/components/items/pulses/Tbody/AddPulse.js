@@ -34,7 +34,7 @@ class AddPulse extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    this.props.createPulse(formValues, Number(this.props.categoryId),Number(this.props.boardId)) 
+    this.props.createPulse(formValues, this.props.categoryId,this.props.boardId) 
     this.removeEdit()
 
   }

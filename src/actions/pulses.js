@@ -3,16 +3,17 @@ import history from '../history'
 import * as types from './types'
 
 export const createPulse = (formValues, categoryId, boardId) => {
-  return async (dispatch) => {    
-    const responce = await pulses.post('/pulses', {...formValues, categoryId: categoryId, userInitials: '', status: ''})
-    dispatch({type: types.CREATE_PULSE, payload: responce.data})
-    history.push(`/boards/${boardId}/pulses/${responce.data.id}`)
+  return async (dispatch) => {                             //TODO update initials with user handle
+    const responce = await pulses.post('/pulse', {...formValues, categoryId: categoryId, userInitials: 'AO', status: 'In Progress'})
+    dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
+    history.push(`/boards/${boardId}/pulses/${responce.data.pulse}`)
     //console.log('create category: ',responce.data)    
   }
 }
 
 export const fetchPulses = () => async dispatch => {
   const responce = await pulses.get('/pulses')
+  //console.log('fetch pulses: ', responce.data)  
   dispatch({type: types.FETCH_PULSES, payload: responce.data})
 }
 
