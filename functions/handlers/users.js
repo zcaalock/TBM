@@ -153,39 +153,19 @@ exports.uploadImage = (req, res) => {
 exports.getUsers = (req, res) => {
   cors(req, res, () => {
     db
-      .collection('users').get()
-      .then(data => {
-        let users = [];
-        data.forEach(doc => {
-          users.push(doc.data());
-        })
-        return res.json(users)
+    .collection('users')    
+    .get()
+    .then(data => {
+      let users = [];
+      data.forEach((doc) => {
+        users.push({
+          id: doc.id,
+          title: doc.data().title,
+          userInitials: doc.data().userInitials          
+        });
       })
-      .catch(err => console.error(err))
+      return res.json(users)
+    })
+    .catch(err => console.error(err))
   })
 }
-
-
-//trash 
-//post users
-
-// app.post('/users', (req, res) => {
-//   cors(req, res, () => {
-//     const newUser = {
-//       userInitials: req.body.userInitials,
-//       title: req.body.title,
-//       createdAt: admin.firestore.Timestamp.fromDate(new Date())
-//     }
-
-//     db
-//       .collection('users')
-//       .add(newUser)
-//       .then(doc => {
-//         res.json({ message: `document ${doc.id} created successfuly` })
-//       })
-//       .catch(err => {
-//         res.status(500).json({ error: 'something went wrong' })
-//         console.error(err)
-//       })
-//   })
-// })

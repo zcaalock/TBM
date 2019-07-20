@@ -13,7 +13,7 @@ exports.getBoards = (req, res) => {
           boards.push({
             id: doc.id,
             title: doc.data().title,
-            
+
             //userHandle: doc.data().userHandle,
             createdAt: doc.data().createdAt,
             editedAt: doc.data().editedAt
@@ -34,6 +34,7 @@ exports.postBoard = (req, res) => {
 
     const newBoard = {
       title: req.body.title,
+
       //userHandle: req.user.handle,
       createdAt: new Date().toISOString()
     }
