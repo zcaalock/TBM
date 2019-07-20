@@ -57,7 +57,7 @@ exports.signup = (req, res) => {
         console.error(err)
         if (err.code === 'auth/email-already-in-use') {
           return res.status(400).json({ email: 'This email is already in use' })
-        } else { return res.status(500).json({ error: err.code }) }
+        } else { return res.status(500).json({ general: 'Something went wrong please try again' }) }
       })
   })
 }
@@ -81,23 +81,23 @@ exports.login = (req, res) => {
     })
     .catch((err) => {
       console.log(err)
-      if (err.code === 'auth/wrong-password') {
-        return res.status(403).json({ general: 'Wrong credentials, please try again' })
-      } else { return res.status(500).json({ error: err.code }) }
+      return res
+        .status(403)
+        .json({ general: 'Wrong credentials, please try again' })
     })
 }
 
 //add user details
 exports.addUserDetails = (req, res) => {
- let userDetails = reduceUserDetails(req.body)
- db.doc(`/users/${req.user.handle}`).update(userDetails)
- .then(()=> {
-   return res.json({message: 'Details added successfully'})
- })
- .catch(err => {
-   console.error(err)
-   return res.status(500).json({error: err.code})
- })
+  let userDetails = reduceUserDetails(req.body)
+  db.doc(`/users/${req.user.handle}`).update(userDetails)
+    .then(() => {
+      return res.json({ message: 'Details added successfully' })
+    })
+    .catch(err => {
+      console.error(err)
+      return res.status(500).json({ error: err.code })
+    })
 }
 
 //upload profile image
@@ -113,8 +113,8 @@ exports.uploadImage = (req, res) => {
   let imageToBeUploaded = {}
 
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    if(mimetype !== 'image/jpeg' && mimetype !== 'image/png'){
-      return res.status(400).json({error: 'Wrong file type'})
+    if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+      return res.status(400).json({ error: 'Wrong file type' })
     }
     //my.image.png
     const imageExtension = filename.split('.')[filename.split('.').length - 1]
@@ -153,19 +153,19 @@ exports.uploadImage = (req, res) => {
 exports.getUsers = (req, res) => {
   cors(req, res, () => {
     db
-    .collection('users')    
-    .get()
-    .then(data => {
-      let users = [];
-      data.forEach((doc) => {
-        users.push({
-          id: doc.id,
-          title: doc.data().title,
-          userInitials: doc.data().userInitials          
-        });
+      .collection('users')
+      .get()
+      .then(data => {
+        let users = [];
+        data.forEach((doc) => {
+          users.push({
+            id: doc.id,
+            title: doc.data().title,
+            userInitials: doc.data().userInitials
+          });
+        })
+        return res.json(users)
       })
-      return res.json(users)
-    })
-    .catch(err => console.error(err))
+      .catch(err => console.error(err))
   })
 }
