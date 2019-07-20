@@ -9,6 +9,13 @@ const isEmail = (email) => {
   else return false
 }
 
+//for update routes
+exports.valueCheck = (value)=>{
+  if(updateDocument[value] )
+  return updateDocument[value]
+  else return pulseData[value]
+}
+
 exports.validateSignupData = (data) => {
   let errors = {}
   

@@ -56,6 +56,7 @@ class Tbody extends React.Component {
   }
 
   render() {
+    //onsole.log('pulses state:', this.props.pulses)
     return (
       <tbody>
         {this.renderPulses()}
