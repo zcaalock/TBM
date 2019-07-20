@@ -93,12 +93,12 @@ exports.patchPulse = (req, res) => {
         res.json({
           pulse: {
             id: pulseData.id,
-            title: valueCheck("title"),
-            userInitials: valueCheck("userInitials"), //TODO update with user handle
-            status: valueCheck("status"),
+            title: valueCheck(updateDocument, pulseData,"title"),
+            userInitials: valueCheck(updateDocument, pulseData,"userInitials"), //TODO update with user handle
+            status: valueCheck(updateDocument, pulseData,"status"),
             categoryId: pulseData.categoryId,
             createdAt: pulseData.createdAt,
-            editedAt: valueCheck("editedAt")
+            editedAt: valueCheck(updateDocument, pulseData,"editedAt")
           },
           message: `Pulse ${pulseData.id} edited successfuly`
         })

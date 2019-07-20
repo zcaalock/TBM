@@ -6,7 +6,7 @@ const FBAuth = require('./util/fbAuth')
 const { getBoards, postBoard, deleteBoard, patchBoard } = require('./handlers/boards')
 const { getStatus } = require('./handlers/status')
 const { getCategories, postCategory, patchCategory, deleteCategory } = require('./handlers/categories')
-const { getDetails } = require('./handlers/details')
+const { getDetails, postDetail, patchDetail, deleteDetail } = require('./handlers/details')
 const { getPulses, postPulse, deletePulse, patchPulse } = require('./handlers/pulses')
 const { signup, login, getUsers, uploadImage, addUserDetails } = require('./handlers/users')
 
@@ -28,8 +28,13 @@ app.post('/pulse', postPulse)
 app.delete('/pulse/:id', deletePulse)
 app.patch('/pulse/:id', patchPulse)
 
-//other routes
+//details routes
 app.get('/details', getDetails)
+app.post('/detail', postDetail)
+app.delete('/detail/:id', deleteDetail)
+app.patch('/detail/:id', patchDetail)
+
+//other routes
 app.get('/status', getStatus)
 
 

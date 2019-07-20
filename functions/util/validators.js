@@ -10,10 +10,10 @@ const isEmail = (email) => {
 }
 
 //for update routes
-exports.valueCheck = (value)=>{
-  if(updateDocument[value] )
-  return updateDocument[value]
-  else return pulseData[value]
+exports.valueCheck = (newDoc,oldDoc,value)=>{
+  if(newDoc[value] )
+  return newDoc[value]
+  else return oldDoc[value]
 }
 
 exports.validateSignupData = (data) => {
