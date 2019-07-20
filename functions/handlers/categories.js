@@ -8,9 +8,9 @@ exports.getCategories = (req, res) => {
       .orderBy('createdAt')
       .get()
       .then(data => {
-        let categories = [];
+        let category = [];
         data.forEach((doc) => {
-          categories.push({
+          category.push({
             id: doc.id,
             title: doc.data().title,
             boardId: doc.data().boardId,
@@ -19,7 +19,7 @@ exports.getCategories = (req, res) => {
             editedAt: doc.data().editedAt
           });
         })
-        return res.json(categories)
+        return res.json(category)
       })
       .catch(err => console.error(err))
   })
@@ -44,7 +44,7 @@ exports.postCategory = (req, res) => {
       .then(doc => {
         res.json({
           category: {
-            title: newBoard.title,
+            title: newCategory.title,
             //userHandle: newBoard.userHandle
             id: doc.id,
             boardId: newCategory.boardId,
