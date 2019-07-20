@@ -16,7 +16,7 @@ class Tbody extends React.Component {
   }  
 
   goLink(id) {
-    history.push(`/boards/${this.props.appState.id}/pulses/${Number(id)}`)
+    history.push(`/boards/${this.props.appState.id}/pulses/${id}`)
     //console.log('select', id)
   }
 
@@ -32,7 +32,7 @@ class Tbody extends React.Component {
   }
 
   renderPulses() {
-    const id = Number(this.props.categoryId)
+    const id = this.props.categoryId
     const pulses = _.filter(this.props.pulses, { categoryId: id })
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)

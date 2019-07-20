@@ -13,7 +13,7 @@ export const createBoard = (formValues) => {
 
 export const fetchBoards = () => async dispatch => {
   const responce = await boards.get('/boards')
-  console.log('fetch boards: ', responce.data)  
+  //console.log('fetch boards: ', responce.data)  
   dispatch({type: types.FETCH_BOARDS, payload: responce.data})
   
 }

@@ -13,7 +13,7 @@ class DeletePulse extends React.Component {
   }
 
   renderDelete(){    
-    const details = _.filter(this.props.details, {pulseId: Number(this.props.pulseId)})    
+    const details = _.filter(this.props.details, {pulseId: this.props.pulseId})    
     //console.log('details: ', this.props.details)
     if (details.length>0){
       return (
@@ -27,7 +27,7 @@ class DeletePulse extends React.Component {
       )
     } return (
       <div
-        onClick={() => this.props.deletePulse(Number(this.props.pulseId), this.props.boardId)}
+        onClick={() => this.props.deletePulse(this.props.pulseId, this.props.boardId)}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"

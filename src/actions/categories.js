@@ -2,14 +2,12 @@ import history from '../history'
 import categories from '../apis/server'
 import * as types from './types'
 
-
 export const createCategory = (formValues, id) => {
-  console.log('board id:', id)
+  
   return async (dispatch) => {    
     const responce = await categories.post('/category', {...formValues, boardId: id})
-    dispatch({type: types.CREATE_CATEGORY, payload: responce.data.category})
-    //history.push(`/boards/${id}`)
-    //console.log('create category: ',id)    
+    await console.log('responce category: ',responce.data.category)
+    dispatch({type: types.CREATE_CATEGORY, payload: responce.data.category})     
   }
 }
 
