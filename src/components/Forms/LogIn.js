@@ -1,52 +1,103 @@
 import React from 'react'
-import _ from 'lodash'
 import { connect } from 'react-redux'
-import {fetchUsers} from '../../actions/users'
 import { Button, Form, Message } from 'semantic-ui-react'
+import { loginUser } from '../../actions/users'
 
 class Login extends React.Component {
-  state={text: ""}
-  componentDidMount(){
-    this.props.fetchUsers()
-    
-  }
-
-  onSubmit(users){
-    const initials =_.filter(users, {userInitials: this.state.text})    
-    if (initials.length>0) {
-      console.log('pass', this.state)
-      return this.props.goLing()
-    } else {
-      this.setState({error: true})
-      console.log('wrong', this.state.error)
-    }
-    
-  }
-
-  handleMessage(){    
-    if (this.state.error===true)  {
-      console.log('sdfsdf')
-      return <Message error header='Wrong Name' content="Please enter valid Initials" />
+  constructor() {
+    super()
+    this.state = {
+      email: '',
+      password: '',
+      errors: {}
     }
   }
 
-  render(){
-    //console.log('users:', this.props.users)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }  
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    
+    this.props.loginUser(userData, this.props.history);
+    
+  };
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  handleCredentialError(){
+    if(this.state.errors.general) 
+     return <Message
+     error
+     header='Wrong Credentials'
+     content='Wrong email or password please try again'
+   />
+  }
+
+    
+  render() {
+    //console.log('login state: ', this.state)
+    const { errors } = this.state;
+    
     return (
-    <Form error onSubmit={()=>this.onSubmit(this.props.users)} >
-    <Form.Input onChange={(e)=>this.setState({text: e.target.value, error:false})}  label='Enter initials' placeholder='Your initials' />
-    {this.handleMessage()}
-    <Button>Submit</Button>
-  </Form>
+      <div>
+        <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">
+          <div className='item leftMenu-main'><h3>Task Manager</h3></div>
+        </div>
+        <div className='login'>
+          <Form error onSubmit={this.handleSubmit} >
+            <Form.Input
+              id="email"
+              name="email"
+              type="email"
+              label="Email"
+              //helperText={errors.email}
+              //error={errors.email ? true : false}
+              error={errors.email ? errors.email : false}
+              fluid
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              //helperText={errors.password}
+              error={errors.password ? errors.password : false}
+              fluid
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            {this.handleCredentialError()}
+            <Button
+              type="submit"              
+            >
+              Login
+        </Button>
+          </Form>
+        </div>
+      </div>
+
     )
   }
 }
-  
+
 const mapStateToProps = (state) => {
   return {
-    users: Object.values(state.users)
-
+    user: state.user,
+    UI: state.UI
   }
 }
 
-export default connect(mapStateToProps,{fetchUsers}) (Login)
+export default connect(mapStateToProps, { loginUser })(Login)

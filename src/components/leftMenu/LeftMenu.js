@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import history from '../../history'
 import { fetchBoards, createBoard } from '../../actions/boards'
+import {logoutUser} from '../../actions/users'
 import { editState } from '../../actions/appState'
 import AddBoard from './AddBoard'
 
@@ -74,7 +75,7 @@ class Boards extends React.Component {
           //data-position="bottom center"
           // data-tooltip="Go to main page" 
           style={{ cursor: "pointer" }}
-          onClick={() => { this.goLink(); this.props.editState('', 'id') }}
+          onClick={() => { this.props.logoutUser(); this.props.editState('', 'id') }}
           className='item leftMenu-main'>{this.renderLogOut()}</div>
 
         <div className="ui secondary text menu">
@@ -101,4 +102,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBoards, createBoard, editState })(Boards)
+export default connect(mapStateToProps, { fetchBoards, createBoard, editState, logoutUser })(Boards)

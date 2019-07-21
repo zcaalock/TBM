@@ -8,6 +8,7 @@ import pulsesReducers from './pulsesReducers'
 import detailsReducers from './detailsReducers'
 import usersReducers from './usersReducers'
 import statusReducers from './statusReducers'
+import uiReducers from './uiReducers';
 
 
 export default combineReducers({
@@ -15,9 +16,10 @@ export default combineReducers({
   categories: categoriesReducers,
   pulses: pulsesReducers,
   details: detailsReducers,
-  users: usersReducers,
+  user: usersReducers,
   appState: appStateReducers,
   status: statusReducers,
+  UI: uiReducers,
   form: formReducer
   
 })
