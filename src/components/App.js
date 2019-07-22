@@ -7,7 +7,7 @@ import ItemsMain from './items/ItemsMain'
 import Details from './rightMenu/Details'
 import LandingPage from './middle/LandingPage'
 
-import signup from './Forms/Signup'
+import Signup from './Forms/Signup'
 import Login from './Forms/LogIn';
 import unAuth from './middle/unAuth'
 
@@ -20,7 +20,7 @@ const App = () => {
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/unAuth" component={unAuth} />
             <Route exact path="/login" component={Login}/>
-            <Route exact path="/signup" component={signup} />
+            <Route exact path="/signup" component={Signup} />
             <Route path="/boards" exact component={(props)=>(<><LeftMenu {...props}/> <Boards {...props}/></>)} />
             <Route path="/boards/:id" component={(props)=>(<><LeftMenu {...props}/> <ItemsMain {...props}/></>)} />
             <Route path="/boards/:id/pulses/:id" component={Details} />

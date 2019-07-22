@@ -17,7 +17,7 @@ class LandingPage extends React.Component {
       </div>
       <div className='login' style={{textAlign: 'center'}}>
         <Button onClick={()=>this.goLink('login')}>Login</Button>
-        <Button onClick={()=>this.goLink('signin')}>Sign in</Button>
+        <Button onClick={()=>this.goLink('signup')}>Sign up</Button>
         </div>  
       </div>
     )
