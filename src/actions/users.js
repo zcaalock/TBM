@@ -11,7 +11,7 @@ export const loginUser = (userData, history) => async (dispatch) => {
       setAuthorizationHeader(res.data.token);      
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
-      history.push('/boards');
+      history.push('/mypulses');
     })
     .catch((err) => {
       dispatch({
@@ -20,6 +20,7 @@ export const loginUser = (userData, history) => async (dispatch) => {
       });
     });
 };
+
 
 export const signupUser = (newUserData, history) => (dispatch) => {
   
@@ -30,7 +31,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       setAuthorizationHeader(res.data.token);      
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
-      history.push('/boards');
+      history.push('/mypulses');
     })
     .catch((err) => {
       dispatch({

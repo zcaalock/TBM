@@ -9,7 +9,7 @@ export const EDIT_BOARD = 'EDIT_BOARD'
 export const EDIT_STATE = 'EDIT_STATE'
 
 //status
-export const FETCH_STATUS = 'FETCH_STATUS'
+
 
 
 // categories
@@ -41,6 +41,10 @@ export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
 
 // settings
 export const FETCH_LEAD = 'FETCH_LEAD'
+export const CREATE_LEAD = 'CREATE_LEAD'
+export const EDIT_LEAD = 'EDIT_LEAD'
+export const DELETE_LEAD = 'DELETE_LEAD'
+export const FETCH_STATUS = 'FETCH_STATUS'
 
 //UI
 export const SET_ERRORS = 'SET_ERRORS';

@@ -4,7 +4,7 @@ import history from '../../history'
 
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
-import LogOut from './LogOut'
+import SettingsIcons from './SettingsIcons'
 
 class Boards extends React.Component {
 
@@ -15,19 +15,24 @@ class Boards extends React.Component {
     }
   }
   componentDidUpdate() {
-    this.handleAuth()
+    //this.handleAuth()
   }
 
   render() {
     return (
       <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
-        <LogOut />
+        <div className='item leftMenu-main' style={{textAlign: 'center'}}>
+          <h3>Task Manager</h3>        
+      </div>
+      
+          <SettingsIcons/>        
+      
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
             <div
               className="menu" style={{ width: '100%' }}>
               <div
-                onClick={() => history.push('/boards')}
+                onClick={() => history.push('/mypulses')}
                 className="header item"
                 style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>
                 My tasks

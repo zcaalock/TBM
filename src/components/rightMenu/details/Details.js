@@ -34,10 +34,12 @@ class Details extends React.Component {
     return {}
   }
 
-  handleOnClick(id, bool){
-    this.props.fetchDetails()
-    console.log('detail check: ', bool)
+  handleOnClick(id, bool){    
     this.props.editDetail(id, { check: bool })
+      .then(()=>{
+        this.props.fetchDetails()
+      })
+
   }
   
   renderDetails() {
