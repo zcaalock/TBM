@@ -3,9 +3,7 @@ import * as types from './types'
 
 
 export const fetchLead = () => async dispatch => {
-  const responce = await axios.get('/lead')
-  console.log('lead: ', responce.data)
-  //console.log(responce.data)
+  const responce = await axios.get('/lead')  
   dispatch({type: types.FETCH_LEAD, payload: responce.data})
   
 }

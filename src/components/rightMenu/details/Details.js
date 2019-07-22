@@ -20,6 +20,11 @@ class Details extends React.Component {
 
   componentDidMount() {
     this.props.fetchDetails()
+    
+  }
+
+  setBool(bool){
+    this.setState({check: bool})
   }
 
   renderCrossOut(bool) {
@@ -28,26 +33,26 @@ class Details extends React.Component {
     }
     return {}
   }
-  renderCheckBox(bool) {
-    if (bool === true) {
-      return true
-    }
-    return false
-  }
 
+  handleOnClick(id, bool){
+    this.props.fetchDetails()
+    console.log('detail check: ', bool)
+    this.props.editDetail(id, { check: bool })
+  }
   
   renderDetails() {
     const id = this.props.pulseId
     const details = _.filter(this.props.details, { pulseId: id })
 
     return details.map(detail => {
+      
       return (
         <div key={detail.id} className='item'>
           <div
             style={{ display: 'inline-block' }}>
             <Checkbox
-              onClick={() => this.props.editDetail(detail.id, { check: !detail.check })}
-              defaultChecked={this.renderCheckBox(detail.check)}
+              onClick={() => this.handleOnClick(detail.id, !detail.check)}
+              defaultChecked={detail.check}
               style={{ marginBottom: '-4px' }} />
           </div>
           <div style={{ display: 'inline-block', paddingLeft: '10px', cursor: 'default' }}>

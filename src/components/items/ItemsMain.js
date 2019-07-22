@@ -1,17 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchBoard, deleteBoard, editBoard } from '../../actions/boards'
+import { deleteBoard, editBoard } from '../../actions/boards'
 import { editState } from '../../actions/appState'
 
 import Header from './Header'
 import Body from './Body'
 
 class ItemsMain extends React.Component {
-  componentDidMount() {
-    this.props.fetchBoard(this.props.match.params.id)
-
-
-  }
+  
 
   renderHeader() {
     if (!this.props.board) {
@@ -45,4 +41,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBoard, deleteBoard, editBoard, editState })(ItemsMain)
+export default connect(mapStateToProps, { deleteBoard, editBoard, editState })(ItemsMain)

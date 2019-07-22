@@ -2,14 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
 import Body from './Body'
-import { fetchPulse } from '../../actions/pulses'
+
 
 
 class Details extends React.Component {
-
-  componentDidMount() {
-    this.props.fetchPulse(this.props.match.params.id)
-  }
+  
 
   render() {
     if (!this.props.pulse) {
@@ -28,4 +25,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPulse })(Details)
+export default connect(mapStateToProps, {  })(Details)

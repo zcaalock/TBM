@@ -5,7 +5,7 @@ import Body from './Boards/Body'
 class Boards extends React.Component {
   render(){
     return(
-      <div className="article">
+      <div className="article" style={{width: "calc(100% - 270px)"}}>
         <Head/>
         <Body/>
       </div>

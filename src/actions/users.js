@@ -4,12 +4,11 @@ import history from '../history'
 import * as types from './types'
 
 export const loginUser = (userData, history) => async (dispatch) => {
-  console.log('login acion: ', userData)
+  
   axios
     .post('/login', userData)
     .then((res) => {
-      setAuthorizationHeader(res.data.token);
-      //console.log('token: ', res.data.token)
+      setAuthorizationHeader(res.data.token);      
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
       history.push('/boards');
@@ -48,13 +47,11 @@ export const logoutUser = () => (dispatch) => {
   history.push('/')
 };
 
-export const getUserData = () => (dispatch) => {
-  console.log('getUserData')
+export const getUserData = () => (dispatch) => {  
   dispatch({ type: types.LOADING_USER });
   axios
     .get('/user')
-    .then((res) => {
-      console.log('getUserData: ', res.data)
+    .then((res) => {      
       dispatch({
         type: types.SET_USER,
         payload: res.data
@@ -86,6 +83,5 @@ export const editUserDetails = (userDetails) => (dispatch) => {
 const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem('FBIdToken', FBIdToken);
-  axios.defaults.headers.common['Authorization'] = FBIdToken;
-  //console.log('local storage:', localStorage)
+  axios.defaults.headers.common['Authorization'] = FBIdToken;  
 };
