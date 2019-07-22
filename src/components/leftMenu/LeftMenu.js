@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import history from '../../history'
 import { fetchBoards, createBoard } from '../../actions/boards'
-import {logoutUser} from '../../actions/users'
+import { logoutUser } from '../../actions/users'
 import { editState } from '../../actions/appState'
 import AddBoard from './AddBoard'
 
@@ -13,6 +13,10 @@ class Boards extends React.Component {
 
   componentDidMount() {
     this.props.fetchBoards()
+  }
+
+  componentDidUpdate(){
+    this.handleAuth()
   }
 
   goLink() {
@@ -26,6 +30,13 @@ class Boards extends React.Component {
 
   handleHover() {
     this.setState({ isHovering: !this.state.isHovering })
+  }
+
+  handleAuth() {    
+    if (this.props.user.loading === false) {      
+      if (this.props.user.authenticated === false)        
+        history.push('/unAuth')
+    }
   }
 
   renderLogOut() {
@@ -42,11 +53,12 @@ class Boards extends React.Component {
   }
 
   renderBoards() {
+    //this.handleAuth()
     if (this.props.boards.length === 0) {
       return (
-        <div className="ui active inline loader">          
+        <div className="ui active inline loader">
         </div>
-        
+
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
@@ -63,11 +75,8 @@ class Boards extends React.Component {
     })
   }
 
-  render() {    
-    
-
+  render() {
     return (
-
       <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
         <div
           onMouseEnter={() => this.handleHover()}
@@ -76,8 +85,8 @@ class Boards extends React.Component {
           // data-tooltip="Go to main page" 
           style={{ cursor: "pointer" }}
           onClick={() => { this.props.logoutUser(); this.props.editState('', 'id') }}
-          className='item leftMenu-main'>{this.renderLogOut()}</div>
-
+          className='item leftMenu-main'>{this.renderLogOut()}
+        </div>
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
             <div
@@ -98,7 +107,8 @@ const mapStateToProps = (state) => {
 
   return {
     boards: Object.values(state.boards),
-    appState: state.appState
+    appState: state.appState,
+    user: state.user
   }
 }
 
