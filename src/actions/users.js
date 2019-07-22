@@ -3,14 +3,6 @@ import axios from 'axios'
 import history from '../history'
 import * as types from './types'
 
-export const fetchUsers = () => async dispatch => {
-  const responce = await axios.get('/users')
-  //console.log(responce)
-  //console.log(responce.data)
-  dispatch({type: types.FETCH_USERS, payload: responce.data})
-  
-}
-
 export const loginUser = (userData, history) => async (dispatch) => {
   console.log('login acion: ', userData)
   axios

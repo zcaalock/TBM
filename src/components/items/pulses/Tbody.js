@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import history from '../../../history'
-import { fetchPulses } from '../../../actions/pulses'
+
 import {fetchDetails} from '../../../actions/details'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
@@ -11,7 +11,7 @@ import ProgressBar from '../../Forms/ProgressBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
-    this.props.fetchPulses()
+    
     this.props.fetchDetails()
   }  
 
@@ -75,4 +75,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPulses, fetchDetails })(Tbody)
+export default connect(mapStateToProps, { fetchDetails })(Tbody)

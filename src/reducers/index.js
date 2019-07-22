@@ -7,8 +7,12 @@ import categoriesReducers from './categoriesReducers'
 import pulsesReducers from './pulsesReducers'
 import detailsReducers from './detailsReducers'
 import usersReducers from './usersReducers'
-import statusReducers from './statusReducers'
+
 import uiReducers from './uiReducers';
+
+//settings
+import statusReducers from './settings/statusReducers'
+import leadReducers from './settings/leadReducers'
 
 
 export default combineReducers({
@@ -20,6 +24,6 @@ export default combineReducers({
   appState: appStateReducers,
   status: statusReducers,
   UI: uiReducers,
-  form: formReducer
-  
+  form: formReducer,
+  lead: leadReducers,  
 })
