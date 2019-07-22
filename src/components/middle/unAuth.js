@@ -18,7 +18,7 @@ class unAuth extends React.Component {
         <div className='login' style={{ textAlign: 'center' }}>
           <Message negative header='Unauthorized' content='You are not authorized to view this page, please login or sign up' />
           <Button onClick={() => this.goLink('login')}>Login</Button>
-          <Button onClick={() => this.goLink('signin')}>Sign in</Button>
+          <Button onClick={() => this.goLink('signin')}>Sign Up</Button>
         </div>
       </div>
     )
