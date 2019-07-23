@@ -32,7 +32,7 @@ class Boards extends React.Component {
             <div
               className="menu" style={{ width: '100%' }}>
               <div
-                onClick={() => history.push('/mypulses')}
+                onClick={() => history.push(`/mypulses/${this.props.user.userInitials}`)}
                 className="header item"
                 style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>
                 My tasks

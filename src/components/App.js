@@ -24,9 +24,10 @@ const App = () => {
             <Route exact path="/unAuth" component={unAuth} />
             <Route exact path="/login" component={Login}/>
             <Route exact path="/signup" component={Signup} />
-            <Route path="/mypulses" exact component={(props)=>(<><LeftMenu {...props}/> <MyPulses {...props}/></>)} />
+            <Route path="/mypulses/:uinit" component={(props)=>(<><LeftMenu {...props}/> <MyPulses {...props}/></>)} />
             <Route path="/settings" exact component={(props)=>(<><LeftMenu {...props}/> <Settings {...props}/></>)} />
             <Route path="/boards/:id" component={(props)=>(<><LeftMenu {...props}/> <Boards {...props}/></>)} />
+            <Route path='/mypulses/:uinit/pulses/:id' component={Details} />
             <Route path="/boards/:id/pulses/:id" component={Details} />
           </Route>
         </div>

@@ -4,31 +4,42 @@ import history from '../history'
 import * as types from './types'
 
 export const loginUser = (userData, history) => async (dispatch) => {
-  
+
   axios
     .post('/login', userData)
     .then((res) => {
-      setAuthorizationHeader(res.data.token);      
+      setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
-      history.push('/mypulses');
+
     })
     .catch((err) => {
       dispatch({
         type: types.SET_ERRORS,
         payload: err.response.data
       });
-    });
+    })
+    .then(()=>{
+      axios
+    .get('/user')
+    .then((res) => {
+      //console.log('res',res.data)
+      history.push(`/mypulses/${res.data.credentials.userInitials}`);
+    })
+    .catch((err) => console.log(err));
+  
+    })
+  
 };
 
 
 export const signupUser = (newUserData, history) => (dispatch) => {
-  
+
   dispatch({ type: types.LOADING_UI });
   axios
     .post('/signup', newUserData)
     .then((res) => {
-      setAuthorizationHeader(res.data.token);      
+      setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
       history.push('/mypulses');
@@ -48,11 +59,11 @@ export const logoutUser = () => (dispatch) => {
   history.push('/')
 };
 
-export const getUserData = () => (dispatch) => {  
+export const getUserData = () => (dispatch) => {
   dispatch({ type: types.LOADING_USER });
   axios
     .get('/user')
-    .then((res) => {      
+    .then((res) => {
       dispatch({
         type: types.SET_USER,
         payload: res.data
@@ -78,11 +89,12 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));};
+    .catch((err) => console.log(err));
+};
 
 
 const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem('FBIdToken', FBIdToken);
-  axios.defaults.headers.common['Authorization'] = FBIdToken;  
+  axios.defaults.headers.common['Authorization'] = FBIdToken;
 };

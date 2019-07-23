@@ -4,10 +4,11 @@ import Body from './MyPulses/Body'
 
 class MyPulses extends React.Component {
   render(){
+    //console.log('params: ', this.props.match.params.uinit)
     return(
-      <div className="article" style={{width: "calc(100% - 270px)"}}>
+      <div className="article" style={{width: "calc(80% - 270px)"}}>
         <Head/>
-        <Body/>
+        <Body params={this.props.match.params}/>
       </div>
     )
   }

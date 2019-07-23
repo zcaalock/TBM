@@ -5,19 +5,23 @@ import history from '../../../../history'
 
 import {fetchDetails} from '../../../../actions/details'
 import {fetchPulses} from '../../../../actions/pulses'
-import PulseName from './Tbody/PulseName'
-import LeadPerson from './Tbody/LeadPerson'
-import Status from './Tbody/Status'
+import {fetchCategories} from '../../../../actions/categories'
+import {fetchBoards} from '../../../../actions/boards'
+import PulseName from '../../Boards/pulses/Tbody/PulseName'
+import LeadPerson from '../../Boards/pulses/Tbody/LeadPerson'
+import Status from '../../Boards/pulses/Tbody/Status'
 import ProgressBar from '../../../Forms/ProgressBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
+    this.props.fetchBoards()
     this.props.fetchPulses()
     this.props.fetchDetails()
+    this.props.fetchCategories()
   }  
 
-  goLink(id) {
-    history.push(`/mypulses/${this.props.appState.id}/pulses/${id}`)
+  goLink(id, userInitials) {
+    history.push(`/mypulses/${userInitials}/pulses/${id}`)
     //console.log('select', id)
   }
 
@@ -31,18 +35,30 @@ class Tbody extends React.Component {
       return <ProgressBar value={value*100} />
     } 
   }
+  
 
-  renderPulses() {
-    const userInitials = this.props.user.userInitials
-    const pulses = _.filter(this.props.pulses, { categoryId: id })
+  renderPulses() { 
+    //console.log('params: ', this.props.params.uinit)   
+    const initials = this.props.params.uinit
+    const pulses = _.filter(this.props.pulses, { userInitials: initials})
+    if(this.props.boards.length>0 && this.props.pulses.length >0 && this.props.categories.length > 0)
     return pulses.map(pulse => {
-      //console.log('pulse: ', pulse)
+      //console.log('pulse: ', pulse.categoryId)
+      let category = _.find(this.props.categories, {id: pulse.categoryId})
+      let board = _.find(this.props.boards, {id: category.boardId})
+      //console.log('sdfsf: ',category.title)
       return (
-        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id)}>
+        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id, initials)}>
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
-          <td data-label="LeadPerson" style={{ overflow: "visible", width: '10%' }}>
+          <td>            
+            {board.title}
+          </td>
+          <td>
+            {category.title}
+          </td>
+          <td data-label="LeadPerson" style={{ overflow: "visible", width: '11%' }}>
             <LeadPerson pulse={pulse} />
           </td>
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
@@ -57,7 +73,7 @@ class Tbody extends React.Component {
   }
 
   render() {
-    //onsole.log('pulses state:', this.props.pulses)
+    //console.log('pulses state:', this.props.pulses)
     return (
       <tbody>
         {this.renderPulses()}
@@ -69,11 +85,14 @@ class Tbody extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
+    user: state.user.credentials,
     pulses: Object.values(state.pulses),
+    boards: Object.values(state.boards),
     details: Object.values(state.details),
+    categories: Object.values(state.categories),
     appState: state.appState
 
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails, fetchPulses })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards })(Tbody)
