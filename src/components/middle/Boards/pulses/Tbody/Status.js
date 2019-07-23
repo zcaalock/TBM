@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchStatus } from '../../../../actions/status'
-import { editPulse } from '../../../../actions/pulses'
-import DropDownMenu from '../../../Forms/DropDownMenu'
+import { fetchStatus } from '../../../../../actions/status'
+import { editPulse } from '../../../../../actions/pulses'
+import DropDownMenu from '../../../../Forms/DropDownMenu'
 
 class UserName extends React.Component {
   componentDidMount() {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Header from '../../items/categories/Header'
+import Header from '../categories/Header'
 import Thead from './Thead'
 import Tbody from './Tbody'
 import AddPulse from './Tbody/AddPulse'

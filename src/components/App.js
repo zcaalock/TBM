@@ -3,14 +3,14 @@ import { Router, Route } from 'react-router-dom'
 import LeftMenu from './leftMenu/LeftMenu'
 
 import history from '../history'
-import ItemsMain from './items/ItemsMain'
+import Boards from './middle/Boards'
 import Details from './rightMenu/Details'
 import LandingPage from './middle/LandingPage'
 
 import MyPulses from './middle/MyPulses'
 
 import Signup from './Forms/Signup'
-import Login from './Forms/Login';
+import Login from './Forms/Login'
 import Settings from './middle/Settings'
 import unAuth from './middle/unAuth'
 
@@ -26,7 +26,7 @@ const App = () => {
             <Route exact path="/signup" component={Signup} />
             <Route path="/mypulses" exact component={(props)=>(<><LeftMenu {...props}/> <MyPulses {...props}/></>)} />
             <Route path="/settings" exact component={(props)=>(<><LeftMenu {...props}/> <Settings {...props}/></>)} />
-            <Route path="/boards/:id" component={(props)=>(<><LeftMenu {...props}/> <ItemsMain {...props}/></>)} />
+            <Route path="/boards/:id" component={(props)=>(<><LeftMenu {...props}/> <Boards {...props}/></>)} />
             <Route path="/boards/:id/pulses/:id" component={Details} />
           </Route>
         </div>

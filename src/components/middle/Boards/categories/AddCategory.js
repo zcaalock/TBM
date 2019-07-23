@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCategory } from '../../../actions/categories'
-import SingleInput from '../../Forms/SingleInput'
+import { createCategory } from '../../../../actions/categories'
+import SingleInput from '../../../Forms/SingleInput'
 
 class AddCategory extends React.Component {
   state = { isHovering: false, itemEditable: false }

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { deleteBoard, editBoard } from '../../actions/boards'
 import { editState } from '../../actions/appState'
 
-import Header from './Header'
-import Body from './Body'
+import Header from './Boards/Header'
+import Body from './Boards/Body'
 
 class ItemsMain extends React.Component {
   

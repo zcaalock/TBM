@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import {deletePulse} from '../../../../actions/pulses'
-import {fetchDetails} from '../../../../actions/details'
+import {deletePulse} from '../../../../../actions/pulses'
+import {fetchDetails} from '../../../../../actions/details'
 
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { editPulse} from '../../../../actions/pulses'
-import SingleInput from '../../../Forms/SingleInput'
+import { editPulse} from '../../../../../actions/pulses'
+import SingleInput from '../../../../Forms/SingleInput'
 
 class EditPulseName extends React.Component {    
 

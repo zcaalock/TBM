@@ -1,12 +1,12 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { fetchCategories } from '../../../actions/categories'
-import { fetchPulses } from '../../../actions/pulses'
+import { fetchCategories } from '../../../../actions/categories'
+import { fetchPulses } from '../../../../actions/pulses'
 
 import Header from './Header'
 import Table from '../pulses/Table'
-import ProgressBar from '../../Forms/ProgressBar'
+import ProgressBar from '../../../Forms/ProgressBar'
 
 class Categories extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { editBoard } from '../../actions/boards'
-import SingleInput from '../Forms/SingleInput'
+import { editBoard } from '../../../../actions/boards'
+import SingleInput from '../../../Forms/SingleInput'
 
 class EditBoardName extends React.Component {
     

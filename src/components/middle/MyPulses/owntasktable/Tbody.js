@@ -1,22 +1,23 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import history from '../../../history'
+import history from '../../../../history'
 
-import {fetchDetails} from '../../../actions/details'
+import {fetchDetails} from '../../../../actions/details'
+import {fetchPulses} from '../../../../actions/pulses'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
-import ProgressBar from '../../Forms/ProgressBar'
+import ProgressBar from '../../../Forms/ProgressBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
-    
+    this.props.fetchPulses()
     this.props.fetchDetails()
   }  
 
   goLink(id) {
-    history.push(`/boards/${this.props.appState.id}/pulses/${id}`)
+    history.push(`/mypulses/${this.props.appState.id}/pulses/${id}`)
     //console.log('select', id)
   }
 
@@ -32,7 +33,7 @@ class Tbody extends React.Component {
   }
 
   renderPulses() {
-    const id = this.props.categoryId
+    const userInitials = this.props.user.userInitials
     const pulses = _.filter(this.props.pulses, { categoryId: id })
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)
@@ -75,4 +76,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, fetchPulses })(Tbody)

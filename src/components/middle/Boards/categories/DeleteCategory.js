@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import {deleteCategory} from '../../../actions/categories'
-import { fetchPulses} from '../../../actions/pulses'
+import {deleteCategory} from '../../../../actions/categories'
+import { fetchPulses} from '../../../../actions/pulses'
 
 class DeleteCategory extends React.Component {
 

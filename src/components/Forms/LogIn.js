@@ -15,7 +15,7 @@ class Login extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UI.errors });
+      this.setState({ errors: nextProps.UI.errors })
     }
   }  
 

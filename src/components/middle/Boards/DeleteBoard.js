@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import {deleteBoard} from '../../actions/boards'
-import {fetchCategories} from '../../actions/categories'
+import {deleteBoard} from '../../../actions/boards'
+import {fetchCategories} from '../../../actions/categories'
 
 
 class DeleteBoard extends React.Component {

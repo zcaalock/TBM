@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPulse } from '../../../../actions/pulses'
-import SingleInput from '../../../Forms/SingleInput'
+import { createPulse } from '../../../../../actions/pulses'
+import SingleInput from '../../../../Forms/SingleInput'
 
 class AddPulse extends React.Component {
   state = { isHovering: false, itemEditable: false }

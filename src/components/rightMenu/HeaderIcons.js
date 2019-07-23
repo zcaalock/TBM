@@ -1,5 +1,5 @@
 import React from 'react'
-import DeletePulse from '../items/pulses/Tbody/DeletePulse'
+import DeletePulse from '../middle/Boards/pulses/Tbody/DeletePulse'
 
 class HeaderIcons extends React.Component {
   render() {
