@@ -14,8 +14,8 @@ class Boards extends React.Component {
         history.push('/unAuth')
     }
   }
-  componentDidUpdate() {
-    //this.handleAuth()
+  componentDidMount() {
+    this.handleAuth()
   }
 
   render() {
@@ -32,14 +32,14 @@ class Boards extends React.Component {
             <div
               className="menu" style={{ width: '100%' }}>
               <div
-                onClick={() => history.push(`/mypulses/${this.props.user.userInitials}`)}
+                onClick={() => history.push(`/mypulses/${this.props.user.credentials.userId}`)}
                 className="header item"
                 style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>
                 My tasks
                 </div>                
               <div                
                 className="header item"
-                style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>
+                style={{ paddingLeft: '0', paddingBottom: '10px' }}>
                 Boards:
                 </div>
               <BoardsList />

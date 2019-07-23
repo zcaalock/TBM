@@ -3,8 +3,7 @@ import Head from './MyPulses/Head'
 import Body from './MyPulses/Body'
 
 class MyPulses extends React.Component {
-  render(){
-    //console.log('params: ', this.props.match.params.uinit)
+  render(){    
     return(
       <div className="article" style={{width: "calc(80% - 270px)"}}>
         <Head/>

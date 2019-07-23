@@ -7,6 +7,7 @@ import {fetchDetails} from '../../../../actions/details'
 import {fetchPulses} from '../../../../actions/pulses'
 import {fetchCategories} from '../../../../actions/categories'
 import {fetchBoards} from '../../../../actions/boards'
+import {fetchLead} from '../../../../actions/settings'
 import PulseName from '../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../Boards/pulses/Tbody/LeadPerson'
 import Status from '../../Boards/pulses/Tbody/Status'
@@ -15,13 +16,14 @@ import ProgressBar from '../../../Forms/ProgressBar'
 class Tbody extends React.Component {
   componentDidMount() {
     this.props.fetchBoards()
+    this.props.fetchLead()
     this.props.fetchPulses()
     this.props.fetchDetails()
     this.props.fetchCategories()
   }  
 
-  goLink(id, userInitials) {
-    history.push(`/mypulses/${userInitials}/pulses/${id}`)
+  goLink(id, userId) {
+    history.push(`/mypulses/${userId}/pulses/${id}`)
     //console.log('select', id)
   }
 
@@ -39,8 +41,12 @@ class Tbody extends React.Component {
 
   renderPulses() { 
     //console.log('params: ', this.props.params.uinit)   
-    const initials = this.props.params.uinit
-    const pulses = _.filter(this.props.pulses, { userInitials: initials})
+    let pulses = {}
+    const userId = this.props.params.userId
+    let findUserByUserId = _.filter(this.props.lead, {userId: userId})    
+    
+    if(findUserByUserId.length > 0)     
+    pulses = _.filter(this.props.pulses, { userId: userId})       
     if(this.props.boards.length>0 && this.props.pulses.length >0 && this.props.categories.length > 0)
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse.categoryId)
@@ -48,7 +54,7 @@ class Tbody extends React.Component {
       let board = _.find(this.props.boards, {id: category.boardId})
       //console.log('sdfsf: ',category.title)
       return (
-        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id, initials)}>
+        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id, userId)}>
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
@@ -87,6 +93,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.credentials,
     pulses: Object.values(state.pulses),
+    lead: Object.values(state.lead),
     boards: Object.values(state.boards),
     details: Object.values(state.details),
     categories: Object.values(state.categories),
@@ -95,4 +102,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards, fetchLead })(Tbody)

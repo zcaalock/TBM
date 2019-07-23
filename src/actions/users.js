@@ -24,7 +24,7 @@ export const loginUser = (userData, history) => async (dispatch) => {
     .get('/user')
     .then((res) => {
       //console.log('res',res.data)
-      history.push(`/mypulses/${res.data.credentials.userInitials}`);
+      history.push(`/mypulses/${res.data.credentials.userId}`);
     })
     .catch((err) => console.log(err));
   
@@ -42,7 +42,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: types.CLEAR_ERRORS });
-      history.push('/mypulses');
+      history.push(`/mypulses/${res.data.credentials.userId}`);
     })
     .catch((err) => {
       dispatch({

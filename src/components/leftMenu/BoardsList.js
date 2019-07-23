@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchBoards} from '../../actions/boards'
 
+
 class BoardsList extends React.Component {
 
   componentDidMount() {
