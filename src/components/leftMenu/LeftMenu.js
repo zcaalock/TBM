@@ -2,9 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import history from '../../history'
 import { editState } from '../../actions/appState'
+
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
+
 
 class Boards extends React.Component {
 
@@ -22,11 +24,16 @@ class Boards extends React.Component {
     this.props.editState('', 'pulseId');
     this.props.editState(this.props.match.params.id, 'id')
     history.push(`/mypulses/${this.props.user.credentials.userId}`)
-
   }
 
-  handleSelectedItem() {
-    if (this.props.appState.id === 'mypulses')
+  handleFiltersOnClick(){
+    this.props.editState('filters', 'id')
+    this.props.editState('', 'pulseId');
+    history.push('/filters')
+  }
+
+  handleSelectedItem(selector) {
+    if (this.props.appState.id === selector)
       return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
   }
@@ -45,7 +52,7 @@ class Boards extends React.Component {
               <div
                 onClick={() => this.handleMyPulsesOnClick()}
                 className="header item headerSelectable"
-                style={this.handleSelectedItem()}>
+                style={this.handleSelectedItem('mypulses')}>
                 My pulses
               </div>
               <div
@@ -54,11 +61,15 @@ class Boards extends React.Component {
                 Boards:
               </div>
               <BoardsList />
-              <AddBoard />
+              
+              <div style={{borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
+              <div style={{marginTop: '15px'}}>
               <div
-                className="header item"
-                style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
-                Archive
+                onClick={() => this.handleFiltersOnClick()}
+                className="header item headerSelectable"
+                style={this.handleSelectedItem('filters')}>
+                Filters
+              </div>
               </div>
             </div>
           </div>
