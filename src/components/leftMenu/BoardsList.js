@@ -17,6 +17,12 @@ class BoardsList extends React.Component {
     return ''
   }
 
+  selectedStyle(id){
+    if(id === this.props.appState.id)
+      return {backgroundColor: '#E9E9E9', paddingLeft: '0'}
+    return {paddingLeft: '0'}  
+  } 
+
   renderBoards() {
     //this.handleAuth()
     if (this.props.boards.length === 0) {
@@ -32,7 +38,7 @@ class BoardsList extends React.Component {
           to={`/boards/${board.id}`}
           className={`item ${this.selectedCheck(board.id)}`}
           key={board.id}
-          style={{ paddingLeft: '0' }}>
+          style={this.selectedStyle(board.id)}>
           {board.title}
         </Link>
       )

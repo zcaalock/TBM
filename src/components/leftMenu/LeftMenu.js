@@ -18,28 +18,32 @@ class Boards extends React.Component {
     //this.handleAuth()
   }
 
+  handleSelectedItem(){
+    if (this.props.appState.id === 'mypulses')
+      return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }
+    return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
+    } 
+
   render() {
     return (
       <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
         <div className='item leftMenu-main' style={{textAlign: 'center'}}>
           <h3>Task Manager</h3>        
-      </div>
-      
-          <SettingsIcons/>        
-      
+      </div>      
+          <SettingsIcons/>      
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
             <div
               className="menu" style={{ width: '100%' }}>
               <div
                 onClick={() => history.push(`/mypulses/${this.props.user.credentials.userId}`)}
-                className="header item"
-                style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>
-                My tasks
+                className="header item headerSelectable"
+                style={this.handleSelectedItem()}>
+                My pulses
                 </div>                
               <div                
                 className="header item"
-                style={{ paddingLeft: '0', paddingBottom: '10px' }}>
+                style={{ paddingLeft: '0', paddingTop: '10px' }}>
                 Boards:
                 </div>
               <BoardsList />
@@ -56,7 +60,9 @@ class Boards extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    user: state.user
+    user: state.user,
+    appState: state.appState
+
   }
 }
 

@@ -7,6 +7,12 @@ import { logoutUser } from '../../actions/users'
 
 class SettingsIcons extends React.Component {
 
+  handleSelectedIcon(){
+    if (this.props.appState.id === 'settings') 
+      return ""
+    return "articleIcon"
+  } 
+
   render() {
     return (
       <div 
@@ -17,7 +23,7 @@ class SettingsIcons extends React.Component {
           onClick={() => history.push('/settings')}
           data-position="left center"
           data-tooltip="Settings"
-          className="articleIcon"
+          className={this.handleSelectedIcon()}
           style={{ display: 'inline-block' }}>
           <h3><i className="setting icon" /></h3>
         </div>
@@ -33,7 +39,12 @@ class SettingsIcons extends React.Component {
 
     )
   }
-
 }
 
-export default connect(null, { logoutUser })(SettingsIcons)
+const mapStateToProps = (state) => {
+  return ({
+    appState: state.appState
+  })
+}
+
+export default connect(mapStateToProps, { logoutUser })(SettingsIcons)
