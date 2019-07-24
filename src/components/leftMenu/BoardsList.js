@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchBoards} from '../../actions/boards'
+import {editState} from '../../actions/appState'
 
 
 class BoardsList extends React.Component {
@@ -35,6 +36,7 @@ class BoardsList extends React.Component {
     return this.props.boards.map(board => {
       return (
         <Link
+          onClick={()=>this.props.editState('', 'pulseId')}
           to={`/boards/${board.id}`}
           className={`item ${this.selectedCheck(board.id)}`}
           key={board.id}
@@ -63,4 +65,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchBoards })(BoardsList)
+export default connect(mapStateToProps, { fetchBoards, editState })(BoardsList)

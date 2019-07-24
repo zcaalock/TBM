@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import history from '../../../../history'
 
 import {fetchDetails} from '../../../../actions/details'
+import {editState} from '../../../../actions/appState'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
@@ -16,8 +17,15 @@ class Tbody extends React.Component {
   }  
 
   goLink(id) {
+    this.props.editState(id, 'pulseId')
     history.push(`/boards/${this.props.appState.id}/pulses/${id}`)
+    
     //console.log('select', id)
+  }
+
+  renderSelect(pulseId){
+    if(this.props.appState.pulseId === pulseId)
+    return {backgroundColor: '#F5F5F5'}
   }
 
   renderProgressBar(id){
@@ -37,7 +45,7 @@ class Tbody extends React.Component {
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)
       return (
-        <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id)}>
+        <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
@@ -75,4 +83,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, editState })(Tbody)

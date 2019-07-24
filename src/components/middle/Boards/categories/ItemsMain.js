@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteBoard, editBoard } from '../../../../actions/boards'
-import { editState } from '../../../../actions/appState'
+//import { editState } from '../../../../actions/appState'
 
 import Header from '../../../items/Header'
 import Body from './Body'
@@ -17,8 +17,7 @@ class ItemsMain extends React.Component {
         </div>
       )
     }
-    const { title } = this.props.board
-    this.props.editState(this.props.match.params.id, 'id') //selected board to appState
+    const { title } = this.props.board      
     return (
       <div className="article"
       // style={{display: 'inline-block', width: '70%'}} 
@@ -41,4 +40,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { deleteBoard, editBoard, editState })(ItemsMain)
+export default connect(mapStateToProps, { deleteBoard, editBoard })(ItemsMain)

@@ -18,7 +18,7 @@ class ItemsMain extends React.Component {
       )
     }
     const { title } = this.props.board
-    this.props.editState(this.props.match.params.id, 'id') //selected board to appState
+    this.props.editState(this.props.match.params.id, 'id') //selected board to appState    
     return (
       <div className="article"
       // style={{display: 'inline-block', width: '70%'}} 
