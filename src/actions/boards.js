@@ -28,9 +28,9 @@ export const editBoard = (id, formValues) => async dispatch => {
   
 }
 
-export const deleteBoard = (id) => async dispatch => {  
+export const deleteBoard = (id, userId) => async dispatch => {  
   await axios.delete(`/board/${id}`)
   dispatch({type: types.DELETE_BOARD, payload: id})
-  history.push('/boards/')
+  history.push(`/mypulses/${userId}`)
   
 }

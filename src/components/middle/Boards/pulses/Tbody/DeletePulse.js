@@ -9,7 +9,7 @@ import {fetchDetails} from '../../../../../actions/details'
 class DeletePulse extends React.Component {
 
   componentDidMount() {
-    this.props.fetchDetails()    
+    //this.props.fetchDetails()    
   }
 
   renderDelete(){    

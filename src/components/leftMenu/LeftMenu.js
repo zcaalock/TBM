@@ -15,7 +15,7 @@ class Boards extends React.Component {
     }
   }
   componentDidMount() {
-    this.handleAuth()
+    //this.handleAuth()
   }
 
   render() {

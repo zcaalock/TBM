@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { signupUser } from '../../actions/users'
+import history from '../../history'
 
 class Signup extends React.Component {
   constructor() {
@@ -56,7 +57,7 @@ class Signup extends React.Component {
     return (
       <div>
         <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">
-          <div className='item leftMenu-main'><h3>Task Manager</h3></div>
+          <div onClick={()=>history.push('/')} style={{cursor: 'pointer'}} className='item leftMenu-main'><h3>Task Manager</h3></div>
         </div>
         <div className='login' style={{top: 'calc(50% - 200px)'}}>
           <Form error onSubmit={this.handleSubmit} >

@@ -7,7 +7,7 @@ import { fetchPulses} from '../../../../actions/pulses'
 class DeleteCategory extends React.Component {
 
   componentDidMount() {
-    this.props.fetchPulses()
+    //this.props.fetchPulses()
     
   }
 

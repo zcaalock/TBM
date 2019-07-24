@@ -41,15 +41,24 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
-      dispatch({ type: types.CLEAR_ERRORS });
-      history.push(`/mypulses/${res.data.credentials.userId}`);
+      dispatch({ type: types.CLEAR_ERRORS });      
     })
     .catch((err) => {
       dispatch({
         type: types.SET_ERRORS,
         payload: err.response.data
       });
-    });
+    })
+    .then(()=>{
+      axios
+    .get('/user')
+    .then((res) => {
+      //console.log('res',res.data)
+      history.push(`/mypulses/${res.data.credentials.userId}`);
+    })
+    .catch((err) => console.log(err));
+  
+    })
 };
 
 export const logoutUser = () => (dispatch) => {

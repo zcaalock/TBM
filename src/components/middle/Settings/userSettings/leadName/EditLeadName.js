@@ -8,7 +8,7 @@ class EditBoardName extends React.Component {
     
 
   onSubmit(formValues,id) {
-    console.log('form: ', formValues, id)
+    //console.log('form: ', formValues, id)
     this.props.editLead(id, formValues)
     this.props.removeEdit()
   }

@@ -8,7 +8,7 @@ import {fetchCategories} from '../../../actions/categories'
 class DeleteBoard extends React.Component {
 
   componentDidMount() {
-    this.props.fetchCategories()
+    //this.props.fetchCategories()
     
   }
 
@@ -26,7 +26,7 @@ class DeleteBoard extends React.Component {
       )
     } return (
       <div
-        onClick={() => this.props.deleteBoard(this.props.boardId)}
+        onClick={() => this.props.deleteBoard(this.props.boardId, this.props.user.userId)}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
@@ -51,7 +51,8 @@ class DeleteBoard extends React.Component {
 const mapStateToProps = (state)=>{
   return{
     categories: Object.values(state.categories),
-    boardId: state.appState.id    
+    boardId: state.appState.id,
+    user: state.user.credentials    
   }
 }
 

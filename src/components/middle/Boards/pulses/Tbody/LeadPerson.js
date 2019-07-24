@@ -14,7 +14,7 @@ class UserName extends React.Component {
   
   saveField(title){
     const leadPerson = _.filter(this.props.lead, {title: title})
-    console.log('changed person: ',leadPerson[0].userId)
+    //console.log('changed person: ',leadPerson[0].userId)
     if(leadPerson[0].userId)
     this.props.editPulse(this.props.pulse.id, {userId: leadPerson[0].userId}) 
   }
