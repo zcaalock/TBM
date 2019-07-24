@@ -8,6 +8,7 @@ import { fetchPulses } from '../../../../actions/pulses'
 import { fetchCategories } from '../../../../actions/categories'
 import { fetchBoards } from '../../../../actions/boards'
 import { fetchLead } from '../../../../actions/settings'
+import { editState } from '../../../../actions/appState'
 import PulseName from '../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../Boards/pulses/Tbody/LeadPerson'
 import Status from '../../Boards/pulses/Tbody/Status'
@@ -15,6 +16,7 @@ import ProgressBar from '../../../Forms/ProgressBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
+    this.props.editState('mypulses', 'id') //selected board to appState
     this.props.fetchBoards()
     this.props.fetchLead()
     this.props.fetchPulses()
@@ -115,4 +117,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards, fetchLead })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards, fetchLead, editState })(Tbody)

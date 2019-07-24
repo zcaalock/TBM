@@ -8,7 +8,7 @@ class OwnTaskList extends React.Component {
     return (
       <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
         <Thead />
-        <Tbody params={this.props.params} />
+        <Tbody params={this.props.params} private={this.props.params}/>
       </table>
     )
   }

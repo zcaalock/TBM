@@ -22,7 +22,7 @@ class Tbody extends React.Component {
 
   renderProgressBar(id){
     const details = _.filter(this.props.details, {pulseId: id})
-    const checked = _.filter(this.props.details, {pulseId: id, check:true})
+    const checked = _.filter(this.props.details, {pulseId: id, check:'true'})
     
     if (details.length>0) {
       const value = checked.length / details.length

@@ -1,5 +1,6 @@
 import React from 'react'
 import DeletePulse from '../middle/Boards/pulses/Tbody/DeletePulse'
+import ArchivePulse from '../middle/Boards/pulses/Tbody/ArchivePulse'
 
 class HeaderIcons extends React.Component {
   render() {
@@ -12,19 +13,8 @@ class HeaderIcons extends React.Component {
           data-tooltip="Edit"
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
-        </div> */}
-        <div
-          className="articleIcon"
-          data-position="bottom center"
-          data-tooltip="Archive"
-          style={{
-            display: 'inline-block',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            cursor: 'pointer'
-          }}>
-          <i className=" archive icon" />
-        </div>        
+        </div>         */}
+            <ArchivePulse pulseId={this.props.pulseId}/>
           <DeletePulse pulseId={this.props.pulseId}/>        
       </div>
     )

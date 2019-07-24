@@ -19,7 +19,7 @@ class Details extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchDetails()
+    //this.props.fetchDetails()
     
   }
 
@@ -28,18 +28,24 @@ class Details extends React.Component {
   }
 
   renderCrossOut(bool) {
-    if (bool === true) {
+    if (bool === 'true') {
       return { textDecoration: 'line-through' }
     }
     return {}
   }
 
-  handleOnClick(id, bool){    
-    this.props.editDetail(id, { check: bool })
-      .then(()=>{
-        this.props.fetchDetails()
-      })
+  handleOnClick(id, bool){   
+    if (bool === 'false')
+    this.props.editDetail(id, { check: 'true' })
+    if (bool === 'true')
+    this.props.editDetail(id, { check: 'false' })
+  }
 
+  defaulCheck(bool){
+    if (bool === 'false')
+    return false
+    if (bool === 'true')
+    return true
   }
   
   renderDetails() {
@@ -53,8 +59,8 @@ class Details extends React.Component {
           <div
             style={{ display: 'inline-block' }}>
             <Checkbox
-              onClick={() => this.handleOnClick(detail.id, !detail.check)}
-              defaultChecked={detail.check}
+              onClick={() => this.handleOnClick(detail.id, detail.check)}
+              defaultChecked={this.defaulCheck(detail.check)}
               style={{ marginBottom: '-4px' }} />
           </div>
           <div style={{ display: 'inline-block', paddingLeft: '10px', cursor: 'default' }}>

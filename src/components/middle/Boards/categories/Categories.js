@@ -16,11 +16,11 @@ class Categories extends React.Component {
   }
 
   expand(id) {
-    this.setState({ [id]: true })
+    this.setState({ [id]: 'true' })
   }
 
   collapse(id) {
-    this.setState({ [id]: false })
+    this.setState({ [id]: 'false' })
   }
 
   renderProgressBar(id) {
@@ -35,7 +35,7 @@ class Categories extends React.Component {
   }
 
   renderColapsingMenu(category, id) {
-    if (this.state && this.state[id] === true) {
+    if (this.state && this.state[id] === 'true') {
       return (
         <Table
           collapse={() => this.collapse(category.id)}

@@ -13,7 +13,7 @@ class HeaderIcons extends React.Component {
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>
-        <div
+        {/* <div
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Archive"
@@ -24,7 +24,7 @@ class HeaderIcons extends React.Component {
             cursor: 'pointer'
           }}>
           <i className=" archive icon" />
-        </div>        
+        </div>         */}
           <DeleteCategory
           categoryId={this.props.categoryId} />        
       </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchLead, createLead, deleteLead } from '../../../../actions/settings'
+import { editState } from '../../../../actions/appState'
 import { fetchPulses } from '../../../../actions/pulses'
 import { Item, Button } from 'semantic-ui-react'
 
@@ -10,6 +11,7 @@ import LeadName from './leadName/LeadName'
 class UserSettings extends React.Component {
 
   componentDidMount() {
+    this.props.editState('settings', 'id') //selected board to appState
     this.props.fetchLead()
     this.props.fetchPulses()
   }
@@ -69,7 +71,7 @@ class UserSettings extends React.Component {
     return(<div>No user found..</div>)
   }
 
-  renderItem() {
+  renderItem() {    
     return (
       <Item.Group>
         <Item>
@@ -103,4 +105,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchLead, createLead, deleteLead, fetchPulses })(UserSettings)
+export default connect(mapStateToProps, { fetchLead, createLead, deleteLead, fetchPulses, editState })(UserSettings)

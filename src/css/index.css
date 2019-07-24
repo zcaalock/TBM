@@ -25,7 +25,7 @@
   }
   .rightMenu{
     background-color: #bcbdbd26;  
-    margin-left: 40px !important;;
+    margin-left: 40px !important;
     height: 98%;
     min-width: 240px;
     width: 30%
@@ -36,6 +36,9 @@
 
 .middleContainer {
   margin-left: 270px
+}
+.headerSelectable:hover{
+  background-color: #E9E9E9 !important
 }
 
 .head-vertical-segment{
