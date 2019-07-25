@@ -7,8 +7,17 @@ import { editPulse } from '../../../../../actions/pulses'
 import DropDownMenu from '../../../../Forms/DropDownMenu'
 
 class UserName extends React.Component {
+  
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }   
+  
   componentDidMount() {
-    //this.props.fetchLead()
+    if (this.isEmpty(this.props.lead)) this.props.fetchLead()
   }
 
   

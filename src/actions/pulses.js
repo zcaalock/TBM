@@ -30,6 +30,6 @@ export const editPulse = (id, formValues) => async dispatch => {
 export const deletePulse = (id, boardId) => async dispatch => {
   await axios.delete(`/pulse/${id}`)
   dispatch({type: types.DELETE_PULSE, payload: id})
-  history.push(`/boards/${boardId}`)
+  //history.push(`/boards/${boardId}`)
   
 }

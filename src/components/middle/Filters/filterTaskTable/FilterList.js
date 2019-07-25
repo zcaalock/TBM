@@ -96,7 +96,7 @@ class SearchFilter extends React.Component {
   }
 
   handleOnCheckBoxClick(bool) {
-    console.log('props: ', this.state)
+    //console.log('props: ', this.state)
     if (bool === 'false')
       this.props.editState('true', 'showArchived')
     if (bool === 'true') {
@@ -116,8 +116,7 @@ class SearchFilter extends React.Component {
 
   render() {
     if (this.isEmpty(col)) this.makeCollection()
-    const { isLoading, value, results } = this.state
-    console.log('rerender', this.props.appState.showArchived)
+    const { isLoading, value, results } = this.state    
     return (
       <div>
         <div style={{ display: 'inline-block' }}>

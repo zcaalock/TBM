@@ -13,9 +13,20 @@ import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
-
-    this.props.fetchDetails()
+    
+    if (this.isEmpty(this.props.pulses)) this.props.fetchDetails()
   }
+
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
+  
+
 
   goLink(id) {
     this.props.editState(id, 'pulseId')
@@ -50,7 +61,7 @@ class Tbody extends React.Component {
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
             <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
           </td>
-          <td data-label="LeadPerson" style={{ overflow: "visible", width: '10%' }}>
+          <td data-label="LeadPerson" style={{ overflow: "visible", minWidth: '100px' }}>
             <LeadPerson pulse={pulse} />
           </td>
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>

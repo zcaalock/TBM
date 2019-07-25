@@ -50,10 +50,10 @@ class Tbody extends React.Component {
         //console.log('sdfsf: ',category.title)
         return (
           <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
-            <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
+            <td style={{ paddingLeft: '10px'}} data-label="Name">
               <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
             </td>
-            <td>
+            <td >
               {board.title}
             </td>
             <td>
@@ -65,7 +65,7 @@ class Tbody extends React.Component {
             <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
               <Status pulse={pulse} />
             </td>
-            <td style={{ wdth: '10%' }}>
+            <td >
               <DetailProgrsBar details={this.props.details} pulse={pulse} />
               {/* {this.renderProgressBar(pulse.id)} */}
             </td>
@@ -81,12 +81,12 @@ class Tbody extends React.Component {
         <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
           <thead>
             <tr>
-              <th style={{ paddingLeft: '10px', width: '' }}>Name</th>
-              <th style={{ width: '10%' }}>Board</th>
-              <th style={{ width: '10%' }}>Category</th>
-              <th style={{ width: '10%' }}>Lead Person</th>
+              <th style={{ paddingLeft: '10px', width: '30%' }}>Name</th>
+              <th style={{ minWidth: '20%' }}>Board</th>
+              <th style={{ width: '15%' }}>Category</th>
+              <th style={{ width: '15%' }}>Lead Person</th>
               <th style={{ width: '120px' }}>Status</th>
-              <th style={{ width: '10%' }}>Progress</th>
+              <th style={{ width: '10%' }}>Details</th>
             </tr>
           </thead>
           <tbody>

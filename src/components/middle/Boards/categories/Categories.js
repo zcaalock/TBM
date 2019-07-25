@@ -10,9 +10,19 @@ import ProgressBar from '../../../Forms/ProgressBar'
 
 class Categories extends React.Component {
 
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }   
+  
+  
+
   componentDidMount() {
-    this.props.fetchCategories()
-    this.props.fetchPulses()
+    if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
+    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()    
   }
 
   expand(id) {
@@ -25,7 +35,7 @@ class Categories extends React.Component {
 
   renderProgressBar(id) {
     const pulses = _.filter(this.props.pulses, { categoryId: id })
-    const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done' })
+    const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
 
     if (pulses.length > 0) {
       const value = checked.length / pulses.length

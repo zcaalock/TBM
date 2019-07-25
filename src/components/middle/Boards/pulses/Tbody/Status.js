@@ -5,14 +5,23 @@ import { editPulse } from '../../../../../actions/pulses'
 import DropDownMenu from '../../../../Forms/DropDownMenu'
 
 class UserName extends React.Component {
+
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }   
+  
   componentDidMount() {
-    this.props.fetchStatus()
+    if (this.isEmpty(this.props.status)) this.props.fetchStatus()
   }
+  
 
   saveField(title){
     this.props.editPulse(this.props.pulse.id, {status: title})    
-  }
-  
+  }  
   
   render() {
     if(this.props.pulse.archived === 'false')

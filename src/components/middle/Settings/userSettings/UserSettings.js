@@ -21,7 +21,7 @@ class UserSettings extends React.Component {
 
   componentDidMount() {
     this.props.editState('settings', 'id') //selected board to appState    
-    if (this.isEmpty(this.props.pulses)) this.props.fetchLead()
+    if (this.isEmpty(this.props.lead)) this.props.fetchLead()
     if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
   }
 

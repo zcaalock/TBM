@@ -1,7 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import history from '../../history'
+
 import { editState } from '../../actions/appState'
+import { fetchStatus } from '../../actions/status'
+import { fetchPulses } from '../../actions/pulses'
+import { fetchCategories } from '../../actions/categories'
+import { fetchBoards } from '../../actions/boards'
+import { fetchLead } from '../../actions/settings'
+import { fetchDetails } from '../../actions/details'
 
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
@@ -18,6 +25,20 @@ class Boards extends React.Component {
   }
   componentDidMount() {
     //this.handleAuth()
+  }
+
+  refreshDB() {
+    if (this.props.appState.refreshed === 'false') {
+      this.props.fetchBoards()
+      this.props.fetchStatus()
+      this.props.fetchPulses()
+      this.props.fetchDetails()
+      this.props.fetchLead()
+      this.props.fetchCategories()
+    }
+    this.props.editState('true', 'refreshed')
+    setTimeout(() => { this.props.editState('false', 'refreshed') }, 60000);
+
   }
 
   handleMyPulsesOnClick() {
@@ -37,6 +58,11 @@ class Boards extends React.Component {
     if (this.props.appState.id === selector)
       return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
+  }
+
+  renderRefreshClass() {
+    if (this.props.appState.refreshed === "false") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Refresh database" className='refreshDB'><i className='refreshDBspin large refresh icon' /></div>
+    if (this.props.appState.refreshed === "true") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Cannot refresh database now" className='greyedDB'><i className='large refresh icon' /></div>
   }
 
   render() {
@@ -64,9 +90,8 @@ class Boards extends React.Component {
                 Boards:
               </div>
               <BoardsList />
-
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
-
+              {this.renderRefreshClass()}
             </div>
           </div>
         </div>
@@ -85,4 +110,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { editState })(Boards)
+export default connect(mapStateToProps, { editState, fetchBoards, fetchCategories, fetchDetails, fetchLead, fetchPulses, fetchStatus })(Boards)
