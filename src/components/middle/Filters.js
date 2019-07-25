@@ -5,7 +5,7 @@ import Body from './Filters/Body'
 class Filtrs extends React.Component {
   render(){    
     return(
-      <div className="article" style={{width: "calc(80% - 270px)"}}>
+      <div className="" style={{width: "100%"}}>
         <Head/>
         <Body/>
       </div>

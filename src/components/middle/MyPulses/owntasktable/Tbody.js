@@ -8,6 +8,7 @@ import { fetchPulses } from '../../../../actions/pulses'
 import { fetchCategories } from '../../../../actions/categories'
 import { fetchBoards } from '../../../../actions/boards'
 import { fetchLead } from '../../../../actions/settings'
+import { fetchStatus} from '../../../../actions/status'
 import { editState } from '../../../../actions/appState'
 import PulseName from '../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../Boards/pulses/Tbody/LeadPerson'
@@ -15,23 +16,36 @@ import Status from '../../Boards/pulses/Tbody/Status'
 import ProgressBar from '../../../Forms/ProgressBar'
 
 class Tbody extends React.Component {
-  componentDidMount() {
-    this.props.editState('mypulses', 'id') //selected board to appState
-    this.props.fetchBoards()
-    this.props.fetchLead()
-    this.props.fetchPulses()
-    this.props.fetchDetails()
-    this.props.fetchCategories()
+
+
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
   }
 
+  componentDidMount() {
+    this.props.editState('mypulses', 'id') //selected board to appState
+    if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
+    if (this.isEmpty(this.props.status)) this.props.fetchStatus()
+    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
+    if (this.isEmpty(this.props.details)) this.props.fetchDetails()
+    if (this.isEmpty(this.props.status)) this.props.fetchStatus()
+    if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
+
+  }  
+
   goLink(id, userId) {
+    this.props.editState(id, 'pulseId')
     history.push(`/mypulses/${userId}/pulses/${id}`)
     //console.log('select', id)
   }
 
   renderProgressBar(id) {
     const details = _.filter(this.props.details, { pulseId: id })
-    const checked = _.filter(this.props.details, { pulseId: id, check: true })
+    const checked = _.filter(this.props.details, { pulseId: id, check: 'true' })
 
     if (details.length > 0) {
       const value = checked.length / details.length
@@ -39,7 +53,11 @@ class Tbody extends React.Component {
       return <ProgressBar value={value * 100} />
     }
   }
-
+  
+  renderSelect(pulseId){
+    if(this.props.appState.pulseId === pulseId)
+    return {backgroundColor: '#F5F5F5'}
+  }
 
   renderPulses() {
     //console.log('params: ', this.props.params.uinit)   
@@ -54,7 +72,7 @@ class Tbody extends React.Component {
         let board = _.find(this.props.boards, { id: category.boardId })
         //console.log('sdfsf: ',category.title)
         return (
-          <tr key={pulse.id} className='tableRow' onClick={() => this.goLink(pulse.id, userId)}>
+          <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id, userId)}>
             <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
               <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
             </td>
@@ -111,10 +129,11 @@ const mapStateToProps = (state) => {
     lead: Object.values(state.lead),
     boards: Object.values(state.boards),
     details: Object.values(state.details),
+    status: Object.values(state.status),
     categories: Object.values(state.categories),
     appState: state.appState
 
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards, fetchLead, editState })(Tbody)
+export default connect(mapStateToProps, { fetchDetails, fetchPulses, fetchCategories, fetchBoards, fetchLead, editState, fetchStatus })(Tbody)

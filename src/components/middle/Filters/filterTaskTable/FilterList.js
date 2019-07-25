@@ -8,26 +8,10 @@ import { fetchPulses } from '../../../../actions/pulses'
 import { fetchCategories } from '../../../../actions/categories'
 import { fetchBoards } from '../../../../actions/boards'
 import { fetchLead } from '../../../../actions/settings'
+import { fetchDetails } from '../../../../actions/details'
 
 
-
-
-let col = [
-  // {
-  //   title: "AO",
-  //   description: "Lead Person"
-  // },
-  // {
-  //   title: "Done",
-  //   description: "Status"
-  // },
-  // {
-  //   title: "Archived",
-  //   description: "link"
-  // }
-]
-
-
+let col = []
 const initialState = { isLoading: false, results: [], value: '' }
 
 class SearchFilter extends React.Component {
@@ -42,36 +26,38 @@ class SearchFilter extends React.Component {
   }
 
   componentDidMount() {
-
     if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
     if (this.isEmpty(this.props.status)) this.props.fetchStatus()
     if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
+    if (this.isEmpty(this.props.details)) this.props.fetchDetails()
+    if (this.isEmpty(this.props.lead)) this.props.fetchLead()
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
-
-  }
-
-  makeCollection() {
-
-    if (this.props.status.length > 0)
-      this.props.status.map(person => {
-        //console.log('personh', person.title)
-        col.push({ title: person.title, description: 'LeadPerson' })
-
-      })
-    col = _.uniqBy(col, 'title')
-    console.log('bb: ', col)
-  }
-
-  handleOnClick(title, description) {
-    if (this.state.results[0])
-      history.push(`/filters/${description}/${title}`)
-  }
-
-  handleOnFocus() {
     this.makeCollection()
   }
 
-  handleResultSelect = (e, { result }) => {this.setState({ value: { title: result.title, description: result.description } }); this.handleOnClick(result.title, result.description)}
+  makeCollection() {
+    
+    if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length >0 && this.props.categories.length > 0) {
+      this.props.status.map(status => {        
+        col.push({ title: status.title, description: 'Status', link: status.title })
+      })
+      this.props.lead.map(lead => {        
+        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId })
+      })
+      this.props.pulses.map(pulse => {            
+        col.push({ title: _.keyBy(this.props.categories, 'id')[pulse.categoryId].title, description: 'Category', link: pulse.categoryId})
+      })
+    }
+    //console.log('col: ', col)
+    return col = _.uniqBy(col, 'title')
+  }
+
+  handleOnClick(link, description) {
+    if (this.state.results[0])
+      history.push(`/filters/${description}/${link}`)
+  }  
+
+  handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description) }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -90,14 +76,13 @@ class SearchFilter extends React.Component {
   }
 
   render() {
-    //console.log('state:', this.state)
+    if (this.isEmpty(col)) this.makeCollection()    
     const { isLoading, value, results } = this.state
 
     return (
-
       <div>
         <Search
-          onFocus={() => this.handleOnFocus()}
+          //onFocus={() => this.handleOnFocus()}
           //onClick={()=> this.handleOnClick()}
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
@@ -105,10 +90,9 @@ class SearchFilter extends React.Component {
             leading: true,
           })}
           results={results}
-          value={value.title}
+          value={value}
         //{...this.props}
         />
-
       </div>
     )
   }
@@ -120,9 +104,9 @@ const mapStateToProps = (state) => {
     status: Object.values(state.status),
     pulses: Object.values(state.pulses),
     boards: Object.values(state.boards),
-    categories: Object.values(state.categories)
+    categories: Object.values(state.categories),
+    details: Object.values(state.details)
   }
-
 }
 
-export default connect(mapStateToProps, { fetchStatus, fetchPulses, fetchCategories, fetchBoards, fetchLead })(SearchFilter)
+export default connect(mapStateToProps, { fetchStatus, fetchPulses, fetchCategories, fetchBoards, fetchLead, fetchDetails })(SearchFilter)

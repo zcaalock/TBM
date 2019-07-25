@@ -23,7 +23,8 @@ class Boards extends React.Component {
   handleMyPulsesOnClick() {
     this.props.editState('', 'pulseId');
     this.props.editState(this.props.match.params.id, 'id')
-    history.push(`/mypulses/${this.props.user.credentials.userId}`)
+    history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
+    //history.push(`/mypulses/${this.props.user.credentials.userId}`)
   }
 
   handleFiltersOnClick(){

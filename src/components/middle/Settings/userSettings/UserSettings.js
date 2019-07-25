@@ -10,10 +10,19 @@ import LeadName from './leadName/LeadName'
 
 class UserSettings extends React.Component {
 
+
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
   componentDidMount() {
-    this.props.editState('settings', 'id') //selected board to appState
-    this.props.fetchLead()
-    this.props.fetchPulses()
+    this.props.editState('settings', 'id') //selected board to appState    
+    if (this.isEmpty(this.props.pulses)) this.props.fetchLead()
+    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
   }
 
   handleCreateLead() {
