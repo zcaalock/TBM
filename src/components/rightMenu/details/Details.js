@@ -58,7 +58,7 @@ class Details extends React.Component {
         <div key={detail.id} className='item'>
           <div
             style={{ display: 'inline-block' }}>
-            <Checkbox
+            <Checkbox              
               onClick={() => this.handleOnClick(detail.id, detail.check)}
               defaultChecked={this.defaulCheck(detail.check)}
               style={{ marginBottom: '-4px' }} />

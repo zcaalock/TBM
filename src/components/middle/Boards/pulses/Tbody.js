@@ -3,45 +3,46 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import history from '../../../../history'
 
-import {fetchDetails} from '../../../../actions/details'
-import {editState} from '../../../../actions/appState'
+import { fetchDetails } from '../../../../actions/details'
+import { editState } from '../../../../actions/appState'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
 import ProgressBar from '../../../Forms/ProgressBar'
+import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
 
 class Tbody extends React.Component {
   componentDidMount() {
-    
+
     this.props.fetchDetails()
-  }  
+  }
 
   goLink(id) {
     this.props.editState(id, 'pulseId')
     history.push(`/boards/${this.props.appState.id}/pulses/${id}`)
-    
+
     //console.log('select', id)
   }
 
-  renderSelect(pulseId){
-    if(this.props.appState.pulseId === pulseId)
-    return {backgroundColor: '#F5F5F5'}
+  renderSelect(pulseId) {
+    if (this.props.appState.pulseId === pulseId)
+      return { backgroundColor: '#F5F5F5' }
   }
 
-  renderProgressBar(id){
-    const details = _.filter(this.props.details, {pulseId: id})
-    const checked = _.filter(this.props.details, {pulseId: id, check:'true'})
-    
-    if (details.length>0) {
+  renderProgressBar(id) {
+    const details = _.filter(this.props.details, { pulseId: id })
+    const checked = _.filter(this.props.details, { pulseId: id, check: 'true' })
+
+    if (details.length > 0) {
       const value = checked.length / details.length
       //console.log('value: ', value)
-      return <ProgressBar value={value*100} />
-    } 
+      return <ProgressBar value={value * 100} />
+    }
   }
 
   renderPulses() {
     const id = this.props.categoryId
-    const pulses = _.filter(this.props.pulses, { categoryId: id })
+    const pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)
       return (
@@ -55,8 +56,9 @@ class Tbody extends React.Component {
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
           </td>
-          <td style={{wdth: '10%'}}>
-            {this.renderProgressBar(pulse.id)}
+          <td style={{ wdth: '10%' }}>
+            <DetailProgrsBar details={this.props.details} pulse={pulse} />
+            {/* {this.renderProgressBar(pulse.id)} */}
           </td>
         </tr>
       )

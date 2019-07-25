@@ -1,8 +1,10 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { Search } from 'semantic-ui-react'
+import { Search, Checkbox } from 'semantic-ui-react'
+
 import history from '../../../../history'
+import { editState } from '../../../../actions/appState'
 import { fetchStatus } from '../../../../actions/status'
 import { fetchPulses } from '../../../../actions/pulses'
 import { fetchCategories } from '../../../../actions/categories'
@@ -36,26 +38,37 @@ class SearchFilter extends React.Component {
   }
 
   makeCollection() {
-    
-    if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length >0 && this.props.categories.length > 0) {
-      this.props.status.map(status => {        
+
+    if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0) {
+      this.props.status.map(status => {
         col.push({ title: status.title, description: 'Status', link: status.title })
+        return col
       })
-      this.props.lead.map(lead => {        
+      this.props.lead.map(lead => {
         col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId })
+        return col
       })
-      this.props.pulses.map(pulse => {            
-        col.push({ title: _.keyBy(this.props.categories, 'id')[pulse.categoryId].title, description: 'Category', link: pulse.categoryId})
+      this.props.pulses.map(pulse => {
+        col.push({ title: _.keyBy(this.props.categories, 'id')[pulse.categoryId].title, description: 'Category', link: pulse.categoryId })
+        return col
       })
+
+      col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true' })
+      return col = _.uniqBy(col, 'title')
     }
     //console.log('col: ', col)
-    return col = _.uniqBy(col, 'title')
+
   }
 
   handleOnClick(link, description) {
     if (this.state.results[0])
-      history.push(`/filters/${description}/${link}`)
-  }  
+      if (description === 'ArchivedPulses') {
+        this.handleOnCheckBoxClick(this.props.appState.showArchived)
+        history.push(`/filters/${description}/${link}`)
+      }
+      else history.push(`/filters/${description}/${link}`)
+
+  }
 
   handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description) }
 
@@ -75,24 +88,65 @@ class SearchFilter extends React.Component {
     }, 300)
   }
 
-  render() {
-    if (this.isEmpty(col)) this.makeCollection()    
-    const { isLoading, value, results } = this.state
+  defaulCheck(bool) {
+    if (bool === 'false')
+      return false
+    if (bool === 'true')
+      return true
+  }
 
+  handleOnCheckBoxClick(bool) {
+    console.log('props: ', this.state)
+    if (bool === 'false')
+      this.props.editState('true', 'showArchived')
+    if (bool === 'true') {
+      this.props.editState('false', 'showArchived')
+
+      if (this.state.value === "Archived") 
+      history.push(`/filters/`)
+    }
+  }
+
+  renderCheckBoxLabelStyle() {
+    if (this.props.appState.showArchived === 'true')
+      return 'archivedColorRed'
+    if (this.props.appState.showArchived === 'false')
+      return 'archivedColor'
+  }
+
+  render() {
+    if (this.isEmpty(col)) this.makeCollection()
+    const { isLoading, value, results } = this.state
+    console.log('rerender', this.props.appState.showArchived)
     return (
       <div>
-        <Search
-          //onFocus={() => this.handleOnFocus()}
-          //onClick={()=> this.handleOnClick()}
-          loading={isLoading}
-          onResultSelect={this.handleResultSelect}
-          onSearchChange={_.debounce(this.handleSearchChange, 500, {
-            leading: true,
-          })}
-          results={results}
-          value={value}
-        //{...this.props}
-        />
+        <div style={{ display: 'inline-block' }}>
+          <Search
+            //onFocus={() => this.handleOnFocus()}
+            //onClick={()=> this.handleOnClick()}
+            loading={isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={_.debounce(this.handleSearchChange, 500, {
+              leading: true,
+            })}
+            results={results}
+            value={value}
+          //{...this.props}
+          />
+        </div >
+        <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+          <Checkbox
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)}
+            //defaultChecked={this.defaulCheck(this.props.appState.showArchived)}
+            checked={this.defaulCheck(this.props.appState.showArchived)}
+            slider
+            style={{ marginBottom: '-4px', }}
+          //label='Show archived' 
+          //className={this.renderCheckBoxLabelStyle()}
+          />
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)} className={this.renderCheckBoxLabelStyle()} >Show archived</label>
+        </div>
+
       </div>
     )
   }
@@ -105,8 +159,9 @@ const mapStateToProps = (state) => {
     pulses: Object.values(state.pulses),
     boards: Object.values(state.boards),
     categories: Object.values(state.categories),
-    details: Object.values(state.details)
+    details: Object.values(state.details),
+    appState: state.appState
   }
 }
 
-export default connect(mapStateToProps, { fetchStatus, fetchPulses, fetchCategories, fetchBoards, fetchLead, fetchDetails })(SearchFilter)
+export default connect(mapStateToProps, { fetchStatus, fetchPulses, fetchCategories, fetchBoards, fetchLead, fetchDetails, editState })(SearchFilter)

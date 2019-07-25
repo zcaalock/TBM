@@ -15,7 +15,7 @@ class UserName extends React.Component {
   
   
   render() {
-    //console.log('users: ', this.props.users)
+    if(this.props.pulse.archived === 'false')
     return (
       <div>
         {/* {this.props.pulse.userInitials} */}
@@ -26,7 +26,14 @@ class UserName extends React.Component {
         text={this.props.pulse.status} />
       </div>
     )
+    if(this.props.pulse.archived === 'true')
+    return (
+      <div>
+          {this.props.pulse.status}
+      </div>
+    )
   }
+  
 }
 
 const mapStateToProps = (state) => {

@@ -1,7 +1,7 @@
 import * as types from '../actions/types'
 
 const appState ={
-  
+  showArchived: 'false'
 }
 
 export default (state = appState, action) => {

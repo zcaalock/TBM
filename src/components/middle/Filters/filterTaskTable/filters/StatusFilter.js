@@ -37,16 +37,16 @@ class Tbody extends React.Component {
   }
 
   renderPulses() {
-    //console.log('params: ', this.props.params.uinit)   
+    //console.log('selector: ', this.props.selector, this.props.item)   
     let pulses = {}
-
-
-    pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item })
+    if (this.props.appState.showArchived === 'true') {pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item})}
+    if (this.props.appState.showArchived === 'false') {pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' })}
+    
     if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
       return pulses.map(pulse => {
         //console.log('pulse: ', pulse.categoryId)
         let category = _.find(this.props.categories, { id: pulse.categoryId })
-        let board = _.find(this.props.boards, { id: category.boardId })
+        let board = _.find(this.props.boards, { id: category.boardId })        
         //console.log('sdfsf: ',category.title)
         return (
           <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
@@ -59,7 +59,7 @@ class Tbody extends React.Component {
             <td>
               {category.title}
             </td>
-            <td data-label="LeadPerson" style={{ overflow: "visible", width: '15%' }}>
+            <td data-label="LeadPerson" style={{ overflow: "visible", width: '10%' }}>
               <LeadPerson pulse={pulse} />
             </td>
             <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
@@ -84,7 +84,7 @@ class Tbody extends React.Component {
               <th style={{ paddingLeft: '10px', width: '' }}>Name</th>
               <th style={{ width: '10%' }}>Board</th>
               <th style={{ width: '10%' }}>Category</th>
-              <th style={{ width: '20%' }}>Lead Person</th>
+              <th style={{ width: '10%' }}>Lead Person</th>
               <th style={{ width: '120px' }}>Status</th>
               <th style={{ width: '10%' }}>Progress</th>
             </tr>

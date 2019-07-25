@@ -17,18 +17,19 @@
   }
 }
 
-@media(max-width: 1080px) {
+@media(max-width: 1150px) {
   .article{
     margin-left: 220px;
     display: inline-block;
-    width: calc(70% - 270px);    
+    width: calc(80% - 270px); 
+    min-width: 450px;   
   }
   .rightMenu{
     background-color: #bcbdbd26;  
     margin-left: 40px !important;
     height: 98%;
-    min-width: 240px;
-    width: 30%
+    min-width: 200px;
+    width: calc(20% - 270px);
     
     
   }
@@ -68,6 +69,9 @@
 
 .leftMenu{  
   background-color: #bcbdbd26;
+  position: fixed;
+  height: 98%;
+  padding: 20px
   
 }
 
@@ -144,4 +148,21 @@
 
 .settingsUserInfo {
   padding: 3px 3px 3px 0
+}
+
+.archivedColor{
+  padding-left: 10px;
+  cursor: pointer;
+  color: rgba(0,0,0,.6) !important
+}
+
+.archivedColor:hover{
+  padding-left: 10px;
+  cursor: pointer;
+  color: black !important
+}
+.archivedColorRed{
+  padding-left: 10px;
+  cursor: pointer;
+  color: #DC6969 !important
 }

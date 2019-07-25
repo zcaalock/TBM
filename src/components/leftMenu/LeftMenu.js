@@ -41,7 +41,9 @@ class Boards extends React.Component {
 
   render() {
     return (
-      <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
+      <div
+        //style={{ position: "fixed", height: '98%', padding: '20px' }}
+        className="leftMenu header">
         <div className='item leftMenu-main' style={{ textAlign: 'center' }}>
           <h3>Task Manager</h3>
         </div>
@@ -64,7 +66,7 @@ class Boards extends React.Component {
               <BoardsList />
 
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
-              
+
             </div>
           </div>
         </div>

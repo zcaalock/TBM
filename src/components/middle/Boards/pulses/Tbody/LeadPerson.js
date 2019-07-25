@@ -8,7 +8,7 @@ import DropDownMenu from '../../../../Forms/DropDownMenu'
 
 class UserName extends React.Component {
   componentDidMount() {
-    this.props.fetchLead()
+    //this.props.fetchLead()
   }
 
   
@@ -26,9 +26,9 @@ class UserName extends React.Component {
     if (leadPerson.length>0)
     return leadPerson[0].title
   }
-  
-  render() {
-    //console.log('users: ', this.props.users)
+
+  renderDropDown(){
+    if(this.props.pulse.archived === 'false')
     return (
       <div>
         {/* {this.props.pulse.userInitials} */}
@@ -38,6 +38,19 @@ class UserName extends React.Component {
         values={this.props.lead}
         text={this.findLeadPersonById()} />
       </div>
+    )
+    if(this.props.pulse.archived === 'true')
+    return (
+      <div>
+          {this.findLeadPersonById()}
+      </div>
+    )
+  }
+  
+  render() {
+    //console.log('users: ', this.props.users)
+    return (
+      <div>{this.renderDropDown()}</div>
     )
   }
 }
