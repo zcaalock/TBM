@@ -7,7 +7,6 @@ import LeftMenu from './leftMenu/LeftMenu'
 import Boards from './middle/Boards'
 import Details from './rightMenu/Details'
 import LandingPage from './middle/LandingPage'
-import MyPulses from './middle/MyPulses'
 import Filters from './middle/Filters'
 import FilterTable from './middle/Filters/filterTaskTable/FilterTable'
 
@@ -26,9 +25,7 @@ const App = () => {
             <Route exact path="/unAuth" component={unAuth} />
             <Route exact path="/login" component={Login}/>
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/settings" component={(props)=>(<><LeftMenu {...props}/> <Settings {...props}/></>)} />
-            <Route path="/mypulses/:userId" component={(props)=>(<><LeftMenu {...props}/> <MyPulses {...props}/></>)} />
-            <Route path='/mypulses/:userId/pulses/:id' component={Details} />
+            <Route exact path="/settings" component={(props)=>(<><LeftMenu {...props}/> <Settings {...props}/></>)} />            
             <Route exact path="/filters" component={(props)=>(<><LeftMenu {...props}/> <div className='article'><Filters {...props}/></div></>)} />
             <Route path='/filters/:selector/:item' component={(props)=>(<><LeftMenu {...props}/> <div className='article'><Filters {...props}/><FilterTable {...props}/></div></>)}/>
             <Route path='/filters/:selector/:item/pulses/:id' component={Details}/>                      

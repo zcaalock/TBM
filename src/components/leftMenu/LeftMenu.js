@@ -27,10 +27,10 @@ class Boards extends React.Component {
     //history.push(`/mypulses/${this.props.user.credentials.userId}`)
   }
 
-  handleFiltersOnClick(){
+  handleFiltersOnClick() {
     this.props.editState('filters', 'id')
     this.props.editState('', 'pulseId');
-    history.push('/filters')
+    history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
   }
 
   handleSelectedItem(selector) {
@@ -51,10 +51,10 @@ class Boards extends React.Component {
             <div
               className="menu" style={{ width: '100%' }}>
               <div
-                onClick={() => this.handleMyPulsesOnClick()}
+                onClick={() => this.handleFiltersOnClick()}
                 className="header item headerSelectable"
-                style={this.handleSelectedItem('mypulses')}>
-                My pulses
+                style={this.handleSelectedItem('filters')}>
+                Filters
               </div>
               <div
                 className="header item"
@@ -62,16 +62,9 @@ class Boards extends React.Component {
                 Boards:
               </div>
               <BoardsList />
+
+              <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
               
-              <div style={{borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
-              <div style={{marginTop: '15px'}}>
-              <div
-                onClick={() => this.handleFiltersOnClick()}
-                className="header item headerSelectable"
-                style={this.handleSelectedItem('filters')}>
-                Filters
-              </div>
-              </div>
             </div>
           </div>
         </div>
