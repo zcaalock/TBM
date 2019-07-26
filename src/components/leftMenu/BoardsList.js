@@ -7,9 +7,20 @@ import {editState} from '../../actions/appState'
 
 class BoardsList extends React.Component {
 
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }    
+  
+
   componentDidMount() {
-    this.props.fetchBoards()
+    if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
+      
   }
+  
 
   selectedCheck(id) {
     if (id === this.props.appState.id) {

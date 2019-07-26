@@ -5,7 +5,7 @@ class Body extends React.Component {
   render() {
     return (
       <div style={{paddingTop: '20px', paddingBottom: '20px'}}>
-        <FilterList/>        
+        <FilterList/>                
       </div>
     )
   }

@@ -13,6 +13,7 @@ import { fetchDetails } from '../../actions/details'
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
+import AddPulseModal from '../Forms/AddPulseModal'
 
 
 class Boards extends React.Component {
@@ -24,7 +25,7 @@ class Boards extends React.Component {
     }
   }
   componentDidMount() {
-    this.handleAuth()
+    //this.handleAuth()
   }
 
   refreshDB() {
@@ -78,12 +79,16 @@ class Boards extends React.Component {
           <div className="item" style={{ width: '150px' }}>
             <div
               className="menu" style={{ width: '100%' }}>
+                <div onClick={()=> this.props.editState('true', 'addPulseOpen')} data-position="bottom center" data-tooltip="Create Pulse" className="refreshDB" style={{paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
+                <i  className="plus square outline large icon"/>
+              </div>
               <div
-                onClick={() => this.handleFiltersOnClick()}
+                onClick={() => this.handleFiltersOnClick()}                
                 className="header item headerSelectable"
                 style={this.handleSelectedItem('filters')}>
                 Filters
               </div>
+              
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
@@ -95,6 +100,7 @@ class Boards extends React.Component {
             </div>
           </div>
         </div>
+        <AddPulseModal />
       </div>
     )
   }
