@@ -1,5 +1,6 @@
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
+import axios from 'axios'
 
 import history from '../history'
 
@@ -14,6 +15,21 @@ import Signup from './Forms/Signup'
 import Login from './Forms/Login'
 import Settings from './middle/Settings'
 import unAuth from './middle/unAuth'
+
+//axios.defaults.baseURL = 'https://europe-west2-quickstart-1561998550467.cloudfunctions.net/api'
+
+const token = localStorage.FBIdToken;
+if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logoutUser());
+    window.location.href = '/login';
+  } else {
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch(getUserData());
+  }
+}
 
 const App = () => {
   return (
