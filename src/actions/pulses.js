@@ -3,9 +3,9 @@ import axios from 'axios'
 //import history from '../history'
 import * as types from './types'
 
-export const createPulse = (formValues, categoryId) => {
+export const createPulse = (formValues, categoryId, userId) => {
   return async (dispatch) => {                             //TODO update initials with user handle
-    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, status: 'In Progress'})
+    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress'})
     dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
     //history.push(`/boards/${boardId}/pulses/${responce.data.pulse.id}`)       
   }

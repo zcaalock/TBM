@@ -44,11 +44,10 @@ class PulseModal extends Component {
   handleSubmit() {
     //console.log('formValues', formValues)
     const userData = {
-      title: this.state.name,     
-      userId: this.state.userId
+      title: this.state.name      
     };
 
-    this.props.createPulse(userData, this.state.categoryId, );
+    this.props.createPulse(userData, this.state.categoryId, this.state.userId );
     this.close()
   }
 
