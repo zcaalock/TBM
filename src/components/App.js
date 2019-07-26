@@ -12,9 +12,14 @@ import Filters from './middle/Filters'
 import FilterTable from './middle/Filters/filterTaskTable/FilterTable'
 
 import Signup from './Forms/Signup'
-import Login from './Forms/Login'
+import Login from './Forms/Logiffn'
 import Settings from './middle/Settings'
 import unAuth from './middle/unAuth'
+import jwtDecode from 'jwt-decode';
+
+import store from '../reducers/index'
+import {SET_AUTHENTICATED} from '../actions/types'
+import {logoutUser, getUserData} from '../actions/users'
 
 //axios.defaults.baseURL = 'https://europe-west2-quickstart-1561998550467.cloudfunctions.net/api'
 
@@ -29,7 +34,7 @@ if (token) {
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch(getUserData());
   }
-}
+};
 
 const App = () => {
   return (
