@@ -3,6 +3,7 @@ import { Checkbox } from 'semantic-ui-react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchDetails, editDetail } from '../../../actions/details'
+
 import DetailIcons from './DetailIcons'
 import EditDetailName from './EditDetailName'
 

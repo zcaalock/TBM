@@ -81,10 +81,10 @@ class PulseModal extends Component {
     return categories = _.uniqBy(categories, 'text')
     
   }
-  activateLeadField() { if (this.state.name === '') {return true} else {return false}}
-  activateBoardField() { if (this.state.userId === '') {return true} else {return false}}
-  activateCategoryField() { if (this.state.boardId === '') {return true} {return false}}
-  activateSubmit() { if (this.state.categoryId === '') {return true} {return false}}
+  activateLeadField()  { return this.state.name === '' ?  true : false}
+  activateBoardField() {  return this.state.userId === '' ? true : false}
+  activateCategoryField() { return this.state.boardId === '' ? true : false}
+  activateSubmit() {  return this.state.categoryId === ''? true : false}
 
   defaulCheck(bool) {
     if (bool === 'false')

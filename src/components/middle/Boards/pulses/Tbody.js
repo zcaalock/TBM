@@ -28,7 +28,7 @@ class Tbody extends React.Component {
   
 
 
-  goLink(id) {
+  goLink(id) {    
     this.props.editState(id, 'pulseId')
     history.push(`/boards/${this.props.appState.id}/pulses/${id}`)
 

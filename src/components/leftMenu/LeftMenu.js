@@ -9,6 +9,7 @@ import { fetchCategories } from '../../actions/categories'
 import { fetchBoards } from '../../actions/boards'
 import { fetchLead } from '../../actions/settings'
 import { fetchDetails } from '../../actions/details'
+import { fetchNotepads } from '../../actions/notepad'
 
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
@@ -36,6 +37,7 @@ class Boards extends React.Component {
       this.props.fetchDetails()
       this.props.fetchLead()
       this.props.fetchCategories()
+      this.props.fetchNotepads()
     }
     this.props.editState('true', 'refreshed')
     setTimeout(() => { this.props.editState('false', 'refreshed') }, 60000);
@@ -116,4 +118,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { editState, fetchBoards, fetchCategories, fetchDetails, fetchLead, fetchPulses, fetchStatus })(Boards)
+export default connect(mapStateToProps, { editState, fetchBoards, fetchCategories, fetchDetails, fetchLead, fetchPulses, fetchStatus, fetchNotepads })(Boards)

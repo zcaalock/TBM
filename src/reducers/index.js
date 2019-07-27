@@ -8,6 +8,7 @@ import categoriesReducers from './categoriesReducers'
 import pulsesReducers from './pulsesReducers'
 import detailsReducers from './detailsReducers'
 import usersReducers from './usersReducers'
+import notepadReducers from './notepadReducers'
 
 import uiReducers from './uiReducers';
 
@@ -44,6 +45,7 @@ const reducers = combineReducers({
   categories: categoriesReducers,
   pulses: pulsesReducers,
   details: detailsReducers,
+  notepad: notepadReducers,
   user: usersReducers,
   appState: appStateReducers,
   status: statusReducers,

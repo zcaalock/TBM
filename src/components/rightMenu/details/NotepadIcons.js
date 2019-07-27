@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {deleteDetail} from '../../../actions/details'
+import {deleteNotepad} from '../../../actions/notepad'
 
 
-class DetailIcon extends React.Component {  
+class NotepadIcons extends React.Component {  
 
   render() {
     return (
@@ -22,7 +22,7 @@ class DetailIcon extends React.Component {
           <i className=" edit icon" />
         </div>
         <div
-          onClick={() => { this.props.deleteDetail(this.props.detailId) }}
+          onClick={() => { this.props.deleteNotepad(this.props.notepadId) }}
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Delete"
@@ -47,4 +47,4 @@ class DetailIcon extends React.Component {
   }
 }
 
-export default connect(null, {deleteDetail}) (DetailIcon)
+export default connect(null, {deleteNotepad}) (NotepadIcons)

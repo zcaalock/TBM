@@ -1,4 +1,4 @@
-import history from '../history'
+//import history from '../history'
 //import categories from '../apis/server'
 import axios from 'axios'
 import * as types from './types'
