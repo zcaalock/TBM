@@ -58,7 +58,7 @@ class Notepad extends Component {
                 Notepad:
           </h3>
             </div>
-            <div style={{ display: 'inline-block', float: 'right' }}>
+            <div style={{ display: 'inline-block', float: 'right', paddingRight: '4px' }}>
               <NotepadIcons showEdit={() => this.showEdit(notepad.id)} notepadId={notepad.id} />
             </div>
           </div>
@@ -81,7 +81,7 @@ class Notepad extends Component {
               Notepad:
           </h3>
           </div>
-          <div style={{ display: 'inline-block', float: 'right' }}>
+          <div style={{ display: 'inline-block', float: 'right', width: '35px' }}>
             <div
               onClick={() => { this.setState({showNewNotepad: 'true'}) }}
               className="articleIcon"

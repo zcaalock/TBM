@@ -38,7 +38,7 @@ class Header extends React.Component {
             {this.props.title}
           </h3>
         </div>
-        <div className="header item" style={{ display: 'inline-block', float: 'right' }}>
+        <div className="header item" style={{ display: 'inline-block', float: 'right', width: '55px' }}>
           <HeaderIcons
             showEdit={() => this.showEdit()}
             pulseId={this.props.pulseId}
