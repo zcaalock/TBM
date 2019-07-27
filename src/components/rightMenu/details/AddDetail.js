@@ -26,7 +26,7 @@ class AddDetail extends React.Component {
     if (this.state.isHovering === true) {
       return (
         <div data-position="bottom center"
-        data-tooltip="Add item">
+        data-tooltip="Add check list item">
           <i className="plus icon"  />
         </div>)
     }

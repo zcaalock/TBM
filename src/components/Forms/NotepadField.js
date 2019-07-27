@@ -23,7 +23,7 @@ class SingleInput extends React.Component {
         placeholder="Enter name..." 
         autoFocus={true} 
         //style={this.props.propChildStyle} 
-        style={{height: '350px'}} 
+        style={{height: '350px', padding: '0px', backgroundColor: '#F5F5F5'}} 
         {...input} 
         autoComplete="off" />
         

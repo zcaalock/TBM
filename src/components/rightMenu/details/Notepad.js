@@ -38,8 +38,8 @@ class Notepad extends Component {
    if (this.state.showNewNotepad === 'true')
     return <TextArea 
               onChange={(e, { value }) => this.setState({ content: value })}
-            style={{width: '100%', height: '350px'}}
-            onBlur={()=>this.createNotepad(this.state.content)}
+            style={{width: '100%', height: '350px', backgroundColor: '#F5F5F5'}}
+            onBlur={()=>{this.createNotepad(this.state.content); this.setState({showNewNotepad: 'false'})}}
             />
   }
 
@@ -62,12 +62,12 @@ class Notepad extends Component {
               <NotepadIcons showEdit={() => this.showEdit(notepad.id)} notepadId={notepad.id} />
             </div>
           </div>
-          <div style={{ paddingTop: '20px' }}>
+          <div onDoubleClick={() => this.showEdit(notepad.id)} style={{ paddingTop: '20px' }}>
             <EditNotepadContent
-              title={notepad.content}
-              detail={notepad}
+              content={notepad.content}
+              notepad={notepad}
               editState={this.state}
-              onClick={() => this.showEdit(notepad.id)}
+              
               showEdit={() => this.showEdit(notepad.id)}
               removeEdit={() => this.removeEdit(notepad.id)} />
           </div>
@@ -86,7 +86,7 @@ class Notepad extends Component {
               onClick={() => { this.setState({showNewNotepad: 'true'}) }}
               className="articleIcon"
               data-position="bottom center"
-              data-tooltip="Edit"
+              data-tooltip="New Note"
               style={{
                 display: 'inline-block',
                 paddingLeft: '10px',

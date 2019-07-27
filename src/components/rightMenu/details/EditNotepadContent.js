@@ -9,19 +9,21 @@ class editNotepadContent extends React.Component {
 
   onSubmit = (formValues) => {
     //this.props.editDetail(this.props.detail.id, formValues)
+    if(this.props.notepad.content !== formValues.content)
+    //console.log('submit value: ', formValues, 'notepad Id:', this.props.notepad.id)
+    this.props.editNotepad(this.props.notepad.id, formValues)
     
-    console.log('submit value: ', formValues)
     this.props.removeEdit()
   }   
 
   renderEditNotepad() {
-    const id =[`itemEditable${this.props.detail.id}`]    
+    const id =[`itemEditable${this.props.notepad.id}`]    
     if (this.props.editState[id] === "true") {
       return (
         <NotepadField 
         propStyle={{padding: '0'}} 
         propChildStyle={{ padding: '0'}}
-        initialValues={_.pick(this.props.detail, 'content')} 
+        initialValues={_.pick(this.props.notepad, 'content')} 
         removeEdit={()=>this.props.removeEdit()} 
         onSubmit={this.onSubmit} />
       )
@@ -30,7 +32,7 @@ class editNotepadContent extends React.Component {
     if (!this.props.editState.itemEditable || this.props.editState.itemEditable === "false") {
       return (                    
           <div >
-          {this.props.title}
+          {this.props.content}
           </div>        
       )
     }

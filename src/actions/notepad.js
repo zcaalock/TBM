@@ -12,12 +12,13 @@ export const createNotepad = (formValues, id) => {
 
 export const fetchNotepads = () => async dispatch => {
   const responce = await axios.get('/notepad')
-  console.log('notes: ', responce)
+  //console.log('notes: ', responce)
   dispatch({type: types.FETCH_NOTEPADS, payload: responce.data})
 }
 
 export const editNotepad = (id, formValues) => async dispatch => {  
   const responce = await axios.patch(`/notepad/${id}`, formValues)
+  console.log('notes: ', responce)
   await dispatch({type: types.EDIT_NOTEPAD, payload: responce.data.notes})
   
 }
