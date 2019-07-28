@@ -1,6 +1,7 @@
 //import users from '../apis/server'
 import axios from 'axios'
 import history from '../history'
+import {editState} from './appState'
 import * as types from './types'
 
 export const loginUser = (userData, history) => async (dispatch) => {
@@ -25,7 +26,9 @@ export const loginUser = (userData, history) => async (dispatch) => {
     .then((res) => {
       //console.log('res',res.data)
       //history.push(`/mypulses/${res.data.credentials.userId}`);
+      dispatch(editState({selector: 'LeadPerson', value: res.data.credentials.handle}, 'filter'))
       history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
+      
     })
     .catch((err) => console.log(err));
   
@@ -56,6 +59,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     .then((res) => {
       //console.log('res',res.data)
       //history.push(`/mypulses/${res.data.credentials.userId}`);
+      dispatch(editState({selector: 'LeadPerson', value: res.data.credentials.handle}, 'filter'))
       history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
     })
     .catch((err) => console.log(err));

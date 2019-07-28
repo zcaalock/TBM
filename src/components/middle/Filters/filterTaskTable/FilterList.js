@@ -140,7 +140,7 @@ class SearchFilter extends React.Component {
   }
 
   render() {
-    console.log('state: ', this.state)
+    //console.log('state: ', this.state)
     if (this.isEmpty(colSplited)) this.makeCollection()
     const { isLoading, value, results } = this.state    
     return (
