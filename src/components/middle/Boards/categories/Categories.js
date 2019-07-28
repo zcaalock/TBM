@@ -8,6 +8,8 @@ import Header from './Header'
 import Table from '../pulses/Table'
 import ProgressBar from '../../../Forms/ProgressBar'
 
+
+
 class Categories extends React.Component {
 
   isEmpty(obj) {
@@ -34,11 +36,27 @@ class Categories extends React.Component {
   }
 
   renderProgressBar(id) {
+    let detailStorage = []
     const pulses = _.filter(this.props.pulses, { categoryId: id })
     const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
+    const pulsesPB = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
+    
+    pulsesPB.map(pulse => {      
+    this.props.details.map(detail =>{
+        if (detail.pulseId === pulse.id)
+        detailStorage.push({detailId: detail.id, check: detail.check}) 
+        //console.log('detail', detail.id) 
+        
+      })     
+    })
+    
+    const details = _.unionBy(detailStorage, 'detailId')
+    const detailsChecked = _.filter(details, {check: 'true'})
 
-    if (pulses.length > 0) {
-      const value = checked.length / pulses.length
+    console.log('pbar: ', detailsChecked.length)
+
+    if (details.length > 0) {
+      const value = detailsChecked.length / details.length
       //console.log('value: ', value)
       return <ProgressBar size={'tiny'} value={value * 100} />
     }
@@ -93,6 +111,7 @@ const mapStateToProps = (state) => {
   return {
     categories: Object.values(state.categories),
     pulses: Object.values(state.pulses),
+    details: Object.values(state.details),
     appState: state.appState
   }
 }

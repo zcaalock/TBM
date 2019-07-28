@@ -22,7 +22,7 @@ import store from '../reducers/index'
 import { SET_AUTHENTICATED } from '../actions/types'
 import { logoutUser, getUserData } from '../actions/users'
 
-//axios.defaults.baseURL = 'https://europe-west2-quickstart-1561998550467.cloudfunctions.net/api'
+axios.defaults.baseURL = 'https://europe-west2-quickstart-1561998550467.cloudfunctions.net/api'
 
 const token = localStorage.FBIdToken;
 if (token) {

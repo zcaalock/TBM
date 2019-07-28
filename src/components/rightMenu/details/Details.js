@@ -57,7 +57,7 @@ class Details extends React.Component {
       //key={detail.id} basic='very'
       return (
         <Table.Row key={detail.id}>
-          <Table.Cell>
+          <Table.Cell style={{ width: '25px' }}>
             <Checkbox
               onClick={() => this.handleOnClick(detail.id, detail.check)}
               defaultChecked={this.defaulCheck(detail.check)}

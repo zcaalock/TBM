@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { fetchLead, createLead, deleteLead } from '../../../../actions/settings'
 import { editState } from '../../../../actions/appState'
 import { fetchPulses } from '../../../../actions/pulses'
-import { Item, Button } from 'semantic-ui-react'
+import { Item, Button, Message } from 'semantic-ui-react'
 
 import LeadName from './leadName/LeadName'
 
 class UserSettings extends React.Component {
-
+  state={showError: 'false'}
 
   isEmpty(obj) {
     for (var key in obj) {
@@ -35,13 +35,28 @@ class UserSettings extends React.Component {
     this.props.deleteLead(id)
   }
 
+  renderErrorMessage() {
+    if (this.state.showError === 'true')
+      return (
+        <Message negative>
+          <Message.Header>Cannot preceed with the request</Message.Header>
+          <p>Lead person name is in use</p>
+        </Message>
+      )
+  }
+
+  tiggerError(){
+    this.setState({showError: 'true'})
+    setTimeout(() => { this.setState({showError: 'false'}) }, 5000);
+  }
+
   renderCreateLeadButton() {
     const pulses = _.filter(this.props.pulses, { userId: this.props.user.userId })
     const leads = _.filter(this.props.lead, { userId: this.props.user.userId })
     //console.log('user pulses: ', pulses, leads)
 
-    if (leads.length > 0 && pulses.length === 0) return <Button negative onClick={() => this.handleDeleteLead(leads[0].id)}>Remove user from Lead Person List</Button>    
-    if (leads.length > 0 && pulses.length > 0) return <div data-position="bottom left" data-tooltip="Remove your initials from pulses" ><Button disabled >Remove user from Lead Person List</Button></div>
+    if (leads.length > 0 && pulses.length === 0) return <Button negative onClick={() => this.handleDeleteLead(leads[0].id)}>Remove user from Lead Person List</Button>
+    if (leads.length > 0 && pulses.length > 0) return <div style={{width: '265px'}} onClick={()=>this.tiggerError()}><Button  disabled >Remove user from Lead Person List</Button></div>
     if (this.props.user.handle) return <Button onClick={() => this.handleCreateLead()}>Add user to Lead Person List</Button>
     return <div></div>
   }
@@ -59,7 +74,7 @@ class UserSettings extends React.Component {
   }
 
   renderMeta() {
-    
+
     if (this.props.user.handle)
       return (
         <Item.Meta>
@@ -77,12 +92,13 @@ class UserSettings extends React.Component {
           </div>
         </Item.Meta>
       )
-    return(<div>No user found..</div>)
+    return (<div>No user found..</div>)
   }
 
-  renderItem() {    
+  renderItem() {
     return (
       <Item.Group>
+        {this.renderErrorMessage()}
         <Item>
           <Item.Image size='tiny' src='/images/no-image.png' />
           <Item.Content>
@@ -90,6 +106,7 @@ class UserSettings extends React.Component {
             {this.renderMeta()}
             <Item.Description></Item.Description>
             {this.renderCreateLeadButton()}
+            
           </Item.Content>
         </Item>
       </Item.Group>

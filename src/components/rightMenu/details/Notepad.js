@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import { TextArea } from 'semantic-ui-react'
 
-//import { isEmpty } from '../../../actions/helperFunctions'
+import { isEmpty } from '../../../actions/helperFunctions'
 import { fetchNotepads } from '../../../actions/notepad'
 import { createNotepad } from '../../../actions/notepad'
 import NotepadIcons from './NotepadIcons'
@@ -12,6 +12,10 @@ import EditNotepadContent from './EditNotepadContent'
 
 
 class Notepad extends Component {
+
+  componentDidMount(){
+    if (isEmpty(this.props.notepad)) this.props.fetchNotepads()
+  }
 
   state = {showNewNotepad: 'false'}
 

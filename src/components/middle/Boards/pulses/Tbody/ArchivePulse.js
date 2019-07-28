@@ -20,7 +20,7 @@ class ArchivePulse extends React.Component {
         onClick={() => this.props.editPulse(this.props.pulseId, {archived: 'false'})}        
         data-position="left center"
         data-tooltip="unarchive pulse"
-        style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px' ,cursor: 'pointer' }}>          
+        style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px' ,cursor: 'pointer'}}>          
         <i className=" archive icon" /> archived        
       </div>
       )

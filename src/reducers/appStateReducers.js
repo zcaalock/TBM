@@ -3,7 +3,7 @@ import * as types from '../actions/types'
 const appState ={
   showArchived: 'false',
   refreshed: 'false',
-  addPulseOpen: 'false'
+  addPulseOpen: 'false'  
 }
 
 export default (state = appState, action) => {

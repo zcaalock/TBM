@@ -47,7 +47,7 @@ class SingleInput extends React.Component {
 
     return (
       <form 
-      onBlur={()=>this.props.removeEdit()}
+      //onBlur={()=>{this.props.removeEdit()}}
       onKeyDown={this.Cancel} 
       onSubmit={this.props.handleSubmit(this.onSubmit)} 
       onBlur={this.props.handleSubmit(this.onSubmit)} 
