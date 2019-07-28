@@ -14,6 +14,7 @@ import { fetchDetails } from '../../../../actions/details'
 
 
 let col = []
+let colSplited = []
 const initialState = { isLoading: false, results: [], value: '' }
 
 class SearchFilter extends React.Component {
@@ -55,14 +56,26 @@ class SearchFilter extends React.Component {
       
       this.props.pulses.map(pulse => {
 
-        col.push({ title: `${_.keyBy(this.props.categories, 'id')[pulse.categoryId].title} ${_.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title}`, description: 'Category', link: pulse.categoryId, id: pulse.id })
+        col.push({ 
+          title: `${_.keyBy(this.props.categories, 'id')[pulse.categoryId].title}/${_.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title }`, 
+          description: `Category: ${_.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title }`, 
+          link: pulse.categoryId, 
+          id: pulse.id,
+          //category: _.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title 
+        })  
         return col
       })
 
       col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true', id: 'Archived' })
-      return col = _.uniqBy(col, 'title')
+      col = _.uniqBy(col, 'title')
+      colSplited = []
+      col.map(col => {
+        colSplited.push({title: col.title.split('/')[0], id:col.id, link:col.link, description: col.description})
+      })
+            
     }
     //console.log('col: ',col)
+    //console.log('re: ',colSplited)
 
   }
 
@@ -70,15 +83,16 @@ class SearchFilter extends React.Component {
     if (this.state.results[0])
       if (description === 'ArchivedPulses') {
         this.handleOnCheckBoxClick(this.props.appState.showArchived)
-        this.props.editState({selector: description, value: title}, 'filter')
-        history.push(`/filters/${description}/${link}`)
+        this.props.editState({selector: description, value: title.split('/')[0]}, 'filter')
+        history.push(`/filters/${description.split(':')[0]}/${link}`)
       }
-      else history.push(`/filters/${description}/${link}`)
-      this.props.editState({selector: description, value: title}, 'filter')
+      else history.push(`/filters/${description.split(':')[0]}/${link}`)
+      this.props.editState({selector: description.split(':')[0], value: title.split('/')[0]}, 'filter')
 
   }
 
-  handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description, result.title) }
+  handleResultSelect = (e, { result }) => { this.setState({ value: result.title.split('/')[0] });this.handleOnClick(result.link, result.description, result.title.split('/')[0]) 
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -89,9 +103,11 @@ class SearchFilter extends React.Component {
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
       const isMatch = result => re.test(result.title)
 
+      const results = _.filter(colSplited, isMatch).map(result => ({ ...result, key: result.id }));
+
       this.setState({
         isLoading: false,
-        results: _.filter(col, isMatch),
+        results: results//_.filter(colSplited, isMatch),
       })
     }, 300)
   }
@@ -123,8 +139,8 @@ class SearchFilter extends React.Component {
   }
 
   render() {
-    
-    if (this.isEmpty(col)) this.makeCollection()
+    console.log('state: ', this.state)
+    if (this.isEmpty(colSplited)) this.makeCollection()
     const { isLoading, value, results } = this.state    
     return (
       <div>
@@ -132,6 +148,7 @@ class SearchFilter extends React.Component {
           <Search
             //onFocus={() => this.handleOnFocus()}
             //onClick={()=> this.handleOnClick()}
+            
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
