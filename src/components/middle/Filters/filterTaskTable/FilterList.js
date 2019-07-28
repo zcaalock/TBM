@@ -26,8 +26,10 @@ class SearchFilter extends React.Component {
     }
     return true;
   }
+  
 
   componentDidMount() {
+    
     if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
     if (this.isEmpty(this.props.status)) this.props.fetchStatus()
     if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
@@ -35,42 +37,48 @@ class SearchFilter extends React.Component {
     if (this.isEmpty(this.props.lead)) this.props.fetchLead()
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
     this.makeCollection()
+    //console.log('user: ', this.props.user)
+    if(this.props.user) this.props.editState({selector: 'LeadPerson', value: this.props.user.credentials.handle}, 'filter')
   }
 
   makeCollection() {
 
     if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0) {
       this.props.status.map(status => {
-        col.push({ title: status.title, description: 'Status', link: status.title })
+        col.push({ title: status.title, description: 'Status', link: status.title, id: status.id})
         return col
       })
       this.props.lead.map(lead => {
-        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId })
+        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id })
         return col
       })
+      
       this.props.pulses.map(pulse => {
-        col.push({ title: _.keyBy(this.props.categories, 'id')[pulse.categoryId].title, description: 'Category', link: pulse.categoryId })
+
+        col.push({ title: `${_.keyBy(this.props.categories, 'id')[pulse.categoryId].title} ${_.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title}`, description: 'Category', link: pulse.categoryId, id: pulse.id })
         return col
       })
 
-      col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true' })
+      col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true', id: 'Archived' })
       return col = _.uniqBy(col, 'title')
     }
-    //console.log('col: ', col)
+    //console.log('col: ',col)
 
   }
 
-  handleOnClick(link, description) {
+  handleOnClick(link, description, title) {
     if (this.state.results[0])
       if (description === 'ArchivedPulses') {
         this.handleOnCheckBoxClick(this.props.appState.showArchived)
+        this.props.editState({selector: description, value: title}, 'filter')
         history.push(`/filters/${description}/${link}`)
       }
       else history.push(`/filters/${description}/${link}`)
+      this.props.editState({selector: description, value: title}, 'filter')
 
   }
 
-  handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description) }
+  handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description, result.title) }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -115,6 +123,7 @@ class SearchFilter extends React.Component {
   }
 
   render() {
+    
     if (this.isEmpty(col)) this.makeCollection()
     const { isLoading, value, results } = this.state    
     return (
@@ -154,11 +163,12 @@ class SearchFilter extends React.Component {
 const mapStateToProps = (state) => {
   return {
     lead: Object.values(state.lead),
-    status: Object.values(state.status),
+    status: Object.values(state.status),    
     pulses: Object.values(state.pulses),
     boards: Object.values(state.boards),
     categories: Object.values(state.categories),
     details: Object.values(state.details),
+    user: state.user,
     appState: state.appState
   }
 }

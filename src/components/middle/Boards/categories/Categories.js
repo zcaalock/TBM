@@ -37,14 +37,15 @@ class Categories extends React.Component {
 
   renderProgressBar(id) {
     let detailStorage = []
-    const pulses = _.filter(this.props.pulses, { categoryId: id })
-    const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
+    //const pulses = _.filter(this.props.pulses, { categoryId: id })
+    //const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
     const pulsesPB = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
     
     pulsesPB.map(pulse => {      
-    this.props.details.map(detail =>{
+    return this.props.details.map(detail =>{
         if (detail.pulseId === pulse.id)
         detailStorage.push({detailId: detail.id, check: detail.check}) 
+        return detailStorage
         //console.log('detail', detail.id) 
         
       })     
@@ -53,7 +54,6 @@ class Categories extends React.Component {
     const details = _.unionBy(detailStorage, 'detailId')
     const detailsChecked = _.filter(details, {check: 'true'})
 
-    console.log('pbar: ', detailsChecked.length)
 
     if (details.length > 0) {
       const value = detailsChecked.length / details.length
