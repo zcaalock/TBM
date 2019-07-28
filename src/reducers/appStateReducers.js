@@ -1,7 +1,10 @@
 import * as types from '../actions/types'
 
 const appState ={
-  
+  showArchived: 'false',
+  refreshed: 'false',
+  addPulseOpen: 'false',
+  filter: {selector: '', value: ''} 
 }
 
 export default (state = appState, action) => {

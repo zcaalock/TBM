@@ -9,7 +9,7 @@ export const EDIT_BOARD = 'EDIT_BOARD'
 export const EDIT_STATE = 'EDIT_STATE'
 
 //status
-export const FETCH_STATUS = 'FETCH_STATUS'
+
 
 
 // categories
@@ -32,5 +32,30 @@ export const FETCH_DETAIL = 'FETCH_DETAIL'
 export const EDIT_DETAIL = 'EDIT_DETAIL'
 export const DELETE_DETAIL = 'DELETE_DETAIL'
 
+//notepad
+export const CREATE_NOTEPAD = 'CREATENOTEPAD'
+export const FETCH_NOTEPADS = 'FETCH_NOTEPADS'
+export const FETCH_NOTEPAD = 'FETCH_NOTEPAD'
+export const EDIT_NOTEPAD = 'EDIT_NOTEPAD'
+export const DELETE_NOTEPAD = 'DELETE_NOTEPAD'
+
 // users
-export const FETCH_USERS = 'FETCH_USERS'
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
+export const SET_USER = 'SET_USER';
+export const LOADING_USER = 'LOADING_USER';
+export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
+
+// settings
+export const FETCH_LEAD = 'FETCH_LEAD'
+export const CREATE_LEAD = 'CREATE_LEAD'
+export const EDIT_LEAD = 'EDIT_LEAD'
+export const DELETE_LEAD = 'DELETE_LEAD'
+export const FETCH_STATUS = 'FETCH_STATUS'
+
+//UI
+export const SET_ERRORS = 'SET_ERRORS';
+export const LOADING_UI = 'LOADING_UI';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const LOADING_DATA = 'LOADING_DATA';
+export const STOP_LOADING_UI = 'STOP_LOADING_UI';

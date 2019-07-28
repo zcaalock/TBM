@@ -26,14 +26,14 @@ class AddDetail extends React.Component {
     if (this.state.isHovering === true) {
       return (
         <div data-position="bottom center"
-        data-tooltip="Add item">
+        data-tooltip="Add check list item">
           <i className="plus icon"  />
         </div>)
     }
   }
 
   onSubmit = (formValues) => {
-    this.props.createDetail(formValues, Number(this.props.pulseId))
+    this.props.createDetail(formValues, this.props.pulseId)
     this.removeEdit()
   }
 

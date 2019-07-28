@@ -1,29 +1,27 @@
-import details from '../apis/server'
+//import details from '../apis/server'
+import axios from 'axios'
 import * as types from './types'
 
 
 export const createDetail = (formValues, id) => {
   return async (dispatch) => {    
-    const responce = await details.post('/details', {...formValues, pulseId: id, check: false})
-    dispatch({type: types.CREATE_DETAIL, payload: responce.data})
-    //history.push(`/boards/${id}/pulses/${responce.data.id}`)
-    //console.log('create category: ',responce.data)    
+    const responce = await axios.post('/detail', {...formValues, pulseId: id})    
+    dispatch({type: types.CREATE_DETAIL, payload: responce.data.detail})       
   }
 }
 
 export const fetchDetails = () => async dispatch => {
-  const responce = await details.get('/details')
+  const responce = await axios.get('/details')
   dispatch({type: types.FETCH_DETAILS, payload: responce.data})
 }
 
-export const editDetail = (id, formValues) => async dispatch => {
-  //console.log("edit pulse: ", id, formValues)
-  const responce = await details.patch(`/details/${id}`, formValues)
-  dispatch({type: types.EDIT_DETAIL, payload: responce.data})
+export const editDetail = (id, formValues) => async dispatch => {  
+  const responce = await axios.patch(`/detail/${id}`, formValues)
+  await dispatch({type: types.EDIT_DETAIL, payload: responce.data.detail})
   
 }
 
 export const deleteDetail = (id) => async dispatch => {
-  await details.delete(`/details/${id}`)
+  await axios.delete(`/detail/${id}`)
   dispatch({type: types.DELETE_DETAIL, payload: id})  
 }

@@ -2,20 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
 import Body from './Body'
-import { fetchPulse } from '../../actions/pulses'
+
 
 
 class Details extends React.Component {
-
-  componentDidMount() {
-    this.props.fetchPulse(this.props.match.params.id)
-  }
+  
 
   render() {
     if (!this.props.pulse) {
-      return <div>loading</div>
+      return <div className="article rightMenu" style={{ position: 'absolute', marginLeft:'calc(80% - 20px)', padding: '20px', float: 'right'}}><div className="ui active inline loader"></div></div>
     } return (
-      <div className="article rightMenu" style={{ position: 'fixed', display: 'inline-block', marginLeft: '0', padding: '20px'}}>
+      <div className="article rightMenu" style={{ position: 'fixed', display: 'inline-block', padding: '20px'}}>
         <Header title={this.props.pulse.title} pulseId={this.props.pulse.id}/>
         <Body pulseId={this.props.pulse.id}/>
       </div>
@@ -28,4 +25,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPulse })(Details)
+export default connect(mapStateToProps, {  })(Details)

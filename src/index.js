@@ -1,24 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import {createStore, applyMiddleware, compose} from 'redux'
+//import {Provider} from 'react-redux'
+//import {createStore, applyMiddleware, compose} from 'redux'
 import App from './components/App'
-import reducers from './reducers'
-import reduxThunk from 'redux-thunk'
+//import reducers from './reducers'
+//import reduxThunk from 'redux-thunk'
 import './css/index.css'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(
-  reducers,
-  composeEnhancers(applyMiddleware(reduxThunk))
-  )
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+// //  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose
 
-ReactDOM.render(
+// const store = createStore(
+//   reducers,
+//   composeEnhancers(applyMiddleware(reduxThunk))
+//   )
+
+ ReactDOM.render(
   
-  <Provider store={store}>
+//   <Provider store={store}>
     <App />
  
-    </Provider>
+    //</Provider>
   
   , document.querySelector('#root')
 )

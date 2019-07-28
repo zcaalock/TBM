@@ -1,82 +1,108 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import history from '../../history'
-import { fetchBoards, createBoard } from '../../actions/boards'
+
 import { editState } from '../../actions/appState'
+import { fetchStatus } from '../../actions/status'
+import { fetchPulses } from '../../actions/pulses'
+import { fetchCategories } from '../../actions/categories'
+import { fetchBoards } from '../../actions/boards'
+import { fetchLead } from '../../actions/settings'
+import { fetchDetails } from '../../actions/details'
+import { fetchNotepads } from '../../actions/notepad'
+
 import AddBoard from './AddBoard'
+import BoardsList from './BoardsList'
+import SettingsIcons from './SettingsIcons'
+import AddPulseModal from '../Forms/AddPulseModal'
+
 
 class Boards extends React.Component {
 
-  state = { isHovering: false }
-
-  componentDidMount() {
-    this.props.fetchBoards()
-  }
-
-  goLink() {
-    history.push(`/`)
-    //console.log('select', id)
-  }
-
-  goBoards(){
-    history.push('/boards')
-  }
-
-  handleHover() {
-    this.setState({ isHovering: !this.state.isHovering })
-  }
-
-  renderLogOut() {
-    if (this.state.isHovering === false)
-      return <h3>Task Manager</h3>
-    return <div ><h3><i className="power off icon" />LogOut</h3></div>
-  }
-
-  selectedCheck(id) {
-    if (id === Number(this.props.appState.id)) {
-      return 'active'
+  handleAuth() {
+    if (this.props.user.loading === false) {
+      if (this.props.user.authenticated === false)
+        history.push('/unAuth')
     }
-    return ''
+  }
+  componentDidMount() {
+    //this.handleAuth()
   }
 
-  renderBoards() {
-    return this.props.boards.map(board => {
-      return (
-        <Link
-          to={`/boards/${board.id}`}
-          className={`item ${this.selectedCheck(board.id)}`}
-          key={board.id}
-          style={{ paddingLeft: '0' }}>
-          {board.title}
-        </Link>
-      )
-    })
+  refreshDB() {
+    if (this.props.appState.refreshed === 'false') {
+      this.props.fetchBoards()
+      this.props.fetchStatus()
+      this.props.fetchPulses()
+      this.props.fetchDetails()
+      this.props.fetchLead()
+      this.props.fetchCategories()
+      this.props.fetchNotepads()
+    }
+    this.props.editState('true', 'refreshed')
+    setTimeout(() => { this.props.editState('false', 'refreshed') }, 60000);
+
+  }
+
+  handleMyPulsesOnClick() {
+    this.props.editState('', 'pulseId');
+    this.props.editState(this.props.match.params.id, 'id')
+    history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
+    //history.push(`/mypulses/${this.props.user.credentials.userId}`)
+  }
+
+  handleFiltersOnClick() {
+    this.props.editState('filters', 'id')
+    this.props.editState('', 'pulseId');
+    history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
+  }
+
+  handleSelectedItem(selector) {
+    if (this.props.appState.id === selector)
+      return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }
+    return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
+  }
+
+  renderRefreshClass() {
+    if (this.props.appState.refreshed === "false") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Refresh database" className='refreshDB'><i className='refreshDBspin large refresh icon' /></div>
+    if (this.props.appState.refreshed === "true") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Cannot refresh database now" className='greyedDB'><i className='large refresh icon' /></div>
   }
 
   render() {
     return (
-
-      <div style={{ position: "fixed", height: '98%', padding: '20px' }} className="leftMenu header">
-        <div
-        onMouseEnter={() => this.handleHover()}
-        onMouseLeave={() => this.handleHover()} 
-          //data-position="bottom center"
-        // data-tooltip="Go to main page" 
-         style={{ cursor: "pointer" }} 
-         onClick={() => { this.goLink(); this.props.editState('', 'id') }} 
-         className='item leftMenu-main'>{this.renderLogOut()}</div>
-               
+      <div
+        //style={{ position: "fixed", height: '98%', padding: '20px' }}
+        className="leftMenu header">
+        <div className='item leftMenu-main' style={{ textAlign: 'center' }}>
+          <h3>Task Manager</h3>
+        </div>
+        <SettingsIcons />
         <div className="ui secondary text menu">
           <div className="item" style={{ width: '150px' }}>
-            <div              
+            <div
               className="menu" style={{ width: '100%' }}>
-              <div onClick={()=>this.goBoards()} className="header item" style={{ paddingLeft: '0', paddingBottom: '10px', cursor: 'pointer' }}>Boards</div>
-              {this.renderBoards()}
-              <AddBoard />
+                <div onClick={()=> this.props.editState('true', 'addPulseOpen')} data-position="bottom center" data-tooltip="Create Pulse" className="refreshDB" style={{paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
+                <i  className="plus square outline large icon"/>
+              </div>
+              <div
+                onClick={() => this.handleFiltersOnClick()}                
+                className="header item headerSelectable"
+                style={this.handleSelectedItem('filters')}>
+                Filters
+              </div>
+              
+              <div
+                className="header item"
+                style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
+                Boards:
+              </div>
+              <BoardsList />
+              <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}><AddBoard /></div>
+              {this.renderRefreshClass()}
             </div>
           </div>
         </div>
+        <AddPulseModal />
       </div>
     )
   }
@@ -86,9 +112,10 @@ class Boards extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    boards: Object.values(state.boards),
+    user: state.user,
     appState: state.appState
+
   }
 }
 
-export default connect(mapStateToProps, { fetchBoards, createBoard, editState })(Boards)
+export default connect(mapStateToProps, { editState, fetchBoards, fetchCategories, fetchDetails, fetchLead, fetchPulses, fetchStatus, fetchNotepads })(Boards)

@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {deleteDetail} from '../../../actions/details'
 
-class DetailIcon extends React.Component {
+
+class DetailIcon extends React.Component {  
+
   render() {
     return (
       <div>
