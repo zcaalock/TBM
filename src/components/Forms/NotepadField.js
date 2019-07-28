@@ -62,7 +62,7 @@ const validate = (formValues) => {
   const errors = {}
 
   if (!formValues.content) {
-    errors.content = 'Please enter a content'
+    errors.content = 'Filed cannot be empty, use delete icon to remove notepad'
   }  
   return errors
 }
