@@ -60,6 +60,7 @@ class Boards extends React.Component {
   handleFiltersOnClick() {
     this.props.editState('filters', 'id')
     this.props.editState('', 'pulseId');
+    if(this.props.user) this.props.editState({selector: 'LeadPerson', value: this.props.user.credentials.handle}, 'filter')
     history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
   }
 

@@ -39,7 +39,7 @@ class SearchFilter extends React.Component {
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
     this.makeCollection()
     //console.log('user: ', this.props.user)
-    if(this.props.user) this.props.editState({selector: 'LeadPerson', value: this.props.user.credentials.handle}, 'filter')
+    
   }
 
   makeCollection() {
@@ -127,7 +127,8 @@ class SearchFilter extends React.Component {
       this.props.editState('false', 'showArchived')
 
       if (this.state.value === "Archived") 
-      history.push(`/filters/`)
+      {this.props.editState({selector: '', value: ''}, 'filter')
+      history.push(`/filters/`)}
     }
   }
 
