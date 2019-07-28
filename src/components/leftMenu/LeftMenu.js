@@ -19,6 +19,12 @@ import AddPulseModal from '../Forms/AddPulseModal'
 
 class Boards extends React.Component {
 
+  state={MHide: 'true'}
+
+  showMobileMenu(){
+    return this.state.MHide === 'false' ?  '' : 'MHide'
+  }
+
   handleAuth() {
     if (this.props.user.loading === false) {
       if (this.props.user.authenticated === false)
@@ -74,11 +80,12 @@ class Boards extends React.Component {
         //style={{ position: "fixed", height: '98%', padding: '20px' }}
         className="leftMenu header">
         <div className='item leftMenu-main' style={{ textAlign: 'center' }}>
-          <h3>Task Manager</h3>
+          <div onClick={()=>this.setState({MHide: this.state.MHide === 'true'?'false':'true'})} id="TMenu" style={{display: 'inline-block'}}><i className='bars icon'/></div>
+          <div style={{display: 'inline-block'}}><h3>Task Manager</h3></div>
         </div>
-        <SettingsIcons />
-        <div className="ui secondary text menu">
-          <div className="item" style={{ width: '150px' }}>
+        <SettingsIcons MHide={this.showMobileMenu()} />
+        <div className={`${this.showMobileMenu()} ui secondary text menu`}>
+          <div className="item" style={{ width: '100%', margin: 'auto' }}>
             <div
               className="menu" style={{ width: '100%' }}>
                 <div onClick={()=> this.props.editState('true', 'addPulseOpen')} data-position="bottom center" data-tooltip="Create Pulse" className="refreshDB" style={{paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
@@ -102,7 +109,7 @@ class Boards extends React.Component {
             </div>
           </div>
         </div>
-        <AddPulseModal />
+        <AddPulseModal className={this.showMobileMenu()} />
       </div>
     )
   }

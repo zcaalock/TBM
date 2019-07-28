@@ -70,7 +70,7 @@ class SearchFilter extends React.Component {
       col = _.uniqBy(col, 'title')
       colSplited = []
       col.map(col => {
-        colSplited.push({title: col.title.split('/')[0], id:col.id, link:col.link, description: col.description})
+        return colSplited.push({title: col.title.split('/')[0], id:col.id, link:col.link, description: col.description})
       })
             
     }
