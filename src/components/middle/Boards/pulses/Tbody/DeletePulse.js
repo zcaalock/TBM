@@ -22,7 +22,7 @@ class DeletePulse extends React.Component {
         data-position="left center"
         data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
-        <i className=" trash icon" style={{color: '#bcbdbd26', paddingLeft: '10px'}} />        
+        <i className="articleIcon trash icon" style={{ paddingLeft: '10px'}} />        
       </div>
       )
     } return (

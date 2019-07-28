@@ -43,7 +43,7 @@ class AddBoard extends React.Component {
   renderNewBoard() {
     if (this.state.itemEditable === true) {
       return <SingleInput
-        propStyle={{ marginLeft: '0px' }}
+        propStyle={{ paddingTop: '15px', paddingBottom: '10px' }}
         propChildStyle={{ padding: '0' }}
         removeEdit={() => this.removeEdit()}
         onSubmit={this.onSubmit} />
@@ -56,10 +56,10 @@ class AddBoard extends React.Component {
           onClick={() => this.showEdit()}
           onMouseLeave={() => this.hideIcon()}
           onMouseEnter={() => this.showIcon()}
-          className="tableNewDetail" style={{ paddingTop: '5px' }}
+          className="articleIcon" style={{ paddingTop: '15px', paddingBottom: '15px' }}
         >
           <div style={{ display: 'inline-block' }}>{this.showHover()}</div>
-          <div style={{ display: 'inline-block' }}>New</div>
+          <div style={{ display: 'inline-block' }}>New Board</div>
           {/* <div >New</div>
           <div style={{ position: 'absolute', right: "0px" }}><i className="icon plus" /></div> */}
         </div>

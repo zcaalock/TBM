@@ -28,7 +28,7 @@ class Header extends React.Component {
             removeEdit={() => this.removeEdit()}
           />
         </div>
-        <div style={{ float: 'right' }}>          
+        <div style={{ float: 'right', paddingRight: '22px' }}>          
           <div
             className="articleIcon"
             style={{ display: 'inline-block' }}>

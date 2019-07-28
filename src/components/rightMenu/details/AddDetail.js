@@ -58,7 +58,7 @@ class AddDetail extends React.Component {
           onDoubleClick={() => this.showEdit()}>
           <div style={{cursor: 'pointer'}}>
             <div onClick={() => this.showEdit()} style={{display: 'inline-block'}}>{this.showHover()}</div>
-            <div style={{display: 'inline-block'}}>New</div>
+            <div style={{display: 'inline-block'}}>Add item</div>
           </div>         
         </div>
       )
@@ -70,8 +70,8 @@ class AddDetail extends React.Component {
   render() {
     //console.log('add category state: ', this.props)
     return (
-      <div style={{}} className="tableNewDetail" >
-        <div className="menu" style={{ width: '100%', paddingLeft: '37px' }}>          
+      <div style={{}} className="articleIcon" >
+        <div className="menu" style={{ width: '100%', paddingLeft: '50px' }}>          
           {this.renderNewDetail()}
         </div>
       </div>

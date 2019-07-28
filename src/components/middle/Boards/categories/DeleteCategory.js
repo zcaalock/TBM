@@ -24,7 +24,7 @@ class DeleteCategory extends React.Component {
         data-position="bottom left"
         data-tooltip="Remove all pulses before delete"
         style={{ display: 'inline-block' }}>
-        <i className=" trash icon" style={{color: '#bcbdbd26'}} />        
+        <i className="articleIcon trash icon" style={{paddingLeft: '10px'}} />        
       </div>
       )
     } return (
@@ -33,8 +33,8 @@ class DeleteCategory extends React.Component {
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block', cursor: 'pointer' }}>
-        <i className=" trash icon" />        
+        style={{ display: 'inline-block', cursor: 'pointer',  }}>
+        <i style={{paddingLeft: '10px'}} className=" trash icon" />        
       </div>
     )
   }

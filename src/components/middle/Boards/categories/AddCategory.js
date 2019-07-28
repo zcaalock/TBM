@@ -59,7 +59,7 @@ class AddCategory extends React.Component {
           onMouseEnter={() => this.showIcon()}
           onClick={() => this.showEdit()}>
           {this.showHover()}
-          New
+          New Category
         </div>
       )
     }

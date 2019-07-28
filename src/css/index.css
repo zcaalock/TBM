@@ -17,6 +17,7 @@
   .leftMenu{  
     background-color: #bcbdbd26;
     position: fixed;
+    min-width: 195px;
     height: 98%;
     padding: 20px
     
@@ -128,7 +129,7 @@
 
 
 .articleIcon{
-  color: #bcbdbd26 !important;
+  color: #cecece !important;
 }
 
 .articleIcon:hover {
@@ -151,11 +152,11 @@
 }
 
 .tableNewPulse {
-  color: #F5F5F5 !important;
+  color: #cecece !important;
 }
 
 .tableNewPulse:hover {
-  color: black !important;
+  color: #00A569 !important;
 }
 
 .tableNewDetail {
