@@ -8,7 +8,7 @@ class NotepadIcons extends React.Component {
   render() {
     return (
       <div>
-        <div
+        {/* <div
           onClick={() => { this.props.showEdit() }}
           className="articleIcon"
           data-position="bottom center"
@@ -20,7 +20,7 @@ class NotepadIcons extends React.Component {
             cursor: 'pointer'
           }}>
           <i className=" edit icon" />
-        </div>
+        </div> */}
         <div
           onClick={() => { this.props.deleteNotepad(this.props.notepadId) }}
           className="articleIcon"

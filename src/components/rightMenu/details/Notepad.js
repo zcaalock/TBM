@@ -1,56 +1,75 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { TextArea } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+import CKEditor from 'ckeditor4-react'
 
 import { isEmpty } from '../../../actions/helperFunctions'
 import { fetchNotepads } from '../../../actions/notepad'
-import { createNotepad } from '../../../actions/notepad'
+import { createNotepad, editNotepad, deleteNotepad } from '../../../actions/notepad'
 import NotepadIcons from './NotepadIcons'
-import EditNotepadContent from './EditNotepadContent'
+
 
 
 
 class Notepad extends Component {
 
-  componentDidMount(){
+  state = {}
+
+  componentDidMount() {
     if (isEmpty(this.props.notepad)) this.props.fetchNotepads()
+    const notepad = _.find(this.props.notepad, { pulseId: this.props.pulseId })
+    if (notepad) this.setState({ data: notepad.content });
   }
 
-  state = {showNewNotepad: 'false'}
 
-  removeEdit(id) {
-    //console.log('show edit', id)
-    this.setState({ [`itemEditable${id}`]: 'false' })
-
-  }
-
-  showEdit(id) {
-    this.setState({ [`itemEditable${id}`]: 'true' })
-    //console.log('edit', id)
-  }
-  
-
-  createNotepad(content) {
+  createNewNotepad() {
     //console.log('content: ', content, 'detailId', this.props.pulseId)
-    this.props.createNotepad({content: content}, this.props.pulseId)
-    
+    //this.props.createNotepad({ content: content }, this.props.pulseId)
+    this.props.createNotepad({ content: '<p>Enter notes here...</p>' }, this.props.pulseId)
+    this.setState({ data: '<p>Enter notes here...</p>' })
+
 
   }
 
-  renderNewNotepad(){
-   if (this.state.showNewNotepad === 'true')
-    return <TextArea 
-              onChange={(e, { value }) => this.setState({ content: value })}
-            style={{width: '100%', height: '350px', backgroundColor: '#F5F5F5'}}
-            onBlur={()=>{this.createNotepad(this.state.content); this.setState({showNewNotepad: 'false'})}}
-            />
+  onEditorChange(evt) {
+    this.setState({
+      data: evt.editor.getData()
+    });
+
+
+  }
+
+  renderNewNotepad() {
+
+  }
+
+  renderCKEditor(content) {
+    return <CKEditor
+      data={content}
+      type="inline"
+      onChange={evt => this.onEditorChange(evt)}
+    //onBlur={this.props.createNotepad({content: this.state.data}, this.props.pulseId)}
+    />
+  }
+
+  renderSaveButton(content, notepadId) {
+    console.log('state:', this.state.data, 'content:', content)
+    //console.log('content', content)
+    if (this.state.data === content) return <Button disabled>Save</Button>
+    if (this.state.data !== content) return <Button onClick={() => this.CKEditorSaveToDB(notepadId)} style={{ color: '#00A569' }} data-position="right center" data-tooltip="Save to database">Save</Button>
+  }
+
+  CKEditorSaveToDB(notepadId) {
+    //console.log('save', this.state.data, notepadId)
+    if(this.state.data === '') this.props.deleteNotepad(notepadId)
+    this.props.editNotepad(notepadId, { content: this.state.data })
   }
 
 
   render() {
-    
-    const notepad = _.find(this.props.notepad, { pulseId: this.props.pulseId})
+
+    const notepad = _.find(this.props.notepad, { pulseId: this.props.pulseId })
     //console.log('notepad state: ', this.state)
     if (notepad)
 
@@ -66,15 +85,9 @@ class Notepad extends Component {
               <NotepadIcons showEdit={() => this.showEdit(notepad.id)} notepadId={notepad.id} />
             </div>
           </div>
-          <div onDoubleClick={() => this.showEdit(notepad.id)} style={{ paddingTop: '20px' }}>
-            <EditNotepadContent
-              content={notepad.content}
-              notepad={notepad}
-              editState={this.state}
-              
-              showEdit={() => this.showEdit(notepad.id)}
-              removeEdit={() => this.removeEdit(notepad.id)} />
-          </div>
+          <div style={{ paddingTop: '20px' }}>{this.renderCKEditor(notepad.content)}</div>
+          <div style={{ paddingTop: '20px' }}>{this.renderSaveButton(notepad.content, notepad.id)}</div>
+
         </div>
       )
     return (
@@ -87,7 +100,7 @@ class Notepad extends Component {
           </div>
           <div style={{ display: 'inline-block', float: 'right', width: '35px' }}>
             <div
-              onClick={() => { this.setState({showNewNotepad: 'true'}) }}
+              onClick={() => this.createNewNotepad()}
               className="articleIcon"
               data-position="bottom center"
               data-tooltip="New Note"
@@ -100,9 +113,6 @@ class Notepad extends Component {
               <i className=" plus icon" />
             </div>
           </div>
-        </div>
-        <div style={{ paddingTop: '20px' }}>
-          {this.renderNewNotepad()}
         </div>
       </div>
     )
@@ -117,4 +127,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchNotepads, createNotepad })(Notepad)
+export default connect(mapStateToProps, { fetchNotepads, createNotepad, editNotepad, deleteNotepad })(Notepad)
