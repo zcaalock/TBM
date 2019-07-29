@@ -24,7 +24,7 @@ class DeleteCategory extends React.Component {
         data-position="bottom left"
         data-tooltip="Remove all pulses before delete"
         style={{ display: 'inline-block' }}>
-        <i className="articleIcon trash icon" style={{paddingLeft: '10px'}} />        
+        <i className="trash icon" style={{paddingLeft: '10px', color: '#cecece'}} />        
       </div>
       )
     } return (

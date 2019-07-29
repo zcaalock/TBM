@@ -19,25 +19,25 @@ import leadReducers from './settings/leadReducers'
 const initialState ={}
 const middleware = [thunk]
 
-function saveToLocalStorage(state) {
-  try {
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('state', serializedState)
-  } catch(e) {
-    console.log(e)
-  }
-}
+// function saveToLocalStorage(state) {
+//   try {
+//     const serializedState = JSON.stringify(state)
+//     localStorage.setItem('state', serializedState)
+//   } catch(e) {
+//     console.log(e)
+//   }
+// }
 
-function loadFromLocalStorage(){
-  try {
-    const serializedState = localStorage.getItem('state')
-    if (serializedState === null ) return undefined
-    return JSON.parse(serializedState)
-  } catch(e) {
-    console.log(e)
-    return undefined
-  }
-}
+// function loadFromLocalStorage(){
+//   try {
+//     const serializedState = localStorage.getItem('state')
+//     if (serializedState === null ) return undefined
+//     return JSON.parse(serializedState)
+//   } catch(e) {
+//     console.log(e)
+//     return undefined
+//   }
+// }
 
 
 const reducers = combineReducers({
@@ -63,13 +63,13 @@ const composeEnhancers =
 
     
 const enhancer = composeEnhancers(applyMiddleware(...middleware));
-const persistedState = loadFromLocalStorage()
+//const persistedState = loadFromLocalStorage()
 const store = createStore(
   reducers, 
-  //initialState, 
-  persistedState, 
+  initialState, 
+  //persistedState, 
   enhancer);
 
-store.subscribe(() => saveToLocalStorage(store.getState()))
+//store.subscribe(() => saveToLocalStorage(store.getState()))
 
 export default store;
