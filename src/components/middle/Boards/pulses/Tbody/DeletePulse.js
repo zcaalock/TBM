@@ -15,7 +15,7 @@ class DeletePulse extends React.Component {
   renderDelete(){    
     const details = _.filter(this.props.details, {pulseId: this.props.pulseId})
     const notepad = _.filter(this.props.notepad, {pulseId: this.props.pulseId})    
-    console.log('details: ', notepad)
+    //console.log('details: ', notepad)
     if (details.length>0 || notepad.length > 0){
       return (
         <div

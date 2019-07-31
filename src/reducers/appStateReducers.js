@@ -4,7 +4,8 @@ const appState ={
   showArchived: 'false',
   refreshed: 'false',
   addPulseOpen: 'false',
-  filter: {selector: '', value: ''} 
+  filter: {selector: '', value: ''},
+  sortBy: {name: '', direction: 'asc'} 
 }
 
 export default (state = appState, action) => {

@@ -137,6 +137,9 @@
 .articleIcon:hover {
   color: black !important
 }
+.articleIconSelected {
+  color: black !important
+}
 
 .categories {
   background-color: #bcbdbd26 !important;
