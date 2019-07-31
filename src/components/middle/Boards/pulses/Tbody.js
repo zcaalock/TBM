@@ -10,6 +10,7 @@ import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
 import ProgressBar from '../../../Forms/ProgressBar'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
+import Deadline from '../../Boards/pulses/Tbody/Deadline'
 
 class Tbody extends React.Component {
   componentDidMount() {
@@ -69,6 +70,9 @@ class Tbody extends React.Component {
           </td>
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
+          </td>
+          <td>
+            <Deadline pulse={pulse}/>
           </td>
           <td style={{ wdth: '10%' }}>
             <DetailProgrsBar details={this.props.details} pulse={pulse} />

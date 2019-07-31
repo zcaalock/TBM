@@ -9,6 +9,7 @@ import LeadPerson from '../../../Boards/pulses/Tbody/LeadPerson'
 import Status from '../../../Boards/pulses/Tbody/Status'
 import ProgressBar from '../../../../Forms/ProgressBar'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
+import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 
 class Tbody extends React.Component {
   componentDidMount() {
@@ -41,15 +42,16 @@ class Tbody extends React.Component {
   handleFilterClick(name){
     //console.log(name)
     const sortBy = this.props.appState.sortBy
-    if(sortBy.name === 'createdAt') this.props.editState({ name: 'title', direction: 'asc' }, 'sortBy')
+    if(name === 'title' && sortBy.name === 'createdAt') this.props.editState({ name: 'title', direction: 'asc' }, 'sortBy')
+    if(name === 'deadline' && sortBy.name === 'createdAt') this.props.editState({ name: 'deadline', direction: 'asc' }, 'sortBy')
     if(sortBy.name === name && sortBy.direction === 'desc') this.props.editState({ name: name, direction: 'asc' }, 'sortBy')
     if(sortBy.name === name && sortBy.direction === 'asc') this.props.editState({ name: name, direction: 'desc' }, 'sortBy')
   }
 
-  renderRemoveSortIcon() {
+  renderRemoveSortIcon(name) {
     const sortBy = this.props.appState.sortBy
-    if(sortBy.name === 'title') return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc', selector: '' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>
-      
+    if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>
+    if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>  
   }
 
 
@@ -68,10 +70,15 @@ class Tbody extends React.Component {
 
   sortIconClass(name) {
     const sortBy = this.props.appState.sortBy
-    if(sortBy.name === 'createdAt')return 'articleIcon sort alphabet down icon'
-    if(sortBy.direction === 'asc' && sortBy.name === name)return 'articleIconSelected sort alphabet down icon'
-    if(sortBy.direction === 'desc' && sortBy.name === name)return 'articleIconSelected sort alphabet up icon'
+    if(name === 'title' && sortBy.name === 'createdAt')return 'articleIcon sort alphabet down icon'
+    if(name === 'title' && sortBy.direction === 'asc' && sortBy.name === name)return 'articleIconSelected sort alphabet down icon'
+    if(name === 'title' && sortBy.direction === 'desc' && sortBy.name === name)return 'articleIconSelected sort alphabet up icon'
+    if(name === 'deadline' && sortBy.name === 'createdAt')return 'articleIcon sort numeric down icon'
+    if(name === 'deadline' && sortBy.direction === 'asc' && sortBy.name === name)return 'articleIconSelected sort numeric down icon'
+    if(name === 'deadline' && sortBy.direction === 'desc' && sortBy.name === name)return 'articleIconSelected sort numeric up icon'
   }
+
+  //Calendar
 
 
 
@@ -106,7 +113,7 @@ class Tbody extends React.Component {
             <Status pulse={pulse} />
           </td>
           <td>
-
+            <Deadline pulse={pulse}/>
           </td>
           <td >
             <DetailProgrsBar details={this.props.details} pulse={pulse} />
@@ -124,12 +131,12 @@ class Tbody extends React.Component {
         <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
           <thead>
             <tr>
-              <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={()=>this.handleFilterClick('title')} className={this.sortIconClass('title')} style={{cursor: 'pointer'}}/>{this.renderRemoveSortIcon()}</th>
+              <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={()=>this.handleFilterClick('title')} className={this.sortIconClass('title')} style={{cursor: 'pointer'}}/>{this.renderRemoveSortIcon('title')}</th>
               <th style={{ minWidth: '15%' }}>Board </th>
               <th style={{ width: '10%' }}>Category</th>
               <th style={{ width: '10%' }}>Lead Person</th>
               <th style={{ width: '120px' }}>Status</th>
-              <th style={{ width: '10%' }}>Deadline</th>
+              <th style={{ width: '10%' }}>Deadline <i onClick={()=>this.handleFilterClick('deadline')} className={this.sortIconClass('deadline')} style={{cursor: 'pointer'}}/>{this.renderRemoveSortIcon('deadline')}</th>
               <th style={{ width: '10%' }}>Details</th>
               
             </tr>
