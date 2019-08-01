@@ -112,7 +112,7 @@ class Tbody extends React.Component {
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
           </td>
-          <td>
+          <td >
             <Deadline pulse={pulse}/>
           </td>
           <td >

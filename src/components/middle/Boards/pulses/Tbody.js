@@ -71,10 +71,10 @@ class Tbody extends React.Component {
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
           </td>
-          <td>
+          <td style={{ width: '165px' }}>
             <Deadline pulse={pulse}/>
           </td>
-          <td style={{ wdth: '10%' }}>
+          <td style={{ width: '10%' }}>
             <DetailProgrsBar details={this.props.details} pulse={pulse} />
             {/* {this.renderProgressBar(pulse.id)} */}
           </td>
