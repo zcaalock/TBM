@@ -14,7 +14,7 @@ class Details extends React.Component {
     } return (
       <div className="article rightMenu" style={{ padding: '20px'}}>
         <Header title={this.props.pulse.title} pulseId={this.props.pulse.id}/>
-        <Body pulseId={this.props.pulse.id}/>
+        <Body key={this.props.pulse.id} pulseId={this.props.pulse.id}/>
       </div>
     )
   }
@@ -22,6 +22,7 @@ class Details extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     pulse: state.pulses[ownProps.match.params.id]
+
   }
 }
 

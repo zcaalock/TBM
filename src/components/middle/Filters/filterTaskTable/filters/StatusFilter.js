@@ -14,10 +14,11 @@ import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 class Tbody extends React.Component {
   componentDidMount() {
     this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')
+    
   }
 
   goLink(id) {
-    this.props.editState(id, 'pulseId')
+    this.props.editState(id, 'pulseId')    
     history.push(`/filters/${this.props.params.selector}/${this.props.params.item}/pulses/${id}`)
   }
 
@@ -159,7 +160,7 @@ const mapStateToProps = (state) => {
     lead: Object.values(state.lead),
     boards: Object.values(state.boards),
     details: Object.values(state.details),
-    categories: Object.values(state.categories),
+    categories: Object.values(state.categories),    
     appState: state.appState
 
   }
