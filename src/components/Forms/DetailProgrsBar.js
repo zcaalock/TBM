@@ -3,8 +3,6 @@ import _ from 'lodash'
 import ProgressBar from './ProgressBar'
 
 
-
-
 export default class DetailProgressBar extends Component {
   
    
