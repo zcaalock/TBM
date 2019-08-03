@@ -18,8 +18,8 @@ class Header extends React.Component {
   render() {
     return (
 
-      <div className="head-vertical-segment" style={{}}>
-        <div style={{ float: 'left' }}>
+      <div className="head-vertical-segment" style={{width: '100%'}}>
+        <div style={{ float: 'left', width: '90%' }}>
           <EditBoardName
             title={this.props.title}
             board={this.props.board}

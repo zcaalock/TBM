@@ -2,6 +2,7 @@ import * as types from '../actions/types'
 
 const appState ={
   showArchived: 'false',
+  hideEmptyDates: 'false',
   refreshed: 'false',
   addPulseOpen: 'false',
   filter: {selector: '', value: ''},

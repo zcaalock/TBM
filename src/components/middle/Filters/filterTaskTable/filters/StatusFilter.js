@@ -52,7 +52,7 @@ class Tbody extends React.Component {
   renderRemoveSortIcon(name) {
     const sortBy = this.props.appState.sortBy
     if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>
-    if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>  
+    // if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>  
   }
 
 
@@ -88,7 +88,9 @@ class Tbody extends React.Component {
     //console.log('selector: ', this.props.selector, this.props.item)   
     let pulses = {}    
     if (this.props.appState.showArchived === 'true') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item }) }
+    if (this.props.appState.showArchived === 'true' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item }).reject({deadline: ''}).value() }
     if (this.props.appState.showArchived === 'false') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' }) }
+    if (this.props.appState.showArchived === 'false' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item, archived: 'false' }).reject({deadline: ''}).value() }
     if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
      
     return this.sortPulsesBy(pulses).map(pulse => {

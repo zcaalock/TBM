@@ -1,6 +1,6 @@
 @media(min-width: 980px) {
   .article{
-    margin-left: 220px;
+    margin-left: 240px;
     display: inline-block;
     width: calc(80% - 270px);    
   }
@@ -8,7 +8,7 @@
     background-color: #bcbdbd26; 
     display: inline-block;
     position: fixed; 
-    margin-left: 40px;
+    margin-left: 30px;
     height: 98%;
     min-width: 240px;
     width: 20%;   
@@ -18,7 +18,7 @@
   .leftMenu{  
     background-color: #bcbdbd26;
     position: fixed;
-    min-width: 195px;
+    width: 210px;
     height: 98%;
     padding: 20px
     

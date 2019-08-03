@@ -119,12 +119,12 @@ class SearchFilter extends React.Component {
       return true
   }
 
-  handleOnCheckBoxClick(bool) {
+  handleOnCheckBoxClick(bool, selector) {
     //console.log('props: ', this.state)
     if (bool === 'false')
-      this.props.editState('true', 'showArchived')
+      this.props.editState('true', selector)
     if (bool === 'true') {
-      this.props.editState('false', 'showArchived')
+      this.props.editState('false', selector)
 
       if (this.state.value === "Archived") 
       {this.props.editState({selector: '', value: ''}, 'filter')
@@ -132,10 +132,10 @@ class SearchFilter extends React.Component {
     }
   }
 
-  renderCheckBoxLabelStyle() {
-    if (this.props.appState.showArchived === 'true')
+  renderCheckBoxLabelStyle(selector) {
+    if (selector === 'true')
       return 'archivedColorRed'
-    if (this.props.appState.showArchived === 'false')
+    if (selector === 'false')
       return 'archivedColor'
   }
 
@@ -162,7 +162,7 @@ class SearchFilter extends React.Component {
         </div >
         <div style={{ display: 'inline-block', marginLeft: '10px' }}>
           <Checkbox
-            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)}
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived, 'showArchived')}
             //defaultChecked={this.defaulCheck(this.props.appState.showArchived)}
             checked={this.defaulCheck(this.props.appState.showArchived)}
             slider
@@ -170,7 +170,19 @@ class SearchFilter extends React.Component {
           //label='Show archived' 
           //className={this.renderCheckBoxLabelStyle()}
           />
-          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)} className={this.renderCheckBoxLabelStyle()} >Show archived</label>
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived, 'showArchived')} className={this.renderCheckBoxLabelStyle(this.props.appState.showArchived)} >Show archived</label>
+        </div>
+        <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+          <Checkbox
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')}
+            //defaultChecked={this.defaulCheck(this.props.appState.showArchived)}
+            checked={this.defaulCheck(this.props.appState.hideEmptyDates)}
+            slider
+            style={{ marginBottom: '-4px', }}
+          //label='Show archived' 
+          //className={this.renderCheckBoxLabelStyle()}
+          />
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')} className={this.renderCheckBoxLabelStyle(this.props.appState.hideEmptyDates)} >Hide empty dates</label>
         </div>
 
       </div>
