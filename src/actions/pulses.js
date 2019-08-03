@@ -21,8 +21,10 @@ export const fetchPulses = () => async dispatch => {
 //   dispatch({type: types.FETCH_PULSE, payload: responce.data})
 // }
 
-export const editPulse = (id, formValues) => async dispatch => {  
-  const responce = await axios.patch(`/pulse/${id}`, formValues)    
+export const editPulse = (id, formValues) => async dispatch => { 
+  //console.log('edit pulse value: ', formValues) 
+  const responce = await axios.patch(`/pulse/${id}`, formValues)
+  //console.log('edit pulse: ', responce.data.pulse)    
   dispatch({type: types.EDIT_PULSE, payload: responce.data.pulse})
   
 }

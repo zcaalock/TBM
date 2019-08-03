@@ -50,7 +50,7 @@ class Header extends React.Component {
             />
           </div>
         </div>
-        <div className="header item" style={{ float: 'right' }}>
+        <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
           <HeaderIcons
             showEdit={() => this.showEdit()}
             categoryId={this.props.categoryKey}

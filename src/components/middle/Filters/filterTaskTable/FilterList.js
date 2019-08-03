@@ -14,6 +14,7 @@ import { fetchDetails } from '../../../../actions/details'
 
 
 let col = []
+let colSplited = []
 const initialState = { isLoading: false, results: [], value: '' }
 
 class SearchFilter extends React.Component {
@@ -26,10 +27,10 @@ class SearchFilter extends React.Component {
     }
     return true;
   }
-  
+
 
   componentDidMount() {
-    
+
     if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
     if (this.isEmpty(this.props.status)) this.props.fetchStatus()
     if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
@@ -38,47 +39,61 @@ class SearchFilter extends React.Component {
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
     this.makeCollection()
     //console.log('user: ', this.props.user)
-    if(this.props.user) this.props.editState({selector: 'LeadPerson', value: this.props.user.credentials.handle}, 'filter')
+
   }
 
   makeCollection() {
 
     if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0) {
       this.props.status.map(status => {
-        col.push({ title: status.title, description: 'Status', link: status.title, id: status.id})
+        col.push({ title: status.title, description: 'Status', link: status.title, id: status.id })
         return col
       })
       this.props.lead.map(lead => {
         col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id })
         return col
       })
-      
+
       this.props.pulses.map(pulse => {
 
-        col.push({ title: `${_.keyBy(this.props.categories, 'id')[pulse.categoryId].title} ${_.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title}`, description: 'Category', link: pulse.categoryId, id: pulse.id })
+        col.push({
+          title: `${_.keyBy(this.props.categories, 'id')[pulse.categoryId].title}/${_.filter(this.props.boards, { id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId })[0].title}`,
+          description: `Category: ${_.filter(this.props.boards, { id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId })[0].title}`,
+          link: pulse.categoryId,
+          id: pulse.id,
+          //category: _.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title 
+        })
         return col
       })
 
       col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true', id: 'Archived' })
-      return col = _.uniqBy(col, 'title')
+      col = _.uniqBy(col, 'title')
+      colSplited = []
+      col.map(col => {
+        return colSplited.push({ title: col.title.split('/')[0], id: col.id, link: col.link, description: col.description })
+      })
+
     }
     //console.log('col: ',col)
+    //console.log('re: ',colSplited)
 
   }
 
   handleOnClick(link, description, title) {
     if (this.state.results[0])
       if (description === 'ArchivedPulses') {
-        this.handleOnCheckBoxClick(this.props.appState.showArchived)
-        this.props.editState({selector: description, value: title}, 'filter')
-        history.push(`/filters/${description}/${link}`)
+        this.props.editState('true', 'showArchived')
+        this.props.editState({ selector: description, value: title.split('/')[0] }, 'filter')
+        history.push(`/filters/${description.split(':')[0]}/${link}`)
       }
-      else history.push(`/filters/${description}/${link}`)
-      this.props.editState({selector: description, value: title}, 'filter')
+      else history.push(`/filters/${description.split(':')[0]}/${link}`)
+    this.props.editState({ selector: description.split(':')[0], value: title.split('/')[0] }, 'filter')
 
   }
 
-  handleResultSelect = (e, { result }) => { this.setState({ value: result.title }); this.handleOnClick(result.link, result.description, result.title) }
+  handleResultSelect = (e, { result }) => {
+    this.setState({ value: result.title.split('/')[0] }); this.handleOnClick(result.link, result.description, result.title.split('/')[0])
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -89,9 +104,11 @@ class SearchFilter extends React.Component {
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
       const isMatch = result => re.test(result.title)
 
+      const results = _.filter(colSplited, isMatch).map(result => ({ ...result, key: result.id }));
+
       this.setState({
         isLoading: false,
-        results: _.filter(col, isMatch),
+        results: results//_.filter(colSplited, isMatch),
       })
     }, 300)
   }
@@ -103,35 +120,43 @@ class SearchFilter extends React.Component {
       return true
   }
 
-  handleOnCheckBoxClick(bool) {
-    //console.log('props: ', this.state)
-    if (bool === 'false')
-      this.props.editState('true', 'showArchived')
+  handleOnCheckBoxClick(bool, selector) {
+    console.log('props: ', selector)
+    if (bool === 'false') {
+      this.props.editState('true', selector)
+      if (this.state.value === "Archived" && selector === 'showArchived') {
+        this.props.editState({ selector: 'ArchivedPulses', value: 'true' }, 'filter')
+        history.push(`/filters/ArchivedPulses/true`)
+      }
+    }
     if (bool === 'true') {
-      this.props.editState('false', 'showArchived')
-
-      if (this.state.value === "Archived") 
-      history.push(`/filters/`)
+      this.props.editState('false', selector)
+      if (this.state.value === "Archived" && selector === 'showArchived') {
+        this.props.editState({ selector: 'AllActivePulses', value: 'true' }, 'filter')
+        console.log('go ')
+        history.push(`/filters/ArchivedPulses/false`)
+      }
     }
   }
 
-  renderCheckBoxLabelStyle() {
-    if (this.props.appState.showArchived === 'true')
+  renderCheckBoxLabelStyle(selector) {
+    if (selector === 'true')
       return 'archivedColorRed'
-    if (this.props.appState.showArchived === 'false')
+    if (selector === 'false')
       return 'archivedColor'
   }
 
   render() {
-    
-    if (this.isEmpty(col)) this.makeCollection()
-    const { isLoading, value, results } = this.state    
+    //console.log('state: ', this.state)
+    if (this.isEmpty(colSplited)) this.makeCollection()
+    const { isLoading, value, results } = this.state
     return (
       <div>
         <div style={{ display: 'inline-block' }}>
           <Search
             //onFocus={() => this.handleOnFocus()}
             //onClick={()=> this.handleOnClick()}
+
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
@@ -144,7 +169,7 @@ class SearchFilter extends React.Component {
         </div >
         <div style={{ display: 'inline-block', marginLeft: '10px' }}>
           <Checkbox
-            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)}
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived, 'showArchived')}
             //defaultChecked={this.defaulCheck(this.props.appState.showArchived)}
             checked={this.defaulCheck(this.props.appState.showArchived)}
             slider
@@ -152,7 +177,19 @@ class SearchFilter extends React.Component {
           //label='Show archived' 
           //className={this.renderCheckBoxLabelStyle()}
           />
-          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived)} className={this.renderCheckBoxLabelStyle()} >Show archived</label>
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showArchived, 'showArchived')} className={this.renderCheckBoxLabelStyle(this.props.appState.showArchived)} >Show archived</label>
+        </div>
+        <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+          <Checkbox
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')}
+            //defaultChecked={this.defaulCheck(this.props.appState.showArchived)}
+            checked={this.defaulCheck(this.props.appState.hideEmptyDates)}
+            slider
+            style={{ marginBottom: '-4px', }}
+          //label='Show archived' 
+          //className={this.renderCheckBoxLabelStyle()}
+          />
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')} className={this.renderCheckBoxLabelStyle(this.props.appState.hideEmptyDates)} >Hide empty dates</label>
         </div>
 
       </div>
@@ -163,7 +200,7 @@ class SearchFilter extends React.Component {
 const mapStateToProps = (state) => {
   return {
     lead: Object.values(state.lead),
-    status: Object.values(state.status),    
+    status: Object.values(state.status),
     pulses: Object.values(state.pulses),
     boards: Object.values(state.boards),
     categories: Object.values(state.categories),

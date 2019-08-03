@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import ProgressBar from './ProgressBar'
 
+
 export default class DetailProgressBar extends Component {
+  
    
   renderProgressBar(id) {
     const details = _.filter(this.props.details, { pulseId: id })
@@ -11,7 +13,7 @@ export default class DetailProgressBar extends Component {
     if (details.length > 0 && this.props.pulse.archived === 'false') {
       const value = checked.length / details.length
       //console.log('value: ', value)
-      return <ProgressBar value={value * 100} />
+      return <ProgressBar  value={value * 100} />
     }
 
     if (this.props.pulse.archived === 'true') {
@@ -21,10 +23,14 @@ export default class DetailProgressBar extends Component {
   }
 
   render() {
-    return (
+    const details = _.filter(this.props.details, { pulseId: this.props.pulse.id })
+    const checked = _.filter(this.props.details, { pulseId: this.props.pulse.id, check: "true" })
+    if (details.length > 0 && this.props.pulse.archived === 'false') return (
       <div>
-        {this.renderProgressBar(this.props.pulse.id)}     
+        <div style={{display: 'inline-block', width: '100px'}} >{this.renderProgressBar(this.props.pulse.id)} </div>  
+        <div style={{display: 'inline-block', position:'absolute', marginLeft: '-60px', paddingTop: '3px'}}>{checked.length}/{details.length}</div> 
       </div>
     )
+    return <div></div>
   }
 }

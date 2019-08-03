@@ -18,7 +18,7 @@ export const fetchNotepads = () => async dispatch => {
 
 export const editNotepad = (id, formValues) => async dispatch => {  
   const responce = await axios.patch(`/notepad/${id}`, formValues)
-  console.log('notes: ', responce)
+  console.log('notes: ', responce.data.notes)
   await dispatch({type: types.EDIT_NOTEPAD, payload: responce.data.notes})
   
 }

@@ -21,7 +21,7 @@ class DeleteBoard extends React.Component {
         data-position="bottom left"
         data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
-        <i className=" trash icon" style={{color: '#bcbdbd26'}} />        
+        <i className="trash icon" style={{paddingLeft: '9px', color: '#cecece'}} />        
       </div>
       )
     } return (
@@ -30,7 +30,7 @@ class DeleteBoard extends React.Component {
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block',cursor: 'pointer' }}>
+        style={{ display: 'inline-block',cursor: 'pointer', paddingLeft: '9px' }}>
         <i className=" trash icon" />        
       </div>
     )

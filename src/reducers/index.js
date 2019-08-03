@@ -16,7 +16,7 @@ import uiReducers from './uiReducers';
 import statusReducers from './settings/statusReducers'
 import leadReducers from './settings/leadReducers'
 
-const initialState ={}
+//const initialState ={}
 const middleware = [thunk]
 
 function saveToLocalStorage(state) {

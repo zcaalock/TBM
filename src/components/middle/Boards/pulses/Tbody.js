@@ -10,6 +10,7 @@ import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
 import ProgressBar from '../../../Forms/ProgressBar'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
+import Deadline from '../../Boards/pulses/Tbody/Deadline'
 
 class Tbody extends React.Component {
   componentDidMount() {
@@ -51,9 +52,12 @@ class Tbody extends React.Component {
     }
   }
 
+  
+
   renderPulses() {
     const id = this.props.categoryId
     const pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
+    
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)
       return (
@@ -67,7 +71,10 @@ class Tbody extends React.Component {
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
           </td>
-          <td style={{ wdth: '10%' }}>
+          <td style={{ width: '165px' }}>
+            <Deadline pulse={pulse}/>
+          </td>
+          <td style={{ width: '10%' }}>
             <DetailProgrsBar details={this.props.details} pulse={pulse} />
             {/* {this.renderProgressBar(pulse.id)} */}
           </td>

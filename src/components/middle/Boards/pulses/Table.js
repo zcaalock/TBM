@@ -17,7 +17,7 @@ class Table extends React.Component {
           categoryTitle={this.props.categoryTitle}
           category={this.props.category} />
         <table className="ui very basic table" style={{paddingLeft: '15px'}}>
-          <Thead categoryId={this.props.categoryKey}/>
+          <Thead categoryId={this.props.categoryKey} />
           <Tbody categoryId={this.props.categoryKey} />
           <AddPulse boardId={this.props.boardId} categoryId={this.props.categoryKey}/>
         </table>

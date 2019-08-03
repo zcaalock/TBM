@@ -13,10 +13,10 @@ class SettingsIcons extends React.Component {
     return "articleIcon"
   } 
 
-  render() {
+  render() {    
     return (
       <div 
-      className='item leftMenu-main' 
+      className={`${this.props.MHide} item leftMenu-main `}
       style={{ position: 'relative', textAlign: 'center', paddingBottom: '0px', cursor: 'pointer' }}>
 
         <div

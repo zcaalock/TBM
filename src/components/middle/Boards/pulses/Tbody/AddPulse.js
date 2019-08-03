@@ -54,12 +54,12 @@ class AddPulse extends React.Component {
 
     if (this.state.itemEditable === false) {
       return (
-        <div style={{ width: '100%' }}
+        <div style={{ width: '100%', paddingBottom: '15px' }}
           onMouseLeave={() => this.hideIcon()}
           onMouseEnter={() => this.showIcon()}
           onClick={() => this.showEdit()}>
           <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>New</div>
+          <div style={{display: 'inline-block'}}>New Pulse</div>
         </div>
       )
     }
