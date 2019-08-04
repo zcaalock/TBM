@@ -7,7 +7,7 @@ export default class DetailProgressBar extends Component {
   
    
   renderProgressBar(id) {
-    console.log('archived:', this.props.pulse.archived )
+    //console.log('archived:', this.props.pulse.archived )
     const details = _.filter(this.props.details, { pulseId: id })
     const checked = _.filter(this.props.details, { pulseId: id, check: "true" })
 
