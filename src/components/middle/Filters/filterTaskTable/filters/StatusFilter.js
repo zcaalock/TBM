@@ -86,11 +86,27 @@ class Tbody extends React.Component {
 
   renderPulses() {
     //console.log('selector: ', this.props.selector, this.props.item)   
-    let pulses = {}    
-    if (this.props.appState.showArchived === 'true') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item }) }
-    if (this.props.appState.showArchived === 'true' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item }).reject({deadline: ''}).value() }
-    if (this.props.appState.showArchived === 'false') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' }) }
-    if (this.props.appState.showArchived === 'false' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item, archived: 'false' }).reject({deadline: ''}).value() }
+    let pulses = {}
+    const showArchived = this.props.appState.showArchived 
+    const hideEmptyDates = this.props.appState.hideEmptyDates
+    const showPrivate = this.props.appState.showPrivate  
+    
+    if (showArchived === 'true') { 
+      pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item })
+      if (hideEmptyDates === 'true' && showPrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ privateId: this.props.user.userId}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'true' && showPrivate === 'false') { pulses = _.chain(this.props.pulses).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && showPrivate === 'true') { pulses = _.chain(this.props.pulses).filter({privateId: this.props.user.userId}).value() }
+      
+    }
+
+    if (showArchived === 'false') { 
+      pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' })
+      if (hideEmptyDates === 'true' && showPrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ privateId: this.props.user.userId, archived: 'false'}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'true' && showPrivate === 'false') { pulses = _.chain(this.props.pulses).filter({ archived: 'false'}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && showPrivate === 'true') { pulses = _.chain(this.props.pulses).filter({privateId: this.props.user.userId, archived: 'false'}).value() }      
+    }
+      
+    
     if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
     pulses = _.filter(pulses, (pulse) => {
       return pulse.privateId === '' || pulse.privateId === this.props.user.userId;
