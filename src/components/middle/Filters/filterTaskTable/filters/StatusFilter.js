@@ -92,16 +92,19 @@ class Tbody extends React.Component {
     if (this.props.appState.showArchived === 'false') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' }) }
     if (this.props.appState.showArchived === 'false' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item, archived: 'false' }).reject({deadline: ''}).value() }
     if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
-     
+    pulses = _.filter(pulses, (pulse) => {
+      return pulse.privateId === '' || pulse.privateId === this.props.user.userId;
+  }); 
     return this.sortPulsesBy(pulses).map(pulse => {
-      //console.log('pulse: ', pulse.categoryId)
+      
       let category = _.find(this.props.categories, { id: pulse.categoryId })
       let board = _.find(this.props.boards, { id: category.boardId })
+      //console.log('pulse: ', pulse.archived)
       //console.log('sdfsf: ',category.title)
       return (
         <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
+            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={this.props.user.userId} />
           </td>
           <td >
             {board.title}
@@ -119,7 +122,7 @@ class Tbody extends React.Component {
             <Deadline pulse={pulse}/>
           </td>
           <td >
-            <DetailProgrsBar details={this.props.details} pulse={pulse} />
+            <DetailProgrsBar key={pulse.id} details={this.props.details} pulse={pulse} />
             {/* {this.renderProgressBar(pulse.id)} */}
           </td>
         </tr>
@@ -158,7 +161,7 @@ const mapStateToProps = (state) => {
 
   return {
     user: state.user.credentials,
-    pulses: Object.values(state.pulses),
+    pulses: Object.values(state.pulses),    
     lead: Object.values(state.lead),
     boards: Object.values(state.boards),
     details: Object.values(state.details),

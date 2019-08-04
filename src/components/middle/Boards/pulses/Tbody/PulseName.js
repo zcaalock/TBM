@@ -27,6 +27,21 @@ class PulseName extends React.Component {
   //   }
   // }
 
+  renderPrivateIcon() {
+    //console.log('pulse: ',this.props.pulse.privateId, 'pri: ', this.props.privateId )
+    if (this.props.pulse.privateId === this.props.privateId) {
+      return (
+        <div
+          data-position="bottom center"
+          data-tooltip="Private Pulse"
+          
+        >
+
+          <i className="privacy icon" />
+        </div>)
+    }
+  }
+
   removeEdit() {
     this.setState({ itemEditable: false })
   }
@@ -48,6 +63,12 @@ class PulseName extends React.Component {
           style={{ position: 'absolute', marginLeft: '-25px', display: 'inline-block' }}>
           {this.renderIcon()}
         </div> */}
+        <div
+
+          style={{cursor:'auto', position: 'absolute', marginLeft: '-35px', display: 'inline-block', color: '#00A569' }}>
+           
+          {this.renderPrivateIcon()}
+        </div>
         <div
           //onMouseEnter={() => this.showIcon()}
           //onMouseLeave={() => this.hideIcon()}

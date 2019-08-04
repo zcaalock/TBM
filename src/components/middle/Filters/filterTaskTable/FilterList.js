@@ -46,11 +46,11 @@ class SearchFilter extends React.Component {
 
     if (this.props.status.length > 0 && this.props.lead.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0) {
       this.props.status.map(status => {
-        col.push({ title: status.title, description: 'Status', link: status.title, id: status.id })
+        col.push({ title: status.title, description: 'Status', link: status.title, id: status.id, privateId: '' })
         return col
       })
       this.props.lead.map(lead => {
-        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id })
+        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id, privateId: '' })
         return col
       })
 
@@ -61,17 +61,22 @@ class SearchFilter extends React.Component {
           description: `Category: ${_.filter(this.props.boards, { id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId })[0].title}`,
           link: pulse.categoryId,
           id: pulse.id,
+          privateId: pulse.privateId
           //category: _.filter(this.props.boards, {id: _.keyBy(this.props.categories, 'id')[pulse.categoryId].boardId})[0].title 
         })
+        col = _.filter(col, {privateId: ''})
         return col
       })
 
-      col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true', id: 'Archived' })
+      col.push({ title: 'Archived', description: 'ArchivedPulses', link: 'true', id: 'Archived', privateId: '' })
+      col.push({ title: 'Private', description: 'PrivatePulses', link: this.props.user.credentials.userId, id: '', privateId: this.props.user.credentials.userId })
       col = _.uniqBy(col, 'title')
       colSplited = []
       col.map(col => {
         return colSplited.push({ title: col.title.split('/')[0], id: col.id, link: col.link, description: col.description })
       })
+
+      //console.log('col: ', col)
 
     }
     //console.log('col: ',col)

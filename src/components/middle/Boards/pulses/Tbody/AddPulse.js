@@ -1,6 +1,7 @@
 import React from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux'
-import { createPulse } from '../../../../../actions/pulses'
+import { createPulse, createPrivatePulse } from '../../../../../actions/pulses'
 import SingleInput from '../../../../Forms/SingleInput'
 
 class AddPulse extends React.Component {
@@ -34,12 +35,20 @@ class AddPulse extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    this.props.createPulse(formValues, this.props.categoryId, '') 
+    if(this.props.boards[this.props.boardId].privateId === '') this.props.createPulse(formValues, this.props.categoryId, '')
+    if(this.props.boards[this.props.boardId].privateId === this.props.userId) this.props.createPrivatePulse(formValues, this.props.categoryId, this.props.userId)
     this.removeEdit()
 
   }
 
-  renderNewPulse() {
+  renderName(){
+    if(this.props.boards[this.props.boardId].privateId === '')
+    return <div>{this.renderNewPulse('New Pulse')}</div>
+    if(this.props.boards[this.props.boardId].privateId === this.props.userId)
+    return <div>{this.renderNewPulse('New Private Pulse')}</div>
+  }
+
+  renderNewPulse(name) {
     if (this.state.itemEditable === true) {
       return (
         <div style={{ width: '100%' }}>
@@ -59,7 +68,7 @@ class AddPulse extends React.Component {
           onMouseEnter={() => this.showIcon()}
           onClick={() => this.showEdit()}>
           <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>New Pulse</div>
+          <div style={{display: 'inline-block'}}>{name}</div>
         </div>
       )
     }
@@ -71,7 +80,8 @@ class AddPulse extends React.Component {
       <tfoot>
         <tr  >
           <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
-            {this.renderNewPulse()}
+            {/* {this.renderNewPulse()} */}
+            {this.renderName()}
           </td>
           <td colSpan="2">
           </td>
@@ -81,5 +91,12 @@ class AddPulse extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    boards: _.keyBy(Object.values(state.boards), 'id'),
+    userId: state.user.credentials.userId
+  }
+}
 
-export default connect(null, { createPulse })(AddPulse)
+
+export default connect(mapStateToProps, { createPulse, createPrivatePulse  })(AddPulse)

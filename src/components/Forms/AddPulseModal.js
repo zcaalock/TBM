@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 
-import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
+import { Button, Modal, Form, Input, Select, Checkbox } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import {createPulse} from '../../actions/pulses'
+import { createPulse } from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
 import { fetchCategories } from '../../actions/categories'
@@ -12,7 +12,7 @@ import { fetchCategories } from '../../actions/categories'
 
 let boards = []
 let categories = []
-let lead =[]
+let lead = []
 
 class PulseModal extends Component {
 
@@ -37,17 +37,19 @@ class PulseModal extends Component {
       name: '',
       boardId: '',
       categoryId: '',
-      userId: ''
+      userId: '',
+      privateId: ''
     }
   }
 
   handleSubmit() {
     //console.log('formValues', formValues)
     const userData = {
-      title: this.state.name      
+      title: this.state.name,
+      privateId: this.state.privateId
     };
 
-    this.props.createPulse(userData, this.state.categoryId, this.state.userId );
+    this.props.createPulse(userData, this.state.categoryId, this.state.userId);
     this.close()
   }
 
@@ -62,29 +64,33 @@ class PulseModal extends Component {
   }
 
   generateBoardList() {
+
     if (this.props.boards.length > 0)
       this.props.boards.map(board => {
-        boards.push({ key: board.id, text: board.title, value: board.id })
+        boards.push({ key: board.id, text: board.title, value: board.id, private: board.privateId })
         return boards
       })
+         
+    boards = _.filter(boards, { private: '' })
+
     return boards = _.uniqBy(boards, 'text')
   }
 
-  generateCategoriesList() {    
-    if (this.props.categories.length > 0){      
+  generateCategoriesList() {
+    if (this.props.categories.length > 0) {
       _.filter(this.props.categories, { boardId: this.state.boardId })
         .map(category => {
           categories.push({ key: category.id, text: category.title, value: category.id })
           return categories
         })
-    }    
+    }
     return categories = _.uniqBy(categories, 'text')
-    
+
   }
-  activateLeadField()  { return this.state.name === '' ?  true : false}
-  activateBoardField() {  return this.state.userId === '' ? true : false}
-  activateCategoryField() { return this.state.boardId === '' ? true : false}
-  activateSubmit() {  return this.state.categoryId === ''? true : false}
+  activateLeadField() { return this.state.name === '' ? true : false }
+  activateBoardField() { return this.state.userId === '' ? true : false }
+  activateCategoryField() { return this.state.boardId === '' ? true : false }
+  activateSubmit() { return this.state.categoryId === '' ? true : false }
 
   defaulCheck(bool) {
     if (bool === 'false')
@@ -93,14 +99,14 @@ class PulseModal extends Component {
       return true
   }
 
-  close = () => {this.props.editState('false', 'addPulseOpen'); this.setState({name: '', boardId: '', categoryId: '',  userId: ''})   }
+  close = () => { this.props.editState('false', 'addPulseOpen'); this.setState({ name: '', boardId: '', categoryId: '', userId: '' }) }
   render() {
     if (this.isEmpty(boards)) this.generateBoardList()
     if (this.isEmpty(categories)) this.generateCategoriesList()
     if (this.isEmpty(lead)) this.generateLeadList()
     //console.log('state', this.state)
     const { addPulseOpen } = this.props.appState
-
+    //console.log('boards: ', boards )
     return (
       <div>
         <Modal size='tiny' dimmer='inverted' open={this.defaulCheck(addPulseOpen)} onClose={this.close}>
@@ -140,7 +146,7 @@ class PulseModal extends Component {
                   label='Board name'
                   placeholder='Board name'
                   searchInput={{ id: 'boardId' }}
-                  onChange={(e, { value }) => {this.setState({ boardId: value }); categories=[]   }}
+                  onChange={(e, { value }) => { this.setState({ boardId: value }); categories = [] }}
                 />
                 <Form.Field
                   search
@@ -190,7 +196,8 @@ const mapStateToProps = (state) => {
     categories: Object.values(state.categories),
     lead: Object.values(state.lead),
     appState: state.appState,
-    
+    privateId: state.user.credentials.userId
+
   }
 }
 
