@@ -13,7 +13,7 @@ class Details extends React.Component {
       return <div className="article rightMenu" style={{ position: 'absolute', marginLeft:'calc(80% - 20px)', padding: '20px', float: 'right'}}><div className="ui active inline loader"></div></div>
     } return (
       <div className="article rightMenu" style={{ padding: '20px'}}>
-        <Header title={this.props.pulse.title} pulseId={this.props.pulse.id}/>
+        <Header title={this.props.pulse.title} pulseId={this.props.pulse.id} pulse={this.props.pulse}/>
         <Body key={this.props.pulse.id} pulseId={this.props.pulse.id}/>
       </div>
     )

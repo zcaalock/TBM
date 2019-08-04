@@ -42,6 +42,7 @@ class Header extends React.Component {
           <HeaderIcons
             showEdit={() => this.showEdit()}
             pulseId={this.props.pulseId}
+            pulse={this.props.pulse}
           />
         </div>
       </div>

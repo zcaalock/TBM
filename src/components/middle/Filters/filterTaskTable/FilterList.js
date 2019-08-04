@@ -126,7 +126,7 @@ class SearchFilter extends React.Component {
   }
 
   handleOnCheckBoxClick(bool, selector) {
-    console.log('props: ', selector)
+    //console.log('props: ', selector)
     if (bool === 'false') {
       this.props.editState('true', selector)
       if (this.state.value === "Archived" && selector === 'showArchived') {
