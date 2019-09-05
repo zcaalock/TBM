@@ -38,6 +38,7 @@ class SearchFilter extends React.Component {
     if (this.isEmpty(this.props.lead)) this.props.fetchLead()
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
     this.makeCollection()
+    this.props.editState(this.props.user.credentials.userId, 'selectedUserId')
     //console.log('user: ', this.props.user)
 
   }
@@ -88,11 +89,13 @@ class SearchFilter extends React.Component {
     if (this.state.results[0])
       if (description === 'ArchivedPulses') {
         this.props.editState('true', 'showArchived')
+        this.props.editState(link, 'selectedUserId')
         this.props.editState({ selector: description, value: title.split('/')[0] }, 'filter')
         history.push(`/filters/${description.split(':')[0]}/${link}`)
       }
       else history.push(`/filters/${description.split(':')[0]}/${link}`)
     this.props.editState({ selector: description.split(':')[0], value: title.split('/')[0] }, 'filter')
+    this.props.editState(link, 'selectedUserId')
 
   }
 
@@ -151,6 +154,20 @@ class SearchFilter extends React.Component {
       return 'archivedColor'
   }
 
+  renderPrivateCheckBox(){
+    if(this.props.appState.selectedUserId === this.props.user.credentials.userId) return (
+      <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+          <Checkbox
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.hidePrivate, 'hidePrivate')}            
+            checked={this.defaulCheck(this.props.appState.hidePrivate)}
+            slider
+            style={{ marginBottom: '-4px', }}          
+          />
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.hidePrivate, 'hidePrivate')} className={this.renderCheckBoxLabelStyle(this.props.appState.hidePrivate)} >Hide private pulses</label>
+        </div>
+    )
+  }
+
   render() {
     //console.log('state: ', this.state)
     if (this.isEmpty(colSplited)) this.makeCollection()
@@ -187,15 +204,7 @@ class SearchFilter extends React.Component {
           />
           <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')} className={this.renderCheckBoxLabelStyle(this.props.appState.hideEmptyDates)} >Hide empty dates</label>
         </div>
-        <div style={{ display: 'inline-block', marginLeft: '10px' }}>
-          <Checkbox
-            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showPrivate, 'showPrivate')}            
-            checked={this.defaulCheck(this.props.appState.showPrivate)}
-            slider
-            style={{ marginBottom: '-4px', }}          
-          />
-          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showPrivate, 'showPrivate')} className={this.renderCheckBoxLabelStyle(this.props.appState.showPrivate)} >Show only private</label>
-        </div>
+        {this.renderPrivateCheckBox()}
       </div>
     )
   }
