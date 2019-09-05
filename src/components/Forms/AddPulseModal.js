@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 
-import { Button, Modal, Form, Input, Select, Checkbox } from 'semantic-ui-react'
+import { Button, Modal, Form, Input, Select} from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { createPulse } from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
