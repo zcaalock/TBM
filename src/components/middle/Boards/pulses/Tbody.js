@@ -55,8 +55,11 @@ class Tbody extends React.Component {
   
 
   renderPulses() {
+    console.log(this.props.appState.showArchived)
     const id = this.props.categoryId
-    const pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
+    let pulses = _.filter(this.props.pulses, (this.props.appState.showArchived === 'false')?{ categoryId: id, archived: 'false' }:{ categoryId: id })
+    //(this.props.appState.showArchived === 'false') ? pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' }) : pulses = _.filter(this.props.pulses, { categoryId: id })
+    //let pulses = _.filter(this.props.pulses, { categoryId: id })
     
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)

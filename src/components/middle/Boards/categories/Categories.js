@@ -95,12 +95,32 @@ class Categories extends React.Component {
     })
   }
 
+  renderCategoriesWithArchived() {
+    //var sort = _.sortBy(this.props.categories, 'id')
+    //console.log('sort: ', sort)
+    return this.props.categories.map(category => {
+      if (category.boardId === this.props.appState.id && category.privateId === "") {
+        return (
+          <div key={category.id}>
+            {this.renderProgressBar(category.id)}
+            {this.renderColapsingMenu(category, category.id)}</div>
+        )
+      } return null
+    })
+  }
+
+  checkIfArchived() {
+
+    if(this.props.appState.showArchived === "true") return this.renderCategoriesWithArchived()
+    return this.renderCategories()
+  }
+
 
   render() {
     //console.log('fetch categories: ', this.props.categories)
     return (
       <div>
-        {this.renderCategories()}
+        {this.checkIfArchived()}
       </div>
     )
   }
