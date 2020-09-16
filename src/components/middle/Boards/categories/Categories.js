@@ -85,7 +85,7 @@ class Categories extends React.Component {
     //var sort = _.sortBy(this.props.categories, 'id')
     //console.log('sort: ', sort)
     return this.props.categories.map(category => {
-      if (category.boardId === this.props.appState.id && category.privateId === "") {
+      if (category.boardId === this.props.appState.id && category.privateId === "" && category.archived !== "true") {
         return (
           <div key={category.id}>
             {this.renderProgressBar(category.id)}
