@@ -63,10 +63,10 @@ class Tbody extends React.Component {
       return (
         <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
-            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
+            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={this.props.privateId} />
           </td>
           <td data-label="LeadPerson" style={{ overflow: "visible", minWidth: '100px' }}>
-            <LeadPerson pulse={pulse} />
+            <LeadPerson pulse={pulse}  />
           </td>
           <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
             <Status pulse={pulse} />
@@ -98,6 +98,7 @@ const mapStateToProps = (state) => {
   return {
     pulses: Object.values(state.pulses),
     details: Object.values(state.details),
+    privateId: state.user.credentials.userId,
     appState: state.appState
 
   }

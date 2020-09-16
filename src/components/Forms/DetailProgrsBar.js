@@ -7,6 +7,7 @@ export default class DetailProgressBar extends Component {
   
    
   renderProgressBar(id) {
+    //console.log('archived:', this.props.pulse.archived )
     const details = _.filter(this.props.details, { pulseId: id })
     const checked = _.filter(this.props.details, { pulseId: id, check: "true" })
 
@@ -31,6 +32,9 @@ export default class DetailProgressBar extends Component {
         <div style={{display: 'inline-block', position:'absolute', marginLeft: '-60px', paddingTop: '3px'}}>{checked.length}/{details.length}</div> 
       </div>
     )
+    if (this.props.pulse.archived === 'true') {
+      return <div style={{color: 'rgb(220, 105, 105)'}}>Pulse archived</div>
+    }
     return <div></div>
   }
 }

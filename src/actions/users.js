@@ -27,7 +27,8 @@ export const loginUser = (userData, history) => async (dispatch) => {
       //console.log('res',res.data)
       //history.push(`/mypulses/${res.data.credentials.userId}`);
       dispatch(editState({selector: 'LeadPerson', value: res.data.credentials.handle}, 'filter'))
-      history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
+      //history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
+      history.push('/loading')
       
     })
     .catch((err) => console.log(err));
@@ -60,7 +61,8 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       //console.log('res',res.data)
       //history.push(`/mypulses/${res.data.credentials.userId}`);
       dispatch(editState({selector: 'LeadPerson', value: res.data.credentials.handle}, 'filter'))
-      history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
+      history.push('/loading')
+      //history.push(`/filters/LeadPerson/${res.data.credentials.userId}`)
     })
     .catch((err) => console.log(err));
   

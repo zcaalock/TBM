@@ -5,7 +5,15 @@ import * as types from './types'
 
 export const createBoard = (formValues) => {  
   return async (dispatch) => {    
-    const responce = await axios.post('/board', {...formValues})     
+    const responce = await axios.post('/board', {...formValues, privateId: ''})     
+    await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
+    await history.push(`/boards/${responce.data.board.id}`)    
+  }
+}
+
+export const createPrivateBoard = (formValues, userId) => {  
+  return async (dispatch) => {    
+    const responce = await axios.post('/board', {...formValues, privateId: userId})     
     await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
     await history.push(`/boards/${responce.data.board.id}`)    
   }
@@ -31,6 +39,6 @@ export const editBoard = (id, formValues) => async dispatch => {
 export const deleteBoard = (id, userId) => async dispatch => {  
   await axios.delete(`/board/${id}`)
   dispatch({type: types.DELETE_BOARD, payload: id})
-  history.push(`/mypulses/${userId}`)
+  history.push(`/filters/LeadPerson/${userId}`)
   
 }

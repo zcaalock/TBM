@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import history from '../history'
 
+import Loading from '../components/Forms/Loading'
+
 import LeftMenu from './leftMenu/LeftMenu'
 import Boards from './middle/Boards'
 import Details from './rightMenu/Details'
@@ -39,11 +41,12 @@ if (token) {
 
 const App = () => {
   return (
-    <div style={{ margin: '10px' }} className="container">
+    <div style={{ margin: '0px' }} className="container">
       <Provider store={store}>
         <Router history={history}>
           <div>
             <Route >
+              <Route exact path="/loading" component={Loading} />
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/unAuth" component={unAuth} />
               <Route exact path="/login" component={Login} />

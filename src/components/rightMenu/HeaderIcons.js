@@ -1,6 +1,7 @@
 import React from 'react'
 import DeletePulse from '../middle/Boards/pulses/Tbody/DeletePulse'
 import ArchivePulse from '../middle/Boards/pulses/Tbody/ArchivePulse'
+import PrivatePulse from '../middle/Boards/pulses/Tbody/PrivatePulse'
 
 class HeaderIcons extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class HeaderIcons extends React.Component {
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>         */}
+          <PrivatePulse pulse={this.props.pulse}/>
             <ArchivePulse pulseId={this.props.pulseId}/>
           <DeletePulse pulseId={this.props.pulseId}/>        
       </div>

@@ -11,6 +11,7 @@ class Thead extends React.Component {
     if(selector === 'LeadPerson') return  <StatusFilter selector='userId' item={this.props.match.params.item} params={this.props.match.params} />
     if(selector === 'Category') return  <StatusFilter selector='categoryId' item={this.props.match.params.item} params={this.props.match.params} />
     if(selector === 'ArchivedPulses') return  <StatusFilter selector='archived' item={this.props.match.params.item} params={this.props.match.params} />
+    if(selector === 'PrivatePulses') return  <StatusFilter selector='privateId' item={this.props.match.params.item} params={this.props.match.params} />
   }
 
   render() {

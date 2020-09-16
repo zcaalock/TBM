@@ -13,6 +13,8 @@ class SettingsIcons extends React.Component {
     return "articleIcon"
   } 
 
+  
+
   render() {    
     return (
       <div 
@@ -28,7 +30,7 @@ class SettingsIcons extends React.Component {
           <h3><i className="setting icon" /></h3>
         </div>
         <div
-          onClick={() => {history.push('/'); this.props.logoutUser()}}
+          onClick={() => {history.push('/'); this.props.logoutUser(); localStorage.removeItem("state")}}
           data-position="right center"
           data-tooltip="Logout"
           className="articleIcon"

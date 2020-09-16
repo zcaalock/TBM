@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import history from '../../history'
+import _ from 'lodash'
 
 import { editState } from '../../actions/appState'
 import { fetchStatus } from '../../actions/status'
@@ -60,7 +61,8 @@ class Boards extends React.Component {
   handleFiltersOnClick() {
     this.props.editState('filters', 'id')
     this.props.editState('', 'pulseId');
-    if(this.props.user) this.props.editState({selector: 'LeadPerson', value: this.props.user.credentials.handle}, 'filter')
+    this.props.editState(this.props.user.credentials.userId, 'selectedUserId')
+    if (this.props.user) this.props.editState({ selector: 'LeadPerson', value: this.props.user.credentials.handle }, 'filter')
     history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`)
   }
 
@@ -73,6 +75,20 @@ class Boards extends React.Component {
   renderRefreshClass() {
     if (this.props.appState.refreshed === "false") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Refresh database" className='refreshDB'><i className='refreshDBspin large refresh icon' /></div>
     if (this.props.appState.refreshed === "true") return <div onClick={() => this.refreshDB()} data-position="bottom center" data-tooltip="Cannot refresh database now" className='greyedDB'><i className='large refresh icon' /></div>
+  }
+
+  renderPrivateBoardList() {
+    const findPrivateBoards = _.filter(this.props.boards, { privateId: this.props.user.credentials.userId })
+
+    if (findPrivateBoards.length > 0 && this.props.user.credentials.userId === findPrivateBoards[0].privateId)
+      return (
+        
+          <BoardsList privateId={this.props.user.credentials.userId} />
+          
+
+
+      )
+    return <div style={{ display: 'none' }}></div>
   }
 
   render() {
@@ -104,15 +120,25 @@ class Boards extends React.Component {
                 style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
                 Boards:
               </div>
-              <BoardsList />
+              <BoardsList privateId='' />
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
-                <AddBoard />
+                <AddBoard name={'New Board'} />
+              </div>
+              <div
+                className="header item"
+                style={{ paddingLeft: '0', paddingTop: '20px' }}>
+                Private Boards:
+              </div>
+              {this.renderPrivateBoardList()}
+              <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
+                <AddBoard name={'New Private Board'} />
               </div>
               {this.renderRefreshClass()}
             </div>
           </div>
         </div>
         <AddPulseModal className={this.showMobileMenu()} />
+
       </div>
     )
   }
@@ -123,7 +149,8 @@ const mapStateToProps = (state) => {
 
   return {
     user: state.user,
-    appState: state.appState
+    appState: state.appState,
+    boards: Object.values(state.boards)
 
   }
 }

@@ -13,7 +13,12 @@ class Login extends React.Component {
     }
   }
 
+  componentDidMount(){
+    localStorage.removeItem("state")
+  }
+
   componentWillReceiveProps(nextProps) {
+    
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors })
     }

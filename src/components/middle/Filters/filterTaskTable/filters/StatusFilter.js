@@ -86,22 +86,43 @@ class Tbody extends React.Component {
 
   renderPulses() {
     //console.log('selector: ', this.props.selector, this.props.item)   
-    let pulses = {}    
-    if (this.props.appState.showArchived === 'true') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item }) }
-    if (this.props.appState.showArchived === 'true' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item }).reject({deadline: ''}).value() }
-    if (this.props.appState.showArchived === 'false') { pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item, archived: 'false' }) }
-    if (this.props.appState.showArchived === 'false' && this.props.appState.hideEmptyDates === 'true') { pulses = _.chain(this.props.pulses).filter({ [this.props.selector]: this.props.item, archived: 'false' }).reject({deadline: ''}).value() }
+    let pulses = {}
+    const showArchived = this.props.appState.showArchived 
+    const hideEmptyDates = this.props.appState.hideEmptyDates
+    const hidePrivate = this.props.appState.hidePrivate  
+    
+    if (showArchived === 'true') { 
+      pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item })
+      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).reject({privateId: this.props.user.userId}).value() }
+      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({privateId: this.props.user.userId}).value() }
+      
+    }
+
+    if (showArchived === 'false') { 
+      pulses = _.chain(this.props.pulses).filter({[this.props.selector]: this.props.item}).reject({archived: 'true' }).value() 
+      //console.log('pulses: ', pulses)
+      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).reject({privateId: this.props.user.userId}).value() }
+      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({privateId: this.props.user.userId}).value() } 
+         
+    }
+      
+    
     if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
-     
+    pulses = _.filter(pulses, (pulse) => {
+      return pulse.privateId === '' || pulse.privateId === this.props.user.userId;
+  }); 
     return this.sortPulsesBy(pulses).map(pulse => {
-      //console.log('pulse: ', pulse.categoryId)
+      
       let category = _.find(this.props.categories, { id: pulse.categoryId })
       let board = _.find(this.props.boards, { id: category.boardId })
+      //console.log('pulse: ', pulse.archived)
       //console.log('sdfsf: ',category.title)
       return (
         <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} />
+            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={this.props.user.userId} />
           </td>
           <td >
             {board.title}
@@ -119,7 +140,7 @@ class Tbody extends React.Component {
             <Deadline pulse={pulse}/>
           </td>
           <td >
-            <DetailProgrsBar details={this.props.details} pulse={pulse} />
+            <DetailProgrsBar key={pulse.id} details={this.props.details} pulse={pulse} />
             {/* {this.renderProgressBar(pulse.id)} */}
           </td>
         </tr>
@@ -158,7 +179,7 @@ const mapStateToProps = (state) => {
 
   return {
     user: state.user.credentials,
-    pulses: Object.values(state.pulses),
+    pulses: Object.values(state.pulses),    
     lead: Object.values(state.lead),
     boards: Object.values(state.boards),
     details: Object.values(state.details),

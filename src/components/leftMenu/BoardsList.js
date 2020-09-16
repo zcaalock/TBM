@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchBoards} from '../../actions/boards'
@@ -44,7 +45,7 @@ class BoardsList extends React.Component {
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return this.props.boards.map(board => {
+    return _.filter(this.props.boards, {privateId: this.props.privateId}).map(board => {
       return (
         <Link
           onClick={()=>this.props.editState('', 'pulseId')}
