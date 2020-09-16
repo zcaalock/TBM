@@ -1,12 +1,15 @@
 import React from 'react'
+import Categories from './categories/Categories'
+import AddCategory from './categories/AddCategory'
 
 
 class Body extends React.Component {
-  render(){
-    return(
-      <div style={{width: '50%'}}>        
-        sdf   
-      </div>
+  render() {
+    return (
+      <>
+        <Categories />
+        <AddCategory />
+      </>
     )
   }
 }

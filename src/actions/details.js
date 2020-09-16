@@ -1,28 +1,27 @@
-import details from '../apis/server'
+//import details from '../apis/server'
+import axios from 'axios'
 import * as types from './types'
 
 
 export const createDetail = (formValues, id) => {
   return async (dispatch) => {    
-    const responce = await details.post('/detail', {...formValues, pulseId: id})
-    console.log('details res: ', responce.data.detail)
+    const responce = await axios.post('/detail', {...formValues, pulseId: id})    
     dispatch({type: types.CREATE_DETAIL, payload: responce.data.detail})       
   }
 }
 
 export const fetchDetails = () => async dispatch => {
-  const responce = await details.get('/details')
+  const responce = await axios.get('/details')
   dispatch({type: types.FETCH_DETAILS, payload: responce.data})
 }
 
-export const editDetail = (id, formValues) => async dispatch => {
-  //console.log("edit pulse: ", id, formValues)
-  const responce = await details.patch(`/detail/${id}`, formValues)
-  dispatch({type: types.EDIT_DETAIL, payload: responce.data.detail})
+export const editDetail = (id, formValues) => async dispatch => {  
+  const responce = await axios.patch(`/detail/${id}`, formValues)
+  await dispatch({type: types.EDIT_DETAIL, payload: responce.data.detail})
   
 }
 
 export const deleteDetail = (id) => async dispatch => {
-  await details.delete(`/detail/${id}`)
+  await axios.delete(`/detail/${id}`)
   dispatch({type: types.DELETE_DETAIL, payload: id})  
 }

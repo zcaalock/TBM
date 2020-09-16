@@ -2,10 +2,7 @@ import * as types from '../actions/types'
 import _ from 'lodash'
 
 export default (state = {}, action) => {
-  switch (action.type) {
-    
-    // case types.FETCH_BOARD:
-    //   return {...state, [action.payload.id]: action.payload}
+  switch (action.type) { 
     
      case types.CREATE_DETAIL:
        return {...state, [action.payload.id]: action.payload}

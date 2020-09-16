@@ -33,12 +33,12 @@ class Header extends React.Component {
   render() {
     return (
       <div className="rightMenu-header" style={{padding: '' }}>
-        <div className='' style={{ display: 'inline-block' }}>
+        <div className='' style={{ display: 'inline-block', maxWidth: '224px' }}>
           <h3>
             {this.props.title}
           </h3>
         </div>
-        <div className="header item" style={{ display: 'inline-block', float: 'right' }}>
+        <div className="header item" style={{ display: 'inline-block', float: 'right', minWidth: '53px', paddingRight: '13px' }}>
           <HeaderIcons
             showEdit={() => this.showEdit()}
             pulseId={this.props.pulseId}
