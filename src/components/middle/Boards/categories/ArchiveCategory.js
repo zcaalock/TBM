@@ -13,7 +13,7 @@ class ArchiveCategory extends React.Component {
   renderArchive(){    
     const findCategory = _.filter(this.props.categories, {id: this.props.categoryId})
     const isArchived = findCategory[0].archived    
-    console.log('details: ', isArchived)
+    //console.log('details: ', isArchived)
     if (isArchived === 'true'){
       return (
         <div
