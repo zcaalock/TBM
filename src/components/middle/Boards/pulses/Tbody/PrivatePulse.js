@@ -1,31 +1,28 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { editPulse } from '../../../../../actions/pulses'
 
 
-class ArchivePulse extends React.Component {
+function ArchivePulse (props) {
 
-  componentDidMount() {
+  const pulses = useSelector(state => Object.values(state.pulses));
+  const user = useSelector(state => state.user.credentials);
+  const boards = useSelector(state => Object.values(state.boards));
+  const categories = useSelector(state => Object.values(state.categories));
+  const dispatch = useDispatch();
 
-  }
+  const renderArchive = () => {
 
-  renderArchive() {
-    
+    //const category = _.find(categories, { id: props.pulse.categoryId })
+    //const board = _.find(props.boards, { id: category.boardId })   
 
-    const category = _.find(this.props.categories, { id: this.props.pulse.categoryId })
-      const board = _.find(this.props.boards, { id: category.boardId })
 
-      //console.log('details: ', this.props.pulse.id)
-    //const findPulseId = this.props.pulse.id
-
-    //const isBoardPrivate = this.props.boards[this.props.boardId].privateId
-    
-    
-    if (this.props.pulse.privateId && this.props.pulse.privateId === this.props.user.userId && board.privateId === '') {
+    if (props.pulse.privateId && props.pulse.privateId === user.userId) {
       return (
         <div
-          onClick={() => this.props.editPulse(this.props.pulse.id, { privateId: '' })}
+          onClick={() => dispatch(editPulse(props.pulse.id, { privateId: '' }))}
           data-position="left center"
           data-tooltip="Make public"
           style={{ display: 'inline-block', color: '#00A569', paddingRight: '5px', cursor: 'pointer' }}>
@@ -34,10 +31,10 @@ class ArchivePulse extends React.Component {
       )
     }
 
-    if (this.props.pulse.privateId === '')
+    if (props.pulse.privateId === '')
       return (
         <div
-          onClick={() => this.props.editPulse(this.props.pulse.id, { privateId: this.props.user.userId })}
+          onClick={() => dispatch(editPulse(props.pulse.id, { privateId: user.userId }))}
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Make private"
@@ -47,22 +44,15 @@ class ArchivePulse extends React.Component {
       )
   }
 
-  render() {
-    return (
-      <>
-        {this.renderArchive()}
-      </>
-    )
-  }
+
+  return (
+    <>
+      {renderArchive()}
+    </>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    pulses: Object.values(state.pulses),
-    user: state.user.credentials,
-    boards: Object.values(state.boards),
-    categories: Object.values(state.categories)
-  }
-}
+export default ArchivePulse
 
-export default connect(mapStateToProps, { editPulse })(ArchivePulse)
+
+
