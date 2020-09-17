@@ -55,14 +55,16 @@ class Tbody extends React.Component {
   
 
   renderPulses() {
-    console.log(this.props.appState.showArchived)
+    //console.log(this.props.appState.showArchived)
     const id = this.props.categoryId
     let pulses = _.filter(this.props.pulses, (this.props.appState.showArchived === 'false')?{ categoryId: id, archived: 'false' }:{ categoryId: id })
+
     //(this.props.appState.showArchived === 'false') ? pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' }) : pulses = _.filter(this.props.pulses, { categoryId: id })
     //let pulses = _.filter(this.props.pulses, { categoryId: id })
     
     return pulses.map(pulse => {
       //console.log('pulse: ', pulse)
+      if(pulse.privateId === '' || pulse.privateId === this.props.privateId)
       return (
         <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
