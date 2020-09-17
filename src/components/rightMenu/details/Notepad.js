@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Button } from 'semantic-ui-react'
-
+import { editPulse } from '../../../actions/pulses'
 import { isEmpty } from '../../../actions/helperFunctions'
 import { fetchNotepads } from '../../../actions/notepad'
 import { createNotepad, editNotepad, deleteNotepad } from '../../../actions/notepad'
@@ -28,6 +28,7 @@ class Notepad extends Component {
   createNewNotepad() {
     this.props.createNotepad({ content: '<p>Enter notes here...</p>' }, this.props.pulseId)
     this.setState({ data: '<p>Enter notes here...</p>' })
+    this.props.editPulse(this.props.appState.pulseId, {readed: [this.props.userId]})
   }
 
   onEditorChange = (event, editor) => {
@@ -36,9 +37,9 @@ class Notepad extends Component {
 
 
   renderSaveButton(notepadId) {
-    const notepad = _.find(this.props.notepad, { pulseId: this.props.appState.pulseId })    
+    const notepad = _.find(this.props.notepad, { pulseId: this.props.appState.pulseId })
     if (this.state.data === notepad.content) return <Button disabled>Save</Button>
-    if (this.state.data !== notepad.content) {      
+    if (this.state.data !== notepad.content) {
       return <Button onClick={() => this.CKEditorSaveToDB(notepadId)} style={{ color: '#00A569' }} data-position="right center" data-tooltip="Save to database">Save</Button>
     }
   }
@@ -46,6 +47,7 @@ class Notepad extends Component {
   CKEditorSaveToDB(notepadId) {
     if (this.state.data === '') this.props.deleteNotepad(notepadId)
     this.props.editNotepad(notepadId, { content: this.state.data })
+    this.props.editPulse(this.props.appState.pulseId, {readed: [this.props.userId]})
   }
 
   submitNotepad = (data) => {
@@ -110,8 +112,9 @@ const mapStateToProps = (state) => {
   return {
     notepad: Object.values(state.notepad),
     details: Object.values(state.details),
-    appState: state.appState
+    appState: state.appState,
+    userId: state.user.credentials.userId
   }
 }
 
-export default connect(mapStateToProps, { fetchNotepads, createNotepad, editNotepad, deleteNotepad })(Notepad)
+export default connect(mapStateToProps, { fetchNotepads, createNotepad, editNotepad, deleteNotepad, editPulse })(Notepad)

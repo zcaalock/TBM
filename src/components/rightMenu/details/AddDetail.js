@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createDetail } from '../../../actions/details'
+import { createDetail} from '../../../actions/details'
+import {editPulse} from '../../../actions/pulses'
 import SingleInput from '../../Forms/SingleInput'
 
 class AddDetail extends React.Component {
@@ -35,6 +36,7 @@ class AddDetail extends React.Component {
   onSubmit = (formValues) => {
     this.props.createDetail(formValues, this.props.pulseId)
     this.removeEdit()
+    this.props.editPulse(this.props.pulseId, {readed: [this.props.userId]})
   }
 
   renderNewDetail() {
@@ -82,8 +84,10 @@ class AddDetail extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    boardID: state.appState.id
+    boardID: state.appState.id,
+    userId: state.user.credentials.userId
+
   }
 }
 
-export default connect(mapStateToProps, { createDetail })(AddDetail)
+export default connect(mapStateToProps, { createDetail, editPulse })(AddDetail)

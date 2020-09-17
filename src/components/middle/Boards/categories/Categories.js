@@ -18,13 +18,13 @@ class Categories extends React.Component {
         return false;
     }
     return true;
-  }   
-  
-  
+  }
+
+
 
   componentDidMount() {
     if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
-    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()    
+    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
   }
 
   expand(id) {
@@ -40,19 +40,21 @@ class Categories extends React.Component {
     //const pulses = _.filter(this.props.pulses, { categoryId: id })
     //const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
     const pulsesPB = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
-    
-    pulsesPB.map(pulse => {      
-    return this.props.details.map(detail =>{
+
+    pulsesPB.map(pulse => {
+      return this.props.details.map(detail => {
         if (detail.pulseId === pulse.id)
-        detailStorage.push({detailId: detail.id, check: detail.check}) 
+          detailStorage.push({ detailId: detail.id, check: detail.check })
         return detailStorage
         //console.log('detail', detail.id) 
-        
-      })     
+
+      })
     })
+
     
+
     const details = _.unionBy(detailStorage, 'detailId')
-    const detailsChecked = _.filter(details, {check: 'true'})
+    const detailsChecked = _.filter(details, { check: 'true' })
 
 
     if (details.length > 0) {
@@ -61,6 +63,8 @@ class Categories extends React.Component {
       return <ProgressBar size={'tiny'} value={value * 100} />
     }
   }
+
+  
 
   renderColapsingMenu(category, id) {
     if (this.state && this.state[id] === 'true') {
@@ -74,18 +78,25 @@ class Categories extends React.Component {
       )
     } return (
       <Header
+        appState={this.props.appState.showNotifications}
         expandCollapse={() => this.expand(category.id)}
         categoryKey={category.id}
         categoryTitle={category.title}
-        category={category} />
+        category={category} 
+        id={category.id}
+        pulses={this.props.pulses}
+        privateId={this.props.privateId}
+        />
     )
   }
 
   renderCategories() {
     //var sort = _.sortBy(this.props.categories, 'id')
     //console.log('sort: ', sort)
+    
     return this.props.categories.map(category => {
       if (category.boardId === this.props.appState.id && category.privateId === "" && category.archived !== "true") {
+        
         return (
           <div key={category.id}>
             {this.renderProgressBar(category.id)}
@@ -111,13 +122,14 @@ class Categories extends React.Component {
 
   checkIfArchived() {
 
-    if(this.props.appState.showArchived === "true") return this.renderCategoriesWithArchived()
+    if (this.props.appState.showArchived === "true") return this.renderCategoriesWithArchived()
     return this.renderCategories()
   }
 
 
   render() {
     //console.log('fetch categories: ', this.props.categories)
+    
     return (
       <div>
         {this.checkIfArchived()}
@@ -132,7 +144,8 @@ const mapStateToProps = (state) => {
     categories: Object.values(state.categories),
     pulses: Object.values(state.pulses),
     details: Object.values(state.details),
-    appState: state.appState
+    appState: state.appState,
+    privateId: state.user.credentials.userId,
   }
 }
 

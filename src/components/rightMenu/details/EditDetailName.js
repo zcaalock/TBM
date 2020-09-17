@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { editDetail } from '../../../actions/details'
+import { editPulse } from '../../../actions/pulses'
 import SingleInput from '../../Forms/SingleInput'
 
 class EditDetailName extends React.Component {    
@@ -9,6 +10,7 @@ class EditDetailName extends React.Component {
   onSubmit = (formValues) => {
     this.props.editDetail(this.props.detail.id, formValues)
     this.props.removeEdit()
+    this.props.editPulse(this.props.pulseId, {readed: [this.props.userId]})
   }   
 
   renderEditDetail() {
@@ -43,4 +45,4 @@ class EditDetailName extends React.Component {
   }
 }
 
-export default connect(null, { editDetail })(EditDetailName)
+export default connect(null, { editDetail, editPulse })(EditDetailName)

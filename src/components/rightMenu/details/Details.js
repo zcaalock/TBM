@@ -3,7 +3,7 @@ import { Checkbox, Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchDetails, editDetail } from '../../../actions/details'
-
+import { editPulse } from '../../../actions/pulses'
 import DetailIcons from './DetailIcons'
 import EditDetailName from './EditDetailName'
 
@@ -36,10 +36,14 @@ class Details extends React.Component {
   }
 
   handleOnClick(id, bool) {
-    if (bool === 'false')
+    if (bool === 'false') {
       this.props.editDetail(id, { check: 'true' })
-    if (bool === 'true')
+      this.props.editPulse(this.props.pulseId, { readed: [this.props.userId] })
+    }
+    if (bool === 'true') {
       this.props.editDetail(id, { check: 'false' })
+      this.props.editPulse(this.props.pulseId, { readed: [this.props.userId] })
+    }
   }
 
   defaulCheck(bool) {
@@ -68,6 +72,8 @@ class Details extends React.Component {
               <EditDetailName
                 title={detail.title}
                 detail={detail}
+                pulseId={this.props.pulseId}
+                userId={this.props.userId}
                 editState={this.state}
                 showEdit={() => this.showEdit(detail.id)}
                 removeEdit={() => this.removeEdit(detail.id)} />
@@ -107,8 +113,9 @@ class Details extends React.Component {
 const mapStateToProps = (state) => {
 
   return {
-    details: Object.values(state.details)
+    details: Object.values(state.details),
+    userId: state.user.credentials.userId
   }
 }
 
-export default connect(mapStateToProps, { fetchDetails, editDetail })(Details)
+export default connect(mapStateToProps, { fetchDetails, editDetail, editPulse })(Details)

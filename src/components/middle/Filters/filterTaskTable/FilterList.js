@@ -168,6 +168,7 @@ class SearchFilter extends React.Component {
     )
   }
 
+  
   render() {
     //console.log('state: ', this.state)
     if (this.isEmpty(colSplited)) this.makeCollection()
@@ -205,6 +206,15 @@ class SearchFilter extends React.Component {
           <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.hideEmptyDates, 'hideEmptyDates')} className={this.renderCheckBoxLabelStyle(this.props.appState.hideEmptyDates)} >Hide empty dates</label>
         </div>
         {this.renderPrivateCheckBox()}
+        <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+          <Checkbox
+            onClick={() => this.handleOnCheckBoxClick(this.props.appState.showNotifications, 'showNotifications')}            
+            checked={this.defaulCheck(this.props.appState.showNotifications)}
+            slider
+            style={{ marginBottom: '-4px', }}          
+          />
+          <label onClick={() => this.handleOnCheckBoxClick(this.props.appState.showNotifications, 'showNotifications')} className={this.renderCheckBoxLabelStyle(this.props.appState.showNotifications)} >Show Notifications</label>
+        </div>
       </div>
     )
   }

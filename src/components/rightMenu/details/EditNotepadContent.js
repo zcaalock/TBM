@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { editNotepad } from '../../../actions/notepad'
 import NotepadField from '../../Forms/NotepadField'
+import { editPulse } from '../../../actions/pulses'
 //import SingleInput from '../../Forms/SingleInput'
 
 class editNotepadContent extends React.Component {    
@@ -12,7 +13,7 @@ class editNotepadContent extends React.Component {
     if(this.props.notepad.content !== formValues.content)
     //console.log('submit value: ', formValues, 'notepad Id:', this.props.notepad.id)
     this.props.editNotepad(this.props.notepad.id, formValues)
-    
+    this.props.editPulse(this.props.appState.pulseId, {readed: [this.props.userId]})
     this.props.removeEdit()
   }   
 
@@ -48,4 +49,4 @@ class editNotepadContent extends React.Component {
   }
 }
 
-export default connect(null, { editNotepad })(editNotepadContent)
+export default connect(null, { editNotepad, editPulse })(editNotepadContent)

@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import HeaderIcons from './HeaderIcons'
 import EditHeaderName from './editHeaderName'
 
@@ -30,7 +31,20 @@ class Header extends React.Component {
         </div>)
     }
   }
+  mapNotifications(){
+    let notoficationStorage = 0
+    const pulsesPB = _.filter(this.props.pulses, { categoryId: this.props.id })
+    pulsesPB.map(pulse => {
+      let findUser = undefined
+      if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.privateId) return findUser = true })
+      if (pulse.readed && pulse.readed.length > 0 && findUser !== true) return notoficationStorage++
+      return null
+    })
+    return notoficationStorage
+    
+  }
   render() {
+    
     return (
       <div style={{}} className="categories ui secondary text menu" >
         <div className="menu" style={{ width: '100%' }}>
@@ -54,6 +68,8 @@ class Header extends React.Component {
           <HeaderIcons
             showEdit={() => this.showEdit()}
             categoryId={this.props.categoryKey}
+            notifications={this.mapNotifications()}
+            appState={this.props.appState}
           />
         </div>
       </div>

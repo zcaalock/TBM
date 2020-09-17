@@ -211,3 +211,30 @@
   cursor: pointer;
   color: #DC6969 !important
 }
+
+.notification {
+  position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 24px;
+    background-color: #DC6969;
+    text-align: center;
+    margin-left: 10px;
+    color: white;
+    padding-top: 4px;
+    border-radius: 8px 0px;
+}
+
+.notificationCategory {
+  position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 24px;
+    background-color: #DC6969;
+    text-align: center;
+    margin-left: -64px;
+    margin-top: -13px;
+    color: white;
+    padding-top: 4px;
+    border-radius: 0px 0px 8px 8px;
+}
