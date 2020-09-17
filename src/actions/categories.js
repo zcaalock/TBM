@@ -19,13 +19,14 @@ export const fetchCategories = () => async dispatch => {
 }
 
 export const editCategory = (id, formValues) => async dispatch => {
+  console.log(id, formValues)
   axios.patch(`/category/${id}`, formValues)
     .then(() => {
       axios
         .get(`/category/${id}`)
         .then((res) => {
           dispatch({ type: types.EDIT_CATEGORY, payload: res.data })
-          //console.log('cat: ', res.data)
+          console.log('cat: ', res.data)
           //history.push(`/mypulses/${res.data.credentials.userId}`);
         })
         .catch((err) => console.log(err));

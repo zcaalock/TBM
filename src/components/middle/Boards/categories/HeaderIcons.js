@@ -1,5 +1,6 @@
 import React from 'react'
 import DeleteCategory from './DeleteCategory'
+import ArchiveCategory from './ArchiveCategory'
 
 class HeaderIcons extends React.Component {
   render() {
@@ -25,8 +26,8 @@ class HeaderIcons extends React.Component {
           }}>
           <i className=" archive icon" />
         </div>         */}
-          <DeleteCategory
-          categoryId={this.props.categoryId} />        
+        <ArchiveCategory categoryId={this.props.categoryId} />
+        <DeleteCategory categoryId={this.props.categoryId} />        
       </div>
     )
   }
