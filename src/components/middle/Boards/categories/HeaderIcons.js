@@ -2,35 +2,29 @@ import React from 'react'
 import DeleteCategory from './DeleteCategory'
 import ArchiveCategory from './ArchiveCategory'
 
-class HeaderIcons extends React.Component {
-  render() {
+function HeaderIcons (props) {  
+
+    const renderNotifications =() => {
+      if (props.notifications > 0 && props.appState === 'true') return <div className='notificationCategory' data-tooltip="Unreaded content">{props.notifications}</div>
+    }
+
     return (
       <div>
+        {renderNotifications()}
         <div
-          onClick={() => { this.props.showEdit() }}
+          onClick={() => { props.showEdit() }}
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Edit"
-          style={{ display: 'inline-block', cursor: 'pointer' }}>
+          style={{ display: 'inline-block', cursor: 'pointer', marginRight: '7px' }}>
           <i className=" edit icon" />
-        </div>
-        {/* <div
-          className="articleIcon"
-          data-position="bottom center"
-          data-tooltip="Archive"
-          style={{
-            display: 'inline-block',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            cursor: 'pointer'
-          }}>
-          <i className=" archive icon" />
-        </div>         */}
-        <ArchiveCategory categoryId={this.props.categoryId} />
-        <DeleteCategory categoryId={this.props.categoryId} />        
+        </div>        
+        <ArchiveCategory categoryId={props.categoryId} />
+        <DeleteCategory categoryId={props.categoryId} /> 
+               
       </div>
     )
-  }
+  
 }
 
 export default HeaderIcons

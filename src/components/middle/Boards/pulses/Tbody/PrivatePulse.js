@@ -1,22 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import _ from 'lodash'
-import { connect } from 'react-redux'
 import { editPulse } from '../../../../../actions/pulses'
 
 
 function ArchivePulse (props) {
 
-  const pulses = useSelector(state => Object.values(state.pulses));
+  //const pulses = useSelector(state => Object.values(state.pulses));
   const user = useSelector(state => state.user.credentials);
-  const boards = useSelector(state => Object.values(state.boards));
-  const categories = useSelector(state => Object.values(state.categories));
+  //const boards = useSelector(state => Object.values(state.boards));
+  //const categories = useSelector(state => Object.values(state.categories));
   const dispatch = useDispatch();
 
-  const renderArchive = () => {
-
-    //const category = _.find(categories, { id: props.pulse.categoryId })
-    //const board = _.find(props.boards, { id: category.boardId })   
+  const renderArchive = () => {     
 
 
     if (props.pulse.privateId && props.pulse.privateId === user.userId) {
