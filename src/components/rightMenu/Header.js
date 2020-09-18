@@ -6,36 +6,8 @@ function Header(props) {
 
   const [state, defState] = useState(
     { isHovering: false, itemEditable: false });
-
-  // removeEdit() {
-  //   this.setState({ itemEditable: false })
-  // }
-
-  // hideIcon() {
-  //   this.setState({ isHovering: false })
-  // }
-
-  // showIcon() {
-  //   this.setState({ isHovering: true })
-  // }
-
-  // showHover() {
-  //   if (this.state.isHovering === true) {
-  //     return (
-  //       <div>
-  //         <i className="sort icon" />
-  //       </div>)
-  //   }
-  // }
-
-
   return (
     <div className="rightMenu-header" style={{ padding: '' }}>
-      {/* <div className='' style={{ display: 'inline-block', maxWidth: '224px' }}>
-          <h3>
-            {this.props.title}
-          </h3>
-        </div> */}
       <div style={{ display: 'inline-block', maxWidth: '224px' }}>
         <h3>
           <EditPulseName
@@ -55,7 +27,6 @@ function Header(props) {
       </div>
     </div>
   )
-
 }
 
 export default Header
