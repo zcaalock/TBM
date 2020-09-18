@@ -4,15 +4,16 @@ import axios from 'axios'
 import * as types from './types'
 
 export const createPulse = (formValues, categoryId, userId) => {
-  return async (dispatch) => {                             //TODO update initials with user handle
-    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: '', readed: userId})
+  return async (dispatch) => {    
+    console.log('user: ', userId, formValues)                    
+    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: ''})
     dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
     //history.push(`/boards/${boardId}/pulses/${responce.data.pulse.id}`)       
   }
 }
 
 export const createPrivatePulse = (formValues, categoryId, userId) => {
-  return async (dispatch) => {                             //TODO update initials with user handle
+  return async (dispatch) => {                             
     const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: userId})
     dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
     //history.push(`/boards/${boardId}/pulses/${responce.data.pulse.id}`)       

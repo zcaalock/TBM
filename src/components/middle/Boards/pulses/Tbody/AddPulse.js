@@ -35,7 +35,7 @@ class AddPulse extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    if(this.props.boards[this.props.boardId].privateId === '') this.props.createPulse(formValues, this.props.categoryId, '')
+    if(this.props.boards[this.props.boardId].privateId === '') this.props.createPulse(formValues, this.props.categoryId, this.props.userId,)
     if(this.props.boards[this.props.boardId].privateId === this.props.userId) this.props.createPrivatePulse(formValues, this.props.categoryId, this.props.userId)
     this.removeEdit()
 
