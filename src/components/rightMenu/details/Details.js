@@ -1,121 +1,96 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Table } from 'semantic-ui-react'
 import _ from 'lodash'
-import { connect } from 'react-redux'
-import { fetchDetails, editDetail } from '../../../actions/details'
+import { editDetail } from '../../../actions/details'
 import { editPulse } from '../../../actions/pulses'
 import DetailIcons from './DetailIcons'
 import EditDetailName from './EditDetailName'
 
-class Details extends React.Component {
-  state = {}
+function Details(props) {
+  const [state, defState] = useState({});
+  const dispatch = useDispatch();
+  const details = useSelector(state => Object.values(state.details));
+  const userId = useSelector(state => state.user.credentials.userId);
 
-  removeEdit(id) {
-    this.setState({ [`itemEditable${id}`]: false })
+  const removeEdit = (id) => {
+    defState({ [`itemEditable${id}`]: false })
   }
 
-  showEdit(id) {
-    this.setState({ [`itemEditable${id}`]: true })
-    console.log('edit')
-  }
+  const showEdit = (id) => {
+    defState({ [`itemEditable${id}`]: true })
+  }  
 
-  componentDidMount() {
-    //this.props.fetchDetails()
-
-  }
-
-  setBool(bool) {
-    this.setState({ check: bool })
-  }
-
-  renderCrossOut(bool) {
+  const renderCrossOut = (bool) => {
     if (bool === 'true') {
       return { textDecoration: 'line-through' }
     }
     return {}
   }
 
-  handleOnClick(id, bool) {
+  const handleOnClick = (id, bool) => {
     if (bool === 'false') {
-      this.props.editDetail(id, { check: 'true' })
-      this.props.editPulse(this.props.pulseId, { readed: [this.props.userId] })
+      dispatch(editDetail(id, { check: 'true' }))
+      dispatch(editPulse(props.pulseId, { readed: [userId] }))
     }
     if (bool === 'true') {
-      this.props.editDetail(id, { check: 'false' })
-      this.props.editPulse(this.props.pulseId, { readed: [this.props.userId] })
+      dispatch(editDetail(id, { check: 'false' }))
+      dispatch(editPulse(props.pulseId, { readed: [userId] }))
     }
   }
 
-  defaulCheck(bool) {
+  const defaulCheck = (bool) => {
     if (bool === 'false')
       return false
     if (bool === 'true')
       return true
   }
 
-  renderDetails() {
-    const id = this.props.pulseId
-    const details = _.filter(this.props.details, { pulseId: id })
+  const renderDetails = () => {
+    const id = props.pulseId
+    const detailsFiltered = _.filter(details, { pulseId: id })
 
-    return details.map(detail => {
+    return detailsFiltered.map(detail => {
       //key={detail.id} basic='very'
       return (
         <Table.Row key={detail.id}>
           <Table.Cell style={{ width: '25px' }}>
             <Checkbox
-              onClick={() => this.handleOnClick(detail.id, detail.check)}
-              defaultChecked={this.defaulCheck(detail.check)}
+              onClick={() => handleOnClick(detail.id, detail.check)}
+              defaultChecked={defaulCheck(detail.check)}
               style={{ marginBottom: '-4px' }} />
           </Table.Cell>
           <Table.Cell>
-            <div className="blackHover" style={this.renderCrossOut(detail.check)}>
+            <div className="blackHover" style={renderCrossOut(detail.check)}>
               <EditDetailName
                 title={detail.title}
                 detail={detail}
-                pulseId={this.props.pulseId}
-                userId={this.props.userId}
-                editState={this.state}
-                showEdit={() => this.showEdit(detail.id)}
-                removeEdit={() => this.removeEdit(detail.id)} />
+                pulseId={props.pulseId}
+                userId={userId}
+                editState={state}
+                showEdit={() => showEdit(detail.id)}
+                removeEdit={() => removeEdit(detail.id)} />
             </div>
           </Table.Cell>
           <Table.Cell style={{ width: '76px' }}>
-            <DetailIcons showEdit={() => this.showEdit(detail.id)} detailId={detail.id} />
+            <DetailIcons showEdit={() => showEdit(detail.id)} detailId={detail.id} />
           </Table.Cell>
         </Table.Row>
       )
     })
   }
 
-  render() {
-    return (
-      <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%', paddingLeft: '10px' }}>
-        <Table basic='very' >
-          {/* <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Notes</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header> */}
-          <Table.Body>
-            {this.renderDetails()}
-          </Table.Body>
-        </Table>
+  return (
+    <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%', paddingLeft: '10px' }}>
+      <Table basic='very' >
+        <Table.Body>
+          {renderDetails()}
+        </Table.Body>
+      </Table>
+    </div>
+  )
 
-
-
-      </div>
-    )
-  }
 }
 
-const mapStateToProps = (state) => {
 
-  return {
-    details: Object.values(state.details),
-    userId: state.user.credentials.userId
-  }
-}
-
-export default connect(mapStateToProps, { fetchDetails, editDetail, editPulse })(Details)
+export default Details

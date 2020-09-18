@@ -1,76 +1,72 @@
-import React from 'react'
-import _ from 'lodash'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import history from '../../../../../history'
+import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
 import PulseName from '../../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../../Boards/pulses/Tbody/LeadPerson'
 import Status from '../../../Boards/pulses/Tbody/Status'
-import ProgressBar from '../../../../Forms/ProgressBar'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
 import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 
-class Tbody extends React.Component {
-  componentDidMount() {
-    this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')
-    
-  }
+function Tbody (props) {
+  
+  const pulses = useSelector(state => Object.values(state.pulses));
+  const boards = useSelector(state => Object.values(state.boards));
+  const categories = useSelector(state => Object.values(state.categories));  
+  const details = useSelector(state => Object.values(state.details)); 
+  const user = useSelector(state => state.user.credentials);
+  const appState = useSelector(state => state.appState);  
 
-  goLink(id) {
-    this.props.editState(id, 'pulseId')    
-    history.push(`/filters/${this.props.params.selector}/${this.props.params.item}/pulses/${id}`)
-  }
+  const dispatch = useDispatch();
+  
+  useEffect( () => {    
+    dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))    
+  },[])
 
-  renderProgressBar(id) {
-    const details = _.filter(this.props.details, { pulseId: id })
-    const checked = _.filter(this.props.details, { pulseId: id, check: "true" })
+  const goLink = (id) => {
+    dispatch(editState(id, 'pulseId'))
+    history.push(`/filters/${props.params.selector}/${props.params.item}/pulses/${id}`)
+  }  
 
-    if (details.length > 0) {
-      const value = checked.length / details.length
-      //console.log('value: ', value)
-      return <ProgressBar value={value * 100} />
-    }
-  }
-
-  renderSelect(pulseId) {
-    if (this.props.appState.pulseId === pulseId)
+  const renderSelect = (pulseId) => {
+    if (appState.pulseId === pulseId)
       return { backgroundColor: '#F5F5F5' }
   }
 
   //sorting collumns
 
-  handleFilterClick(name){
+  const handleFilterClick = (name) =>{
     //console.log(name)
-    const sortBy = this.props.appState.sortBy
-    if(name === 'title' && sortBy.name === 'createdAt') this.props.editState({ name: 'title', direction: 'asc' }, 'sortBy')
-    if(name === 'deadline' && sortBy.name === 'createdAt') this.props.editState({ name: 'deadline', direction: 'asc' }, 'sortBy')
-    if(sortBy.name === name && sortBy.direction === 'desc') this.props.editState({ name: name, direction: 'asc' }, 'sortBy')
-    if(sortBy.name === name && sortBy.direction === 'asc') this.props.editState({ name: name, direction: 'desc' }, 'sortBy')
+    const sortBy = appState.sortBy
+    if(name === 'title' && sortBy.name === 'createdAt') dispatch(editState({ name: 'title', direction: 'asc' }, 'sortBy'))
+    if(name === 'deadline' && sortBy.name === 'createdAt') dispatch(editState({ name: 'deadline', direction: 'asc' }, 'sortBy'))
+    if(sortBy.name === name && sortBy.direction === 'desc') dispatch(editState({ name: name, direction: 'asc' }, 'sortBy'))
+    if(sortBy.name === name && sortBy.direction === 'asc') dispatch(editState({ name: name, direction: 'desc' }, 'sortBy'))
   }
 
-  renderRemoveSortIcon(name) {
-    const sortBy = this.props.appState.sortBy
-    if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>
+  const renderRemoveSortIcon = (name) => {
+    const sortBy = appState.sortBy
+    if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>
     // if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>  
   }
 
-
-  sortPulsesBy(arr) {
+  const sortPulsesBy = (arr) => {
     var data = ''
-    if (this.props.appState.sortBy.direction === 'asc') {
-      data = _.sortBy(arr, [this.props.appState.sortBy.name])
+    if (appState.sortBy.direction === 'asc') {
+      data = _.sortBy(arr, [appState.sortBy.name])
       //onsole.log('sorted: ', data)
       return data
     }
-    if (this.props.appState.sortBy.direction === 'desc') {
-      data = _.sortBy(arr, [this.props.appState.sortBy.name]).reverse()
+    if (appState.sortBy.direction === 'desc') {
+      data = _.sortBy(arr, [appState.sortBy.name]).reverse()
       //console.log('sorted: ', data)
       return data
   }}
 
-  sortIconClass(name) {
-    const sortBy = this.props.appState.sortBy
+  const sortIconClass = (name) => {
+    const sortBy = appState.sortBy
     if(name === 'title' && sortBy.name === 'createdAt')return 'articleIcon sort alphabet down icon'
     if(name === 'title' && sortBy.direction === 'asc' && sortBy.name === name)return 'articleIconSelected sort alphabet down icon'
     if(name === 'title' && sortBy.direction === 'desc' && sortBy.name === name)return 'articleIconSelected sort alphabet up icon'
@@ -81,48 +77,45 @@ class Tbody extends React.Component {
 
   //Calendar
 
-
-
-
-  renderPulses() {
+  const renderPulses = () => {
     //console.log('selector: ', this.props.selector, this.props.item)   
-    let pulses = {}
-    const showArchived = this.props.appState.showArchived 
-    const hideEmptyDates = this.props.appState.hideEmptyDates
-    const hidePrivate = this.props.appState.hidePrivate  
+    let pulsesCol = {}
+    const showArchived = appState.showArchived 
+    const hideEmptyDates = appState.hideEmptyDates
+    const hidePrivate = appState.hidePrivate  
     
     if (showArchived === 'true') { 
-      pulses = _.filter(this.props.pulses, { [this.props.selector]: this.props.item })
-      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).reject({privateId: this.props.user.userId}).value() }
-      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).value() }
-      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulses = _.chain(this.props.pulses).filter({ userId: this.props.appState.selectedUserId}).reject({privateId: this.props.user.userId}).value() }
+      pulsesCol = _.filter(pulses, { [props.selector]: props.item })
+      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulsesCol = _.chain(pulses).filter({ userId: appState.selectedUserId}).reject({deadline: ''}).reject({privateId: user.userId}).value() }
+      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulsesCol = _.chain(pulses).filter({ userId: appState.selectedUserId}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulsesCol = _.chain(pulses).filter({ userId: appState.selectedUserId}).reject({privateId: user.userId}).value() }
       
     }
 
     if (showArchived === 'false') { 
-      pulses = _.chain(this.props.pulses).filter({[this.props.selector]: this.props.item}).reject({archived: 'true' }).value() 
+      pulsesCol = _.chain(pulses).filter({[props.selector]: props.item}).reject({archived: 'true' }).value() 
       //console.log('pulses: ', pulses)
-      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).reject({privateId: this.props.user.userId}).value() }
-      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({deadline: ''}).value() }
-      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulses = _.chain(pulses).filter({ userId: this.props.appState.selectedUserId}).reject({privateId: this.props.user.userId}).value() } 
+      if (hideEmptyDates === 'true' && hidePrivate === 'true') { pulsesCol = _.chain(pulsesCol).filter({ userId: appState.selectedUserId}).reject({deadline: ''}).reject({privateId: user.userId}).value() }
+      if (hideEmptyDates === 'true' && hidePrivate === 'false') { pulsesCol = _.chain(pulsesCol).filter({ userId: appState.selectedUserId}).reject({deadline: ''}).value() }
+      if (hideEmptyDates === 'false' && hidePrivate === 'true') { pulsesCol = _.chain(pulsesCol).filter({ userId: appState.selectedUserId}).reject({privateId: user.userId}).value() } 
          
     }
       
     
-    if (this.props.boards.length > 0 && this.props.pulses.length > 0 && this.props.categories.length > 0)
-    pulses = _.filter(pulses, (pulse) => {
-      return pulse.privateId === '' || pulse.privateId === this.props.user.userId;
+    if (boards.length > 0 && pulses.length > 0 && categories.length > 0)
+    pulsesCol = _.filter(pulsesCol, (pulse) => {
+      return pulse.privateId === '' || pulse.privateId === user.userId;
   }); 
-    return this.sortPulsesBy(pulses).map(pulse => {
+    return sortPulsesBy(pulsesCol).map(pulse => {
       
-      let category = _.find(this.props.categories, { id: pulse.categoryId })
-      let board = _.find(this.props.boards, { id: category.boardId })
+      let category = _.find(categories, { id: pulse.categoryId })
+      let board = _.find(boards, { id: category.boardId })
       //console.log('pulse: ', pulse.archived)
       //console.log('sdfsf: ',category.title)
       return (
-        <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse.id)}>
+        <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={this.props.user.userId} />
+            <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={user.userId} />
           </td>
           <td >
             {board.title}
@@ -140,7 +133,7 @@ class Tbody extends React.Component {
             <Deadline pulse={pulse}/>
           </td>
           <td >
-            <DetailProgrsBar key={pulse.id} details={this.props.details} pulse={pulse} />
+            <DetailProgrsBar key={pulse.id} details={details} pulse={pulse} />
             {/* {this.renderProgressBar(pulse.id)} */}
           </td>
         </tr>
@@ -148,45 +141,26 @@ class Tbody extends React.Component {
     })
   }
 
-  render() {
-
-    return (
+  return (
       <div>
         <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
           <thead>
             <tr>
-              <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={()=>this.handleFilterClick('title')} className={this.sortIconClass('title')} style={{cursor: 'pointer'}}/>{this.renderRemoveSortIcon('title')}</th>
+              <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={()=>handleFilterClick('title')} className={sortIconClass('title')} style={{cursor: 'pointer'}}/>{renderRemoveSortIcon('title')}</th>
               <th style={{ minWidth: '15%' }}>Board </th>
               <th style={{ width: '10%' }}>Category</th>
               <th style={{ width: '10%' }}>Lead Person</th>
               <th style={{ width: '120px' }}>Status</th>
-              <th style={{ width: '10%' }}>Deadline <i onClick={()=>this.handleFilterClick('deadline')} className={this.sortIconClass('deadline')} style={{cursor: 'pointer'}}/>{this.renderRemoveSortIcon('deadline')}</th>
-              <th style={{ width: '10%' }}>Details</th>
-              
+              <th style={{ width: '10%' }}>Deadline <i onClick={()=>handleFilterClick('deadline')} className={sortIconClass('deadline')} style={{cursor: 'pointer'}}/>{renderRemoveSortIcon('deadline')}</th>
+              <th style={{ width: '10%' }}>Details</th>              
             </tr>
           </thead>
           <tbody>
-            {this.renderPulses()}
+            {renderPulses()}
           </tbody>
         </table>
       </div>
-    )
-
-  }
+    )  
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    user: state.user.credentials,
-    pulses: Object.values(state.pulses),    
-    lead: Object.values(state.lead),
-    boards: Object.values(state.boards),
-    details: Object.values(state.details),
-    categories: Object.values(state.categories),    
-    appState: state.appState
-
-  }
-}
-
-export default connect(mapStateToProps, { editState })(Tbody)
+export default Tbody

@@ -1,80 +1,78 @@
-import React from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash'
 import HeaderIcons from './HeaderIcons'
 import EditHeaderName from './editHeaderName'
 
-class Header extends React.Component {
+function Header(props) {
 
-  state = { isHovering: false, itemEditable: false }
+  const [isHovering, setIsHovering] = useState(false)
+  const [itemEditable, setItemEditable] = useState(false)
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const removeEdit = () => {
+    setItemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setItemEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setIsHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setIsHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
         <div>
           <i className="sort icon" />
         </div>)
     }
   }
-  mapNotifications(){
+
+  const mapNotifications = () => {
     let notoficationStorage = 0
-    const pulsesPB = _.filter(this.props.pulses, { categoryId: this.props.id })
+    const pulsesPB = _.filter(props.pulses, { categoryId: props.id })
     pulsesPB.map(pulse => {
       let findUser = undefined
-      if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.privateId) return findUser = true })
+      if (pulse.readed) pulse.readed.forEach(read => { if (read === props.privateId) return findUser = true })
       if (pulse.readed && pulse.readed.length > 0 && findUser !== true) return notoficationStorage++
       return null
     })
     return notoficationStorage
-    
   }
-  render() {
-    
-    return (
-      <div style={{}} className="categories ui secondary text menu" >
-        <div className="menu" style={{ width: '100%' }}>
-          <div
-            onMouseLeave={() => this.hideIcon()}
-            onMouseEnter={() => this.showIcon()}
-            onClick={() => this.props.expandCollapse()}
-            className="header item" style={{cursor: 'pointer'}}>
-            {this.showHover()}
-            {/* {this.props.categoryTitle} */}
-            <EditHeaderName
-              title={this.props.categoryTitle}
-              category={this.props.category}
-              editState={this.state}
-              showEdit={() => this.showEdit()}
-              removeEdit={() => this.removeEdit()}
-            />
-          </div>
-        </div>
-        <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
-          <HeaderIcons
-            showEdit={() => this.showEdit()}
-            categoryId={this.props.categoryKey}
-            notifications={this.mapNotifications()}
-            appState={this.props.appState}
+
+  return (
+    <div style={{}} className="categories ui secondary text menu" >
+      <div className="menu" style={{ width: '100%' }}>
+        <div
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
+          onClick={() => props.expandCollapse()}
+          className="header item" style={{ cursor: 'pointer' }}>
+          {showHover()}
+          <EditHeaderName
+            title={props.categoryTitle}
+            category={props.category}
+            editState={itemEditable}
+            showEdit={() => showEdit()}
+            removeEdit={() => removeEdit()}
           />
         </div>
       </div>
-    )
-  }
+      <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
+        <HeaderIcons
+          showEdit={() => showEdit()}
+          categoryId={props.categoryKey}
+          notifications={mapNotifications()}
+          appState={props.appState}
+        />
+      </div>
+    </div>
+  )
 }
 
 export default Header

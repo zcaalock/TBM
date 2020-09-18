@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import history from '../../../../history'
 import { editPulse } from '../../../../actions/pulses'
 import { fetchDetails } from '../../../../actions/details'
@@ -8,17 +8,23 @@ import { editState } from '../../../../actions/appState'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
-import ProgressBar from '../../../Forms/ProgressBar'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
 import Deadline from '../../Boards/pulses/Tbody/Deadline'
 
-class Tbody extends React.Component {
-  componentDidMount() {
+function Tbody(props) {
 
-    if (this.isEmpty(this.props.pulses)) this.props.fetchDetails()
-  }
+  const pulses = useSelector(state => Object.values(state.pulses));
+  const details = useSelector(state => Object.values(state.details));
+  const privateId = useSelector(state => state.user.credentials.userId);
+  const appState = useSelector(state => state.appState);
 
-  isEmpty(obj) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEmpty(pulses)) dispatch(fetchDetails())
+  }, [])
+
+  const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
         return false;
@@ -26,52 +32,31 @@ class Tbody extends React.Component {
     return true;
   }
 
-
-
-
-  goLink(pulse) {
-    this.props.editState(pulse.id, 'pulseId')
-    history.push(`/boards/${this.props.appState.id}/pulses/${pulse.id}`)
+  const goLink = (pulse) => {
+    dispatch(editState(pulse.id, 'pulseId'))
+    history.push(`/boards/${appState.id}/pulses/${pulse.id}`)
 
     let findUser = undefined
-    if(pulse.readed) pulse.readed.forEach(read => { if (read === this.props.privateId) return findUser = true })  
-    if(pulse.readed && pulse.readed.length > 0 && findUser === undefined) this.props.editPulse(pulse.id, {readed: [...pulse.readed,this.props.privateId]})
-
+    if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined) dispatch(editPulse(pulse.id, { readed: [...pulse.readed, privateId] }))
   }
 
-  renderSelect(pulseId) {
-    if (this.props.appState.pulseId === pulseId)
+  const renderSelect = (pulseId) => {
+    if (appState.pulseId === pulseId)
       return { backgroundColor: '#F5F5F5' }
-  }
+  }  
 
-  renderProgressBar(id) {
-    const details = _.filter(this.props.details, { pulseId: id })
-    const checked = _.filter(this.props.details, { pulseId: id, check: 'true' })
+  const renderPulses = () => {
 
-    if (details.length > 0) {
-      const value = checked.length / details.length
-      //console.log('value: ', value)
-      return <ProgressBar value={value * 100} />
-    }
-  }
+    const id = props.categoryId
+    let pulsesFiltered = _.filter(pulses, (appState.showArchived === 'false') ? { categoryId: id, archived: 'false' } : { categoryId: id })
 
-
-
-  renderPulses() {
-    //console.log(this.props.appState.showArchived)
-    const id = this.props.categoryId
-    let pulses = _.filter(this.props.pulses, (this.props.appState.showArchived === 'false') ? { categoryId: id, archived: 'false' } : { categoryId: id })
-
-    //(this.props.appState.showArchived === 'false') ? pulses = _.filter(this.props.pulses, { categoryId: id, archived: 'false' }) : pulses = _.filter(this.props.pulses, { categoryId: id })
-    //let pulses = _.filter(this.props.pulses, { categoryId: id })
-
-    return pulses.map(pulse => {
-      //console.log('pulse: ', pulse)
-      if (pulse.privateId === '' || pulse.privateId === this.props.privateId)
+    return pulsesFiltered.map(pulse => {
+      if (pulse.privateId === '' || pulse.privateId === privateId)
         return (
-          <tr key={pulse.id} style={this.renderSelect(pulse.id)} className='tableRow' onClick={() => this.goLink(pulse)}>
+          <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse)}>
             <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
-              <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={this.props.privateId} />
+              <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={privateId} />
             </td>
             <td data-label="LeadPerson" style={{ overflow: "visible", minWidth: '100px' }}>
               <LeadPerson pulse={pulse} />
@@ -83,41 +68,26 @@ class Tbody extends React.Component {
               <Deadline pulse={pulse} />
             </td>
             <td style={{ width: '10%' }} >
-              <DetailProgrsBar details={this.props.details} pulse={pulse} />
-              {this.renderPulseNotification(pulse)}
+              <DetailProgrsBar details={details} pulse={pulse} />
+              {renderPulseNotification(pulse)}
             </td>
           </tr>
         )
-        return null
+      return null
     })
-    
   }
 
-  renderPulseNotification(pulse) {
+  const renderPulseNotification = (pulse) => {
     let findUser = undefined
-    if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.privateId) return findUser = true })
-    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && this.props.appState.showNotifications === 'true') return <div className='notification'data-tooltip="Unreaded content">i</div>
+    if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && appState.showNotifications === 'true') return <div className='notification' data-tooltip="Unreaded content">i</div>
   }
 
-  render() {
-    //onsole.log('pulses state:', this.props.pulses)
-    return (
-      <tbody>
-        {this.renderPulses()}
-      </tbody>
-    )
-  }
+  return (
+    <tbody>
+      {renderPulses()}
+    </tbody>
+  )
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    pulses: Object.values(state.pulses),
-    details: Object.values(state.details),
-    privateId: state.user.credentials.userId,
-    appState: state.appState
-
-  }
-}
-
-export default connect(mapStateToProps, { fetchDetails, editState, editPulse })(Tbody)
+export default Tbody

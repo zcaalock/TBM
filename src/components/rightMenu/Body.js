@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Details from './details/Details'
 import AddDetail from './details/AddDetail'
 import Notepad from './details/Notepad'

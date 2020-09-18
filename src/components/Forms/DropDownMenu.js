@@ -1,42 +1,33 @@
 import { Dropdown } from 'semantic-ui-react'
-import { connect } from 'react-redux';
 import React from 'react'
 
-class DropDrownMenu extends React.Component {
+function DropDrownMenu (props) {
 
-  renderDropDown() {
-    //console.log('values: ', this.props.values)
-    if(!this.props.values){
+  const renderDropDown = () => {    
+    if(!props.values){
       return <div class="ui active inline loader"></div>
     }
-    return this.props.values.map(value => {
-      //console.log(c)   
-      //console.log('dropdown value: ', value)
-      return (
-        
+    return props.values.map(value => {      
+      return (        
         <Dropdown.Item
           key={value.id}
           name={value.title}
-          onClick={() => this.props.onSave(value.title)}>
+          onClick={() => props.onSave(value.title)}>
           {value.title}
         </Dropdown.Item>
       )
     })
-  }
-  render() {
-    
+  }    
     return (
       <div>
-        <Dropdown item text={this.props.text}>
+        <Dropdown item text={props.text}>
           <Dropdown.Menu>
-            {this.renderDropDown()}
+            {renderDropDown()}
           </Dropdown.Menu>
         </Dropdown>
       </div>
     )
-  }
 }
 
 
-
-export default connect(null)(DropDrownMenu)
+export default DropDrownMenu

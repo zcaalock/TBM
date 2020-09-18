@@ -2,8 +2,8 @@ import React from 'react'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchBoards} from '../../actions/boards'
-import {editState} from '../../actions/appState'
+import { fetchBoards } from '../../actions/boards'
+import { editState } from '../../actions/appState'
 
 
 class BoardsList extends React.Component {
@@ -14,14 +14,14 @@ class BoardsList extends React.Component {
         return false;
     }
     return true;
-  }    
-  
+  }
+
 
   componentDidMount() {
     if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
-      
+
   }
-  
+
 
   selectedCheck(id) {
     if (id === this.props.appState.id) {
@@ -30,11 +30,11 @@ class BoardsList extends React.Component {
     return ''
   }
 
-  selectedStyle(id){
-    if(id === this.props.appState.id)
-      return {backgroundColor: '#E9E9E9', paddingLeft: '0'}
-    return {paddingLeft: '0'}  
-  } 
+  selectedStyle(id) {
+    if (id === this.props.appState.id)
+      return { backgroundColor: '#E9E9E9', paddingLeft: '0' }
+    return { paddingLeft: '0' }
+  }
 
   renderBoards() {
     //this.handleAuth()
@@ -45,31 +45,31 @@ class BoardsList extends React.Component {
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return _.filter(this.props.boards, {privateId: this.props.privateId}).map(board => {
-      
+    return _.filter(this.props.boards, { privateId: this.props.privateId }).map(board => {
+
       return (
         <>
-        {this.renderNotifications(board.id)}
-        <Link
-          onClick={()=>this.props.editState('', 'pulseId')}
-          to={`/boards/${board.id}`}
-          className={`item ${this.selectedCheck(board.id)}`}
-          key={board.id}
-          style={this.selectedStyle(board.id)}>
-          {board.title}
-        </Link>
-        
+          {this.renderNotifications(board.id)}
+          <Link
+            onClick={() => this.props.editState('', 'pulseId')}
+            to={`/boards/${board.id}`}
+            className={`item ${this.selectedCheck(board.id)}`}
+            key={board.id}
+            style={this.selectedStyle(board.id)}>
+            {board.title}
+          </Link>
+
         </>
       )
     })
   }
 
-  renderNotifications (boardId) {
+  renderNotifications(boardId) {
     let notoficationStorage = 0
     this.props.categories.map(category => {
       if (category.boardId === boardId) {
         const pulsesPB = _.filter(this.props.pulses, { categoryId: category.id })
-        
+
         pulsesPB.map(pulse => {
           let findUser = undefined
           if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.userId) return findUser = true })
@@ -78,13 +78,14 @@ class BoardsList extends React.Component {
         })
         return notoficationStorage
       }
+      return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && this.props.appState.showNotifications === 'true') return <div className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
-    
+    if (notoficationStorage > 0 && this.props.appState.showNotifications === 'true') return <div key={`k${boardId}`} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
+
   }
 
-  
+
 
   render() {
     return (

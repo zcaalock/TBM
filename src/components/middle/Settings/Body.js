@@ -1,15 +1,11 @@
 import React from 'react'
-
 import UserSettings from './userSettings/UserSettings'
 
+function Body() {
 
-class Body extends React.Component {
-
-  render() {
-    return (
-      <UserSettings />
-    )
-  }
+  return (
+    <UserSettings />
+  )
 }
 
 export default Body

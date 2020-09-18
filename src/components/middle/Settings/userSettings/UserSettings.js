@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
+
 import { fetchLead, createLead, deleteLead } from '../../../../actions/settings'
 import { editState } from '../../../../actions/appState'
 import { fetchPulses } from '../../../../actions/pulses'
@@ -8,10 +9,16 @@ import { Item, Button, Message } from 'semantic-ui-react'
 
 import LeadName from './leadName/LeadName'
 
-class UserSettings extends React.Component {
-  state={showError: 'false'}
+function UserSettings () {
 
-  isEmpty(obj) {
+  const dispatch = useDispatch();
+  const [showError, setShowError] = useState(false);
+  
+  const user = useSelector(state => state.user.credentials);
+  const lead = useSelector(state => state.lead);
+  const pulses = useSelector(state => state.pulses);
+
+  const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
         return false;
@@ -19,24 +26,22 @@ class UserSettings extends React.Component {
     return true;
   }
 
-  componentDidMount() {
-    this.props.editState('settings', 'id') //selected board to appState    
-    if (this.isEmpty(this.props.lead)) this.props.fetchLead()
-    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()
+  useEffect(() => {
+    dispatch(editState('settings', 'id')) //selected board to appState    
+    if (isEmpty(lead)) dispatch(fetchLead())
+    if (isEmpty(pulses)) dispatch(fetchPulses())
+  },[])
+
+  const handleCreateLead = () => {
+    dispatch(createLead({ title: user.handle }, user.userId))
   }
 
-  handleCreateLead() {
-
-    this.props.createLead({ title: this.props.user.handle }, this.props.user.userId)
+  const handleDeleteLead = (id) => {    
+    dispatch(deleteLead(id))
   }
 
-  handleDeleteLead(id) {
-    //console.log('del id: ', id)
-    this.props.deleteLead(id)
-  }
-
-  renderErrorMessage() {
-    if (this.state.showError === 'true')
+  const renderErrorMessage = () => {
+    if (showError === true)
       return (
         <Message negative>
           <Message.Header>Cannot preceed with the request</Message.Header>
@@ -45,37 +50,34 @@ class UserSettings extends React.Component {
       )
   }
 
-  tiggerError(){
-    this.setState({showError: 'true'})
-    setTimeout(() => { this.setState({showError: 'false'}) }, 5000);
+  const tiggerError = () => {
+    setShowError(true)
+    setTimeout(() => { setShowError(false) }, 5000);
   }
 
-  renderCreateLeadButton() {
-    const pulses = _.filter(this.props.pulses, { userId: this.props.user.userId })
-    const leads = _.filter(this.props.lead, { userId: this.props.user.userId })
-    //console.log('user pulses: ', pulses, leads)
-
-    if (leads.length > 0 && pulses.length === 0) return <Button negative onClick={() => this.handleDeleteLead(leads[0].id)}>Remove user from Lead Person List</Button>
-    if (leads.length > 0 && pulses.length > 0) return <div style={{width: '265px'}} onClick={()=>this.tiggerError()}><Button  disabled >Remove user from Lead Person List</Button></div>
-    if (this.props.user.handle) return <Button onClick={() => this.handleCreateLead()}>Add user to Lead Person List</Button>
+  const renderCreateLeadButton = () => {
+    const pulsesFiltered = _.filter(pulses, { userId: user.userId })
+    const leadsFiltered = _.filter(lead, { userId: user.userId })
+  
+    if (leadsFiltered.length > 0 && pulsesFiltered.length === 0) return <Button negative onClick={() => handleDeleteLead(leadsFiltered[0].id)}>Remove user from Lead Person List</Button>
+    if (leadsFiltered.length > 0 && pulsesFiltered.length > 0) return <div style={{width: '265px'}} onClick={()=>tiggerError()}><Button  disabled >Remove user from Lead Person List</Button></div>
+    if (user.handle) return <Button onClick={() => handleCreateLead()}>Add user to Lead Person List</Button>
     return <div></div>
   }
 
-  uploadImage = (event) => {
-    //console.log('event: ', event)
-    event.preventDefault();
+  // const uploadImage = (event) => {    
+  //   event.preventDefault();
+  // }
 
+  const renderLeadName = () => {
+    const leadsFiltered = _.filter(lead, { userId: user.userId })
+    if (leadsFiltered.length > 0) return <LeadName userId={user.userId} lead={lead} />
+    return <div>{user.handle}</div>
   }
 
-  renderLeadName() {
-    const leads = _.filter(this.props.lead, { userId: this.props.user.userId })
-    if (leads.length > 0) return <LeadName userId={this.props.user.userId} lead={this.props.lead} />
-    return <div>{this.props.user.handle}</div>
-  }
+  const renderMeta = () => {
 
-  renderMeta() {
-
-    if (this.props.user.handle)
+    if (user.handle)
       return (
         <Item.Meta>
           <div style={{ display: 'inline-block' }}>
@@ -85,50 +87,39 @@ class UserSettings extends React.Component {
             <div className='settingsUserInfo'>lead name: </div>
           </div>
           <div style={{ display: 'inline-block' }}>
-            <div className='settingsUserInfo'>{this.props.user.email}</div>
-            <div className='settingsUserInfo'>{this.props.user.createdAt}</div>
-            <div className='settingsUserInfo'>{this.props.user.userId}</div>
-            <div className='settingsUserInfo'>{this.renderLeadName()}</div>
+            <div className='settingsUserInfo'>{user.email}</div>
+            <div className='settingsUserInfo'>{user.createdAt}</div>
+            <div className='settingsUserInfo'>{user.userId}</div>
+            <div className='settingsUserInfo'>{renderLeadName()}</div>
           </div>
         </Item.Meta>
       )
     return (<div>No user found..</div>)
   }
 
-  renderItem() {
+  const renderItem = () => {
     return (
       <Item.Group>
-        {this.renderErrorMessage()}
+        {renderErrorMessage()}
         <Item>
           <Item.Image size='tiny' src='/images/no-image.png' />
           <Item.Content>
-            <Item.Header>{this.props.user.handle}</Item.Header>
-            {this.renderMeta()}
+            <Item.Header>{user.handle}</Item.Header>
+            {renderMeta()}
             <Item.Description></Item.Description>
-            {this.renderCreateLeadButton()}
-            
+            {renderCreateLeadButton()}            
           </Item.Content>
         </Item>
       </Item.Group>
     )
   }
-
-
-  render() {
+  
     return (
       <div style={{ marginTop: '25px' }}>
-        {this.renderItem()}
+        {renderItem()}
       </div>
     )
   }
-}
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.credentials,
-    lead: state.lead,
-    pulses: state.pulses
-  }
-}
 
-export default connect(mapStateToProps, { fetchLead, createLead, deleteLead, fetchPulses, editState })(UserSettings)
+export default UserSettings

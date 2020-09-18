@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteBoard, editBoard } from '../../../../actions/boards'
+import { deleteBoard} from '../../../../actions/boards'
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from '../../../items/Header'
@@ -18,9 +18,7 @@ function ItemsMain (ownProps) {
     }
     const { title } = board
     return (
-      <div className="article"
-      // style={{display: 'inline-block', width: '70%'}} 
-      >
+      <div className="article">
         <Header board={board} delete={() =>  dispatch(deleteBoard(board.id)) } title={title} />
         <Body />
       </div>

@@ -4,7 +4,7 @@ import EditPulseName from './EditPulseName'
 function PulseName (props) {  
   
   const [state, defState] = useState(
-    { isHovering: false, itemEditable: false } );  
+    { itemEditable: false } );  
   
   const renderPrivateIcon = () => {    
     if (props.pulse.privateId === props.privateId) {

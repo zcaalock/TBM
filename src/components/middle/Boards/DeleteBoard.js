@@ -1,59 +1,44 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
-import {deleteBoard} from '../../../actions/boards'
-import {fetchCategories} from '../../../actions/categories'
+import { deleteBoard } from '../../../actions/boards'
 
+function DeleteBoard() {
 
-class DeleteBoard extends React.Component {
+  const categories = useSelector(state => Object.values(state.categories))
+  const boardId = useSelector(state => state.appState.id)
+  const user = useSelector(state => state.user.credentials)
 
-  componentDidMount() {
-    //this.props.fetchCategories()
-    
-  }
+  const dispatch = useDispatch();
 
-  renderDelete(){    
-    const board = _.filter(this.props.categories, {boardId: this.props.boardId})    
-    if (board.length>0){
+  const renderDelete = () => {
+    const board = _.filter(categories, { boardId: boardId })
+    if (board.length > 0) {
       return (
         <div
-        //onClick={() => { this.props.delete() }}        
-        data-position="bottom left"
-        data-tooltip="Remove all items before delete"
-        style={{ display: 'inline-block' }}>
-        <i className="trash icon" style={{paddingLeft: '9px', color: '#cecece'}} />        
-      </div>
+          data-position="bottom left"
+          data-tooltip="Remove all items before delete"
+          style={{ display: 'inline-block' }}>
+          <i className="trash icon" style={{ paddingLeft: '9px', color: '#cecece' }} />
+        </div>
       )
     } return (
       <div
-        onClick={() => this.props.deleteBoard(this.props.boardId, this.props.user.userId)}
+        onClick={() => dispatch(deleteBoard(boardId, user.userId))}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block',cursor: 'pointer', paddingLeft: '9px' }}>
-        <i className=" trash icon" />        
+        style={{ display: 'inline-block', cursor: 'pointer', paddingLeft: '9px' }}>
+        <i className=" trash icon" />
       </div>
     )
-
   }
 
-  render() {
-      
-    return (
-      <>
-        
-        {this.renderDelete()}
-      </>
-
-    )
-  }
-}
-const mapStateToProps = (state)=>{
-  return{
-    categories: Object.values(state.categories),
-    boardId: state.appState.id,
-    user: state.user.credentials    
-  }
+  return (
+    <>
+      {renderDelete()}
+    </>
+  )
 }
 
-export default connect(mapStateToProps, { fetchCategories, deleteBoard }) (DeleteBoard)
+export default DeleteBoard

@@ -1,31 +1,35 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch} from "react-redux";
 import { createPulse } from '../../../../../actions/pulses'
 import SingleInput from '../../../../Forms/SingleInput'
 
-class AddPulse extends React.Component {
-  state = { isHovering: false, itemEditable: false }
+function AddPulse() {
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const [isHovering, setIsHovering] = useState(false)
+  const [itemEditable, setItemEditable] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const removeEdit = () => {
+    setItemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setItemEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setIsHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setIsHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
-        <div 
+        <div
           data-position="bottom center"
           data-tooltip="Create pulse">
           <i className="plus icon" />
@@ -33,53 +37,48 @@ class AddPulse extends React.Component {
     }
   }
 
-  onSubmit = (formValues) => {
-    this.props.createPulse(formValues, '') 
-    this.removeEdit()
-
+  const onSubmit = (formValues) => {
+    dispatch(createPulse(formValues, ''))
+    removeEdit()
   }
 
-  renderNewPulse() {
-    if (this.state.itemEditable === true) {
+  const renderNewPulse = () => {
+    if (itemEditable === true) {
       return (
         <div style={{ width: '100%' }}>
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
-            removeEdit={() => this.removeEdit()}
-            onSubmit={this.onSubmit} />
+            removeEdit={() => removeEdit()}
+            onSubmit={onSubmit} />
         </div>
       )
     }
 
-    if (this.state.itemEditable === false) {
+    if (itemEditable === false) {
       return (
         <div style={{ width: '100%' }}
-          onMouseLeave={() => this.hideIcon()}
-          onMouseEnter={() => this.showIcon()}
-          onClick={() => this.showEdit()}>
-          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>New</div>
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
+          onClick={() => showEdit()}>
+          <div style={{ display: 'inline-block' }}>{showHover()}</div>
+          <div style={{ display: 'inline-block' }}>New</div>
         </div>
       )
     }
   }
 
-  render() {
-    //console.log('add category state: ', this.props)
-    return (
-      <tfoot>
-        <tr  >
-          <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
-            {this.renderNewPulse()}
-          </td>
-          <td colSpan="2">
-          </td>
-        </tr>
-      </tfoot>
-    )
-  }
+  return (
+    <tfoot>
+      <tr  >
+        <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
+          {renderNewPulse()}
+        </td>
+        <td colSpan="2">
+        </td>
+      </tr>
+    </tfoot>
+  )
 }
 
-
-export default connect(null, { createPulse })(AddPulse)
+export default AddPulse
