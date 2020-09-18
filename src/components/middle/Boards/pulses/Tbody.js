@@ -96,7 +96,7 @@ class Tbody extends React.Component {
   renderPulseNotification(pulse) {
     let findUser = undefined
     if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.privateId) return findUser = true })
-    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined) return <div className='notification'data-tooltip="Unreaded content">i</div>
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && this.props.appState.showNotifications === 'true') return <div className='notification'data-tooltip="Unreaded content">i</div>
   }
 
   render() {
