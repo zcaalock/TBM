@@ -46,7 +46,10 @@ class BoardsList extends React.Component {
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
     return _.filter(this.props.boards, {privateId: this.props.privateId}).map(board => {
+      
       return (
+        <>
+        {this.renderNotifications(board.id)}
         <Link
           onClick={()=>this.props.editState('', 'pulseId')}
           to={`/boards/${board.id}`}
@@ -55,9 +58,33 @@ class BoardsList extends React.Component {
           style={this.selectedStyle(board.id)}>
           {board.title}
         </Link>
+        
+        </>
       )
     })
   }
+
+  renderNotifications (boardId) {
+    let notoficationStorage = 0
+    this.props.categories.map(category => {
+      if (category.boardId === boardId) {
+        const pulsesPB = _.filter(this.props.pulses, { categoryId: category.id })
+        
+        pulsesPB.map(pulse => {
+          let findUser = undefined
+          if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.userId) return findUser = true })
+          if (pulse.readed && pulse.readed.length > 0 && findUser !== true) return notoficationStorage++
+          return null
+        })
+        return notoficationStorage
+      }
+    })
+    //console.log(notoficationStorage)
+    if (notoficationStorage > 0 && this.props.appState.showNotifications === 'true') return <div className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
+    
+  }
+
+  
 
   render() {
     return (
@@ -73,7 +100,10 @@ const mapStateToProps = (state) => {
 
   return {
     boards: Object.values(state.boards),
+    categories: Object.values(state.categories),
+    pulses: Object.values(state.pulses),
     appState: state.appState,
+    userId: state.user.credentials.userId,
   }
 }
 
