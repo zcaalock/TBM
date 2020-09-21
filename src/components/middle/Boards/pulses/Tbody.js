@@ -80,7 +80,7 @@ function Tbody(props) {
   const renderPulseNotification = (pulse) => {
     let findUser = undefined
     if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
-    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && appState.showNotifications === 'true') return <div className='notification' data-tooltip="Unreaded content">i</div>
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && appState.showNotifications === 'true' && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip="Unreaded content">i</div>
   }
 
   return (

@@ -73,7 +73,7 @@ class BoardsList extends React.Component {
         pulsesPB.map(pulse => {
           let findUser = undefined
           if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.userId) return findUser = true })
-          if (pulse.readed && pulse.readed.length > 0 && findUser !== true) return notoficationStorage++
+          if (pulse.readed && pulse.readed.length > 0 && findUser !== true && pulse.privateId === '' && pulse.archived === 'false') return notoficationStorage++
           return null
         })
         return notoficationStorage
