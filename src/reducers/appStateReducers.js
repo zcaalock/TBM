@@ -7,6 +7,7 @@ const appState ={
   hidePrivate: 'false',
   refreshed: 'false',
   addPulseOpen: 'false',
+  editPulseOpen: 'false',
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'} 
 }

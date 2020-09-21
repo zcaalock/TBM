@@ -2,14 +2,12 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import { deleteDetail } from '../../../actions/details'
 
-
-function DetailIcon(props) {
+function DetailIcon(props) {  
   const dispatch = useDispatch();
-
   return (
     <div>
       <div
-        onClick={() => { dispatch(props.showEdit) }}
+        onClick={() => {props.showEdit() }}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Edit"
