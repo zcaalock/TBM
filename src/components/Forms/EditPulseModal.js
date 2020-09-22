@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import _, { set } from 'lodash'
+import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
@@ -22,10 +22,8 @@ function PulseModal() {
   const appState = useSelector(state => state.appState)
 
 
-  const [name, setName] = useState('')
-  const [userName, setUserName] = useState('')
-  const [userId, setUserId] = useState('')
-  const [privateId, setPrivateId] = useState('')
+  const [name, setName] = useState('')  
+  const [userId, setUserId] = useState('')  
   const [categoryId, setCategoryId] = useState('')
   const [boardId, setBoardId] = useState('')
 
