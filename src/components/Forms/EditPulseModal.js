@@ -178,7 +178,6 @@ function PulseModal() {
                   generateCategoriesList()
                   setCategoryId('')
                 }
-
                 }
               />
               <Form.Field
@@ -189,7 +188,7 @@ function PulseModal() {
                 //onFocus={this.handleBoardList()}
                 options={categoriesArr}
                 label='Category name'
-                placeholder='Cateogry name'
+                placeholder={categoryKey[categoryId] ? categoryKey[categoryId].title : ''}
                 searchInput={{ id: 'categoryId' }}
                 onChange={(e, { value }) => setCategoryId(value)}
               />
