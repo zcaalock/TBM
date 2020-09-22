@@ -22,8 +22,10 @@ function PulseModal() {
   const appState = useSelector(state => state.appState)
 
 
-  const [name, setName] = useState('')  
-  const [userId, setUserId] = useState('')  
+  const [name, setName] = useState('')
+  const [userName, setUserName] = useState('')
+  const [userId, setUserId] = useState('')
+  const [privateId, setPrivateId] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [boardId, setBoardId] = useState('')
 
