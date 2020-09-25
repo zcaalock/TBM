@@ -8,6 +8,7 @@ const appState ={
   refreshed: 'false',
   addPulseOpen: 'false',
   editPulseOpen: 'false',
+  gCalendarOpen: 'false',
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'} 
 }

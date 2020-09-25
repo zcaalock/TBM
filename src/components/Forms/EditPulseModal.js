@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import _, { set } from 'lodash'
+import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
