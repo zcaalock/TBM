@@ -1,29 +1,22 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector} from "react-redux";
+
 import Header from './Header'
 import Body from './Body'
 
 
-
-class Details extends React.Component {
+function Details(props) {
   
-
-  render() {
-    if (!this.props.pulse) {
-      return <div className="article rightMenu" style={{ position: 'absolute', marginLeft:'calc(80% - 20px)', padding: '20px', float: 'right'}}><div className="ui active inline loader"></div></div>
-    } return (
-      <div className="article rightMenu" style={{ padding: '20px'}}>
-        <Header title={this.props.pulse.title} pulseId={this.props.pulse.id} pulse={this.props.pulse}/>
-        <Body key={this.props.pulse.id} pulseId={this.props.pulse.id}/>
-      </div>
-    )
-  }
-}
-const mapStateToProps = (state, ownProps) => {
-  return {
-    pulse: state.pulses[ownProps.match.params.id]
-
-  }
+  const pulse = useSelector(state => state.pulses[props.match.params.id]);
+  if (!pulse) {
+    return <div className="article rightMenu" style={{ position: 'absolute', marginLeft: 'calc(80% - 20px)', padding: '20px', float: 'right' }}><div className="ui active inline loader"></div></div>
+  } return (
+    <div className="article rightMenu" style={{ padding: '20px' }}>
+      <Header title={pulse.title} pulseId={pulse.id} pulse={pulse} />
+      <Body key={pulse.id} pulseId={pulse.id} />
+      
+    </div>
+  )
 }
 
-export default connect(mapStateToProps, {  })(Details)
+export default Details

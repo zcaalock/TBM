@@ -1,46 +1,47 @@
 import React from 'react'
 import _ from 'lodash'
-import { connect } from 'react-redux'
+import { useDispatch } from "react-redux";
 import { editDetail } from '../../../actions/details'
+import { editPulse } from '../../../actions/pulses'
 import SingleInput from '../../Forms/SingleInput'
 
-class EditDetailName extends React.Component {    
+function EditDetailName(props) {
 
-  onSubmit = (formValues) => {
-    this.props.editDetail(this.props.detail.id, formValues)
-    this.props.removeEdit()
-  }   
+  const dispatch = useDispatch();
 
-  renderEditDetail() {
-    const id =[`itemEditable${this.props.detail.id}`]    
-    if (this.props.editState[id] === true) {
+  const onSubmit = (formValues) => {
+    dispatch(editDetail(props.detail.id, formValues))
+    dispatch(props.removeEdit)
+    dispatch(editPulse(props.pulseId, { readed: [props.userId] }))
+  }
+
+  const renderEditDetail = () => {
+    const id = [`itemEditable${props.detail.id}`]
+    if (props.editState[id] === true) {
       return (
-        <SingleInput 
-        propStyle={{padding: '0'}} 
-        propChildStyle={{ padding: '0'}}
-        initialValues={_.pick(this.props.detail, 'title')} 
-        removeEdit={()=>this.props.removeEdit()} 
-        onSubmit={this.onSubmit} />
+        <SingleInput
+          propStyle={{ padding: '0' }}
+          propChildStyle={{ padding: '0' }}
+          initialValues={_.pick(props.detail, 'title')}
+          removeEdit={() => dispatch(props.removeEdit)}
+          onSubmit={onSubmit} />
       )
     }
 
-    if (!this.props.editState.itemEditable || this.props.editState.itemEditable === false) {
-      return (                    
-          <div >
-          {this.props.title}
-          </div>        
+    if (!props.editState.itemEditable || props.editState.itemEditable === false) {
+      return (
+        <div >
+          {props.title}
+        </div>
       )
     }
   }
 
-  render() {
-
-    return (
-      <>      
-        {this.renderEditDetail()}
-      </>
-    )
-  }
+  return (
+    <>
+      {renderEditDetail()}
+    </>
+  )
 }
 
-export default connect(null, { editDetail })(EditDetailName)
+export default EditDetailName

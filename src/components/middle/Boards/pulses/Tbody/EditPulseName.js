@@ -1,47 +1,44 @@
 import React from 'react'
+import { useDispatch } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
-import { editPulse} from '../../../../../actions/pulses'
+import { editPulse } from '../../../../../actions/pulses'
 import SingleInput from '../../../../Forms/SingleInput'
 
-class EditPulseName extends React.Component {    
+function EditPulseName(props) {
 
-  onSubmit = (formValues) => {
-    this.props.editPulse(this.props.pulse.id, formValues)
-    this.props.removeEdit()
-  }  
- 
+  const dispatch = useDispatch();
 
-  renderEditPulse() {
-    
-    if (this.props.editState.itemEditable === true) {
+  const onSubmit = (formValues) => {
+    dispatch(editPulse(props.pulse.id, formValues))
+    props.removeEdit()
+  }
+
+  const renderEditPulse = () => {
+
+    if (props.editState.itemEditable === true) {
       return (
-        <SingleInput 
-        propStyle={{padding: '0'}} 
-        propChildStyle={{ padding: '5px'}}
-        initialValues={_.pick(this.props.pulse, 'title')} 
-        removeEdit={()=>this.props.removeEdit()} 
-        onSubmit={this.onSubmit} />
+        <SingleInput
+          propStyle={{ padding: '0' }}
+          propChildStyle={{ padding: '5px' }}
+          initialValues={_.pick(props.pulse, 'title')}
+          removeEdit={() => props.removeEdit()}
+          onSubmit={onSubmit} />
       )
     }
 
-    if (this.props.editState.itemEditable === false) {
+    if (props.editState.itemEditable === false) {
       return (
-        <div >            
-          <div>{this.props.pulse.title}</div>          
+        <div >
+          <div>{props.pulse.title}</div>
         </div>
       )
     }
   }
-
-  render() {
-
-    return (
-      <div style={{width: '100%'}}>      
-        {this.renderEditPulse()}
-      </div>
-    )
-  }
+  return (
+    <div style={{ width: '100%' }}>
+      {renderEditPulse()}
+    </div>
+  )
 }
 
-export default connect(null, { editPulse })(EditPulseName)
+export default EditPulseName

@@ -1,47 +1,43 @@
 import React from 'react'
+import { useDispatch} from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import { editCategory } from '../../../../actions/categories'
 import SingleInput from '../../../Forms/SingleInput'
 
-class EditCategoryName extends React.Component {    
+function EditCategoryName (props) {    
+  const dispatch = useDispatch();
 
-  onSubmit = (formValues) => {
-    this.props.editCategory(this.props.category.id, formValues)
-    this.props.removeEdit()
-  }  
- 
+  const onSubmit = (formValues) => {
+    dispatch(editCategory(props.category.id, formValues))
+    props.removeEdit()
+  }   
 
-  renderEditCategory() {
-    
-    if (this.props.editState.itemEditable === true) {
+  const renderEditCategory = () => {    
+    if (props.editState === true) {
       return (
         <SingleInput 
         propStyle={{padding: '0'}} 
         propChildStyle={{ padding: '5px'}}
-        initialValues={_.pick(this.props.category, 'title')} 
-        removeEdit={()=>this.props.removeEdit()} 
-        onSubmit={this.onSubmit} />
+        initialValues={_.pick(props.category, 'title')} 
+        removeEdit={()=>props.removeEdit()} 
+        onSubmit={onSubmit} />
       )
     }
 
-    if (this.props.editState.itemEditable === false) {
+    if (props.editState === false) {
       return (
         <div >            
-          <div>{this.props.title}</div>          
+          <div>{props.title}</div>          
         </div>
       )
     }
   }
-
-  render() {
-
+  
     return (
       <>      
-        {this.renderEditCategory()}
+        {renderEditCategory()}
       </>
-    )
-  }
+    )  
 }
 
-export default connect(null, { editCategory })(EditCategoryName)
+export default EditCategoryName

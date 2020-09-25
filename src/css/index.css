@@ -172,9 +172,9 @@
   color: black !important;
 }
 
-.blackHover{
+/* .blackHover{
   
-}
+} */
 
 .blackHover:hover {
   color: black !important;
@@ -210,4 +210,47 @@
   padding-left: 10px;
   cursor: pointer;
   color: #DC6969 !important
+}
+
+.notification {
+  position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 24px;
+    background-color: #DC6969;
+    text-align: center;
+    margin-left: 10px;
+    color: white;
+    padding-top: 4px;
+    border-radius: 8px 0px;
+}
+
+.notificationCategory {
+  position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 24px;
+    background-color: #DC6969;
+    text-align: center;
+    margin-left: -64px;
+    margin-top: -13px;
+    color: white;
+    padding-top: 4px;
+    border-radius: 0px 0px 8px 8px;
+}
+.notificationBoard{
+  position: absolute;
+    display: inline-block;
+    width: auto;
+    height: 21px;
+    background-color: #DC6969;
+    text-align: center;
+    margin-left: -20px;
+    margin-top: 1px;
+    color: white;
+    padding-top: 4px;
+    padding-right: 5px;
+    padding-left: 4px;
+    border-radius: 0px 8px 8px 0px;
+
 }

@@ -1,22 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from "react-redux";
 
-
-
-class Head extends React.Component {
-  render() {
+function Head () {
+  
+  const appState = useSelector(state => state.appState);
+  
     return (
       <div className="head-vertical-segment" style={{paddingBottom: '20px'}}>
-        <h3>Filters: {this.props.appState.filter.selector}/{this.props.appState.filter.value}</h3>
+        <h3>Filters: {appState.filter.selector}/{appState.filter.value}</h3>
       </div>
-    )
-  }
+    )  
 }
 
-const mapStateToProps = (state) => {
-  return {
-    appState: state.appState
-  }
-}
-
-export default connect(mapStateToProps) (Head)
+export default Head

@@ -1,57 +1,46 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
-import {editCategory} from '../../../../actions/categories'
+import { editCategory } from '../../../../actions/categories'
 
+function ArchiveCategory(props) {
+  
+  const categories = useSelector(state => Object.values(state.categories)) 
 
-class ArchiveCategory extends React.Component {
+  const dispatch = useDispatch()
 
-  componentDidMount() {
-        
-  }
+  const renderArchive = () => {
+    const findCategory = _.filter(categories, { id: props.categoryId })
+    const isArchived = findCategory[0].archived
 
-  renderArchive(){    
-    const findCategory = _.filter(this.props.categories, {id: this.props.categoryId})
-    const isArchived = findCategory[0].archived    
-    console.log('details: ', isArchived)
-    if (isArchived === 'true'){
+    if (isArchived === 'true') {
       return (
         <div
-        onClick={() => this.props.editCategory(this.props.categoryId, {archived: 'false'})}        
-        data-position="left center"
-        data-tooltip="Unarchive Category"
-        style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px' ,cursor: 'pointer'}}>          
-        <i className=" archive icon" /> archived        
-      </div>
+          onClick={() => dispatch(editCategory(props.categoryId, { archived: 'false' }))}
+          data-position="left center"
+          data-tooltip="Unarchive Category"
+          style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px', cursor: 'pointer' }}>
+          <i className=" archive icon" /> archived
+        </div>
       )
     } else return (
       <div
-        onClick={() => this.props.editCategory(this.props.categoryId, {archived: 'true'})}
+        onClick={() => dispatch(editCategory(props.categoryId, { archived: 'true' }))}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Archive"
-        style={{ display: 'inline-block',cursor: 'pointer' }}>
-        <i className=" archive icon" />        
+        style={{ display: 'inline-block', cursor: 'pointer' }}>
+        <i className=" archive icon" />
       </div>
     )
 
   }
 
-  render() {      
-    return (
-      <>        
-        {this.renderArchive()}
-      </>
-    )
-  }
+  return (
+    <>
+      {renderArchive()}
+    </>
+  )
 }
 
-const mapStateToProps = (state)=>{
-  return{
-    pulses: Object.values(state.pulses),
-    categories: Object.values(state.categories),
-    boardId: state.appState.id      
-  }
-}
-
-export default connect(mapStateToProps, { editCategory }) (ArchiveCategory)
+export default ArchiveCategory

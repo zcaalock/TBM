@@ -1,43 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EditBoardName from './EditBoardName'
 import HeaderIcons from './HeaderIcons'
 
 
-class Header extends React.Component {
-  state = { itemEditable: false }
+function Header(props) {
 
+  const [itemEditable, setitemEditable] = useState(false);
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const removeEdit = () => {
+    setitemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setitemEditable(true)
   }
 
-  render() {
-    return (
-
-      <div className="head-vertical-segment" style={{width: '100%'}}>
-        <div style={{ float: 'left', width: '90%' }}>
-          <EditBoardName
-            title={this.props.title}
-            board={this.props.board}
-            editState={this.state}
-            showEdit={() => this.showEdit()}
-            removeEdit={() => this.removeEdit()}
-          />
-        </div>
-        <div style={{ float: 'right', paddingRight: '22px' }}>          
-          <div
-            className="articleIcon"
-            style={{ display: 'inline-block' }}>
-            <HeaderIcons showEdit={()=>this.showEdit()} />
-          </div>
+  return (
+    <div className="head-vertical-segment" style={{ width: '100%' }}>
+      <div style={{ float: 'left', width: '90%' }}>
+        <EditBoardName
+          title={props.title}
+          board={props.board}
+          editState={itemEditable}
+          showEdit={() => showEdit()}
+          removeEdit={() => removeEdit()}
+        />        
+      </div>
+      <div style={{ float: 'right', paddingRight: '22px' }}>
+        <div
+          className="articleIcon"
+          style={{ display: 'inline-block' }}>
+          <HeaderIcons showEdit={() => showEdit()} />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Header

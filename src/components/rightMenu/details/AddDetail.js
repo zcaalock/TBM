@@ -1,89 +1,83 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { createDetail } from '../../../actions/details'
+import { editPulse } from '../../../actions/pulses'
 import SingleInput from '../../Forms/SingleInput'
 
-class AddDetail extends React.Component {
-  state = { isHovering: false, itemEditable: false }
+function AddDetail(props) {
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const dispatch = useDispatch();
+  const [isHovering, setHovering] = useState(false);
+  const [itemEditable, setEditable] = useState(false)  
+  const userId = useSelector(state => state.user.credentials.userId);
+
+  const removeEdit = () => {
+    setEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
         <div data-position="bottom center"
-        data-tooltip="Add check list item">
-          <i className="plus icon"  />
+          data-tooltip="Add check list item">
+          <i className="plus icon" />
         </div>)
     }
   }
 
-  onSubmit = (formValues) => {
-    this.props.createDetail(formValues, this.props.pulseId)
-    this.removeEdit()
+  const onSubmit = (formValues) => {
+    dispatch(createDetail(formValues, props.pulseId))
+    removeEdit()
+    dispatch(editPulse(props.pulseId, { readed: [userId] }))
   }
 
-  renderNewDetail() {
-    if (this.state.itemEditable === true) {
+  const renderNewDetail = () => {
+    if (itemEditable === true) {
       return (
         <div className="">
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
-            removeEdit={() => this.removeEdit()}
-            onSubmit={this.onSubmit} />
+            removeEdit={() => removeEdit()}
+            onSubmit={onSubmit} />
         </div>
       )
     }
 
-    if (this.state.itemEditable === false) {
+    if (itemEditable === false) {
       return (
         <div className=""
-          onMouseLeave={() => this.hideIcon()}
-          onMouseEnter={() => this.showIcon()}
-          onDoubleClick={() => this.showEdit()}>
-          <div style={{cursor: 'pointer'}}>
-            <div onClick={() => this.showEdit()} style={{display: 'inline-block'}}>{this.showHover()}</div>
-            <div style={{display: 'inline-block'}}>Add item</div>
-          </div>         
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
+          onDoubleClick={() => showEdit()}>
+          <div style={{ cursor: 'pointer' }}>
+            <div onClick={() => showEdit()} style={{ display: 'inline-block' }}>{showHover()}</div>
+            <div style={{ display: 'inline-block' }}>Add item</div>
+          </div>
         </div>
       )
     }
   }
 
-
-
-  render() {
-    //console.log('add category state: ', this.props)
-    return (
-      <div style={{}} className="articleIcon" >
-        <div className="menu" style={{ width: '100%', paddingLeft: '50px' }}>          
-          {this.renderNewDetail()}
-        </div>
+  return (
+    <div style={{}} className="articleIcon" >
+      <div className="menu" style={{ width: '100%', paddingLeft: '50px' }}>
+        {renderNewDetail()}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    boardID: state.appState.id
-  }
-}
-
-export default connect(mapStateToProps, { createDetail })(AddDetail)
+export default AddDetail

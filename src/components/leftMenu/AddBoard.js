@@ -1,30 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import { createBoard, createPrivateBoard } from '../../actions/boards'
 import SingleInput from '../Forms/SingleInput'
 
-class AddBoard extends React.Component {
-  state = { isHovering: false, itemEditable: false }
+function AddBoard(props) {
+  const [isHovering, setIsHovering] = useState(false)
+  const [itemEditable, setItemEditable] = useState(false)
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const boards = useSelector(state => _.keyBy(Object.values(state.boards), 'id'))
+  const userId = useSelector(state => state.user.credentials.userId)
+
+  const dispatch = useDispatch()
+
+  const removeEdit = () => {
+    setItemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setItemEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setIsHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setIsHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
         <div
           style={{ cursor: 'pointer' }}
@@ -35,57 +41,43 @@ class AddBoard extends React.Component {
     }
   }
 
-  onSubmit = (formValues) => {
-   if(this.props.name === 'New Board')  this.props.createBoard(formValues, '')
-   if(this.props.name === 'New Private Board')  this.props.createPrivateBoard(formValues, this.props.userId)  
-    this.removeEdit()
+  const onSubmit = (formValues) => {
+    if (props.name === 'New Board') dispatch(createBoard(formValues, ''))
+    if (props.name === 'New Private Board') dispatch(createPrivateBoard(formValues, userId))
+    removeEdit()
+  }
 
-  }  
-
-  renderNewBoard() {
-    if (this.state.itemEditable === true) {
+  const renderNewBoard = () => {
+    if (itemEditable === true) {
       return <SingleInput
         propStyle={{ paddingTop: '15px', paddingBottom: '10px' }}
         propChildStyle={{ padding: '0' }}
-        removeEdit={() => this.removeEdit()}
-        onSubmit={this.onSubmit} />
+        removeEdit={() => removeEdit()}
+        onSubmit={onSubmit} />
     }
 
-    if (this.state.itemEditable === false) {
+    if (itemEditable === false) {
       return (
         <div
-          onBlur={() => this.removeEdit()}
-          onClick={() => this.showEdit()}
-          onMouseLeave={() => this.hideIcon()}
-          onMouseEnter={() => this.showIcon()}
+          onBlur={() => removeEdit()}
+          onClick={() => showEdit()}
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
           className="articleIcon" style={{ paddingTop: '15px', paddingBottom: '15px' }}
         >
-          <div style={{ display: 'inline-block' }}>{this.showHover()}</div>
-          <div style={{ display: 'inline-block' }}>{this.props.name}</div>
-          {/* <div >New</div>
-          <div style={{ position: 'absolute', right: "0px" }}><i className="icon plus" /></div> */}
+          <div style={{ display: 'inline-block' }}>{showHover()}</div>
+          <div style={{ display: 'inline-block' }}>{props.name}</div>
         </div>
       )
     }
   }
 
-  render() {
+  return (
+    <>
+      {renderNewBoard()}
+    </>
+  )
 
-    return (
-      <>
-        {this.renderNewBoard()}
-        
-      </>
-    )
-  }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    boards: _.keyBy(Object.values(state.boards), 'id'),
-    userId: state.user.credentials.userId
-  }
-}
-
-
-export default connect(mapStateToProps, { createBoard, createPrivateBoard })(AddBoard)
+export default AddBoard

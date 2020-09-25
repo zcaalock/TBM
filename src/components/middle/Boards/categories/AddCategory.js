@@ -1,29 +1,35 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { createCategory } from '../../../../actions/categories'
 import SingleInput from '../../../Forms/SingleInput'
 
-class AddCategory extends React.Component {
-  state = { isHovering: false, itemEditable: false }
+function AddCategory() {
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const boardID = useSelector(state => state.appState.id)   
+
+  const [isHovering, setIsHovering] = useState(false)
+  const [itemEditable, setItemEditable] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const removeEdit = () => {
+    setItemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setItemEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setIsHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setIsHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
         <div
           style={{ cursor: 'pointer' }}
@@ -34,56 +40,44 @@ class AddCategory extends React.Component {
     }
   }
 
-  onSubmit = (formValues) => {
-    this.props.createCategory(formValues, this.props.boardID)
-    this.removeEdit()
+  const onSubmit = (formValues) => {
+    dispatch(createCategory(formValues, boardID))
+    removeEdit()
   }
 
-  renderNewCategory() {
-    if (this.state.itemEditable === true) {
+  const renderNewCategory = () => {
+    if (itemEditable === true) {
       return (
         <div className="articleIcon header item">
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
-            removeEdit={() => this.removeEdit()}
-            onSubmit={this.onSubmit} />
+            removeEdit={() => removeEdit()}
+            onSubmit={onSubmit} />
         </div>
       )
     }
 
-    if (this.state.itemEditable === false) {
+    if (itemEditable === false) {
       return (
         <div className="articleIcon header item"
-          onMouseLeave={() => this.hideIcon()}
-          onMouseEnter={() => this.showIcon()}
-          onClick={() => this.showEdit()}>
-          {this.showHover()}
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
+          onClick={() => showEdit()}>
+          {showHover()}
           New Category
         </div>
       )
     }
   }
 
-
-
-  render() {
-    //console.log('add category state: ', this.props)
-    return (
-      <div style={{}} className="categories ui secondary text menu" >
-        <div className="menu" style={{ width: '100%', backgroundColor: 'white' }}>
-          {this.renderNewCategory()}
-        </div>
+  return (
+    <div style={{}} className="categories ui secondary text menu" >
+      <div className="menu" style={{ width: '100%', backgroundColor: 'white' }}>
+        {renderNewCategory()}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    boardID: state.appState.id
-  }
-}
-
-export default connect(mapStateToProps, { createCategory })(AddCategory)
+export default AddCategory

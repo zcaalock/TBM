@@ -27,7 +27,7 @@ export default class DetailProgressBar extends Component {
     const details = _.filter(this.props.details, { pulseId: this.props.pulse.id })
     const checked = _.filter(this.props.details, { pulseId: this.props.pulse.id, check: "true" })
     if (details.length > 0 && this.props.pulse.archived === 'false') return (
-      <div>
+      <div style={{display: 'inline-block'}}>
         <div style={{display: 'inline-block', width: '100px'}} >{this.renderProgressBar(this.props.pulse.id)} </div>  
         <div style={{display: 'inline-block', position:'absolute', marginLeft: '-60px', paddingTop: '3px'}}>{checked.length}/{details.length}</div> 
       </div>

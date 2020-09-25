@@ -1,25 +1,23 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import {deletePulse} from '../../../../../actions/pulses'
-import {fetchDetails} from '../../../../../actions/details'
 
+function DeletePulse (props) {
+  
+  const details = useSelector(state => Object.values(state.details))
+  const notepad = useSelector(state => Object.values(state.notepad))
+  const boardId = useSelector(state => state.appState.id)  
 
+  const dispatch = useDispatch();
 
-class DeletePulse extends React.Component {
-
-  componentDidMount() {
-    //this.props.fetchDetails()    
-  }
-
-  renderDelete(){    
-    const details = _.filter(this.props.details, {pulseId: this.props.pulseId})
-    const notepad = _.filter(this.props.notepad, {pulseId: this.props.pulseId})    
-    //console.log('details: ', notepad)
-    if (details.length>0 || notepad.length > 0){
+  const renderDelete = () => {    
+    const detailsFiltered = _.filter(details, {pulseId: props.pulseId})
+    const notepadFiltered = _.filter(notepad, {pulseId: props.pulseId})    
+    
+    if (detailsFiltered.length>0 || notepadFiltered.length > 0){
       return (
-        <div
-        //onClick={() => { this.props.delete() }}        
+        <div               
         data-position="left center"
         data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
@@ -28,7 +26,7 @@ class DeletePulse extends React.Component {
       )
     } return (
       <div
-        onClick={() => this.props.deletePulse(this.props.pulseId, this.props.boardId)}
+        onClick={() => dispatch(deletePulse(props.pulseId, boardId))}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
@@ -36,26 +34,13 @@ class DeletePulse extends React.Component {
         <i className=" trash icon" />        
       </div>
     )
-
-  }
-
-  render() {
+  }  
       
     return (
-      <>
-        
-        {this.renderDelete()}
+      <>        
+        {renderDelete()}
       </>
-
-    )
-  }
-}
-const mapStateToProps = (state)=>{
-  return{
-    details: Object.values(state.details),
-    notepad: Object.values(state.notepad),
-    boardId: state.appState.id      
-  }
+    ) 
 }
 
-export default connect(mapStateToProps, { fetchDetails, deletePulse }) (DeletePulse)
+export default DeletePulse

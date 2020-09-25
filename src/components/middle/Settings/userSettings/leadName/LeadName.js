@@ -1,33 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EditLeadName from './EditLeadName'
 import LeadNameIcons from './LeadNameIcons'
 
 
-class LeadName extends React.Component {
-  state = { itemEditable: false }
+function LeadName(props) {
 
-
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const [itemEditable, setitemEditable] = useState(false);
+ 
+  const removeEdit = () => {
+    setitemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setitemEditable(true)
   }
 
-  render() {
-    return (
-
-      <div >
-        <div style={{ display: 'inline-block' }}>          
-          <EditLeadName lead={this.props.lead} userId={this.props.userId} editState={this.state} showEdit={() => this.showEdit()} removeEdit={() => this.removeEdit()}/>
-        </div>
-        <div className="articleIcon" style={{ display: 'inline-block' }}>
-          <LeadNameIcons showEdit={() => this.showEdit()} />
-        </div>        
+  return (
+    <div >
+      <div style={{ display: 'inline-block' }}>
+        <EditLeadName lead={props.lead} userId={props.userId} editState={itemEditable} showEdit={() => showEdit()} removeEdit={() => removeEdit()} />
       </div>
-    )
-  }
+      <div className="articleIcon" style={{ display: 'inline-block' }}>
+        <LeadNameIcons showEdit={() => showEdit()} />
+      </div>
+    </div>
+  )
 }
 
 export default LeadName

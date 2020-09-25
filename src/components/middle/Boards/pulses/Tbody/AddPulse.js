@@ -1,32 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import { createPulse, createPrivatePulse } from '../../../../../actions/pulses'
 import SingleInput from '../../../../Forms/SingleInput'
 
-class AddPulse extends React.Component {
-  state = { isHovering: false, itemEditable: false }
+function AddPulse(props) {
+  const boards = useSelector(state => _.keyBy(Object.values(state.boards), 'id'))
+  const userId = useSelector(state => state.user.credentials.userId)
 
-  removeEdit() {
-    this.setState({ itemEditable: false })
+  const [isHovering, setIsHovering] = useState(false)
+  const [itemEditable, setItemEditable] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const removeEdit = () => {
+    setItemEditable(false)
   }
 
-  showEdit() {
-    this.setState({ itemEditable: true })
+  const showEdit = () => {
+    setItemEditable(true)
   }
 
-  hideIcon() {
-    this.setState({ isHovering: false })
+  const hideIcon = () => {
+    setIsHovering(false)
   }
 
-  showIcon() {
-    this.setState({ isHovering: true })
+  const showIcon = () => {
+    setIsHovering(true)
   }
 
-  showHover() {
-    if (this.state.isHovering === true) {
+  const showHover = () => {
+    if (isHovering === true) {
       return (
-        <div 
+        <div
           data-position="bottom center"
           data-tooltip="Create pulse">
           <i className="plus icon" />
@@ -34,69 +40,57 @@ class AddPulse extends React.Component {
     }
   }
 
-  onSubmit = (formValues) => {
-    if(this.props.boards[this.props.boardId].privateId === '') this.props.createPulse(formValues, this.props.categoryId, '')
-    if(this.props.boards[this.props.boardId].privateId === this.props.userId) this.props.createPrivatePulse(formValues, this.props.categoryId, this.props.userId)
-    this.removeEdit()
-
+  const onSubmit = (formValues) => {
+    if (boards[props.boardId].privateId === '') dispatch(createPulse(formValues, props.categoryId, userId))
+    if (boards[props.boardId].privateId === userId) dispatch(createPrivatePulse(formValues, props.categoryId, userId))
+    removeEdit()
   }
 
-  renderName(){
-    if(this.props.boards[this.props.boardId].privateId === '')
-    return <div>{this.renderNewPulse('New Pulse')}</div>
-    if(this.props.boards[this.props.boardId].privateId === this.props.userId)
-    return <div>{this.renderNewPulse('New Private Pulse')}</div>
+  const renderName = () => {
+    if (boards[props.boardId].privateId === '')
+      return <div>{renderNewPulse('New Pulse')}</div>
+    if (boards[props.boardId].privateId === userId)
+      return <div>{renderNewPulse('New Private Pulse')}</div>
   }
 
-  renderNewPulse(name) {
-    if (this.state.itemEditable === true) {
+  const renderNewPulse = (name) => {
+    if (itemEditable === true) {
       return (
         <div style={{ width: '100%' }}>
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}
-            removeEdit={() => this.removeEdit()}
-            onSubmit={this.onSubmit} />
+            removeEdit={() => removeEdit()}
+            onSubmit={onSubmit} />
         </div>
       )
     }
 
-    if (this.state.itemEditable === false) {
+    if (itemEditable === false) {
       return (
         <div style={{ width: '100%', paddingBottom: '15px' }}
-          onMouseLeave={() => this.hideIcon()}
-          onMouseEnter={() => this.showIcon()}
-          onClick={() => this.showEdit()}>
-          <div style={{display: 'inline-block'}}>{this.showHover()}</div>
-          <div style={{display: 'inline-block'}}>{name}</div>
+          onMouseLeave={() => hideIcon()}
+          onMouseEnter={() => showIcon()}
+          onClick={() => showEdit()}>
+          <div style={{ display: 'inline-block' }}>{showHover()}</div>
+          <div style={{ display: 'inline-block' }}>{name}</div>
         </div>
       )
     }
   }
 
-  render() {
-    //console.log('add category state: ', this.props)
-    return (
-      <tfoot>
-        <tr  >
-          <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
-            {/* {this.renderNewPulse()} */}
-            {this.renderName()}
-          </td>
-          <td colSpan="2">
-          </td>
-        </tr>
-      </tfoot>
-    )
-  }
+  return (
+    <tfoot>
+      <tr  >
+        <td className="tableNewPulse" style={{ paddingLeft: '10px', cursor: 'pointer' }} data-label="Name">
+          {/* {this.renderNewPulse()} */}
+          {renderName()}
+        </td>
+        <td colSpan="2">
+        </td>
+      </tr>
+    </tfoot>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    boards: _.keyBy(Object.values(state.boards), 'id'),
-    userId: state.user.credentials.userId
-  }
-}
-
-
-export default connect(mapStateToProps, { createPulse, createPrivatePulse  })(AddPulse)
+export default AddPulse

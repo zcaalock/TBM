@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { connect } from 'react-redux'
 import { fetchCategories } from '../../../../actions/categories'
 import { fetchPulses } from '../../../../actions/pulses'
 
@@ -8,132 +8,120 @@ import Header from './Header'
 import Table from '../pulses/Table'
 import ProgressBar from '../../../Forms/ProgressBar'
 
+function Categories() {
 
+  const categories = useSelector(state => Object.values(state.categories))
+  const pulses = useSelector(state => Object.values(state.pulses))
+  const details = useSelector(state => Object.values(state.details))
+  const appState = useSelector(state => state.appState)
+  const privateId = useSelector(state => state.user.credentials.userId)
 
-class Categories extends React.Component {
+  const [stateId, setId] = useState({ id: false })
 
-  isEmpty(obj) {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isEmpty(categories)) dispatch(fetchCategories())
+    if (isEmpty(pulses)) dispatch(fetchPulses())
+  }, [])
+
+  const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
         return false;
     }
     return true;
-  }   
-  
-  
-
-  componentDidMount() {
-    if (this.isEmpty(this.props.categories)) this.props.fetchCategories()
-    if (this.isEmpty(this.props.pulses)) this.props.fetchPulses()    
   }
 
-  expand(id) {
-    this.setState({ [id]: 'true' })
+  const expand = (id) => {
+    setId({ [id]: true })
   }
 
-  collapse(id) {
-    this.setState({ [id]: 'false' })
+  const collapse = (id) => {
+    setId({ [id]: false })
   }
 
-  renderProgressBar(id) {
+  const renderProgressBar = (id) => {
     let detailStorage = []
-    //const pulses = _.filter(this.props.pulses, { categoryId: id })
-    //const checked = _.filter(this.props.pulses, { categoryId: id, status: 'Done', archived: 'false' })
-    const pulsesPB = _.filter(this.props.pulses, { categoryId: id, archived: 'false' })
-    
-    pulsesPB.map(pulse => {      
-    return this.props.details.map(detail =>{
+    const pulsesPB = _.filter(pulses, { categoryId: id, archived: 'false' })
+
+    pulsesPB.map(pulse => {
+      return details.map(detail => {
         if (detail.pulseId === pulse.id)
-        detailStorage.push({detailId: detail.id, check: detail.check}) 
+          detailStorage.push({ detailId: detail.id, check: detail.check })
         return detailStorage
-        //console.log('detail', detail.id) 
-        
-      })     
+      })
     })
-    
-    const details = _.unionBy(detailStorage, 'detailId')
-    const detailsChecked = _.filter(details, {check: 'true'})
 
+    const detailsUnion = _.unionBy(detailStorage, 'detailId')
+    const detailsChecked = _.filter(detailsUnion, { check: 'true' })
 
-    if (details.length > 0) {
-      const value = detailsChecked.length / details.length
-      //console.log('value: ', value)
+    if (detailsUnion.length > 0) {
+      const value = detailsChecked.length / detailsUnion.length
       return <ProgressBar size={'tiny'} value={value * 100} />
     }
   }
 
-  renderColapsingMenu(category, id) {
-    if (this.state && this.state[id] === 'true') {
+  const renderColapsingMenu = (category, id) => {
+    if (stateId && stateId[id] === true) {
       return (
         <Table
-          collapse={() => this.collapse(category.id)}
+          collapse={() => collapse(category.id)}
           categoryKey={category.id}
           categoryTitle={category.title}
           category={category}
-          boardId={this.props.appState.id} />
+          boardId={appState.id} />
       )
     } return (
       <Header
-        expandCollapse={() => this.expand(category.id)}
+        appState={appState.showNotifications}
+        expandCollapse={() => expand(category.id)}
         categoryKey={category.id}
         categoryTitle={category.title}
-        category={category} />
+        category={category}
+        id={category.id}
+        pulses={pulses}
+        privateId={privateId}
+      />
     )
   }
 
-  renderCategories() {
-    //var sort = _.sortBy(this.props.categories, 'id')
-    //console.log('sort: ', sort)
-    return this.props.categories.map(category => {
-      if (category.boardId === this.props.appState.id && category.privateId === "" && category.archived !== "true") {
+  const renderCategories = () => {
+
+    return categories.map(category => {
+      if (category.boardId === appState.id && category.privateId === "" && category.archived !== "true") {
+
         return (
           <div key={category.id}>
-            {this.renderProgressBar(category.id)}
-            {this.renderColapsingMenu(category, category.id)}</div>
+            {renderProgressBar(category.id)}
+            {renderColapsingMenu(category, category.id)}</div>
         )
       } return null
     })
   }
 
-  renderCategoriesWithArchived() {
-    //var sort = _.sortBy(this.props.categories, 'id')
-    //console.log('sort: ', sort)
-    return this.props.categories.map(category => {
-      if (category.boardId === this.props.appState.id && category.privateId === "") {
+  const renderCategoriesWithArchived = () => {
+    return categories.map(category => {
+      if (category.boardId === appState.id && category.privateId === "") {
         return (
           <div key={category.id}>
-            {this.renderProgressBar(category.id)}
-            {this.renderColapsingMenu(category, category.id)}</div>
+            {renderProgressBar(category.id)}
+            {renderColapsingMenu(category, category.id)}</div>
         )
       } return null
     })
   }
 
-  checkIfArchived() {
-
-    if(this.props.appState.showArchived === "true") return this.renderCategoriesWithArchived()
-    return this.renderCategories()
+  const checkIfArchived = () => {
+    if (appState.showArchived === "true") return renderCategoriesWithArchived()
+    return renderCategories()
   }
 
-
-  render() {
-    //console.log('fetch categories: ', this.props.categories)
-    return (
-      <div>
-        {this.checkIfArchived()}
-      </div>
-    )
-  }
+  return (
+    <div>
+      {checkIfArchived()}
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    categories: Object.values(state.categories),
-    pulses: Object.values(state.pulses),
-    details: Object.values(state.details),
-    appState: state.appState
-  }
-}
-
-export default connect(mapStateToProps, { fetchCategories, fetchPulses })(Categories)
+export default Categories

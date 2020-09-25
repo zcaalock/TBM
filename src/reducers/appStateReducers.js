@@ -3,9 +3,11 @@ import * as types from '../actions/types'
 const appState ={
   showArchived: 'false',
   hideEmptyDates: 'false',
+  showNotifications: 'false',
   hidePrivate: 'false',
   refreshed: 'false',
   addPulseOpen: 'false',
+  editPulseOpen: 'false',
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'} 
 }

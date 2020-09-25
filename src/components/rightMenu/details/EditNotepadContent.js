@@ -1,51 +1,49 @@
 import React from 'react'
 import _ from 'lodash'
-import { connect } from 'react-redux'
+import { useDispatch } from "react-redux";
 import { editNotepad } from '../../../actions/notepad'
 import NotepadField from '../../Forms/NotepadField'
-//import SingleInput from '../../Forms/SingleInput'
+import { editPulse } from '../../../actions/pulses'
 
-class editNotepadContent extends React.Component {    
+function editNotepadContent(props) {
 
-  onSubmit = (formValues) => {
-    //this.props.editDetail(this.props.detail.id, formValues)
-    if(this.props.notepad.content !== formValues.content)
-    //console.log('submit value: ', formValues, 'notepad Id:', this.props.notepad.id)
-    this.props.editNotepad(this.props.notepad.id, formValues)
-    
-    this.props.removeEdit()
-  }   
+  const dispatch = useDispatch();
 
-  renderEditNotepad() {
-    const id =[`itemEditable${this.props.notepad.id}`]    
-    if (this.props.editState[id] === "true") {
+  const onSubmit = (formValues) => {
+
+    if (props.notepad.content !== formValues.content)
+      dispatch(editNotepad(props.notepad.id, formValues))
+    dispatch(editPulse(props.appState.pulseId, { readed: [props.userId] }))
+    dispatch(removeEdit())
+  }
+
+  const renderEditNotepad = () => {
+    const id = [`itemEditable${props.notepad.id}`]
+    if (props.editState[id] === "true") {
       return (
-        <NotepadField 
-        propStyle={{padding: '0'}} 
-        propChildStyle={{ padding: '0'}}
-        initialValues={_.pick(this.props.notepad, 'content')} 
-        removeEdit={()=>this.props.removeEdit()} 
-        onSubmit={this.onSubmit} />
+        <NotepadField
+          propStyle={{ padding: '0' }}
+          propChildStyle={{ padding: '0' }}
+          initialValues={_.pick(props.notepad, 'content')}
+          removeEdit={() => dispatch(removeEdit())}
+          onSubmit={onSubmit} />
       )
     }
 
-    if (!this.props.editState.itemEditable || this.props.editState.itemEditable === "false") {
-      return (                    
-          <div >
-          {this.props.content}
-          </div>        
+    if (!props.editState.itemEditable || props.editState.itemEditable === "false") {
+      return (
+        <div >
+          {props.content}
+        </div>
       )
     }
   }
 
-  render() {
-
-    return (
-      <>      
-        {this.renderEditNotepad()}
-      </>
-    )
-  }
+  return (
+    <>
+      {renderEditNotepad()}
+    </>
+  )
 }
 
-export default connect(null, { editNotepad })(editNotepadContent)
+export default editNotepadContent
