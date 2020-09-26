@@ -11,6 +11,8 @@ import { editPulse, fetchPulses } from '../../actions/pulses'
 
 
 function GCalendarModal(props) {
+  let calendar = {}
+
 
   const ex = {
     'summary': 'Google I/O 2015',
@@ -18,11 +20,11 @@ function GCalendarModal(props) {
     'description': 'A chance to hear more about Google\'s developer products.',
     'start': {
       'dateTime': '2015-05-28T09:00:00-07:00',
-      'timeZone': 'Poland/Warsaw'
+      'timeZone': 'Europe/Warsaw'
     },
     'end': {
       'dateTime': '2015-05-28T17:00:00-07:00',
-      'timeZone': 'Poland/Warsaw'
+      'timeZone': 'Europe/Warsaw'
     },
     'recurrence': [
       'RRULE:FREQ=DAILY;COUNT=2'
@@ -46,7 +48,7 @@ function GCalendarModal(props) {
   const pulseKey = useSelector(state => _.keyBy(state.pulses, 'id'))
   const detailsKey = useSelector(state => _.keyBy(state.details, 'id'))
 
-  
+
 
 
   const [summary, setSummary] = useState('')
@@ -54,49 +56,24 @@ function GCalendarModal(props) {
   const [location, setLocation] = useState('')
   const [locationShow, setlocationShow] = useState(false)
   const [startTime, setStarttime] = useState(new Date())
-  const [startTimeISO, setStartTimeISO] = useState(startTime.toISOString())  
+  const [startTimeISO, setStartTimeISO] = useState(startTime.toISOString())
   const [endTime, setEndtime] = useState(new Date())
   const [endTimeISO, setEndTimeISO] = useState(endTime.toISOString())
   const [email, setEmail] = useState('')
+  const [emailAdress, setEmailadress] = useState(false)
+
+
   const [emailShow, setEmailshow] = useState(false)
 
-  
 
 
-  const calendar = {
-    'summary': summary,
-    'location': location,
-    'description': description,
-    'start': {
-      'dateTime': startTimeISO,
-      'timeZone': 'Poland/Warsaw'
-    },
-    'end': {
-      'dateTime': endTimeISO,
-      'timeZone': 'Poland/Warsaw'
-    },
-    'recurrence': [
-      'RRULE:FREQ=DAILY;COUNT=2'
-    ],
-    'attendees': [
-      { 'email': email }
-    ],
-    'reminders': {
-      'useDefault': false,
-      'overrides': [
-        { 'method': 'email', 'minutes': 24 * 60 },
-        { 'method': 'popup', 'minutes': 10 }
-      ]
-    }
-  }
+
+
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     setSummary(detailsKey[props.detailId].title)
-    // setCalendar({...calendar, 'description' : ''})
-    // setCalendar({...calendar, 'description' : ''})
-    // setCalendar({...calendar, 'start' : {...calendar.start, 'dateTime': '2020-09-25T17:00:00-07:00'} })
   }, [])
 
   const isEmpty = (obj) => {
@@ -107,8 +84,70 @@ function GCalendarModal(props) {
     return true;
   }
 
-  const handleSubmit = () => {
+  var gapi = window.gapi
+  var CLIENT_ID = '387755363149-iu77017sj4epnmgilqdnrnkk6ckgau46.apps.googleusercontent.com'
+  var API_KEY = 'AIzaSyCdkVlZ06-wbkJyGtot1erbJf2qPpd8vbI'
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
+  var SCOPES = "https://www.googleapis.com/auth/calendar.events"
 
+  const inputEmail = (value) => {
+    setEmail(value)
+    setEmailadress([{ 'email': value }])
+  }
+
+  function handleSubmit() {
+    calendar = {
+      'summary': summary,
+      'location': location,
+      'description': description,
+      'start': {
+        'dateTime': startTimeISO,
+        'timeZone': 'Europe/Warsaw'
+      },
+      'end': {
+        'dateTime': endTimeISO,
+        'timeZone': 'Europe/Warsaw'
+      },
+      'recurrence': [
+        'RRULE:FREQ=DAILY;COUNT=2'
+      ],
+      'attendees': emailAdress,
+      'reminders': {
+        'useDefault': false,
+        'overrides': [
+          { 'method': 'email', 'minutes': 24 * 60 },
+          { 'method': 'popup', 'minutes': 10 }
+        ]
+      }
+    }
+
+    //console.log('email: ', email)
+    //console.log('calendar: ', calendar.start.dateTime)
+    //console.log('time: ', calendar)
+    gapi.load("client:auth2", () => {
+      console.log('client loaded to google')
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES
+      })
+
+      gapi.client.load("calendar", "v3", () => console.log('logged in'))
+
+      gapi.auth2.getAuthInstance().signIn()
+        .then(() => {
+          var request = gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'resource': calendar
+          })
+          request.execute(calendar => {
+            console.log('event: ', calendar)
+            window.open(calendar.htmlLink)
+          })
+        })
+    })
     close()
   }
 
@@ -133,14 +172,14 @@ function GCalendarModal(props) {
 
   function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
-    return re.test(email) || emailShow === false ? null : {
+    return re.test(email) || emailShow === false ? false : {
       content: 'Please enter a valid email address',
       pointing: 'below',
     }
   }
 
   const { gCalendarOpen } = appState
-  console.log('calendar: ', calendar)
+
   //console.log(startDate)
   return (
     <div>
@@ -149,7 +188,7 @@ function GCalendarModal(props) {
         <Modal.Content>
           <Modal.Description>
             <Form
-              onSubmit={handleSubmit}>
+              onSubmit={() => handleSubmit()}>
               <Form.Field
                 id='name'
                 name='name'
@@ -163,35 +202,47 @@ function GCalendarModal(props) {
               <Form.Field
                 id='startdatetime'
                 label='Start Date & Time'
-                style={{marginBottom: '0px'}}
+                style={{ marginBottom: '0px' }}
               />
               <Form.Field >
                 <DatePicker
                   selected={startTime}
-                  onChange={date => setStarttime(date)}
+                  onChange={date => {
+                    setStarttime(date)
+                    setStartTimeISO(date.toISOString()
+                    )
+                  }
+                  }
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={30}
                   timeCaption="time"
-                  dateFormat="MMMM d, yyyy HH:mm"                  
+                  dateFormat="MMMM d, yyyy HH:mm"
                 />
               </Form.Field>
               <Form.Field
                 id='enddatetime'
                 label='End Date & Time'
-                style={{marginBottom: '0px'}}
+                style={{ marginBottom: '0px' }}
               />
               <Form.Field >
                 <DatePicker
                   selected={endTime}
-                  onChange={date => setEndtime(date)}
+                  onChange={date => {
+                    setEndtime(date)
+                    setEndTimeISO(date.toISOString()
+                    )
+                  }
+                }
+
+                  
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={30}
                   timeCaption="time"
-                  dateFormat="MMMM d, yyyy HH:mm"                  
+                  dateFormat="MMMM d, yyyy HH:mm"
                 />
-              </Form.Field>               
+              </Form.Field>
               <Form.Group>
                 <Form.Checkbox
                   onChange={(e, { checked }) => {
@@ -216,6 +267,7 @@ function GCalendarModal(props) {
                 <Form.Checkbox
                   onChange={(e, { checked }) => {
                     setEmailshow(checked)
+                    setEmailadress(false)
                     setEmail('')
                   }
                   }
@@ -226,7 +278,7 @@ function GCalendarModal(props) {
                   control={Input}
                   label='Email'
                   placeholder='mail@mail.com'
-                  onChange={(e, { value }) => setEmail(value)}
+                  onChange={(e, { value }) => inputEmail(value)}
                   value={email}
                   error={validateEmail(email)}
                 />
