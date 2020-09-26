@@ -20,7 +20,7 @@ function DetailIcon(props) {
         onClick={() => {dispatch(editState('true', 'gCalendarOpen')) }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Edit"
+        data-tooltip="Export to Google Calendar"
         style={{
           display: 'inline-block',
           paddingLeft: '28px',

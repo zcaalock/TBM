@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editPulse } from '../../../../../actions/pulses'
 import Calendar from '../../../../Forms/Calendar'
 import DaysToDeadline from './DaysToDeadline'

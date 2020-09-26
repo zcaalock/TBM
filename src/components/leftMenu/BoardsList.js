@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { fetchBoards } from '../../actions/boards'
 import { editState } from '../../actions/appState'
 
 
-class BoardsList extends React.Component {
+function BoardsList(props) {
 
-  isEmpty(obj) {
+  const boards = useSelector(state => Object.values(state.boards))
+  const categories = useSelector(state => Object.values(state.categories))
+  const pulses = useSelector(state => Object.values(state.pulses))
+  const appState = useSelector(state => state.appState)
+  const userId = useSelector(state => state.user.credentials.userId)
+
+  const dispatch = useDispatch()
+
+  const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
         return false;
@@ -16,63 +24,60 @@ class BoardsList extends React.Component {
     return true;
   }
 
-
-  componentDidMount() {
-    if (this.isEmpty(this.props.boards)) this.props.fetchBoards()
-
-  }
+  useEffect(() => {
+    if (isEmpty(boards)) dispatch(fetchBoards())
+  }, [])
 
 
-  selectedCheck(id) {
-    if (id === this.props.appState.id) {
+  const selectedCheck = (id) => {
+    if (id === appState.id) {
       return 'active'
     }
     return ''
   }
 
-  selectedStyle(id) {
-    if (id === this.props.appState.id)
+  const selectedStyle = (id) => {
+    if (id === appState.id)
       return { backgroundColor: '#E9E9E9', paddingLeft: '0' }
     return { paddingLeft: '0' }
   }
 
-  renderBoards() {
+  const renderBoards = () => {
     //this.handleAuth()
-    if (this.props.boards.length === 0) {
+    if (boards.length === 0) {
       return (
         <div className="ui active inline loader">
         </div>
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return _.filter(this.props.boards, { privateId: this.props.privateId }).map(board => {
+    return _.filter(boards, { privateId: props.privateId }).map(board => {
 
       return (
         <>
-          {this.renderNotifications(board.id)}
+          {renderNotifications(board.id)}
           <Link
-            onClick={() => this.props.editState('', 'pulseId')}
+            onClick={() => dispatch(editState('', 'pulseId'))}
             to={`/boards/${board.id}`}
-            className={`item ${this.selectedCheck(board.id)}`}
+            className={`item ${selectedCheck(board.id)}`}
             key={board.id}
-            style={this.selectedStyle(board.id)}>
+            style={selectedStyle(board.id)}>
             {board.title}
           </Link>
-
         </>
       )
     })
   }
 
-  renderNotifications(boardId) {
+  const renderNotifications = (boardId) => {
     let notoficationStorage = 0
-    this.props.categories.map(category => {
+    categories.map(category => {
       if (category.boardId === boardId) {
-        const pulsesPB = _.filter(this.props.pulses, { categoryId: category.id })
+        const pulsesPB = _.filter(pulses, { categoryId: category.id })
 
         pulsesPB.map(pulse => {
           let findUser = undefined
-          if (pulse.readed) pulse.readed.forEach(read => { if (read === this.props.userId) return findUser = true })
+          if (pulse.readed) pulse.readed.forEach(read => { if (read === userId) return findUser = true })
           if (pulse.readed && pulse.readed.length > 0 && findUser !== true && pulse.privateId === '' && pulse.archived === 'false') return notoficationStorage++
           return null
         })
@@ -81,31 +86,14 @@ class BoardsList extends React.Component {
       return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && this.props.appState.showNotifications === 'true') return <div key={`k${boardId}`} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
-
+    if (notoficationStorage > 0 && appState.showNotifications === 'true') return <div key={new Date()} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
   }
 
-
-
-  render() {
-    return (
-      <div>
-        {this.renderBoards()}
-      </div>
-    )
-  }
-
+  return (
+    <div>
+      {renderBoards()}
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-
-  return {
-    boards: Object.values(state.boards),
-    categories: Object.values(state.categories),
-    pulses: Object.values(state.pulses),
-    appState: state.appState,
-    userId: state.user.credentials.userId,
-  }
-}
-
-export default connect(mapStateToProps, { fetchBoards, editState })(BoardsList)
+export default BoardsList
