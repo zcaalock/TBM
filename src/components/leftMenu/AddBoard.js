@@ -8,7 +8,7 @@ function AddBoard(props) {
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
-  const boards = useSelector(state => _.keyBy(Object.values(state.boards), 'id'))
+  //onst boards = useSelector(state => _.keyBy(Object.values(state.boards), 'id'))
   const userId = useSelector(state => state.user.credentials.userId)
 
   const dispatch = useDispatch()

@@ -4,19 +4,19 @@ import ProgressBar from '../../../../Forms/ProgressBarError'
 
 function DaysToDeadline(props) {
 
-  const countPercent = () => {
-    var createdAt = props.pulse.createdAt.split('T')[0]
-    var daysToDeadline = differenceInCalendarDays(
-      new Date(props.pulse.deadline),
-      new Date()
-    )
-    var daysFromCreateToDeadline = differenceInCalendarDays(
-      new Date(props.pulse.deadline),
-      new Date(createdAt)
-    )
-    if (daysToDeadline && daysToDeadline > 0) return (daysFromCreateToDeadline - daysToDeadline) / daysFromCreateToDeadline
-    return null
-  }
+  // const countPercent = () => {
+  //   var createdAt = props.pulse.createdAt.split('T')[0]
+  //   var daysToDeadline = differenceInCalendarDays(
+  //     new Date(props.pulse.deadline),
+  //     new Date()
+  //   )
+  //   var daysFromCreateToDeadline = differenceInCalendarDays(
+  //     new Date(props.pulse.deadline),
+  //     new Date(createdAt)
+  //   )
+  //   if (daysToDeadline && daysToDeadline > 0) return (daysFromCreateToDeadline - daysToDeadline) / daysFromCreateToDeadline
+  //   return null
+  // }
 
   const fixedPercentValues = () => {
     var daysToDeadline = differenceInCalendarDays(

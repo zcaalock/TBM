@@ -5,11 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Button, Modal, Form, Input, Select, Label } from 'semantic-ui-react'
+import { Button, Modal, Form, Input } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { editPulse, fetchPulses } from '../../actions/pulses'
 import CREDENTIALS from '../../GCAPI'
-
 
 function GCalendarModal(props) {
   let calendar = {}
@@ -41,16 +39,10 @@ function GCalendarModal(props) {
         { 'method': 'popup', 'minutes': 10 }
       ]
     }
-
   }
 
-  const pulseIdSelected = useSelector(state => state.appState.pulseId)
   const appState = useSelector(state => state.appState)
-  const pulseKey = useSelector(state => _.keyBy(state.pulses, 'id'))
   const detailsKey = useSelector(state => _.keyBy(state.details, 'id'))
-
-
-
 
   const [summary, setSummary] = useState('')
   const [description, setDescription] = useState('')
@@ -66,27 +58,14 @@ function GCalendarModal(props) {
 
   const [emailShow, setEmailshow] = useState(false)
 
-
-
-
-
-
   const dispatch = useDispatch()
 
   useEffect(() => {
     setSummary(detailsKey[props.detailId].title)
   }, [])
 
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
   var gapi = window.gapi
-  
+
   var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
   var SCOPES = "https://www.googleapis.com/auth/calendar.events"
 
@@ -122,8 +101,10 @@ function GCalendarModal(props) {
     }
 
     //console.log('email: ', email)
-    //console.log('calendar: ', calendar.start.dateTime)
-    //console.log('time: ', calendar)
+    // console.log('calendar: ', calendar)
+    // console.log('desc: ', description)
+    // console.log('summary: ', summary)
+    // console.log('time: ', calendar)
     gapi.load("client:auth2", () => {
       console.log('client loaded to google')
 
@@ -152,7 +133,7 @@ function GCalendarModal(props) {
   }
 
 
-  const activateSubmit = () => { return summary, startTime, endTime === '' ? true : false }
+  const activateSubmit = () => { return summary === '' || startTime === false || endTime === false ? true : false }
   const defaulCheck = (bool) => {
     if (bool === 'false')
       return false
@@ -174,12 +155,27 @@ function GCalendarModal(props) {
     var re = /\S+@\S+\.\S+/;
     return re.test(email) || emailShow === false ? false : {
       content: 'Please enter a valid email address',
-      pointing: 'below',
+      pointing: 'below'      
     }
   }
 
-  const { gCalendarOpen } = appState
+  function renderEmailAdress(email) {
+    email.map(em => {
+      return <Form.Field
+                  disabled={!emailShow}
+                  id='form-input-control-error-email'
+                  control={Input}
+                  label='Email'
+                  style={{width:'100%'}}
+                  placeholder='mail@mail.com'
+                  onChange={(e, { value }) => inputEmail(value)}
+                  value={email}
+                  error={validateEmail(email)}
+                />
+    })
+  }
 
+  const { gCalendarOpen } = appState
   //console.log(startDate)
   return (
     <div>
@@ -195,10 +191,18 @@ function GCalendarModal(props) {
                 control={Input}
                 label='Title'
                 placeholder='Title'
-                defaultValue={summary}
+                defaultValue={detailsKey[props.detailId].title}
                 onChange={(e, { value }) => setSummary(value)}
               />
-
+              <Form.Field
+                id='decription'
+                name='decription'
+                control={Input}
+                label='Description'
+                placeholder='Description'
+                //defaultValue={description}
+                onChange={(e, { value }) => setDescription(value)}
+              />
               <Form.Field
                 id='startdatetime'
                 label='Start Date & Time'
@@ -233,9 +237,7 @@ function GCalendarModal(props) {
                     setEndTimeISO(date.toISOString()
                     )
                   }
-                }
-
-                  
+                  }
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={30}
@@ -277,11 +279,13 @@ function GCalendarModal(props) {
                   id='form-input-control-error-email'
                   control={Input}
                   label='Email'
+                  style={{width:'100%'}}
                   placeholder='mail@mail.com'
                   onChange={(e, { value }) => inputEmail(value)}
                   value={email}
                   error={validateEmail(email)}
                 />
+                {/* {renderEmailAdress(emailAdress)} */}
               </Form.Group>
             </Form>
           </Modal.Description>
@@ -303,7 +307,6 @@ function GCalendarModal(props) {
 
     </div>
   )
-
 }
 
 export default GCalendarModal

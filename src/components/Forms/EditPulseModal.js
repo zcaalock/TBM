@@ -6,8 +6,6 @@ import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
-import { fetchCategories } from '../../actions/categories'
-
 
 let boardsArr = []
 let categoriesArr = []
@@ -24,12 +22,11 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
-
-
+  
+  
+  //const [privateId, setPrivateId] = useState('')
   const [name, setName] = useState('')
-  const [userName, setUserName] = useState('')
   const [userId, setUserId] = useState('')
-  const [privateId, setPrivateId] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [boardId, setBoardId] = useState('')
 
@@ -42,7 +39,7 @@ function PulseModal() {
     setName(pulseKey[appState.pulseId].title)
     //setUserName(leadKey[userId].title)
     setUserId(pulseKey[appState.pulseId].userId)
-    setPrivateId(pulseKey[appState.pulseId].privateId)
+    //setPrivateId(pulseKey[appState.pulseId].privateId)
     setCategoryId(pulseKey[appState.pulseId].categoryId)
     setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
 
@@ -69,7 +66,7 @@ function PulseModal() {
     dispatch(editPulse(pulseIdSelected, userData))
     dispatch(fetchPulses())
     close()
-    
+
   }
 
   const generateLeadList = () => {
@@ -107,9 +104,7 @@ function PulseModal() {
     return categoriesArr = _.uniqBy(categoriesArr, 'text')
 
   }
-  const activateLeadField = () => { return name === '' ? true : false }
-  const activateBoardField = () => { return userId === '' ? true : false }
-  const activateCategoryField = () => { return boardId === '' ? true : false }
+
   const activateSubmit = () => { return categoryId === '' ? true : false }
 
   const defaulCheck = (bool) => {
@@ -193,8 +188,6 @@ function PulseModal() {
                 searchInput={{ id: 'categoryId' }}
                 onChange={(e, { value }) => setCategoryId(value)}
               />
-
-
               {/* <Form.Field
                   id='form-button-control-public'
                   control={Button}
@@ -220,7 +213,6 @@ function PulseModal() {
       </Modal>
     </div>
   )
-
 }
 
 export default PulseModal
