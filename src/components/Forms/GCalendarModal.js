@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button, Modal, Form, Input, Select, Label } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
+import CREDENTIALS from '../../GCAPI'
 
 
 function GCalendarModal(props) {
@@ -85,8 +86,7 @@ function GCalendarModal(props) {
   }
 
   var gapi = window.gapi
-  var CLIENT_ID = '387755363149-iu77017sj4epnmgilqdnrnkk6ckgau46.apps.googleusercontent.com'
-  var API_KEY = 'AIzaSyCdkVlZ06-wbkJyGtot1erbJf2qPpd8vbI'
+  
   var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
   var SCOPES = "https://www.googleapis.com/auth/calendar.events"
 
@@ -128,8 +128,8 @@ function GCalendarModal(props) {
       console.log('client loaded to google')
 
       gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
+        apiKey: CREDENTIALS.API_KEY,
+        clientId: CREDENTIALS.CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES
       })
