@@ -88,7 +88,7 @@ function GCalendarModal(props) {
         'timeZone': 'Europe/Warsaw'
       },
       'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
+        'RRULE:FREQ=DAILY;COUNT=1'
       ],
       'attendees': emailAdress,
       'reminders': {
