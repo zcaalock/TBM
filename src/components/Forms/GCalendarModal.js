@@ -56,6 +56,10 @@ function GCalendarModal(props) {
   const [emailAdress, setEmailadress] = useState(false)
 
 
+  const [errorDate, setErrorDate] = useState(false)
+  const [errorEmail, setErroremail] = useState(false)
+  const [activeSubmit, setActivesubmit] = useState(false)
+
   const [emailShow, setEmailshow] = useState(false)
 
   const dispatch = useDispatch()
@@ -99,12 +103,13 @@ function GCalendarModal(props) {
         ]
       }
     }
+    console.log('email: ', email)
+    console.log('calendar: ', calendar)
+    console.log('desc: ', description)
+    console.log('summary: ', summary)
+    console.log('time: ', calendar)
 
-    //console.log('email: ', email)
-    // console.log('calendar: ', calendar)
-    // console.log('desc: ', description)
-    // console.log('summary: ', summary)
-    // console.log('time: ', calendar)
+
     gapi.load("client:auth2", () => {
       console.log('client loaded to google')
 
@@ -132,8 +137,6 @@ function GCalendarModal(props) {
     close()
   }
 
-
-  const activateSubmit = () => { return summary === '' || startTime === false || endTime === false ? true : false }
   const defaulCheck = (bool) => {
     if (bool === 'false')
       return false
@@ -151,32 +154,54 @@ function GCalendarModal(props) {
     setEmail('')
   }
 
-  function validateEmail(email) {
+  const validateEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
-    return re.test(email) || emailShow === false ? false : {
-      content: 'Please enter a valid email address',
-      pointing: 'below'      
+    if (re.test(email) === true) {
+      setErroremail(false)
+      validateSubmi(errorDate, false)
+    }
+    if (re.test(email) === false) {
+      setErroremail(true)
+      validateSubmi(errorDate, true)
+    }
+
+  }
+
+  const validateSubmi = (date, email) => {
+    summary === '' || date === true || email === true ? setActivesubmit(true) : setActivesubmit(false)
+  }
+
+  function validateDate(date) {
+    if (new Date(startTimeISO).getTime() - new Date(date).getTime() > 0) {
+      setErrorDate(true)
+      validateSubmi(true, errorEmail)
+      return true
+    }
+
+    if (new Date(startTimeISO).getTime() - new Date(date).getTime() <= 0) {
+      setErrorDate(false)
+      validateSubmi(false, errorEmail)
+      return false
     }
   }
 
-  function renderEmailAdress(email) {
-    email.map(em => {
-      return <Form.Field
-                  disabled={!emailShow}
-                  id='form-input-control-error-email'
-                  control={Input}
-                  label='Email'
-                  style={{width:'100%'}}
-                  placeholder='mail@mail.com'
-                  onChange={(e, { value }) => inputEmail(value)}
-                  value={email}
-                  error={validateEmail(email)}
-                />
-    })
-  }
+  // function renderEmailAdress(email) {
+  //   email.map(em => {
+  //     return <Form.Field
+  //       disabled={!emailShow}
+  //       id='form-input-control-error-email'
+  //       control={Input}
+  //       label='Email'
+  //       style={{ width: '100%' }}
+  //       placeholder='mail@mail.com'
+  //       onChange={(e, { value }) => inputEmail(value)}
+  //       value={email}
+  //       error={validateEmail(email)}
+  //     />
+  //   })
+  // }
 
   const { gCalendarOpen } = appState
-  //console.log(startDate)
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(gCalendarOpen)} onClose={close}>
@@ -225,17 +250,21 @@ function GCalendarModal(props) {
                 />
               </Form.Field>
               <Form.Field
+                error={errorDate === true ? {
+                  content: 'End date cannot be before start date',
+                  pointing: 'below'
+                } : false}
                 id='enddatetime'
                 label='End Date & Time'
                 style={{ marginBottom: '0px' }}
               />
-              <Form.Field >
+              <Form.Field error={errorDate}>
                 <DatePicker
                   selected={endTime}
                   onChange={date => {
                     setEndtime(date)
-                    setEndTimeISO(date.toISOString()
-                    )
+                    setEndTimeISO(date.toISOString())
+                    validateDate(date.toISOString())
                   }
                   }
                   showTimeSelect
@@ -279,11 +308,19 @@ function GCalendarModal(props) {
                   id='form-input-control-error-email'
                   control={Input}
                   label='Email'
-                  style={{width:'100%'}}
+                  style={{ width: 'auto' }}
                   placeholder='mail@mail.com'
-                  onChange={(e, { value }) => inputEmail(value)}
+                  onChange={(e, { value }) => {
+                    inputEmail(value)
+                    validateEmail(value)
+                  }
+                  }
                   value={email}
-                  error={validateEmail(email)}
+                  error={errorEmail === true ? {
+                    content: 'Please enter a valid email address',
+                    pointing: 'left',
+                    width: 'auto'
+                  } : false}
                 />
                 {/* {renderEmailAdress(emailAdress)} */}
               </Form.Group>
@@ -295,7 +332,7 @@ function GCalendarModal(props) {
             Cancel
             </Button>
           <Button
-            disabled={activateSubmit()}
+            disabled={activeSubmit}
             form='my-form'
             onClick={() => handleSubmit()}
             icon='checkmark'
