@@ -125,18 +125,18 @@ function GCalendarModal(props) {
       gapi.auth2.getAuthInstance().signIn()
         .then(() => {
           var request = gapi.client.calendar.events.insert({
-            'calendarId': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com',
+            'calendarId': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.co',
             'resource': calendar
           })
           request.execute(calendar => {
             console.log('event: ', calendar)
             //console.log('Cerr: ', calendar.error)
             //window.open(calendar.htmlLink)
-            calendar.error !==undefined? dispatch(editState('generic', 'error')) : close()           
+            calendar.error !== undefined ? dispatch(editState('generic', 'error')) : close()
 
           })
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log('err: ', err)
           if (err) dispatch(editState('generic', 'error'))
         })
@@ -211,10 +211,13 @@ function GCalendarModal(props) {
 
 
   function showError() {
-    return appState.error === 'generic'? <Message negative>
-    <Message.Header>Something went wrong</Message.Header>
-    <p>Try again</p>
-  </Message> :null
+     if(appState.error === 'generic') {
+      setTimeout(() => { dispatch(editState('', 'error')) }, 3000)
+      return <Message negative>
+        <Message.Header>Something went wrong</Message.Header>
+        <p>Try again</p>
+      </Message>
+    } 
   }
   const { gCalendarOpen } = appState
   return (
