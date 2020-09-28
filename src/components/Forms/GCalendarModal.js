@@ -4,12 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Button, Modal, Form, Input, Message } from 'semantic-ui-react'
+import { Button, Modal, Form, Input, Message, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import CREDENTIALS from '../../GCAPI'
 
 function GCalendarModal(props) {
   let calendar = {}
+
+  const calendarIdArr = [
+    { key: 'primary', 'text': 'Main', 'value': 'primary' },
+    { key: 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com', 'text': 'Tribeach', 'value': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com' }
+  ]
 
 
   const ex = {
@@ -41,7 +46,7 @@ function GCalendarModal(props) {
   }
 
   const appState = useSelector(state => state.appState)
-  const detailsKey = useSelector(state => _.keyBy(state.details, 'id'))
+  //const detailsKey = useSelector(state => _.keyBy(state.details, 'id'))
 
   const [summary, setSummary] = useState('')
   const [description, setDescription] = useState('')
@@ -53,7 +58,7 @@ function GCalendarModal(props) {
   const [endTimeISO, setEndTimeISO] = useState(endTime.toISOString())
   const [email, setEmail] = useState('')
   const [emailAdress, setEmailadress] = useState(false)
-
+  const [calendarName, setCalendarName] = useState(calendarIdArr[1].key)
 
   const [errorDate, setErrorDate] = useState(false)
   const [errorEmail, setErroremail] = useState(false)
@@ -66,6 +71,7 @@ function GCalendarModal(props) {
   useEffect(() => {
     setSummary(props.detailTitle)
     dispatch(editState('', 'error'))
+    dispatch(editState('', 'submited'))
   }, [])
 
   var gapi = window.gapi
@@ -91,9 +97,7 @@ function GCalendarModal(props) {
         'dateTime': endTimeISO,
         'timeZone': 'Europe/Warsaw'
       },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=1'
-      ],
+      'recurrence': false,
       'attendees': emailAdress,
       'reminders': {
         'useDefault': false,
@@ -103,6 +107,8 @@ function GCalendarModal(props) {
         ]
       }
     }
+
+
     //console.log('email: ', email)
     //console.log('calendar: ', calendar)
     //console.log('desc: ', description)
@@ -125,19 +131,23 @@ function GCalendarModal(props) {
       gapi.auth2.getAuthInstance().signIn()
         .then(() => {
           var request = gapi.client.calendar.events.insert({
-            'calendarId': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.co',
+            'calendarId': calendarName,
             'resource': calendar
           })
           request.execute(calendar => {
             console.log('event: ', calendar)
-            //console.log('Cerr: ', calendar.error)
+            //console.log('calendarId: ', calendarName)
             //window.open(calendar.htmlLink)
-            calendar.error !== undefined ? dispatch(editState('generic', 'error')) : close()
+            if (calendar.error !== undefined) dispatch(editState('generic', 'error'))
+            else {
+              dispatch(editState('Event created in Calendar', 'submited'))
+              close()
+            }
 
           })
         })
         .catch((err) => {
-          console.log('err: ', err)
+          //console.log('err: ', err)
           if (err) dispatch(editState('generic', 'error'))
         })
     })
@@ -207,17 +217,18 @@ function GCalendarModal(props) {
   //     />
   //   })
   // }
-  //console.log(props.detailTitle)'
+  console.log(calendarName)
+
 
 
   function showError() {
-     if(appState.error === 'generic') {
-      setTimeout(() => { dispatch(editState('', 'error')) }, 3000)
+    if (appState.error === 'generic') {
+      setTimeout(() => { dispatch(editState('', 'error')) }, 4000)
       return <Message negative>
         <Message.Header>Something went wrong</Message.Header>
         <p>Try again</p>
       </Message>
-    } 
+    }
   }
   const { gCalendarOpen } = appState
   return (
@@ -246,6 +257,19 @@ function GCalendarModal(props) {
                 placeholder='Description'
                 //defaultValue={description}
                 onChange={(e, { value }) => setDescription(value)}
+              />
+              <Form.Field
+                search
+                //disabled={activateLeadField()}
+                name='calendarId'
+                control={Select}
+                //onFocus={this.handleBoardList()}
+                options={calendarIdArr}
+                //value='Alek'
+                label='Calendar Id'
+                placeholder={calendarIdArr[1].text}
+                //searchInput={{ id: 'id' }}
+                onChange={(e, { value }) => setCalendarName(value)}
               />
               <Form.Field
                 id='startdatetime'

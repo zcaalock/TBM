@@ -13,7 +13,8 @@ const appState ={
   sortBy: {name: '', direction: 'asc'},
   detailId: '',
   detailName: '',
-  error: '' 
+  error: '',
+  submited: 'test'
 }
 
 export default (state = appState, action) => {
