@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import addHours from 'date-fns/add_hours'
+import addHours from 'date-fns/addHours'
 import { Button, Modal, Form, Input, Message, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import CREDENTIALS from '../../GCAPI'
