@@ -65,7 +65,7 @@ function GCalendarModal(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setSummary(detailsKey[props.detailId].title)
+    setSummary(props.detailTitle)
   }, [])
 
   var gapi = window.gapi
@@ -103,11 +103,11 @@ function GCalendarModal(props) {
         ]
       }
     }
-    console.log('email: ', email)
-    console.log('calendar: ', calendar)
-    console.log('desc: ', description)
-    console.log('summary: ', summary)
-    console.log('time: ', calendar)
+    //console.log('email: ', email)
+    //console.log('calendar: ', calendar)
+    //console.log('desc: ', description)
+    //console.log('summary: ', summary)
+    //console.log('time: ', calendar)
 
 
     gapi.load("client:auth2", () => {
@@ -125,7 +125,7 @@ function GCalendarModal(props) {
       gapi.auth2.getAuthInstance().signIn()
         .then(() => {
           var request = gapi.client.calendar.events.insert({
-            'calendarId': 'primary',
+            'calendarId': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com',
             'resource': calendar
           })
           request.execute(calendar => {
@@ -200,7 +200,7 @@ function GCalendarModal(props) {
   //     />
   //   })
   // }
-
+  console.log(props.detailTitle)
   const { gCalendarOpen } = appState
   return (
     <div>
@@ -211,16 +211,16 @@ function GCalendarModal(props) {
             <Form
               onSubmit={() => handleSubmit()}>
               <Form.Field
-                id='name'
+                id={`name_${props.detailId}`}
                 name='name'
                 control={Input}
                 label='Title'
                 placeholder='Title'
-                defaultValue={detailsKey[props.detailId].title}
+                defaultValue={props.detailTitle}
                 onChange={(e, { value }) => setSummary(value)}
               />
               <Form.Field
-                id='decription'
+                id={`description_${props.detailId}`}
                 name='decription'
                 control={Input}
                 label='Description'
@@ -300,6 +300,7 @@ function GCalendarModal(props) {
                     setEmailshow(checked)
                     setEmailadress(false)
                     setEmail('')
+                    setErroremail(false)
                   }
                   }
                 />

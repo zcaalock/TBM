@@ -1,23 +1,28 @@
 import React, {useEffect} from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { deleteDetail } from '../../../actions/details'
 import {editState} from '../../../actions/appState'
-import GCalendarModal from '../../Forms/GCalendarModal'
+
 
 function DetailIcon(props) {  
 
    const dispatch = useDispatch();
-  const appState = useSelector(state => state.appState) 
+  
   useEffect(()=>{
     dispatch(editState('false', 'gCalendarOpen'))
   },[])
-  const ShowGCalendarModal = () => {
-    return appState.gCalendarOpen === 'true' ?  <GCalendarModal detailId={props.detailId}/> : null
-  }
+  
   return (
     <div>
       <div
-        onClick={() => {dispatch(editState('true', 'gCalendarOpen')) }}
+        onClick={
+          () => {
+            dispatch(editState('true', 'gCalendarOpen')) 
+            dispatch(editState(props.detailId, 'detailId'))
+            dispatch(editState(props.detailTitle, 'detailName'))
+            //console.log(`detailTittle: `, props.detailTitle)
+          }
+        }
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Export to Google Calendar"
@@ -49,9 +54,7 @@ function DetailIcon(props) {
         data-tooltip="Delete"
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />
-      </div>
-      
-      {ShowGCalendarModal()}
+      </div>      
     </div>
   )
 }

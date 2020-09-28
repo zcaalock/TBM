@@ -6,12 +6,14 @@ import { editDetail } from '../../../actions/details'
 import { editPulse } from '../../../actions/pulses'
 import DetailIcons from './DetailIcons'
 import EditDetailName from './EditDetailName'
+import GCalendarModal from '../../Forms/GCalendarModal'
 
 function Details(props) {
   const [state, defState] = useState({});
   const dispatch = useDispatch();
   const details = useSelector(state => Object.values(state.details));
   const userId = useSelector(state => state.user.credentials.userId);
+  const appState = useSelector(state => state.appState) 
 
   const removeEdit = (id) => {
     defState({ [`itemEditable${id}`]: false })
@@ -46,6 +48,10 @@ function Details(props) {
       return true
   }
 
+  const ShowGCalendarModal = () => {
+    return appState.gCalendarOpen === 'true' ?  <GCalendarModal detailId={appState.detailId} detailTitle={appState.detailName}/> : null
+  }
+
   const renderDetails = () => {
     const id = props.pulseId
     const detailsFiltered = _.filter(details, { pulseId: id })
@@ -73,7 +79,7 @@ function Details(props) {
             </div>
           </Table.Cell>
           <Table.Cell style={{ width: '115px' }}>
-            <DetailIcons showEdit={() => showEdit(detail.id)} detailId={detail.id} />
+            <DetailIcons showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
           </Table.Cell>
         </Table.Row>
       )
@@ -85,6 +91,7 @@ function Details(props) {
       <Table basic='very' >
         <Table.Body>
           {renderDetails()}
+          {ShowGCalendarModal()}
         </Table.Body>
       </Table>
     </div>
