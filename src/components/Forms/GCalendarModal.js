@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import _ from 'lodash'
 import { useSelector, useDispatch } from "react-redux";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Button, Modal, Form, Input } from 'semantic-ui-react'
+import { Button, Modal, Form, Input, Message } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import CREDENTIALS from '../../GCAPI'
 
@@ -66,6 +65,7 @@ function GCalendarModal(props) {
 
   useEffect(() => {
     setSummary(props.detailTitle)
+    dispatch(editState('', 'error'))
   }, [])
 
   var gapi = window.gapi
@@ -130,11 +130,18 @@ function GCalendarModal(props) {
           })
           request.execute(calendar => {
             console.log('event: ', calendar)
-            window.open(calendar.htmlLink)
+            //console.log('Cerr: ', calendar.error)
+            //window.open(calendar.htmlLink)
+            calendar.error !==undefined? dispatch(editState('generic', 'error')) : close()           
+
           })
         })
+        .catch((err)=>{
+          console.log('err: ', err)
+          if (err) dispatch(editState('generic', 'error'))
+        })
     })
-    close()
+    //close()
   }
 
   const defaulCheck = (bool) => {
@@ -200,12 +207,21 @@ function GCalendarModal(props) {
   //     />
   //   })
   // }
-  console.log(props.detailTitle)
+  //console.log(props.detailTitle)'
+
+
+  function showError() {
+    return appState.error === 'generic'? <Message negative>
+    <Message.Header>Something went wrong</Message.Header>
+    <p>Try again</p>
+  </Message> :null
+  }
   const { gCalendarOpen } = appState
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(gCalendarOpen)} onClose={close}>
         <Modal.Header>Create Google Calendar Event</Modal.Header>
+        {showError()}
         <Modal.Content>
           <Modal.Description>
             <Form

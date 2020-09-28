@@ -12,7 +12,8 @@ const appState ={
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'},
   detailId: '',
-  detailName: '' 
+  detailName: '',
+  error: '' 
 }
 
 export default (state = appState, action) => {
