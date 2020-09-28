@@ -14,7 +14,7 @@ const appState ={
   detailId: '',
   detailName: '',
   error: '',
-  submited: 'test'
+  submited: ''
 }
 
 export default (state = appState, action) => {

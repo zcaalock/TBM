@@ -59,7 +59,7 @@ function GCalendarModal(props) {
   const [email, setEmail] = useState('')
   const [emailAdress, setEmailadress] = useState(false)
   const [calendarName, setCalendarName] = useState(calendarIdArr[1].key)
-
+  const [openCalendar, setopenCalendar] = useState(false)
   const [errorDate, setErrorDate] = useState(false)
   const [errorEmail, setErroremail] = useState(false)
   const [activeSubmit, setActivesubmit] = useState(false)
@@ -96,7 +96,7 @@ function GCalendarModal(props) {
       'end': {
         'dateTime': endTimeISO,
         'timeZone': 'Europe/Warsaw'
-      },      
+      },
       'recurrence': false,
       'attendees': emailAdress,
       'reminders': {
@@ -138,7 +138,7 @@ function GCalendarModal(props) {
           request.execute(calendar => {
             console.log('event: ', calendar)
             //console.log('calendarId: ', calendarName)
-            //window.open(calendar.htmlLink)
+            if (openCalendar === true) window.open(calendar.htmlLink) 
             if (calendar.error !== undefined) dispatch(editState('generic', 'error'))
             else {
               dispatch(editState('Event created in Calendar', 'submited'))
@@ -375,6 +375,12 @@ function GCalendarModal(props) {
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
+          <Form.Checkbox
+            style={{display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px'}}
+            onChange={(e, { checked }) => {setopenCalendar(true)}
+            }
+            label='Open calendar'
+          />
           <Button onClick={close}>
             Cancel
             </Button>
