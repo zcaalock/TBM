@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import addHours from 'date-fns/add_hours'
 import { Button, Modal, Form, Input, Message, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import CREDENTIALS from '../../GCAPI'
@@ -96,15 +96,15 @@ function GCalendarModal(props) {
       'end': {
         'dateTime': endTimeISO,
         'timeZone': 'Europe/Warsaw'
-      },
+      },      
       'recurrence': false,
       'attendees': emailAdress,
       'reminders': {
-        'useDefault': false,
-        'overrides': [
-          { 'method': 'email', 'minutes': 24 * 60 },
-          { 'method': 'popup', 'minutes': 10 }
-        ]
+        'useDefault': true,
+        // 'overrides': [
+        //   { 'method': 'email', 'minutes': 24 * 60 },
+        //   { 'method': 'popup', 'minutes': 10 }
+        // ]
       }
     }
 
@@ -132,7 +132,8 @@ function GCalendarModal(props) {
         .then(() => {
           var request = gapi.client.calendar.events.insert({
             'calendarId': calendarName,
-            'resource': calendar
+            'resource': calendar,
+            'sendUpdates': 'externalOnly'
           })
           request.execute(calendar => {
             console.log('event: ', calendar)
@@ -217,7 +218,7 @@ function GCalendarModal(props) {
   //     />
   //   })
   // }
-  console.log(calendarName)
+  //console.log(calendarName)
 
 
 
@@ -281,8 +282,10 @@ function GCalendarModal(props) {
                   selected={startTime}
                   onChange={date => {
                     setStarttime(date)
-                    setStartTimeISO(date.toISOString()
-                    )
+                    setStartTimeISO(date.toISOString())
+                    setEndtime(addHours(date, 1))
+                    setEndTimeISO(addHours(date, 1).toISOString())
+                    //console.log(addHours(date, 1).toISOString())
                   }
                   }
                   showTimeSelect
