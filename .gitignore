@@ -3,3 +3,4 @@ build
 .firebase
 src/credentials.json
 src/GCAPI.js
+*.cache
