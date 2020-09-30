@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { useSelector } from "react-redux";
 import _ from 'lodash'
 import HeaderIcons from './HeaderIcons'
 import EditHeaderName from './editHeaderName'
 
 function Header(props) {
-
+  const pulses = useSelector(state => Object.values(state.pulses))
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
@@ -46,8 +47,8 @@ function Header(props) {
   }
 
   const mapPulses = () => {
-    
-    const pulseCount = _.filter(props.pulses, { categoryId: props.id, privateId: '', archived: 'false' })
+    //console.log(props.id)
+    const pulseCount = _.filter(pulses, { categoryId: props.id, privateId: '', archived: 'false' })
     return pulseCount.length
 
   }

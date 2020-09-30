@@ -11,6 +11,7 @@ function Table(props) {
     <div>
       <Header
         expandCollapse={() => props.collapse()}
+        id={props.categoryKey}
         categoryKey={props.categoryKey}
         categoryTitle={props.categoryTitle}
         category={props.category} />
