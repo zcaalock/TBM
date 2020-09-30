@@ -45,6 +45,13 @@ function Header(props) {
     return notoficationStorage
   }
 
+  const mapPulses = () => {
+    
+    const pulseCount = _.filter(props.pulses, { categoryId: props.id, privateId: '', archived: 'false' })
+    return pulseCount.length
+
+  }
+
   return (
     <div style={{}} className="categories ui secondary text menu" >
       <div className="menu" style={{ width: '100%' }}>
@@ -61,6 +68,7 @@ function Header(props) {
             showEdit={() => showEdit()}
             removeEdit={() => removeEdit()}
           />
+          <div style={{marginLeft: '3px'}}>({mapPulses()})</div>
         </div>
       </div>
       <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
