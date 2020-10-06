@@ -7,11 +7,12 @@ import { editPulse } from '../../../../../actions/pulses'
 function ArchivePulse(props) {
 
   const pulses = useSelector(state => Object.values(state.pulses))
+  const clients = useSelector(state => Object.values(state.clients))
   //const boardId = useSelector(state => state.appState.id)
   const dispatch = useDispatch()
 
   const renderArchive = () => {
-    const findPulse = _.filter(pulses, { id: props.pulseId })
+    const findPulse = _.filter(Object.assign(pulses, clients), { id: props.pulseId })
     const isArchived = findPulse[0].archived
 
     if (isArchived === 'true') {

@@ -11,6 +11,7 @@ import { fetchBoards } from '../../actions/boards'
 import { fetchLead } from '../../actions/settings'
 import { fetchDetails } from '../../actions/details'
 import { fetchNotepads } from '../../actions/notepad'
+import { fetchClients } from '../../actions/clients'
 
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
@@ -52,6 +53,7 @@ function Boards (props) {
       dispatch(fetchLead())
       dispatch(fetchCategories())
       dispatch(fetchNotepads())
+      dispatch(fetchClients())
     }
     dispatch(editState('true', 'refreshed'))
     setTimeout(() => { dispatch(editState('false', 'refreshed')) }, 20000)
@@ -71,9 +73,14 @@ function Boards (props) {
     history.push(`/filters/LeadPerson/${user.credentials.userId}`)
   }
 
+  const handleClientsOnClick = () => {
+    history.push('/clients/All/all')
+    dispatch(editState('all', 'id'))
+    dispatch(editState('all', 'pulseId'))
+  }
+
   const handleSelectedItem = (selector) => {
-    if (appState.id === selector)
-      return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }
+    if (appState.id === selector) return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }    
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
   }
 
@@ -112,6 +119,13 @@ function Boards (props) {
                 className="header item headerSelectable"
                 style={handleSelectedItem('filters')}>
                 Filters
+              </div>
+              <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
+              <div
+                onClick={() => handleClientsOnClick()}
+                className="header item headerSelectable"
+                style={handleSelectedItem('clients')}>
+                Clients
               </div>
               <div
                 className="header item"
