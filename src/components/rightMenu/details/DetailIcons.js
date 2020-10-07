@@ -1,11 +1,39 @@
-import React from 'react'
-import { useDispatch } from "react-redux";
+import React, {useEffect} from 'react'
+import { useDispatch} from "react-redux";
 import { deleteDetail } from '../../../actions/details'
+import {editState} from '../../../actions/appState'
+
 
 function DetailIcon(props) {  
-  const dispatch = useDispatch();
+
+   const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(editState('false', 'gCalendarOpen'))
+  },[])
+  
   return (
     <div>
+      <div
+        onClick={
+          () => {
+            dispatch(editState('true', 'gCalendarOpen')) 
+            dispatch(editState(props.detailId, 'detailId'))
+            dispatch(editState(props.detailTitle, 'detailName'))
+            //console.log(`detailTittle: `, props.detailTitle)
+          }
+        }
+        className="articleIcon"
+        data-position="bottom center"
+        data-tooltip="Export to Google Calendar"
+        style={{
+          display: 'inline-block',
+          paddingLeft: '28px',
+          paddingRight: '5px',
+          cursor: 'pointer'
+        }}>
+        <i className="calendar plus outline icon" />
+      </div>
       <div
         onClick={() => {props.showEdit() }}
         className="articleIcon"
@@ -13,8 +41,8 @@ function DetailIcon(props) {
         data-tooltip="Edit"
         style={{
           display: 'inline-block',
-          paddingLeft: '10px',
-          paddingRight: '10px',
+          paddingLeft: '0px',
+          paddingRight: '5px',
           cursor: 'pointer'
         }}>
         <i className=" edit icon" />
@@ -26,7 +54,7 @@ function DetailIcon(props) {
         data-tooltip="Delete"
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />
-      </div>
+      </div>      
     </div>
   )
 }

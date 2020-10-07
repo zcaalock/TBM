@@ -8,8 +8,13 @@ const appState ={
   refreshed: 'false',
   addPulseOpen: 'false',
   editPulseOpen: 'false',
+  gCalendarOpen: 'false',
   filter: {selector: '', value: ''},
-  sortBy: {name: '', direction: 'asc'} 
+  sortBy: {name: '', direction: 'asc'},
+  detailId: '',
+  detailName: '',
+  error: '',
+  submited: ''
 }
 
 export default (state = appState, action) => {

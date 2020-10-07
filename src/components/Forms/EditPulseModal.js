@@ -5,6 +5,7 @@ import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
 
+
 let boardsArr = []
 let categoriesArr = []
 let leadArr = []
@@ -20,12 +21,11 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
-
-
+  
+  
+  //const [privateId, setPrivateId] = useState('')
   const [name, setName] = useState('')
-  const [userName, setUserName] = useState('')
   const [userId, setUserId] = useState('')
-  const [privateId, setPrivateId] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [boardId, setBoardId] = useState('')
 
@@ -35,7 +35,7 @@ function PulseModal() {
 
     setName(pulseKey[appState.pulseId].title)    
     setUserId(pulseKey[appState.pulseId].userId)
-    setPrivateId(pulseKey[appState.pulseId].privateId)
+    //setPrivateId(pulseKey[appState.pulseId].privateId)
     setCategoryId(pulseKey[appState.pulseId].categoryId)
     setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
 
@@ -53,7 +53,7 @@ function PulseModal() {
     dispatch(editPulse(pulseIdSelected, userData))
     dispatch(fetchPulses())
     close()
-    
+
   }
 
   const generateLeadList = () => {
@@ -91,7 +91,7 @@ function PulseModal() {
     return categoriesArr = _.uniqBy(categoriesArr, 'text')
 
   }
-  
+
   const activateSubmit = () => { return categoryId === '' ? true : false }
 
   const defaulCheck = (bool) => {

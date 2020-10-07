@@ -57,11 +57,11 @@ function Boards (props) {
     setTimeout(() => { dispatch(editState('false', 'refreshed')) }, 20000)
   }
 
-  const handleMyPulsesOnClick = () => {
-    dispatch(editState('', 'pulseId'))
-    dispatch(editState(props.match.params.id, 'id'))
-    history.push(`/filters/LeadPerson/${user.credentials.userId}`)    
-  }
+  // const handleMyPulsesOnClick = () => {
+  //   dispatch(editState('', 'pulseId'))
+  //   dispatch(editState(props.match.params.id, 'id'))
+  //   history.push(`/filters/LeadPerson/${user.credentials.userId}`)    
+  // }
 
   const handleFiltersOnClick = () => {
     dispatch(editState('filters', 'id'))

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { useSelector } from "react-redux";
 import _ from 'lodash'
 import HeaderIcons from './HeaderIcons'
 import EditHeaderName from './editHeaderName'
 
 function Header(props) {
-
+  const pulses = useSelector(state => Object.values(state.pulses))
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
@@ -45,6 +46,13 @@ function Header(props) {
     return notoficationStorage
   }
 
+  const mapPulses = () => {
+    //console.log(props.id)
+    const pulseCount = _.filter(pulses, { categoryId: props.id, privateId: '', archived: 'false' })
+    return pulseCount.length
+
+  }
+
   return (
     <div style={{}} className="categories ui secondary text menu" >
       <div className="menu" style={{ width: '100%' }}>
@@ -61,6 +69,7 @@ function Header(props) {
             showEdit={() => showEdit()}
             removeEdit={() => removeEdit()}
           />
+          <div style={{marginLeft: '3px'}}>({mapPulses()})</div>
         </div>
       </div>
       <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
