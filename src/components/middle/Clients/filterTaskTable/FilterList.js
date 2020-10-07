@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Checkbox, Dropdown } from 'semantic-ui-react'
+import { Icon, Checkbox, Input, Label, Dropdown } from 'semantic-ui-react'
 import _ from 'lodash'
-
-import history from '../../../../history'
 import { editState } from '../../../../actions/appState'
 import { fetchClients } from '../../../../actions/clients';
 
-
 let col = []
 let colSplited = []
-
-
-function SearchFilter(props) {
-
-  const [isLoading, setisLoading] = useState(false);
-  const [results, setresults] = useState([]);
-  const [value, setvalue] = useState('');
-
+function SearchFilter(props) {  
   const lead = useSelector(state => Object.values(state.lead));
-  const clients = useSelector(state => Object.values(state.clients))
-  const user = useSelector(state => state.user);
+  const clients = useSelector(state => Object.values(state.clients))  
   const appState = useSelector(state => state.appState);
 
   const dispatch = useDispatch();
@@ -32,7 +21,6 @@ function SearchFilter(props) {
     }
     return true;
   }
-
 
   useEffect(() => {
     if (isEmpty(clients)) dispatch(fetchClients())
@@ -73,42 +61,9 @@ function SearchFilter(props) {
 
   }
 
-  const handleOnClick = (link, description, title) => {
-    if (results[0])
-      if (description === 'ArchivedClients') {
-        dispatch(editState('true', 'showArchived'))
-        dispatch(editState(link, 'selectedUserId'))
-        dispatch(editState({ selector: description, value: title.split('/')[0] }, 'filter'))
-        history.push(`/clients/${description.split(':')[0]}/${link}`)
-      }
-      else history.push(`/clients/${description.split(':')[0]}/${link}`)
-    dispatch(editState({ selector: description.split(':')[0], value: title.split('/')[0] }, 'filter'))
-    dispatch(editState(link, 'selectedUserId'))
-  }
+  
 
-  const handleResultSelect = (e, { result }) => {
-    setvalue(result.title.split('/')[0]); handleOnClick(result.link, result.description, result.title.split('/')[0])
-  }
-
-  const handleSearchChange = (e, { value }) => {
-    setisLoading(true)
-    setvalue(value)
-    setTimeout(() => {
-      if (value.length < 1) {
-        setisLoading(false);
-        setresults([]);
-        setvalue('');
-      }
-
-      const re = new RegExp(_.escapeRegExp(value), 'i')
-      const isMatch = result => re.test(result.title)
-
-      const results = _.filter(colSplited, isMatch).map(result => ({ ...result, key: result.id }));
-
-      setisLoading(false);
-      setresults(results);
-    }, 300)
-  }
+  
 
   const defaulCheck = (bool) => {
     if (bool === 'false')
@@ -121,18 +76,9 @@ function SearchFilter(props) {
     //console.log('props: ', selector)
     if (bool === 'false') {
       dispatch(editState('true', selector))
-      if (value === "Archived" && selector === 'showArchived') {
-        dispatch(editState({ selector: 'ArchivedClients', value: 'true' }, 'filter'))
-        history.push(`/clients/ArchivedClients/true`)
-      }
     }
     if (bool === 'true') {
       dispatch(editState('false', selector))
-      if (value === "Archived" && selector === 'showArchived') {
-        dispatch(editState({ selector: 'AllActiveClients', value: 'true' }, 'filter'))
-        //console.log('go ')
-        history.push(`/clients/ArchivedClients/false`)
-      }
     }
   }
 
@@ -145,36 +91,30 @@ function SearchFilter(props) {
 
   const dropDownSelectable = (name, selector) => {
     return <Dropdown.Item
-    style={{zIndex: 10}}
-    onClick={(event) => {
-      event.stopPropagation()
-      event.nativeEvent.stopImmediatePropagation()
-      dispatch(editState({ ...appState.clientsSettings, [selector]: !appState.clientsSettings[selector] }, 'clientsSettings'))
-    }}
-  >
-    <Checkbox
-      label={name}
-      checked={appState.clientsSettings[selector]}          
-      style={{zIndex: -1}}
-    />
-  </Dropdown.Item>
+      style={{ zIndex: 10 }}
+      onClick={(event) => {
+        event.stopPropagation()
+        event.nativeEvent.stopImmediatePropagation()
+        dispatch(editState({ ...appState.clientsSettings, [selector]: !appState.clientsSettings[selector] }, 'clientsSettings'))
+      }}
+    >
+      <Checkbox
+        label={name}
+        checked={appState.clientsSettings[selector]}
+        style={{ zIndex: -1 }}
+      />
+    </Dropdown.Item>
   }
   //console.log('state: ', this.state)
   if (isEmpty(colSplited)) makeCollection()
-  //const { isLoading, value, results } = this.state
   return (
     <div>
       <div style={{ display: 'inline-block' }}>
-        <Search
-          loading={isLoading}
-          onResultSelect={handleResultSelect}
-          onSearchChange={_.debounce(handleSearchChange, 500, {
-            leading: true,
-          })}
-          results={results}
-          value={value}
-        //{...this.props}
-        />
+        <Input icon placeholder='Search...'>
+          <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'clientSearch'))}>x</Label>
+          <input value={appState.clientSearch} onChange={(v) => { dispatch(editState(v.target.value, 'clientSearch')) }} style={{ borderRadius: '0 25px 25px 0' }} />
+          <Icon name='search' />
+        </Input>
       </div >
       <Dropdown
         style={{ marginLeft: '15px' }}
@@ -223,7 +163,7 @@ function SearchFilter(props) {
               label='Project'
             />
           </Dropdown.Item>
-          {dropDownSelectable('Uniet', 'showUnit')}
+          {dropDownSelectable('Unit', 'showUnit')}
           {dropDownSelectable('Price', 'showPrice')}
           <Dropdown.Item>
             <Checkbox
@@ -252,8 +192,6 @@ function SearchFilter(props) {
       </div>
     </div>
   )
-
 }
-
 
 export default SearchFilter

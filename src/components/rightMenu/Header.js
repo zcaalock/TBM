@@ -18,7 +18,7 @@ function Header(props) {
           />
         </h3>
       </div>
-      <div className="header item" style={{ display: 'inline-block', float: 'right', minWidth: '53px', paddingRight: '13px' }}>
+      <div className="header item" style={{ display: 'inline-block', float: 'right', minWidth: '53px'}}>
         <HeaderIcons
           showEdit={() => defState({ itemEditable: true })}
           pulseId={props.pulseId}

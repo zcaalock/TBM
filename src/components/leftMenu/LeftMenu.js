@@ -118,7 +118,7 @@ function Boards (props) {
                 onClick={() => handleFiltersOnClick()}
                 className="header item headerSelectable"
                 style={handleSelectedItem('filters')}>
-                Filters
+                Find Task
               </div>
               <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
               <div

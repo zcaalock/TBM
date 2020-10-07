@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
-
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 import EditClientUnit from './EditClientUnit'
@@ -65,8 +64,9 @@ function UnitList(props) {
             labeled
           >
             <Dropdown.Menu>
+            
               <Dropdown.Item icon='edit' content='Create name' onClick={() => saveField('Create name')} />
-
+              <Dropdown.Divider />
               {renderItems()}
             </Dropdown.Menu>
           </Dropdown>

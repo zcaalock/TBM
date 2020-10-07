@@ -10,6 +10,7 @@ const appState ={
   editPulseOpen: 'false',
   editClientOpen: 'false',
   gCalendarOpen: 'false',
+  clientSearch: '',
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'},
   clientsSettings: {

@@ -1,14 +1,14 @@
 import React from 'react'
 import DetailsClients from './details/DetailsClients'
-import AddDetail from './details/AddDetail'
-import Notepad from './details/Notepad'
+import AddDetailClient from './details/AddDetailClient'
+import NotepadClient from './details/NotepadClient'
 
 function Body(props) {
   return (
     <div style={{ width: 'auto', display: 'flex', flexDirection: 'column' }}>
-      <DetailsClients pulseId={props.pulseId} />
-      <AddDetail pulseId={props.pulseId} />
-      <Notepad pulseId={props.pulseId} />
+      <DetailsClients clientId={props.clientId} />
+      <AddDetailClient clientId={props.clientId} />
+      <NotepadClient clientId={props.clientId} />
     </div>
   )
 }

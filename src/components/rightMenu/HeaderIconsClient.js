@@ -1,14 +1,10 @@
 import React from 'react'
-import { useSelector, useDispatch } from "react-redux";
 import DeleteClient from '../middle/Clients/Cells/DeleteClient'
-import ArchivePulse from '../middle/Boards/pulses/Tbody/ArchivePulse'
-import PrivatePulse from '../middle/Boards/pulses/Tbody/PrivatePulse'
-import {editState} from '../../actions/appState'
+import ArchiveClient from '../middle/Clients/Cells/ArchiveClient'
 
-function HeaderIcons(props) {
-  const dispatch = useDispatch();
-  const appState = useSelector(state => state.appState)    
 
+function HeaderIcons(props) { 
+     
   return (
     <div>
       <div
@@ -21,11 +17,9 @@ function HeaderIcons(props) {
           data-tooltip="Edit"
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
-        </div>
-      
-      {/* <ArchivePulse pulseId={props.pulseId} />*/}
-      <DeleteClient clientId={props.clientId} /> 
-      
+        </div>      
+      <ArchiveClient clientId={props.clientId} />
+      <DeleteClient clientId={props.clientId} />       
     </div>
   )
 

@@ -21,7 +21,7 @@ function DeleteClient (props) {
         data-position="left center"
         data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
-        <i className="trash icon" style={{ paddingLeft: '10px', color: '#cecece'}} />        
+        <i className="trash icon" style={{ color: '#cecece'}} />        
       </div>
       )
     } return (
@@ -30,7 +30,7 @@ function DeleteClient (props) {
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block',cursor: 'pointer', paddingLeft: '10px' }}>
+        style={{ display: 'inline-block',cursor: 'pointer' }}>
         <i className=" trash icon" />        
       </div>
     )

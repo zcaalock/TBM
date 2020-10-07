@@ -8,8 +8,7 @@ import { Dropdown } from 'semantic-ui-react'
 function StatusList(props) {
 
   const [state, defState] = useState(
-    { itemEditable: false })
-  const clients = useSelector(state => Object.values(state.clients))
+    { itemEditable: false })  
   const dispatch = useDispatch();
 
   const saveField = (title) => {
@@ -20,10 +19,10 @@ function StatusList(props) {
 
   function renderItems() {
     let list = [
-      { key: '#00A569', text: 'Rokujący', icon: 'bullseye', value: '#00A569' },      
+      { key: '#00A569', text: 'Rokujący', icon: 'bullseye', value: '#00A569' },
       { key: '#EDC15C', text: 'Niezdecydowany', icon: 'bullseye', value: '#EDC15C' },
       { key: '#DC6969', text: 'Nierokujący', icon: 'bullseye', value: '#DC6969' }
-      
+
     ]
 
     return _.uniqBy(list, 'key').map(unit => {
@@ -46,11 +45,18 @@ function StatusList(props) {
           <Dropdown
             text={<i className="bullseye icon" style={{ color: props.client.status }} />}
             floating
-            labeled            
-            style={{marginLeft: '0px', marginRight: '10px'}}
-          >            
-            <Dropdown.Menu>   
+            labeled
+            style={{ marginLeft: '0px', marginRight: '10px' }}
+          >           
+            <Dropdown.Menu>
               {renderItems()}
+              <Dropdown.Divider />
+              <Dropdown.Item
+                icon='archive'
+                style={{ color: '#DC6969' }}
+                text='Archive'
+                onClick={()=>{dispatch(editClient(props.client.id, { archived: 'true' }))}}
+              />
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -58,8 +64,11 @@ function StatusList(props) {
     }
     if (props.client.archived === 'true')
       return (
-        <div>
-          {props.client.unit}
+        <div 
+        data-position="bottom center"
+        data-tooltip="Archived"
+        style={{color: '#DC6969', textAlign: 'left', paddingLeft: '12px'}}>
+          <i className=" archive icon" />
         </div>
       )
   }

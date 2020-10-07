@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import _ from 'lodash'
 import {createClient } from '../../../../actions/clients'
 import SingleInput from '../../../Forms/SingleInput'
 
@@ -73,7 +72,7 @@ function AddClient(props) {
 
   return (
     
-        <div className="tableNewPulse" style={{ paddingLeft: '26px', cursor: 'pointer' }} data-label="Name">
+        <div className="tableNewPulse" style={{ paddingLeft: '26px', cursor: 'pointer', height: '40px' }} data-label="Name">
           {/* {this.renderNewPulse()} */}
           {renderNewPulse('Add client')}
         </div>

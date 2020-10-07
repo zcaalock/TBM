@@ -30,9 +30,9 @@ function Tbody(props) {
     history.push(`/clients/${props.params.selector}/${props.params.item}/clients/${id}`)
   }
 
-  const renderSelect = (pulseId) => {
-    if (appState.pulseId === pulseId)
-      return { backgroundColor: '#F5F5F5' }
+  const renderSelect = (client) => {
+    if (appState.pulseId === client.id) return { backgroundColor: '#F5F5F5' }
+    if (client.archived === 'true') return { color: '#80808061' }
   }
 
   //sorting collumns
@@ -96,11 +96,26 @@ function Tbody(props) {
 
     }
 
+    const search = () => {
+
+      // clientsCol.map(item=>{
+      //   if(item.title === appState.clientSearch)
+      // })
+
+    }
+
+
 
     return sortClientsBy(clientsCol).map(client => {
-
-      return (
-        <tr key={client.id} style={renderSelect(client.id)} className='tableRow' onClick={() => goLink(client.id)}>
+      //console.log(_.includes(client.title,'test1'))
+      if (
+        _.includes(client.title.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+         || _.includes(client.phone, appState.clientSearch) === true
+         || _.includes(client.mail.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+         || _.includes(client.project.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+         || _.includes(client.unit.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+      ) return (
+        <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
             <ClientName clientId={client.id} clientName={client.title} client={client} />
           </td>

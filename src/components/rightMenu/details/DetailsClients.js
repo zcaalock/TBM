@@ -3,18 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import { editDetail } from '../../../actions/details'
-import { editPulse } from '../../../actions/pulses'
 import DetailIconsClient from './DetailIconsClient'
-import EditDetailName from './EditDetailName'
-import GCalendarModal from '../../Forms/GCalendarModal'
+import EditDetailNameClient from './EditDetailNameClient'
+import { editClient } from '../../../actions/clients';
 
 function DetailsClients(props) {
   const [state, defState] = useState({});
   const dispatch = useDispatch();
   const details = useSelector(state => Object.values(state.details));
   const userId = useSelector(state => state.user.credentials.userId);
-  const appState = useSelector(state => state.appState) 
-
+  
   const removeEdit = (id) => {
     defState({ [`itemEditable${id}`]: false })
   }
@@ -33,11 +31,11 @@ function DetailsClients(props) {
   const handleOnClick = (id, bool) => {
     if (bool === 'false') {
       dispatch(editDetail(id, { check: 'true' }))
-      //dispatch(editPulse(props.pulseId, { readed: [userId] }))
+      dispatch(editClient(props.clientId, { readed: [userId] }))
     }
     if (bool === 'true') {
       dispatch(editDetail(id, { check: 'false' }))
-      //dispatch(editPulse(props.pulseId, { readed: [userId] }))
+      dispatch(editClient(props.clientId, { readed: [userId] }))
     }
   }
 
@@ -49,7 +47,7 @@ function DetailsClients(props) {
   }  
 
   const renderDetails = () => {
-    const id = props.pulseId
+    const id = props.clientId
     const detailsFiltered = _.filter(details, { pulseId: id })
 
     return detailsFiltered.map(detail => {
@@ -64,17 +62,17 @@ function DetailsClients(props) {
           </Table.Cell>
           <Table.Cell>
             <div className="blackHover" style={renderCrossOut(detail.check)}>
-              <EditDetailName
+              <EditDetailNameClient
                 title={detail.title}
                 detail={detail}
-                pulseId={props.pulseId}
+                clientId={props.clientId}
                 userId={userId}
                 editState={state}
                 showEdit={() => showEdit(detail.id)}
                 removeEdit={() => removeEdit(detail.id)} />
             </div>
           </Table.Cell>
-          <Table.Cell style={{ width: '36px' }}>
+          <Table.Cell style={{ width: '2px' }}>
             <DetailIconsClient showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
           </Table.Cell>
         </Table.Row>

@@ -1,9 +1,6 @@
 import React from 'react'
-import { useSelector } from "react-redux";
 
-function Head () {
-  
-  const appState = useSelector(state => state.appState);
+function Head () {   
   
     return (
       <div className="head-vertical-segment" style={{paddingBottom: '20px'}}>

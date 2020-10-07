@@ -1,6 +1,5 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
-import _ from 'lodash'
+import { useDispatch } from "react-redux"
 import { editClient } from '../../../../actions/clients'
 import SingleInput from '../../../Forms/SingleInput'
 

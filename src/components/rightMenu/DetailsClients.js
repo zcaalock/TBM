@@ -14,8 +14,8 @@ function Details(props) {
   if (client) {    
     return (
       <div className="article rightMenu" style={{ padding: '20px' }}>
-        <HeaderClient title={client.title} pulseId={client.id} pulse={client} />
-        <BodyClient key={client.id} pulseId={client.id} />
+        <HeaderClient title={client.title} clientId={client.id} client={client} />
+        <BodyClient key={client.id} clientId={client.id} />
 
       </div>
     )
