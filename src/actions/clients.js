@@ -6,7 +6,7 @@ import * as types from './types'
 export const createClient = (formValues, userId) => {
   return async (dispatch) => {
     console.log('user: ', userId, formValues)
-    const responce = await axios.post('/client', { ...formValues, userId: userId, status: 'green' })
+    const responce = await axios.post('/client', { ...formValues, userId: userId, status: '#00A569' })
     dispatch({ type: types.CREATE_CLIENT, payload: responce.data.client })
   }
 }

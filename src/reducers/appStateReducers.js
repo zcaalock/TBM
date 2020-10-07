@@ -8,9 +8,18 @@ const appState ={
   refreshed: 'false',
   addPulseOpen: 'false',
   editPulseOpen: 'false',
+  editClientOpen: 'false',
   gCalendarOpen: 'false',
   filter: {selector: '', value: ''},
   sortBy: {name: '', direction: 'asc'},
+  clientsSettings: {
+    showLead: true,
+    showProject: true,
+    showUnit: true,
+    showPrice: true,
+    showDate: true,
+    showStatus: true
+  },
   detailId: '',
   detailName: '',
   error: '',

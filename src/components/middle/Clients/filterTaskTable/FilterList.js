@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Checkbox } from 'semantic-ui-react'
+import { Search, Checkbox, Dropdown } from 'semantic-ui-react'
 import _ from 'lodash'
 
 import history from '../../../../history'
@@ -36,14 +36,14 @@ function SearchFilter(props) {
 
   useEffect(() => {
     if (isEmpty(clients)) dispatch(fetchClients())
-    makeCollection()    
+    makeCollection()
   }, [])
 
   const makeCollection = () => {
 
-    if (lead.length > 0 && clients.length > 0) {      
+    if (lead.length > 0 && clients.length > 0) {
       lead.map(lead => {
-        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id})
+        col.push({ title: lead.title, description: 'LeadPerson', link: lead.userId, id: lead.id })
         return col
       })
 
@@ -53,12 +53,12 @@ function SearchFilter(props) {
           title: client.title,
           description: `Project: ${client.project}`,
           link: client.project,
-          id: client.id,          
-        })        
+          id: client.id,
+        })
         return col
       })
 
-      col.push({ title: 'Archived', description: 'ArchivedClients', link: 'true', id: 'Archived'})      
+      col.push({ title: 'Archived', description: 'ArchivedClients', link: 'true', id: 'Archived' })
       col = _.uniqBy(col, 'title')
       colSplited = []
       col.map(col => {
@@ -92,7 +92,7 @@ function SearchFilter(props) {
 
   const handleSearchChange = (e, { value }) => {
     setisLoading(true)
-    setvalue(value)    
+    setvalue(value)
     setTimeout(() => {
       if (value.length < 1) {
         setisLoading(false);
@@ -143,7 +143,22 @@ function SearchFilter(props) {
       return 'archivedColor'
   }
 
-  
+  const dropDownSelectable = (name, selector) => {
+    return <Dropdown.Item
+    style={{zIndex: 10}}
+    onClick={(event) => {
+      event.stopPropagation()
+      event.nativeEvent.stopImmediatePropagation()
+      dispatch(editState({ ...appState.clientsSettings, [selector]: !appState.clientsSettings[selector] }, 'clientsSettings'))
+    }}
+  >
+    <Checkbox
+      label={name}
+      checked={appState.clientsSettings[selector]}          
+      style={{zIndex: -1}}
+    />
+  </Dropdown.Item>
+  }
   //console.log('state: ', this.state)
   if (isEmpty(colSplited)) makeCollection()
   //const { isLoading, value, results } = this.state
@@ -161,6 +176,71 @@ function SearchFilter(props) {
         //{...this.props}
         />
       </div >
+      <Dropdown
+        style={{ marginLeft: '15px' }}
+        text='Collumns'
+        icon='filter'
+        floating
+        labeled
+        button
+        className='icon'
+      >
+        <Dropdown.Menu
+          onClick={(event) => {
+            event.stopPropagation()
+            event.nativeEvent.stopImmediatePropagation()
+          }}
+        >
+          <Dropdown.Header icon='tags' content='Choose collumns' />
+          <Dropdown.Divider />
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Name'
+            />
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Phone'
+            />
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Mail'
+            />
+          </Dropdown.Item>
+          {dropDownSelectable('Lead Person', 'showLead')}
+          {/* {dropDownSelectable('Project', 'showProject')} */}
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Project'
+            />
+          </Dropdown.Item>
+          {dropDownSelectable('Uniet', 'showUnit')}
+          {dropDownSelectable('Price', 'showPrice')}
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Date'
+            />
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label='Status'
+            />
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox
           onClick={() => handleOnCheckBoxClick(appState.showArchived, 'showArchived')}

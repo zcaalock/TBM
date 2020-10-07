@@ -4,26 +4,25 @@ import _ from 'lodash'
 
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
-import EditClientProject from './EditClientProject'
+import EditClientUnit from './EditClientUnit'
 
-
-function UserName(props) {
+function UnitList(props) {
 
   const [state, defState] = useState(
     { itemEditable: false })
   const clients = useSelector(state => Object.values(state.clients))
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
-    else dispatch(editClient(props.client.id, { project: title }))
+    else dispatch(editClient(props.client.id, { unit: title }))
   }
 
-  const CreateNewProjectName = () => {
+  const CreateNewUnitName = () => {
     if (state.itemEditable === true) return <div
       style={{ display: 'inline-block', width: '100%' }}>
-      <EditClientProject
+      <EditClientUnit
         client={props.client}
         editState={state}
         showEdit={() => defState({ itemEditable: true })}
@@ -34,24 +33,24 @@ function UserName(props) {
     if (state.itemEditable === false) return <div>{renderDropDown()}</div>
   }
 
-  function renderItems () {
-    let projectList = []
+  function renderItems() {
+    let list = []
     clients.map(client => {
 
-      projectList.push({ key: client.id, text: client.project, icon: '', value: client.project })
+      list.push({ key: client.id, text: client.unit, icon: '', value: client.unit })
     })
-    
-    return _.uniqBy(projectList, 'text').map(project => {
+
+    return _.uniqBy(list, 'text').map(unit => {
       return <Dropdown.Item
-        key={project.key}
-        onClick={() => saveField(project.text)}
-        style={{paddingLeft: '28px'}}
-        text={project.text}
+        key={unit.key}
+        onClick={() => saveField(unit.text)}
+        style={{ paddingLeft: '28px' }}
+        text={unit.text}
         //floating
       />
     })
 
-    
+
 
   }
 
@@ -61,13 +60,13 @@ function UserName(props) {
       return (
         <div>
           <Dropdown
-            text={props.client.project}
+            text={props.client.unit}
             floating
             labeled
           >
             <Dropdown.Menu>
               <Dropdown.Item icon='edit' content='Create name' onClick={() => saveField('Create name')} />
-                            
+
               {renderItems()}
             </Dropdown.Menu>
           </Dropdown>
@@ -77,11 +76,11 @@ function UserName(props) {
     if (props.client.archived === 'true')
       return (
         <div>
-          {props.client.project}
+          {props.client.unit}
         </div>
       )
   }
-  return <div>{CreateNewProjectName()}</div>
+  return <div>{CreateNewUnitName()}</div>
 }
 
-export default UserName
+export default UnitList

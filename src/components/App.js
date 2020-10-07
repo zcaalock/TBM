@@ -9,6 +9,7 @@ import Loading from '../components/Forms/Loading'
 import LeftMenu from './leftMenu/LeftMenu'
 import Boards from './middle/Boards'
 import Details from './rightMenu/Details'
+import DetailsClients from './rightMenu/DetailsClients'
 import LandingPage from './middle/LandingPage'
 import Filters from './middle/Filters'
 import FilterTable from './middle/Filters/filterTaskTable/FilterTable'
@@ -59,7 +60,7 @@ const App = () => {
               <Route path='/filters/:selector/:item/pulses/:id' component={Details} />
               <Route exact path="/clients" component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /></div></>)} />
               <Route path='/clients/:selector/:item' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /><ClientsFilterTable {...props} /></div></>)} />
-              <Route path='/clients/:selector/:item/clients/:id' component={Details} />
+              <Route path='/clients/:selector/:item/clients/:id' component={DetailsClients} />
               <Route path="/boards/:id" component={(props) => (<><LeftMenu {...props} /> <Boards {...props} /></>)} />
               <Route path="/boards/:id/pulses/:id" component={Details} />
             </Route>

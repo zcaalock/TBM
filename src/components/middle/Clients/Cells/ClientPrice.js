@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import EditClientProject from './EditClientProject'
+import EditClientPrice from './EditClientPrice'
 
-function ClientProject (props) {  
+function ClientPrice (props) {  
   
   const [state, defState] = useState(
     { itemEditable: false } ) 
@@ -10,7 +10,7 @@ function ClientProject (props) {
       <div onDoubleClick={() => defState({itemEditable: true})}>         
         <div          
           style={{ display: 'inline-block', width: '100%' }}>
-          <EditClientProject
+          <EditClientPrice
             client={props.client}
             editState={state}
             showEdit={() => defState({itemEditable: true})}
@@ -21,4 +21,4 @@ function ClientProject (props) {
     )  
 }
 
-export default ClientProject
+export default ClientPrice
