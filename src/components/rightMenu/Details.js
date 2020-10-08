@@ -7,9 +7,7 @@ import Body from './Body'
 
 function Details(props) {
 
-  const pulses = useSelector(state => state.pulses[props.match.params.id]);
-  const client = useSelector(state => state.clients[props.match.params.id])
-  const pulse = Object.assign(pulses?pulses:{}, client?client:{})
+  const pulse = useSelector(state => state.pulses[props.match.params.id])
   
   if (pulse) {    
     return (

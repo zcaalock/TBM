@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import {deletePulse} from '../../../../../actions/pulses'
+import history from '../../../../../history'
 
 function DeletePulse (props) {
   
@@ -26,7 +27,10 @@ function DeletePulse (props) {
       )
     } return (
       <div
-        onClick={() => dispatch(deletePulse(props.pulseId, boardId))}
+        onClick={() => {
+          dispatch(deletePulse(props.pulseId, boardId)); 
+          //history.push(`/boards/${boardId}`)
+        }}
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
