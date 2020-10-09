@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
-import { Button, Modal, Menu, Form, Input, Select } from 'semantic-ui-react'
+import { Modal, Menu } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
 
 import AddPulseModal from './AddPulseModal'
 import AddClient from './AddClient'
+import GCalendarModal from './GCalendarModal'
 
 function ModalComponent() {
 
@@ -17,6 +18,7 @@ function ModalComponent() {
   const renderModal = () => {
     if (activeItem === 'New pulse') return <AddPulseModal/>
     if (activeItem === 'New client') return <AddClient/>
+    if (activeItem === 'Calendar') return <GCalendarModal/>
   }
 
   return (

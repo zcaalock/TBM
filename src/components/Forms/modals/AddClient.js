@@ -205,7 +205,7 @@ function AddClient() {
               options={leadArr}
               label='Lead Person'
               placeholder='Lead Person'
-              searchInput={{ id: 'text' }}
+              searchInput={{ id: 'text1' }}
               onChange={(e, { value }) => setUserid(value.userId)}
             />
           </Form>
