@@ -13,6 +13,7 @@ function BoardsList(props) {
   const pulses = useSelector(state => Object.values(state.pulses))
   const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
+  const lead = useSelector(state => _.find(state.lead, {userId: userId}))
 
   const dispatch = useDispatch()
 
@@ -86,7 +87,7 @@ function BoardsList(props) {
       return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && appState.showNotifications === 'true') return <div key={new Date()} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
+    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div key={new Date()} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
   }
 
   return (

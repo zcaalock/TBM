@@ -20,7 +20,11 @@ function ArchivePulse (props) {
           onClick={() => dispatch(editPulse(props.pulse.id, { privateId: '' }))}
           data-position="left center"
           data-tooltip="Make public"
-          style={{ display: 'inline-block', color: '#00A569', paddingRight: '5px', cursor: 'pointer' }}>
+          style={{ 
+            display: 'inline-block', 
+            color: '#00A569', 
+            //paddingRight: '5px', 
+            cursor: 'pointer' }}>
           <i className=" privacy icon" />
         </div>
       )

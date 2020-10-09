@@ -5,7 +5,7 @@ import ArchiveCategory from './ArchiveCategory'
 function HeaderIcons (props) {  
 
     const renderNotifications =() => {
-      if (props.notifications > 0 && props.appState === 'true') return <div className='notificationCategory' data-tooltip="Unreaded content">{props.notifications}</div>
+      if (props.notifications > 0 && props.appState === true) return <div className='notificationCategory' data-tooltip="Unreaded content">{props.notifications}</div>
     }
 
     return (

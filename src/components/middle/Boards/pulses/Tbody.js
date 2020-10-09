@@ -16,7 +16,8 @@ function Tbody(props) {
   const pulses = useSelector(state => Object.values(state.pulses));
   const details = useSelector(state => Object.values(state.details));
   const privateId = useSelector(state => state.user.credentials.userId);
-  const appState = useSelector(state => state.appState);
+  const appState = useSelector(state => state.appState)
+  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
 
   const dispatch = useDispatch();
 
@@ -80,7 +81,7 @@ function Tbody(props) {
   const renderPulseNotification = (pulse) => {
     let findUser = undefined
     if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
-    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && appState.showNotifications === 'true' && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip="Unreaded content">i</div>
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && lead.settings.notifications === true && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip="Unreaded content">i</div>
   }
 
   return (

@@ -15,7 +15,7 @@ function DetailIcon(props) {
         style={{
           display: 'inline-block',
           paddingLeft: '0px',
-          paddingRight: '5px',
+          //paddingRight: '5px',
           cursor: 'pointer'
         }}>
         <i className=" edit icon" />

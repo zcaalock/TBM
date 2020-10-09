@@ -2,8 +2,7 @@ import * as types from '../actions/types'
 
 const appState ={
   showArchived: 'false',
-  hideEmptyDates: 'false',
-  showNotifications: 'false',
+  hideEmptyDates: 'false',  
   hidePrivate: 'false',
   refreshed: 'false',
   addPulseOpen: 'false',

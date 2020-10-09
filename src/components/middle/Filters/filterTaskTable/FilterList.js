@@ -217,7 +217,7 @@ function SearchFilter(props) {
         <label onClick={() => handleOnCheckBoxClick(appState.hideEmptyDates, 'hideEmptyDates')} className={renderCheckBoxLabelStyle(appState.hideEmptyDates)} >Hide empty dates</label>
       </div>
       {renderPrivateCheckBox()}
-      <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+      {/* <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox
           onClick={() => handleOnCheckBoxClick(appState.showNotifications, 'showNotifications')}
           checked={defaulCheck(appState.showNotifications)}
@@ -225,7 +225,7 @@ function SearchFilter(props) {
           style={{ marginBottom: '-4px', }}
         />
         <label onClick={() => handleOnCheckBoxClick(appState.showNotifications, 'showNotifications')} className={renderCheckBoxLabelStyle(appState.showNotifications)} >Show Notifications</label>
-      </div>
+      </div> */}
     </div>
   )
 

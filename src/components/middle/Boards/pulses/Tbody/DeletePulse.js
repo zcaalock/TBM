@@ -22,7 +22,10 @@ function DeletePulse (props) {
         data-position="left center"
         data-tooltip="Remove all items before delete"
         style={{ display: 'inline-block' }}>
-        <i className="trash icon" style={{ paddingLeft: '10px', color: '#cecece'}} />        
+        <i className="trash icon" style={{ 
+          //paddingLeft: '10px', 
+          color: '#cecece'
+          }} />        
       </div>
       )
     } return (

@@ -2,12 +2,17 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Message } from 'semantic-ui-react'
 import { editState } from '../actions/appState'
+import _ from 'lodash'
 
 function ResponceMessage() {
     const appState = useSelector(state => state.appState)
+    const userId = useSelector(state => state.user.credentials.userId)
+    const lead = useSelector(state => _.find(state.lead, {userId: userId}))
     const dispatch = useDispatch()
+    
+    
     const renderMessage = () => {
-        if (appState.responseStatus === 200) {
+        if (appState.responseStatus === 200 && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 
@@ -20,7 +25,7 @@ function ResponceMessage() {
             )
         }
 
-        if (appState.responseStatus === 500) {
+        if (appState.responseStatus === 500 && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 
@@ -33,7 +38,7 @@ function ResponceMessage() {
             )
         }
 
-        if (appState.responseStatus === 404) {
+        if (appState.responseStatus === 404 && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 

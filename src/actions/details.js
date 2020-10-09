@@ -32,5 +32,13 @@ export const editDetail = (id, formValues) => async dispatch => {
 
 export const deleteDetail = (id) => async dispatch => {
   await axios.delete(`/detail/${id}`)
-  dispatch({ type: types.DELETE_DETAIL, payload: id })
+    .then((response) => {
+      dispatch({ type: types.DELETE_DETAIL, payload: id })
+      dispatch(editState(response.data.message, 'responseMessage'))
+      dispatch(editState(response.status, 'responseStatus'))
+    })
+    .catch((err) => {
+      dispatch(editState(404, 'responseStatus'))
+      console.log(err)
+    })
 }

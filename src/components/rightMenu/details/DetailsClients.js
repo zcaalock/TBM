@@ -72,7 +72,9 @@ function DetailsClients(props) {
                 removeEdit={() => removeEdit(detail.id)} />
             </div>
           </Table.Cell>
-          <Table.Cell style={{ width: '2px' }}>
+          <Table.Cell style={{ 
+            width: '20px' 
+            }}>
             <DetailIconsClient showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
           </Table.Cell>
         </Table.Row>

@@ -16,7 +16,7 @@ function Categories() {
   const details = useSelector(state => Object.values(state.details))
   const appState = useSelector(state => state.appState)
   const privateId = useSelector(state => state.user.credentials.userId)
-
+  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
   const [stateId, setId] = useState({ id: false })
 
   const dispatch = useDispatch()
@@ -75,7 +75,7 @@ function Categories() {
       )
     } return (
       <Header
-        appState={appState.showNotifications}
+        appState={lead.settings.notifications}
         expandCollapse={() => dispatch(editState(category.id, 'expandCategory'))}
         categoryKey={category.id}
         categoryTitle={category.title}

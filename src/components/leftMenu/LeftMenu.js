@@ -111,7 +111,7 @@ function Boards (props) {
           <div key='d' className="item" style={{ width: '100%', margin: 'auto' }}>
             <div              
               className="menu" style={{ width: '100%' }}>
-              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip="Create Pulse" className="refreshDB" style={{ paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
+              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip="Add Pulse, client or calendar event " className="refreshDB" style={{ paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
                 <i className="plus square outline large icon" />
               </div>
               <div
