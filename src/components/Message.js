@@ -12,7 +12,7 @@ function ResponceMessage() {
     
     
     const renderMessage = () => {
-        if (appState.responseStatus === 200 && lead.settings.messages === true) {
+        if (appState.responseStatus === 200 && lead && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 
@@ -25,7 +25,7 @@ function ResponceMessage() {
             )
         }
 
-        if (appState.responseStatus === 500 && lead.settings.messages === true) {
+        if (appState.responseStatus === 500 && lead && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 
@@ -38,7 +38,7 @@ function ResponceMessage() {
             )
         }
 
-        if (appState.responseStatus === 404 && lead.settings.messages === true) {
+        if (appState.responseStatus === 404 && lead && lead.settings.messages === true) {
             setTimeout(() => { 
                 dispatch(editState('', 'responseMessage')) 
                 dispatch(editState(0, 'responseStatus')) 
