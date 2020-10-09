@@ -20,7 +20,9 @@ import Signup from './Forms/Signup'
 import Login from './Forms/Login'
 import Settings from './middle/Settings'
 import unAuth from './middle/unAuth'
-import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode'
+
+import Message from './Message'
 
 import { Provider } from 'react-redux'
 import store from '../reducers/index'
@@ -48,9 +50,10 @@ const App = () => {
       <Provider store={store}>
         <Router history={history}>
           <div>
+            <Message/>
             <Route >
               <Route exact path="/loading" component={Loading} />
-              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/" component={LandingPage} />              
               <Route exact path="/unAuth" component={unAuth} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
@@ -62,7 +65,7 @@ const App = () => {
               <Route path='/clients/:selector/:item' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /><ClientsFilterTable {...props} /></div></>)} />
               <Route path='/clients/:selector/:item/clients/:id' component={DetailsClients} />
               <Route path="/boards/:id" component={(props) => (<><LeftMenu {...props} /> <Boards {...props} /></>)} />
-              <Route path="/boards/:id/pulses/:id" component={Details} />
+              <Route path="/boards/:id/pulses/:id" component={Details} />              
             </Route>
           </div>
         </Router>

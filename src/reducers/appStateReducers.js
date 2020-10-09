@@ -9,6 +9,7 @@ const appState ={
   addPulseOpen: 'false',
   editPulseOpen: 'false',
   editClientOpen: 'false',
+  modalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
   filter: {selector: '', value: ''},
@@ -21,10 +22,13 @@ const appState ={
     showDate: true,
     showStatus: true
   },
+  expandCategory: '',
   detailId: '',
   detailName: '',
   error: '',
-  submited: ''
+  submited: '', 
+  responseMessage: 'test',
+  responseStatus: 200
 }
 
 export default (state = appState, action) => {
