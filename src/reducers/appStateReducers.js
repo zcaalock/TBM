@@ -26,8 +26,8 @@ const appState ={
   detailName: '',
   error: '',
   submited: '', 
-  responseMessage: 'test',
-  responseStatus: 200
+  responseMessage: '',
+  responseStatus: 0
 }
 
 export default (state = appState, action) => {
