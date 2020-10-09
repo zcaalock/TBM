@@ -32,12 +32,12 @@ function Details(props) {
 
   const handleOnClick = (id, bool) => {
     if (bool === 'false') {
+      dispatch(editPulse(props.pulseId, { readed: [userId] }))
       dispatch(editDetail(id, { check: 'true' }))
-      dispatch(editPulse(props.pulseId, { readed: [userId] }))
     }
-    if (bool === 'true') {
-      dispatch(editDetail(id, { check: 'false' }))
+    if (bool === 'true') {      
       dispatch(editPulse(props.pulseId, { readed: [userId] }))
+      dispatch(editDetail(id, { check: 'false' }))
     }
   }
 

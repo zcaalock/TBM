@@ -7,6 +7,7 @@ import { fetchPulses } from '../../../../actions/pulses'
 import Header from './Header'
 import Table from '../pulses/Table'
 import ProgressBar from '../../../Forms/ProgressBar'
+import { editState } from '../../../../actions/appState';
 
 function Categories() {
 
@@ -63,10 +64,10 @@ function Categories() {
   }
 
   const renderColapsingMenu = (category, id) => {
-    if (stateId && stateId[id] === true) {
+    if (appState.expandCategory === category.id) {
       return (
         <Table
-          collapse={() => collapse(category.id)}
+          collapse={() => dispatch(editState('', 'expandCategory'))}
           categoryKey={category.id}
           categoryTitle={category.title}
           category={category}
@@ -75,7 +76,7 @@ function Categories() {
     } return (
       <Header
         appState={appState.showNotifications}
-        expandCollapse={() => expand(category.id)}
+        expandCollapse={() => dispatch(editState(category.id, 'expandCategory'))}
         categoryKey={category.id}
         categoryTitle={category.title}
         category={category}
