@@ -11,7 +11,7 @@ function HeaderIcons(props) {
   const ShowEditPulseModal = () => {
     return appState.editPulseOpen === 'true' ?  <EditPulseModal/> : null
   }
-
+  //console.log(props.pulse)
   return (
     <div>
       <div
@@ -25,7 +25,7 @@ function HeaderIcons(props) {
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>
-      <PrivatePulse pulse={props.pulse} />
+      <PrivatePulse pulse={props.pulse} pulseId={props.pulseId} />
       <ArchivePulse pulseId={props.pulseId} />
       <DeletePulse pulseId={props.pulseId} />
       {ShowEditPulseModal()}

@@ -13,8 +13,7 @@ let leadArr = []
 
 function AddClient() {
 
-  const clients = useSelector(state => Object.values(state.clients))
-  const appState = useSelector(state => state.appState)
+  const clients = useSelector(state => Object.values(state.clients))  
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => Object.values(state.lead))
 
