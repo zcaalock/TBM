@@ -1,19 +1,21 @@
 import React from 'react'
 import { useSelector } from "react-redux";
 
-import Header from './Header'
-import Body from './Body'
+import HeaderClient from './HeaderClient'
+import BodyClient from './BodyClient'
 
 
 function Details(props) {
 
-  const pulse = useSelector(state => state.pulses[props.match.params.id])
   
-  if (pulse) {    
+  const client = useSelector(state => state.clients[props.match.params.id])
+  
+  
+  if (client) {    
     return (
       <div className="article rightMenu" style={{ padding: '20px' }}>
-        <Header title={pulse.title} pulseId={pulse.id} pulse={pulse} />
-        <Body key={pulse.id} pulseId={pulse.id} />
+        <HeaderClient title={client.title} clientId={client.id} client={client} />
+        <BodyClient key={client.id} clientId={client.id} />
 
       </div>
     )

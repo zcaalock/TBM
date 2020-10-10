@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import HeaderIcons from './HeaderIcons'
-import EditPulseName from '../middle/Boards/pulses/Tbody/EditPulseName'
+import HeaderIconsClient from './HeaderIconsClient'
+import EditClientName from '../middle/Clients/Cells/EditClientName'
 
 function Header(props) {
 
@@ -10,19 +10,19 @@ function Header(props) {
     <div className="rightMenu-header" style={{ padding: '' }}>
       <div style={{ display: 'inline-block', maxWidth: '224px' }}>
         <h3>
-          <EditPulseName
-            pulse={props.pulse}
+          <EditClientName
+            client={props.client}
             editState={state}
             showEdit={() => defState({ itemEditable: true })}
             removeEdit={() => defState({ itemEditable: false })}
           />
         </h3>
       </div>
-      <div className="header item" style={{ display: 'inline-block', float: 'right', minWidth: '53px'}}>
-        <HeaderIcons
+      <div className="header item" style={{ display: 'inline-block', float: 'right' }}>
+        <HeaderIconsClient
           showEdit={() => defState({ itemEditable: true })}
-          pulseId={props.pulseId}
-          pulse={props.pulse}
+          clientId={props.clientId}
+          client={props.client}
         />
       </div>
     </div>

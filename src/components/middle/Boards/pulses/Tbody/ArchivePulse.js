@@ -6,25 +6,20 @@ import { editPulse } from '../../../../../actions/pulses'
 
 function ArchivePulse(props) {
 
-  const pulses = useSelector(state => Object.values(state.pulses))
-  //const boardId = useSelector(state => state.appState.id)
+  const pulses = useSelector(state => Object.values(state.pulses))   
   const dispatch = useDispatch()
-
   const renderArchive = () => {
-    const findPulse = _.filter(pulses, { id: props.pulseId })
-    const isArchived = findPulse[0].archived
-
-    if (isArchived === 'true') {
-      return (
+    //console.log(pulses[props.pulseId].archived)    
+    if (pulses[props.pulseId] && pulses[props.pulseId].archived === 'true') return (
         <div
           onClick={() => dispatch(editPulse(props.pulseId, { archived: 'false' }))}
           data-position="left center"
           data-tooltip="unarchive pulse"
           style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px', cursor: 'pointer' }}>
           <i className=" archive icon" /> archived
-        </div>
-      )
-    } else return (
+        </div>)
+      
+    if (pulses[props.pulseId] && pulses[props.pulseId].archived === 'false')  return (
       <div
         onClick={() => dispatch(editPulse(props.pulseId, { archived: 'true' }))}
         className="articleIcon"
@@ -34,6 +29,9 @@ function ArchivePulse(props) {
         <i className=" archive icon" />
       </div>
     )
+
+
+
   }
 
   return (

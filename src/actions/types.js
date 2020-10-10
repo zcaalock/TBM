@@ -25,6 +25,13 @@ export const FETCH_PULSE = 'FETCH_PULSE'
 export const EDIT_PULSE = 'EDIT_PULSE'
 export const DELETE_PULSE = 'DELETE_PULSE'
 
+// clients
+export const CREATE_CLIENT = 'CREATE_CLIENT'
+export const FETCH_CLIENTS = 'FETCH_CLIENTS'
+export const FETCH_CLIENT = 'FETCH_CLIENT'
+export const EDIT_CLIENT = 'EDIT_CLIENT'
+export const DELETE_CLIENT = 'DELETE_CLIENT'
+
 //details
 export const CREATE_DETAIL = 'CREATE_DETAIL'
 export const FETCH_DETAILS = 'FETCH_DETAILS'
