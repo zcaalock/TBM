@@ -4,14 +4,6 @@ import history from '../../history'
 import _ from 'lodash'
 
 import { editState } from '../../actions/appState'
-import { fetchStatus } from '../../actions/status'
-import { fetchPulses } from '../../actions/pulses'
-import { fetchCategories } from '../../actions/categories'
-import { fetchBoards } from '../../actions/boards'
-import { fetchLead } from '../../actions/settings'
-import { fetchDetails } from '../../actions/details'
-import { fetchNotepads } from '../../actions/notepad'
-import { fetchClients } from '../../actions/clients'
 
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
@@ -42,28 +34,7 @@ function Boards (props) {
       if (user.authenticated === false)
         history.push('/unAuth')
     }
-  }  
-
-  const refreshDB = () => {
-    if (appState.refreshed === 'false') {
-      dispatch(fetchBoards())
-      dispatch(fetchStatus())
-      dispatch(fetchPulses())
-      dispatch(fetchDetails())
-      dispatch(fetchLead())
-      dispatch(fetchCategories())
-      dispatch(fetchNotepads())
-      dispatch(fetchClients())
-    }
-    dispatch(editState('true', 'refreshed'))
-    setTimeout(() => { dispatch(editState('false', 'refreshed')) }, 20000)
-  }
-
-  // const handleMyPulsesOnClick = () => {
-  //   dispatch(editState('', 'pulseId'))
-  //   dispatch(editState(props.match.params.id, 'id'))
-  //   history.push(`/filters/LeadPerson/${user.credentials.userId}`)    
-  // }
+  }    
 
   const handleFiltersOnClick = () => { 
     dispatch(editState('filters', 'id'))   
@@ -78,12 +49,7 @@ function Boards (props) {
   const handleSelectedItem = (selector) => {
     if (appState.id === selector) return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }    
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
-  }
-
-  const renderRefreshClass = () => {
-    if (appState.refreshed === "false") return <div onClick={() => refreshDB()} data-position="bottom center" data-tooltip="Refresh database" className='refreshDB'><i className='refreshDBspin large refresh icon' /></div>
-    if (appState.refreshed === "true") return <div onClick={() => refreshDB()} data-position="bottom center" data-tooltip="Cannot refresh database now" className='greyedDB'><i className='large refresh icon' /></div>
-  }
+  }  
 
   const renderPrivateBoardList = () => {
     const findPrivateBoards = _.filter(boards, { privateId: user.credentials.userId })
@@ -107,14 +73,14 @@ function Boards (props) {
           <div key='d' className="item" style={{ width: '100%', margin: 'auto' }}>
             <div              
               className="menu" style={{ width: '100%' }}>
-              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip="Add Pulse, client or calendar event " className="refreshDB" style={{ paddingTop: '0', borderBottom: '1px solid #DDDDDD' }}>
+              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip="Add pulse, client or calendar event " className="refreshDB" style={{ paddingTop: '0', paddingBottom: '15px', borderBottom: '1px solid #DDDDDD' }}>
                 <i className="plus square outline large icon" />
               </div>
               <div
                 onClick={() => handleFiltersOnClick()}
                 className="header item headerSelectable"
                 style={handleSelectedItem('filters')}>
-                Find Task
+                Find
               </div>
               <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
               <div
@@ -140,8 +106,7 @@ function Boards (props) {
               {renderPrivateBoardList()}
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
                 <AddBoard name={'New Private Board'} />
-              </div>
-              {renderRefreshClass()}
+              </div>              
             </div>
           </div>
         </div>
