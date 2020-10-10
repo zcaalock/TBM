@@ -70,8 +70,7 @@ function PulseModal() {
     history.push(`/boards/${boardId}/pulses/${categoryId}`)  
   }
 
-  const generateLeadList = () => {
-    //console.log('lead: ', this.props.lead)
+  const generateLeadList = () => {    
     if (lead.length > 0)
       lead.map(leadItems => {
         leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
@@ -123,10 +122,8 @@ function PulseModal() {
 
   generateBoardList()
   generateCategoriesList()
-  generateLeadList()
-  //console.log('name: ', name, 'userId: ', 'boardId:', boardId, 'catId: ', categoryId)
-  const { editPulseOpen } = appState
-  console.log(makePrivate)
+  generateLeadList()  
+  const { editPulseOpen } = appState  
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(editPulseOpen)} onClose={close}>
@@ -145,13 +142,10 @@ function PulseModal() {
                 onChange={(e, { value }) => setName(value)}
               />
               <Form.Field
-                search
-                //disabled={activateLeadField()}
+                search                
                 name='userId'
-                control={Select}
-                //onFocus={this.handleBoardList()}
-                options={leadArr}
-                //value='Alek'
+                control={Select}                
+                options={leadArr}                
                 label='Lead Person'
                 placeholder={leadKey[userId] ? leadKey[userId].title : ''}
                 searchInput={{ id: 'userId' }}
@@ -163,8 +157,7 @@ function PulseModal() {
                 control={Select}
                 options={boardsArr}
                 label='Board name'
-                placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}
-                //searchInput={{ id: 'boardId' }}
+                placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}                
                 onChange={(e, { value }) => {
                   setBoardId(value)
                   generateCategoriesList()
