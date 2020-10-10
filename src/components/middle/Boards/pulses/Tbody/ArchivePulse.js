@@ -8,8 +8,7 @@ function ArchivePulse(props) {
 
   const pulses = useSelector(state => state.pulses)   
   const dispatch = useDispatch()
-  const renderArchive = () => {
-    console.log(pulses[props.pulseId])    
+  const renderArchive = () => {       
     if (pulses[props.pulseId] && pulses[props.pulseId].archived === 'true') return (
         <div
           onClick={() => dispatch(editPulse(props.pulseId, { archived: 'false' }))}
@@ -29,9 +28,6 @@ function ArchivePulse(props) {
         <i className=" archive icon" />
       </div>
     )
-
-
-
   }
 
   return (

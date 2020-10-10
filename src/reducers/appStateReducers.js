@@ -1,9 +1,9 @@
 import * as types from '../actions/types'
 
-const appState ={
-  showArchived: 'false',
-  hideEmptyDates: 'false',  
-  hidePrivate: 'false',
+const appState = {
+  showArchived: false,
+  showEmptyDates: false,
+  showPrivate: false,
   refreshed: 'false',
   addPulseOpen: 'false',
   editPulseOpen: 'false',
@@ -11,8 +11,9 @@ const appState ={
   modalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
-  filter: {selector: '', value: ''},
-  sortBy: {name: '', direction: 'asc'},
+  pulseSearch: '',
+  filter: { selector: '', value: '' },
+  sortBy: { name: '', direction: 'asc' },
   clientsSettings: {
     showLead: true,
     showProject: true,
@@ -21,11 +22,22 @@ const appState ={
     showDate: true,
     showStatus: true
   },
+  filterSettings: {
+    searchTitle: true,
+    searchBoard: true,
+    searchCategory: true,
+    searchLead:true,
+    searchStatus: true,
+    searchArchived:false,
+    searchPrivate:false, 
+    onlyPrivate:false,
+    onlyArchived:false
+  },
   expandCategory: '',
   detailId: '',
   detailName: '',
   error: '',
-  submited: '', 
+  submited: '',
   responseMessage: '',
   responseStatus: 0
 }

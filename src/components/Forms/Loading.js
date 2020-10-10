@@ -34,7 +34,7 @@ class Loading extends React.Component {
       this.props.fetchCategories()
       this.props.fetchNotepads()
       
-    setTimeout(() => { history.push(`/filters/LeadPerson/${this.props.user.credentials.userId}`) }, 4000);
+    setTimeout(() => { history.push(`/filters`) }, 4000);
   }
 
   

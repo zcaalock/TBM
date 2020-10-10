@@ -50,7 +50,7 @@ function Tbody(props) {
   const renderPulses = () => {
 
     const id = props.categoryId
-    let pulsesFiltered = _.filter(pulses, (appState.showArchived === 'false') ? { categoryId: id, archived: 'false' } : { categoryId: id })
+    let pulsesFiltered = _.filter(pulses, (lead.settings.showArchived === false) ? { categoryId: id, archived: 'false' } : { categoryId: id })
 
     return pulsesFiltered.map(pulse => {
       if (pulse.privateId === '' || pulse.privateId === privateId)

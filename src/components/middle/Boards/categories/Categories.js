@@ -83,6 +83,7 @@ function Categories() {
         id={category.id}
         pulses={pulses}
         privateId={privateId}
+        boardId={category.boardId}
       />
     )
   }
@@ -114,7 +115,7 @@ function Categories() {
   }
 
   const checkIfArchived = () => {
-    if (appState.showArchived === "true") return renderCategoriesWithArchived()
+    if (appState.showArchived === true) return renderCategoriesWithArchived()
     return renderCategories()
   }
 

@@ -28,7 +28,6 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const privateId = useSelector(state => state.user.credentials.userId)
 
-
   const dispatch = useDispatch()
 
   const isEmpty = (obj) => {
@@ -58,8 +57,7 @@ function PulseModal() {
     history.push(`/boards/${boardId}/pulses/${categoryId}`)
   }
 
-  const generateLeadList = () => {
-    //console.log('lead: ', this.props.lead)
+  const generateLeadList = () => {    
     if (lead.length > 0)
       lead.map(leadItems => {
         leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
@@ -69,10 +67,9 @@ function PulseModal() {
   }
 
   const generateBoardList = () => {
-
     if (boards.length > 0)
       boards.map(board => {
-        boardsArr.push({ key: board.id, text: board.title, value: board.id, private: board.privateId, className: board.privateId === privateId ? 'colorGreen' : '' })
+        boardsArr.push({ key: board.id, text: board.title, value: board.id, private: board.privateId, className: board.privateId === privateId ? 'colorGreen' : '', icon: board.privateId === privateId ? 'privacy' : '' })
         return boardsArr
       })
     boardsPrivateArr = _.filter(boardsArr, { private: privateId })
@@ -82,9 +79,9 @@ function PulseModal() {
 
   const generateCategoriesList = () => {
     if (categories.length > 0) {
-      _.filter(categories, { boardId: boardId })
+      _.filter(categories, { boardId: boardId, archived: 'false' })
         .map(category => {
-          categoriesArr.push({ key: category.id, text: category.title, value: category.id })
+          categoriesArr.push({ key: category.id, text: category.title, value: category.id, className: category.privateId === privateId ? 'colorGreen' : '', icon: category.privateId === privateId ? 'privacy' : '' })
           return categoriesArr
         })
     }

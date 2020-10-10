@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { editPulse, fetchPulses } from '../../actions/pulses'
+import { editPulse} from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
+import history from '../../history'
 
 let boardsArr = []
+let boardsPrivateArr = []
 let categoriesArr = []
 let leadArr = []
 
@@ -22,9 +24,10 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
-  
-  
-  //const [privateId, setPrivateId] = useState('')
+  const [makePrivate, setMakeprivate] = useState(false)
+  const [boardIsPrivate, setBoardPrivate] = useState(false)
+
+  const privateId = useSelector(state => state.user.credentials.userId)
   const [name, setName] = useState('')
   const [userId, setUserId] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -53,20 +56,18 @@ function PulseModal() {
     return true;
   }
 
-
-  const handleSubmit = () => {
-    //console.log('formValues', formValues)
+  const handleSubmit = () => {    
     const userData = {
       title: name,
       categoryId: categoryId,
       userId: userId,
-      boardId: boardId
+      boardId: boardId,
+      privateId: makePrivate === true ? userId : ''
     };
-
-    dispatch(editPulse(pulseIdSelected, userData))
-    dispatch(fetchPulses())
+    dispatch(editPulse(pulseIdSelected, userData))    
     close()
-
+    dispatch(editState(categoryId, 'expandCategory'))
+    history.push(`/boards/${boardId}/pulses/${categoryId}`)  
   }
 
   const generateLeadList = () => {
@@ -80,16 +81,14 @@ function PulseModal() {
   }
 
   const generateBoardList = () => {
-
     if (boards.length > 0)
       boards.map(board => {
-        boardsArr.push({ key: board.id, text: board.title, value: board.id, private: board.privateId })
+        boardsArr.push({ key: board.id, text: board.title, value: board.id, private: board.privateId, className: board.privateId === privateId ? 'colorGreen' : '', icon: board.privateId === privateId ? 'privacy' : '' })
         return boardsArr
       })
-
+    boardsPrivateArr = _.filter(boardsArr, { private: privateId })
     boardsArr = _.filter(boardsArr, { private: '' })
-
-    return boardsArr = _.uniqBy(boardsArr, 'text')
+    return boardsArr = _.uniqBy(boardsArr.concat(boardsPrivateArr), 'text')
   }
 
   const generateCategoriesList = () => {
@@ -127,7 +126,7 @@ function PulseModal() {
   generateLeadList()
   //console.log('name: ', name, 'userId: ', 'boardId:', boardId, 'catId: ', categoryId)
   const { editPulseOpen } = appState
-  //console.log('boards: ', categoriesArr )
+  console.log(makePrivate)
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(editPulseOpen)} onClose={close}>
@@ -160,44 +159,42 @@ function PulseModal() {
               />
               <Form.Field
                 search
-                //disabled={activateBoardField()}
                 name='boardId'
                 control={Select}
-                //onFocus={this.handleBoardList()}
                 options={boardsArr}
                 label='Board name'
                 placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}
-                searchInput={{ id: 'boardId' }}
+                //searchInput={{ id: 'boardId' }}
                 onChange={(e, { value }) => {
                   setBoardId(value)
                   generateCategoriesList()
                   setCategoryId('')
-                }
-
-                }
+                  if (boardKey[value].privateId === userId) { setBoardPrivate(true); setMakeprivate(true) }
+                }}
               />
               <Form.Field
                 search
-                //disabled={activateCategoryField()}
                 name='categoryId'
                 control={Select}
-                //onFocus={this.handleBoardList()}
                 options={categoriesArr}
                 label='Category name'
                 placeholder='Cateogry name'
                 searchInput={{ id: 'categoryId' }}
                 onChange={(e, { value }) => setCategoryId(value)}
               />
-              {/* <Form.Field
-                  id='form-button-control-public'
-                  control={Button}
-                  content='Confirm'
-                  label='Label with htmlFor'
-                /> */}
             </Form>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
+          <Form.Checkbox
+            style={{ display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px' }}
+            onChange={(e, { checked }) => {
+              setMakeprivate(!makePrivate)
+            }}
+            checked={(boardKey[boardId] && boardKey[boardId].privateId === userId) || makePrivate === true ? true : false}
+            label='Make private'
+            disabled={boardKey[boardId] && boardKey[boardId].privateId === userId ? true : false}
+          />
           <Button onClick={close}>
             Cancel
             </Button>

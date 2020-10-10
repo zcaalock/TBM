@@ -5,7 +5,7 @@ import * as types from './types'
 
 export const createClient = (formValues, userId) => {
   return async (dispatch) => {
-    console.log('user: ', userId, formValues)
+    //console.log('user: ', userId, formValues)
     await axios.post('/client', { ...formValues, userId: userId, status: '#00A569' })
       .then((response) => {
         dispatch({ type: types.CREATE_CLIENT, payload: response.data.client })
@@ -26,10 +26,10 @@ export const fetchClients = () => async dispatch => {
 
 
 export const editClient = (id, formValues) => async dispatch => {
-  console.log('edit client value: ', id, formValues)
+  //console.log('edit client value: ', id, formValues)
   await axios.patch(`/client/${id}`, formValues)
     .then((response) => {
-      console.log('edit client response: ', response.data.client)
+      //console.log('edit client response: ', response.data.client)
       dispatch({ type: types.EDIT_CLIENT, payload: response.data.client })
       dispatch(editState(response.data.message, 'responseMessage'))
       dispatch(editState(response.status, 'responseStatus'))

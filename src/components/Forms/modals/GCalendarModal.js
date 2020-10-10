@@ -45,8 +45,7 @@ function GCalendarModal(props) {
     }
   }
 
-  const appState = useSelector(state => state.appState)
-  //const detailsKey = useSelector(state => _.keyBy(state.details, 'id'))
+  const appState = useSelector(state => state.appState)  
 
   const [summary, setSummary] = useState('')
   const [description, setDescription] = useState('')
@@ -61,15 +60,12 @@ function GCalendarModal(props) {
   const [calendarName, setCalendarName] = useState(calendarIdArr[1].key)
   const [openCalendar, setopenCalendar] = useState(false)
   const [errorDate, setErrorDate] = useState(false)
-  const [errorEmail, setErroremail] = useState(false)
-  const [activeSubmit, setActivesubmit] = useState(false)
-
+  const [errorEmail, setErroremail] = useState(false) 
   const [emailShow, setEmailshow] = useState(false)
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    //setSummary(props.detailTitle)
+  useEffect(() => {    
     dispatch(editState('', 'error'))
     dispatch(editState('', 'submited'))
   }, [])
@@ -108,14 +104,6 @@ function GCalendarModal(props) {
       }
     }
 
-
-    //console.log('email: ', email)
-    //console.log('calendar: ', calendar)
-    //console.log('desc: ', description)
-    //console.log('summary: ', summary)
-    //console.log('time: ', calendar)
-
-
     gapi.load("client:auth2", () => {
       console.log('client loaded to google')
 
@@ -136,8 +124,7 @@ function GCalendarModal(props) {
             'sendUpdates': 'externalOnly'
           })
           request.execute(calendar => {
-            console.log('event: ', calendar)
-            //console.log('calendarId: ', calendarName)
+            console.log('event: ', calendar)            
             if (openCalendar === true) window.open(calendar.htmlLink) 
             if (calendar.error !== undefined) dispatch(editState('generic', 'error'))
             else {
@@ -147,20 +134,11 @@ function GCalendarModal(props) {
 
           })
         })
-        .catch((err) => {
-          //console.log('err: ', err)
+        .catch((err) => {          
           if (err) dispatch(editState('generic', 'error'))
         })
-    })
-    //close()
-  }
-
-  const defaulCheck = (bool) => {
-    if (bool === 'false')
-      return false
-    if (bool === 'true')
-      return true
-  }
+    })    
+  }  
 
   const close = () => {
     dispatch(editState(false, 'modalOpen'))
@@ -175,52 +153,23 @@ function GCalendarModal(props) {
   const validateEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
     if (re.test(email) === true) {
-      setErroremail(false)
-      validateSubmi(errorDate, false)
+      setErroremail(false)      
     }
     if (re.test(email) === false) {
-      setErroremail(true)
-      validateSubmi(errorDate, true)
+      setErroremail(true)      
     }
 
-  }
-
-  const validateSubmi = (date, email) => {
-    summary === '' || date === true || email === true ? setActivesubmit(true) : setActivesubmit(false)
-  }
+  } 
 
   function validateDate(date) {
     if (new Date(startTimeISO).getTime() - new Date(date).getTime() > 0) {
-      setErrorDate(true)
-      validateSubmi(true, errorEmail)
-      return true
+      setErrorDate(true)      
     }
 
     if (new Date(startTimeISO).getTime() - new Date(date).getTime() <= 0) {
-      setErrorDate(false)
-      validateSubmi(false, errorEmail)
-      return false
+      setErrorDate(false)      
     }
-  }
-
-  // function renderEmailAdress(email) {
-  //   email.map(em => {
-  //     return <Form.Field
-  //       disabled={!emailShow}
-  //       id='form-input-control-error-email'
-  //       control={Input}
-  //       label='Email'
-  //       style={{ width: '100%' }}
-  //       placeholder='mail@mail.com'
-  //       onChange={(e, { value }) => inputEmail(value)}
-  //       value={email}
-  //       error={validateEmail(email)}
-  //     />
-  //   })
-  // }
-  //console.log(calendarName)
-
-
+  } 
 
   function showError() {
     if (appState.error === 'generic') {
@@ -231,7 +180,7 @@ function GCalendarModal(props) {
       </Message>
     }
   }
-  const { gCalendarOpen } = appState
+  
   return (
     <>      
         <Modal.Header>Create Google Calendar Event</Modal.Header>
@@ -376,7 +325,7 @@ function GCalendarModal(props) {
         <Modal.Actions>
           <Form.Checkbox
             style={{display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px'}}
-            onChange={(e, { checked }) => {setopenCalendar(true)}
+            onChange={(e, { checked }) => {setopenCalendar(!openCalendar)}
             }
             label='Open calendar'
           />
@@ -384,7 +333,7 @@ function GCalendarModal(props) {
             Cancel
             </Button>
           <Button
-            disabled={activeSubmit}
+            disabled={summary === '' || errorDate === true || errorEmail === true ? true : false}
             form='my-form'
             onClick={() => handleSubmit()}
             icon='checkmark'

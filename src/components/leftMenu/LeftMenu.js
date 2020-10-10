@@ -65,18 +65,14 @@ function Boards (props) {
   //   history.push(`/filters/LeadPerson/${user.credentials.userId}`)    
   // }
 
-  const handleFiltersOnClick = () => {
-    dispatch(editState('filters', 'id'))
-    dispatch(editState('', 'pulseId'))
-    dispatch(editState(user.credentials.userId, 'selectedUserId'))
-    if (user) dispatch(editState({ selector: 'LeadPerson', value: user.credentials.handle }, 'filter'))
-    history.push(`/filters/LeadPerson/${user.credentials.userId}`)
+  const handleFiltersOnClick = () => { 
+    dispatch(editState('filters', 'id'))   
+    history.push(`/filters/`)
   }
 
   const handleClientsOnClick = () => {
-    history.push('/clients/All/all')
-    dispatch(editState('all', 'id'))
-    dispatch(editState('all', 'pulseId'))
+    history.push('/clients/')
+    dispatch(editState('clients', 'id'))     
   }
 
   const handleSelectedItem = (selector) => {

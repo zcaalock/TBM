@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
@@ -7,9 +7,7 @@ import { editState } from '../../../actions/appState'
 import { createClient } from '../../../actions/clients'
 import history from '../../../history'
 
-
 let leadArr = []
-//let projectArr = []
 
 function AddClient() {
 
@@ -25,10 +23,7 @@ function AddClient() {
   const [price, setPrice] = useState('')
   const [userId, setUserid] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
-  const [newUnit, setnewUnit] = useState(false)
-  //const [privateId, setPrivateid] = useState('')
-
-  
+  const [newUnit, setnewUnit] = useState(false) 
 
   const dispatch = useDispatch()
 
@@ -38,12 +33,7 @@ function AddClient() {
         return false;
     }
     return true;
-  }
-
-
-  useEffect(() => {
-    //setNewproject(false)
-  }, [])
+  }  
 
   const handleSubmit = () => {
     const userData = {
@@ -57,12 +47,10 @@ function AddClient() {
     }
     dispatch(createClient(userData, userId))
     dispatch(editState(false, 'modalOpen'))
-    history.push('/clients/All/all')
-    //console.log(userData)
+    history.push('/clients/All/all')    
   }
 
-  const generateLeadList = () => {
-    //console.log('lead: ', this.props.lead)
+  const generateLeadList = () => {    
     if (lead.length > 0)
       lead.map(leadItems => {
         leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems })
@@ -111,8 +99,7 @@ function AddClient() {
         name='project'
         control={Input}
         label='Project'
-        placeholder='New project name'
-        //value={this.state.name}
+        placeholder='New project name'        
         onChange={(e, { value }) => setProject(value)}
       />
     )
@@ -138,17 +125,14 @@ function AddClient() {
         name='unit'
         control={Input}
         label='Unit'
-        placeholder='New unit name (fe. "A2")'
-        //value={this.state.name}
+        placeholder='New unit name (fe. "A2")'        
         onChange={(e, { value }) => setUnit(value)}
       />
     )
-  }
-
-  const activateSubmit = () => { return name === '' ? true : false }
+  }  
   
   if (isEmpty(leadArr)) generateLeadList()
-  
+  console.log('name: ', name, 'phone: ', phone, 'mail: ', mail)
   return (
     <>
       <Modal.Header>Create new Client</Modal.Header>
@@ -161,8 +145,7 @@ function AddClient() {
               name='name'
               control={Input}
               label='Client name'
-              placeholder='Client name'
-              //value={this.state.name}
+              placeholder='Client name'              
               onChange={(e, { value }) => setName(value)}
             />
             <Form.Field
@@ -170,8 +153,7 @@ function AddClient() {
               name='phone'
               control={Input}
               label='Client phone'
-              placeholder='Client phone'
-              //value={this.state.name}
+              placeholder='Client phone'              
               onChange={(e, { value }) => setPhone(value)}
             />
             <Form.Field
@@ -179,8 +161,7 @@ function AddClient() {
               name='mail'
               control={Input}
               label='Client email'
-              placeholder='Client email'
-              //value={this.state.name}
+              placeholder='Client email'              
               onChange={(e, { value }) => setMail(value)}
             />
             {projectOptions()}
@@ -190,17 +171,14 @@ function AddClient() {
               name='price'
               control={Input}
               label='Proposed price'
-              placeholder='Proposed price'
-              //value={this.state.name}
+              placeholder='Proposed price'              
               onChange={(e, { value }) => setPrice(value)}
             />
             <Form.Field
-              search
-              //disabled={activateLeadField()}
+              search              
               defaultValue={leadArr.length > 0 ? _.find(leadArr, { key: privateId }).value : ''}
               name='lead'
-              control={Select}
-              //onFocus={this.handleBoardList()}
+              control={Select}              
               options={leadArr}
               label='Lead Person'
               placeholder='Lead Person'
@@ -215,7 +193,7 @@ function AddClient() {
           Cancel
             </Button>
         <Button
-          disabled={activateSubmit()}
+          disabled={name !== '' || mail !== '' || phone !== '' ? false : true}
           form='my-form'
           onClick={() => handleSubmit()}
           icon='checkmark'

@@ -25,11 +25,6 @@ export const fetchBoards = () => async dispatch => {
   
 }
 
-// export const fetchBoard = (id) => async dispatch => {
-//   const responce = await axios.get(`/boards/${id}`)
-//   dispatch({type: types.FETCH_BOARD, payload: responce.data})
-// }
-
 export const editBoard = (id, formValues) => async dispatch => {
   const responce = await axios.patch(`/board/${id}`, formValues)
   dispatch({type: types.EDIT_BOARD, payload: responce.data.board})

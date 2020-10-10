@@ -7,7 +7,7 @@ export const createCategory = (formValues, id) => {
 
   return async (dispatch) => {
     const responce = await axios.post('/category', { ...formValues, boardId: id })
-    await console.log('responce category: ', responce.data.category)
+    //console.log('responce category: ', responce.data.category)
     dispatch({ type: types.CREATE_CATEGORY, payload: responce.data.category })
   }
 }
@@ -19,27 +19,21 @@ export const fetchCategories = () => async dispatch => {
 }
 
 export const editCategory = (id, formValues) => async dispatch => {
-  console.log(id, formValues)
+  //console.log(id, formValues)
   axios.patch(`/category/${id}`, formValues)
     .then(() => {
       axios
         .get(`/category/${id}`)
         .then((res) => {
           dispatch({ type: types.EDIT_CATEGORY, payload: res.data })
-          console.log('cat: ', res.data)
+          //console.log('cat: ', res.data)
           //history.push(`/mypulses/${res.data.credentials.userId}`);
         })
-        .catch((err) => console.log(err));
-
+        .catch((err) => console.log(err))
     })
-  
-
 }
 
 export const deleteCategory = (id, boardId) => async dispatch => {
   await axios.delete(`/category/${id}`)
   dispatch({ type: types.DELETE_CATEGORY, payload: id })
-  //history.push(`/boards/${boardId}`)
-  //history.push('/')
-
 }
