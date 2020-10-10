@@ -4,8 +4,7 @@ import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse, fetchPulses } from '../../actions/pulses'
-import { fetchLead } from '../../actions/settings'
-import { fetchBoards } from '../../actions/boards'
+
 
 let boardsArr = []
 let categoriesArr = []
@@ -32,28 +31,16 @@ function PulseModal() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (isEmpty(boards)) dispatch(fetchBoards())
-    if (isEmpty(lead)) dispatch(fetchLead())
+  useEffect(() => {   
 
-    setName(pulseKey[appState.pulseId].title)
-    //setUserName(leadKey[userId].title)
+    setName(pulseKey[appState.pulseId].title)    
     setUserId(pulseKey[appState.pulseId].userId)
     //setPrivateId(pulseKey[appState.pulseId].privateId)
     setCategoryId(pulseKey[appState.pulseId].categoryId)
     setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
 
   }, [])
-
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-
+  
   const handleSubmit = () => {
     //console.log('formValues', formValues)
     const userData = {
@@ -125,13 +112,12 @@ function PulseModal() {
   generateBoardList()
   generateCategoriesList()
   generateLeadList()
-  //console.log('name: ', name, 'userId: ', 'boardId:', boardId, 'catId: ', categoryId)
-  const { editPulseOpen } = appState
-  //console.log('boards: ', categoriesArr )
+  
+  const { editPulseOpen } = appState  
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(editPulseOpen)} onClose={close}>
-        <Modal.Header>Create new Pulse</Modal.Header>
+        <Modal.Header>Edit Pulse</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form
@@ -173,7 +159,6 @@ function PulseModal() {
                   generateCategoriesList()
                   setCategoryId('')
                 }
-
                 }
               />
               <Form.Field
@@ -184,16 +169,10 @@ function PulseModal() {
                 //onFocus={this.handleBoardList()}
                 options={categoriesArr}
                 label='Category name'
-                placeholder='Cateogry name'
+                placeholder={categoryKey[categoryId] ? categoryKey[categoryId].title : ''}
                 searchInput={{ id: 'categoryId' }}
                 onChange={(e, { value }) => setCategoryId(value)}
               />
-              {/* <Form.Field
-                  id='form-button-control-public'
-                  control={Button}
-                  content='Confirm'
-                  label='Label with htmlFor'
-                /> */}
             </Form>
           </Modal.Description>
         </Modal.Content>
