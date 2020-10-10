@@ -14,6 +14,8 @@ import ProjectList from '../../Cells/ProjectList'
 import UnitList from '../../Cells/UnitList'
 import StatusList from '../../Cells/StatusList'
 
+import DropdownColumnFilter from '../../../../Forms/dropdownColumFilter'
+
 function Tbody(props) {
 
   const clients = useSelector(state => Object.values(state.clients));
@@ -27,7 +29,7 @@ function Tbody(props) {
 
   const goLink = (id) => {
     dispatch(editState(id, 'pulseId'))
-    history.push(`/clients/${props.params.selector}/${props.params.item}/clients/${id}`)
+    history.push(`/clients/client/${id}`)
   }
 
   const renderSelect = (client) => {
@@ -85,25 +87,15 @@ function Tbody(props) {
     let clientsCol = {}
     const showArchived = appState.showArchived
 
-    if (showArchived === 'true') {
+    if (showArchived === true) {
       clientsCol = clients
 
     }
 
-    if (showArchived === 'false') {
+    if (showArchived === false) {
       //clientsCol = _.chain(clients).filter({ [props.selector]: props.item }).reject({ archived: 'true' }).value()  
       clientsCol = _.chain(clients).reject({ archived: 'true' }).value()
-
-    }
-
-    const search = () => {
-
-      // clientsCol.map(item=>{
-      //   if(item.title === appState.clientSearch)
-      // })
-
-    }
-
+    }  
 
 
     return sortClientsBy(clientsCol).map(client => {
@@ -160,6 +152,7 @@ function Tbody(props) {
 
   return (
     <div>
+      <DropdownColumnFilter/>
       <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
         <thead>
           <tr>

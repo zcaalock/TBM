@@ -6,6 +6,8 @@ import EditHeaderName from './editHeaderName'
 
 function Header(props) {
   const pulses = useSelector(state => Object.values(state.pulses))
+  const userId = useSelector(state => state.user.credentials.userId)
+  const selectedBoard = useSelector(state=> _.find(state.boards, {id: props.category.boardId}))
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
@@ -49,10 +51,12 @@ function Header(props) {
   const mapPulses = () => {
     //console.log(props.id)
     const pulseCount = _.filter(pulses, { categoryId: props.id, privateId: '', archived: 'false' })
+    const privatePulseCount = _.filter(pulses, { categoryId: props.id, archived: 'false' })
+    if(selectedBoard.privateId === userId) return privatePulseCount.length
     return pulseCount.length
 
   }
-
+  //console.log('debug: ', props)
   return (
     <div style={{}} className="categories ui secondary text menu" >
       <div className="menu" style={{ width: '100%' }}>

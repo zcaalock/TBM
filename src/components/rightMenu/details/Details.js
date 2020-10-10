@@ -6,14 +6,13 @@ import { editDetail } from '../../../actions/details'
 import { editPulse } from '../../../actions/pulses'
 import DetailIcons from './DetailIcons'
 import EditDetailName from './EditDetailName'
-import GCalendarModal from '../../Forms/GCalendarModal'
 
 function Details(props) {
   const [state, defState] = useState({});
   const dispatch = useDispatch();
   const details = useSelector(state => Object.values(state.details));
   const userId = useSelector(state => state.user.credentials.userId);
-  const appState = useSelector(state => state.appState) 
+  const appState = useSelector(state => state.appState)
 
   const removeEdit = (id) => {
     defState({ [`itemEditable${id}`]: false })
@@ -21,7 +20,7 @@ function Details(props) {
 
   const showEdit = (id) => {
     defState({ [`itemEditable${id}`]: true })
-  }  
+  }
 
   const renderCrossOut = (bool) => {
     if (bool === 'true') {
@@ -32,12 +31,12 @@ function Details(props) {
 
   const handleOnClick = (id, bool) => {
     if (bool === 'false') {
-      dispatch(editDetail(id, { check: 'true' }))
       dispatch(editPulse(props.pulseId, { readed: [userId] }))
+      dispatch(editDetail(id, { check: 'true' }))
     }
     if (bool === 'true') {
-      dispatch(editDetail(id, { check: 'false' }))
       dispatch(editPulse(props.pulseId, { readed: [userId] }))
+      dispatch(editDetail(id, { check: 'false' }))
     }
   }
 
@@ -46,10 +45,6 @@ function Details(props) {
       return false
     if (bool === 'true')
       return true
-  }
-
-  const ShowGCalendarModal = () => {
-    return appState.gCalendarOpen === 'true' ?  <GCalendarModal detailId={appState.detailId} detailTitle={appState.detailName}/> : null
   }
 
   const renderDetails = () => {
@@ -78,8 +73,10 @@ function Details(props) {
                 removeEdit={() => removeEdit(detail.id)} />
             </div>
           </Table.Cell>
-          <Table.Cell style={{ width: '115px' }}>
-            <DetailIcons showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
+          <Table.Cell style={{
+            width: '20px' 
+          }}>
+            <DetailIcons showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title} />
           </Table.Cell>
         </Table.Row>
       )
@@ -91,7 +88,6 @@ function Details(props) {
       <Table basic='very' >
         <Table.Body>
           {renderDetails()}
-          {ShowGCalendarModal()}
         </Table.Body>
       </Table>
     </div>

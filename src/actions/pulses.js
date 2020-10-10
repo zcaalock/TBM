@@ -1,42 +1,82 @@
-//import pulses from '../apis/server'
 import axios from 'axios'
-//import history from '../history'
+import { editState } from './appState'
 import * as types from './types'
 
 export const createPulse = (formValues, categoryId, userId) => {
-  return async (dispatch) => {    
-    console.log('user: ', userId, formValues)                    
-    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: ''})
-    dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
-    //history.push(`/boards/${boardId}/pulses/${responce.data.pulse.id}`)       
+  return async (dispatch) => {
+    //console.log('user: ', userId, formValues)
+    await axios.post('/pulse', { ...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: '' })
+      .then((response) => {
+        dispatch({ type: types.CREATE_PULSE, payload: response.data.pulse })
+        dispatch(editState(response.data.message, 'responseMessage'))
+        dispatch(editState(response.status, 'responseStatus'))
+        //console.log('response: ', response.data.pulse)
+      })
+      .catch((err) => {
+        dispatch(editState(404, 'responseStatus'))
+        console.log(err)
+      })
   }
 }
 
 export const createPrivatePulse = (formValues, categoryId, userId) => {
-  return async (dispatch) => {                             
-    const responce = await axios.post('/pulse', {...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: userId})
-    dispatch({type: types.CREATE_PULSE, payload: responce.data.pulse})
-    //history.push(`/boards/${boardId}/pulses/${responce.data.pulse.id}`)       
+  return async (dispatch) => {
+    await axios.post('/pulse', { ...formValues, categoryId: categoryId, userId: userId, status: 'In Progress', privateId: userId })
+      .then((response) => {
+        dispatch({ type: types.CREATE_PULSE, payload: response.data.pulse })
+        dispatch(editState(response.data.message, 'responseMessage'))
+        dispatch(editState(response.status, 'responseStatus'))
+      })
+      .catch((err) => {
+        dispatch(editState(404, 'responseStatus'))
+        console.log(err)
+      })
   }
 }
 
 export const fetchPulses = () => async dispatch => {
-  const responce = await axios.get('/pulses')   
-  dispatch({type: types.FETCH_PULSES, payload: responce.data})
+  const response = await axios.get('/pulses')
+  dispatch({ type: types.FETCH_PULSES, payload: response.data })
 }
 
-
-export const editPulse = (id, formValues) => async dispatch => { 
-  console.log('edit pulse value: ', formValues) 
-  const responce = await axios.patch(`/pulse/${id}`, formValues)
-  console.log('edit pulse responce: ', responce.data.pulse)    
-  dispatch({type: types.EDIT_PULSE, payload: responce.data.pulse})
-  
+export const fetchPulse = (id) => async dispatch => {
+  await axios.get(`/pulse/${id}`)
+    .then((response) => {
+      //console.log(response)
+      dispatch({ type: types.FETCH_PULSE, payload: response.data.pulse })
+    })
+    .catch((err) => {
+      //dispatch(editState(404, 'responseStatus'))
+      console.log(err)
+    })
 }
 
-export const deletePulse = (id, boardId) => async dispatch => {
+export const editPulse = (id, formValues) => async dispatch => {
+  console.log('edit pulse value: ', formValues)
+  await axios.patch(`/pulse/${id}`, formValues)
+    .then((response) => {
+      //console.log('edit pulse response: ', response.data.pulse)
+      dispatch({ type: types.EDIT_PULSE, payload: response.data.pulse })
+      dispatch(fetchPulse(id))
+      if (!formValues.readed) dispatch(editState(response.data.message, 'responseMessage'))
+      if (!formValues.readed) dispatch(editState(response.status, 'responseStatus'))
+    })
+    .catch((err) => {
+      dispatch(editState(404, 'responseStatus'))
+      console.log(err)
+    })
+}
+
+export const deletePulse = (id) => async dispatch => {
   await axios.delete(`/pulse/${id}`)
-  dispatch({type: types.DELETE_PULSE, payload: id})
-  //history.push(`/boards/${boardId}`)
-  
+    .then((response) => {
+      dispatch(dispatch({ type: types.DELETE_PULSE, payload: id }))
+      dispatch(editState(response.data.message, 'responseMessage'))
+      dispatch(editState(response.status, 'responseStatus'))
+      //console.log(response)
+    })
+    .catch((err) => {
+      dispatch(editState(404, 'responseStatus'))
+      console.log(err)
+    })
 }

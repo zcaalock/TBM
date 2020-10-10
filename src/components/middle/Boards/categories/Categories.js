@@ -7,6 +7,7 @@ import { fetchPulses } from '../../../../actions/pulses'
 import Header from './Header'
 import Table from '../pulses/Table'
 import ProgressBar from '../../../Forms/ProgressBar'
+import { editState } from '../../../../actions/appState';
 
 function Categories() {
 
@@ -15,7 +16,7 @@ function Categories() {
   const details = useSelector(state => Object.values(state.details))
   const appState = useSelector(state => state.appState)
   const privateId = useSelector(state => state.user.credentials.userId)
-
+  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
   const [stateId, setId] = useState({ id: false })
 
   const dispatch = useDispatch()
@@ -63,10 +64,10 @@ function Categories() {
   }
 
   const renderColapsingMenu = (category, id) => {
-    if (stateId && stateId[id] === true) {
+    if (appState.expandCategory === category.id) {
       return (
         <Table
-          collapse={() => collapse(category.id)}
+          collapse={() => dispatch(editState('', 'expandCategory'))}
           categoryKey={category.id}
           categoryTitle={category.title}
           category={category}
@@ -74,14 +75,15 @@ function Categories() {
       )
     } return (
       <Header
-        appState={appState.showNotifications}
-        expandCollapse={() => expand(category.id)}
+        appState={lead.settings.notifications}
+        expandCollapse={() => dispatch(editState(category.id, 'expandCategory'))}
         categoryKey={category.id}
         categoryTitle={category.title}
         category={category}
         id={category.id}
         pulses={pulses}
         privateId={privateId}
+        boardId={category.boardId}
       />
     )
   }
@@ -113,7 +115,7 @@ function Categories() {
   }
 
   const checkIfArchived = () => {
-    if (appState.showArchived === "true") return renderCategoriesWithArchived()
+    if (appState.showArchived === true) return renderCategoriesWithArchived()
     return renderCategories()
   }
 
