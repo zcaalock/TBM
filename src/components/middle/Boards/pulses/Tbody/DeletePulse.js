@@ -37,7 +37,7 @@ function DeletePulse (props) {
         className="articleIcon"
         data-position="bottom center"
         data-tooltip="Delete"
-        style={{ display: 'inline-block',cursor: 'pointer', paddingLeft: '10px' }}>
+        style={{ display: 'inline-block',cursor: 'pointer' }}>
         <i className=" trash icon" />        
       </div>
     )
