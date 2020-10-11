@@ -263,3 +263,11 @@
 .colorGreen {
   color: #00A569 !important
 }
+
+.greenToRed{
+  color: #00A569 !important
+}
+
+.greenToRed:hover{
+  color: #DC6969 !important
+}

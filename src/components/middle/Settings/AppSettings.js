@@ -43,7 +43,7 @@ function AppSettings() {
             slider
             style={{ marginBottom: '-4px', }}
           />
-          <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >Show archived</label>
+          <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchiveind: !leadUser.settgs.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >Show archived</label>
         </div>
         <div style={{ marginBottom: '10px' }}>
           <Checkbox

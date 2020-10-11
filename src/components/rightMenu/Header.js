@@ -8,7 +8,7 @@ function Header(props) {
     { isHovering: false, itemEditable: false });
   return (
     <div className="rightMenu-header" style={{ padding: '' }}>
-      <div style={{ display: 'inline-block', maxWidth: '224px' }}>
+      <div style={{ display: 'inline-block', maxWidth: '70%' }}>
         <h3>
           <EditPulseName
             pulse={props.pulse}

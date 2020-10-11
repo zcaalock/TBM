@@ -2,17 +2,12 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { editPulse } from '../../../../../actions/pulses'
 
-
 function ArchivePulse (props) {
-
-  //const pulses = useSelector(state => Object.values(state.pulses));
-  const user = useSelector(state => state.user.credentials);
-  //const boards = useSelector(state => Object.values(state.boards));
-  //const categories = useSelector(state => Object.values(state.categories));
+  
+  const user = useSelector(state => state.user.credentials)  
   const dispatch = useDispatch();
 
   const renderArchive = () => {     
-
 
     if (props.pulse.privateId && props.pulse.privateId === user.userId) {
       return (
@@ -37,12 +32,11 @@ function ArchivePulse (props) {
           className="articleIcon"
           data-position="bottom center"
           data-tooltip="Make private"
-          style={{ display: 'inline-block', cursor: 'pointer', paddingRight: '5px' }}>
+          style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" privacy icon" />
         </div>
       )
   }
-
 
   return (
     <>

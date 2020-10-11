@@ -9,6 +9,7 @@ import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
 import ModalComponent from '../Forms/modals/Modal'
+import Reminders from '../middle/Boards/pulses/Tbody/Reminder'
 
 
 function Boards (props) {
@@ -106,7 +107,13 @@ function Boards (props) {
               {renderPrivateBoardList()}
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
                 <AddBoard name={'New Private Board'} />
-              </div>              
+              </div> 
+              <div
+                className="header item"
+                style={{ paddingLeft: '0', paddingTop: '20px' }}>
+                Reminders:                
+              </div> 
+              <Reminders/>            
             </div>
           </div>
         </div>

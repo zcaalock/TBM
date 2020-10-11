@@ -5,6 +5,7 @@ import ArchivePulse from '../middle/Boards/pulses/Tbody/ArchivePulse'
 import PrivatePulse from '../middle/Boards/pulses/Tbody/PrivatePulse'
 import {editState} from '../../actions/appState'
 import EditPulseModal from '../Forms/EditPulseModal'
+
 function HeaderIcons(props) {
   const dispatch = useDispatch();
   const appState = useSelector(state => state.appState)  
@@ -24,7 +25,7 @@ function HeaderIcons(props) {
           data-tooltip="Edit"
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
-        </div>
+        </div>      
       <PrivatePulse pulse={props.pulse} pulseId={props.pulseId} />
       <ArchivePulse pulseId={props.pulseId} />
       <DeletePulse pulseId={props.pulseId} />
