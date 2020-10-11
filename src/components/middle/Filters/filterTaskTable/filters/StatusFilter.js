@@ -74,13 +74,19 @@ function Tbody(props) {
   }
 
   const renderPulses = () => {
-    let leadArr = _.chain(lead).reject({ userId: userId }).value()
-    let otherLeadArrId = []
-    leadArr.map(lead => {
-      otherLeadArrId.push({ privateId: lead.userId })
+    let pulsesCol = []
+    pulses.map(item=>{
+      if(item.privateId === '') pulsesCol.push(item)
     })
 
-    let pulsesCol = _.chain(pulses).reject({ otherLeadArrId }).value()
+    let pulseColPrivate = []
+
+    pulses.map(item=>{
+      if(item.privateId === userId) pulseColPrivate.push(item)
+    })
+
+    pulsesCol = pulsesCol.concat(pulseColPrivate)      
+
     const showArchived = leadUser.settings.showArchived
     const showPrivate = appState.showPrivate
     const showEmptyDates = appState.showEmptyDates

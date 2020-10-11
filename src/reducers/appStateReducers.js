@@ -11,6 +11,7 @@ const appState = {
   modalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
+  contactSearch: '',
   pulseSearch: '',
   filter: { selector: '', value: '' },
   sortBy: { name: '', direction: 'asc' },
@@ -21,6 +22,12 @@ const appState = {
     showPrice: true,
     showDate: true,
     showStatus: true
+  },
+  contactsSettings: {
+    showLead: true,
+    showProject: true,    
+    showDate: true,
+    showPrivate: true    
   },
   filterSettings: {
     searchTitle: true,

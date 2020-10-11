@@ -24,14 +24,19 @@ function Reminder(props) {
     pulses.map(pulse => {
       const days = differenceInDays(parseISO(pulse.deadline), new Date())
       const hours = differenceInHours(parseISO(pulse.deadline), new Date())
+      const renderDifs = (x) => {
+        if (x < -1) return `${days} d`
+        if (1 > x && x >= -1) return `${hours + 24} h` 
+        if (x >= 1) return `${days} d`
+      }
       if (
         pulse.userId === user.userId &&
         pulse.deadline.length > 0 &&
         pulse.archived === 'false'
         && days < 12
-        && days >= 0
-        && hours > -24
-      ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: days > 0 ? `${days} d` : `${hours+24} h`, categoryId: pulse.categoryId, privateId: pulse.privateId })
+        && days >= -4
+        && hours > -96
+      ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'' })
     })
   }
 
@@ -59,7 +64,7 @@ function Reminder(props) {
           style={selectedStyle(item.id)}>
           {renderPrivateIcon(item)}
           <div style={{ width: '140px' }}>{item.name}</div>
-          <div style={{ position: 'absolute', right: '0px' }}>{item.difference}</div>
+          <div style={{ position: 'absolute', right: '0px', color: item.color }}>{item.difference}</div>
         </Link>
 
       )

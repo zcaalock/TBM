@@ -56,7 +56,7 @@ function BoardsList(props) {
 
       return (
         <>
-          {renderNotifications(board.id)}
+          <div style={{position: 'absolute', textAlign: 'right', width: '210px'}}>{renderNotifications(board.id)}</div>
           <Link
             onClick={() => dispatch(editState('', 'pulseId'))}
             to={`/boards/${board.id}`}
@@ -87,7 +87,7 @@ function BoardsList(props) {
       return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div key={new Date()} className='notificationBoard' data-position="right center" data-tooltip="Unreaded content">{notoficationStorage}</div>
+    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div style={{zIndex:10}} key={new Date()} className='notificationBoard' data-position="left center" data-tooltip="Unreaded content">{notoficationStorage}</div>
   }
 
   return (

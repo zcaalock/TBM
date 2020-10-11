@@ -7,6 +7,7 @@ import { editState } from '../../../actions/appState'
 
 import AddPulseModal from './AddPulseModal'
 import AddClient from './AddClient'
+import AddContact from './AddContact'
 import GCalendarModal from './GCalendarModal'
 
 function ModalComponent() {
@@ -18,6 +19,7 @@ function ModalComponent() {
   const renderModal = () => {
     if (activeItem === 'New pulse') return <AddPulseModal/>
     if (activeItem === 'New client') return <AddClient/>
+    if (activeItem === 'New contact') return <AddContact/>
     if (activeItem === 'Calendar') return <GCalendarModal/>
   }
 
@@ -34,6 +36,11 @@ function ModalComponent() {
             name='New client'
             active={activeItem === 'New client'}
             onClick={() => setActive('New client')}
+          />
+          <Menu.Item
+            name='New contact'
+            active={activeItem === 'New contact'}
+            onClick={() => setActive('New contact')}
           />
           <Menu.Item
             name='Calendar'

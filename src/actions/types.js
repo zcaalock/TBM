@@ -32,6 +32,13 @@ export const FETCH_CLIENT = 'FETCH_CLIENT'
 export const EDIT_CLIENT = 'EDIT_CLIENT'
 export const DELETE_CLIENT = 'DELETE_CLIENT'
 
+// contacts
+export const CREATE_CONTACT = 'CREATE_CONTACT'
+export const FETCH_CONTACTS = 'FETCH_CONTACTS'
+export const FETCH_CONTACT = 'FETCH_CONTACT'
+export const EDIT_CONTACT = 'EDIT_CONTACT'
+export const DELETE_CONTACT = 'DELETE_CONTACT'
+
 //details
 export const CREATE_DETAIL = 'CREATE_DETAIL'
 export const FETCH_DETAILS = 'FETCH_DETAILS'

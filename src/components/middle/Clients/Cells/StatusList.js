@@ -67,7 +67,7 @@ function StatusList(props) {
         <div 
         data-position="bottom center"
         data-tooltip="Archived"
-        style={{color: '#DC6969', textAlign: 'left', paddingLeft: '12px'}}>
+        style={{color: '#DC6969', textAlign: 'left', paddingLeft: '6.5px'}}>
           <i className=" archive icon" />
         </div>
       )

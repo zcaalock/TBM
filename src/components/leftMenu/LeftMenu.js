@@ -47,6 +47,11 @@ function Boards (props) {
     dispatch(editState('clients', 'id'))     
   }
 
+  const handleContactsOnClick = () => {
+    history.push('/contacts/')
+    dispatch(editState('contacts', 'id'))     
+  }
+
   const handleSelectedItem = (selector) => {
     if (appState.id === selector) return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }    
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
@@ -89,6 +94,13 @@ function Boards (props) {
                 className="header item headerSelectable"
                 style={handleSelectedItem('clients')}>
                 Clients
+              </div>
+              <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
+              <div
+                onClick={() => handleContactsOnClick()}
+                className="header item headerSelectable"
+                style={handleSelectedItem('contacts')}>
+                Contacts
               </div>
               <div
                 className="header item"

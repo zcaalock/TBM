@@ -20,7 +20,7 @@ export const createLead = (formValues, id) => {
 export const editLead = (id, formValues) => async dispatch => {
   await axios.patch(`/lead/${id}`, formValues)    
     .then((response) => {
-      console.log('editLead: ', response)
+      //console.log('editLead: ', response)
       dispatch({ type: types.EDIT_LEAD, payload: response.data.lead })
       dispatch(editState(response.data.message, 'responseMessage'))
       dispatch(editState(response.status, 'responseStatus'))
