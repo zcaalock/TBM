@@ -100,6 +100,7 @@ function Tbody(props) {
          || _.includes(client.mail.toLowerCase(), appState.clientSearch.toLowerCase()) === true
          || _.includes(client.project.toLowerCase(), appState.clientSearch.toLowerCase()) === true
          || _.includes(client.unit.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+         || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
       ) return (
         <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">

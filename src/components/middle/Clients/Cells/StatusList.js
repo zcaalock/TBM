@@ -21,7 +21,8 @@ function StatusList(props) {
     let list = [
       { key: '#00A569', text: 'Rokujący', icon: 'bullseye', value: '#00A569' },
       { key: '#EDC15C', text: 'Niezdecydowany', icon: 'bullseye', value: '#EDC15C' },
-      { key: '#DC6969', text: 'Nierokujący', icon: 'bullseye', value: '#DC6969' }
+      { key: '#DC6969', text: 'Nierokujący', icon: 'bullseye', value: '#DC6969' },
+      { key: 'black', text: 'Kupujący', value: 'Kupujący' }
 
     ]
 
@@ -43,7 +44,7 @@ function StatusList(props) {
       return (
         <div>
           <Dropdown
-            text={<i className="bullseye icon" style={{ color: props.client.status }} />}
+            text={props.client.status==='Kupujący'?'Kupujący':<i className="bullseye icon" style={{ color: props.client.status }} />}
             floating
             labeled
             style={{ marginLeft: '0px', marginRight: '10px' }}
