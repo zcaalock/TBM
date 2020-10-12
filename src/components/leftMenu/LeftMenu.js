@@ -125,7 +125,7 @@ function Boards (props) {
                 style={{ paddingLeft: '0', paddingTop: '20px' }}>
                 Reminders:                
               </div> 
-              <Reminders/>            
+              <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 680px)', overflowY: 'auto'}}><Reminders/></div>            
             </div>
           </div>
         </div>

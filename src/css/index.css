@@ -271,3 +271,12 @@
 .greenToRed:hover{
   color: #DC6969 !important
 }
+
+.reminders {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important /* Firefox */
+}
+
+.reminders::-webkit-scrollbar {
+  display: none;
+}
