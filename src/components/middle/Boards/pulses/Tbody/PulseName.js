@@ -20,7 +20,7 @@ function PulseName (props) {
     return (
       <div onDoubleClick={() => defState({itemEditable: true})}>        
         <div
-          style={{cursor:'auto', position: 'absolute', marginLeft: '-25px', display: 'inline-block', color: '#00A569' }}>           
+          style={{cursor:'auto', position: 'absolute', marginLeft: '-30px', display: 'inline-block', color: '#00A569' }}>           
           {renderPrivateIcon(props)}
         </div>
         <div          

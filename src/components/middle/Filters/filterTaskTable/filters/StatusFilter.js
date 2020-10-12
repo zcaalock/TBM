@@ -129,7 +129,7 @@ function Tbody(props) {
       )
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
-            <td style={{ paddingLeft: '10px' }} data-label="Name">
+            <td data-label="Name" style={{paddingLeft: '10px'}}>
               <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={userId} />
             </td>
             <td >
@@ -158,7 +158,7 @@ function Tbody(props) {
 
   return (
     <div>
-      <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
+      <table className="ui very basic table">
         <thead>
           <tr>
             <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>

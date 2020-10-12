@@ -154,7 +154,7 @@ function Tbody(props) {
   return (
     <div>
       <DropdownColumnFilterClients/>
-      <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
+      <table className="ui very basic table" >
         <thead>
           <tr>
             <th style={{ paddingLeft: '10px', minWidth: '10%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>

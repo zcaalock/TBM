@@ -28,7 +28,7 @@ function DropdownColumnFilter (props) {
     return (
         <Dropdown
         style={{
-          //marginLeft: '15px', 
+          marginLeft: '-10px', 
           color: '#cecece',
           position: 'absolute'
           //border: '1px solid rgba(34,36,38,.15)',

@@ -1,6 +1,6 @@
 @media(min-width: 980px) {
   .article{
-    margin-left: 240px;
+    margin-left: 255px;
     display: inline-block;
     width: calc(80% - 270px);    
   }
