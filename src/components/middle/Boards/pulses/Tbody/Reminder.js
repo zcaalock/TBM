@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import _, { map } from 'lodash'
+import React from 'react'
+import _ from 'lodash'
 import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../../../../actions/appState'
 import { isEmpty } from '../../../../../actions/helperFunctions'
@@ -38,7 +38,7 @@ function Reminder(props) {
       ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'' })
     })
   }
-  console.log(appState.reminderSettings.futureDays)
+  //console.log(appState.reminderSettings.futureDays)
   const renderPrivateIcon = (arr) => {
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
@@ -49,8 +49,7 @@ function Reminder(props) {
     return sorted.map(item => {
       return (
         <Link
-          data-position="right center"
-          data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
+          
           onClick={() => {
             dispatch(editState('', 'pulseId'))
             dispatch(editState(item.categoryId, 'expandCategory'))
@@ -62,7 +61,10 @@ function Reminder(props) {
           key={item.name}
           style={selectedStyle(item.id)}>
           {renderPrivateIcon(item)}
-          <div style={{ width: '140px' }}>{item.name}</div>
+          <div 
+          data-position="right center"
+          data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
+          style={{ width: '140px', position: 'static' }}>{item.name}</div>
           <div style={{ position: 'absolute', right: '0px', color: item.color }}>{item.difference}</div>
         </Link>
 
