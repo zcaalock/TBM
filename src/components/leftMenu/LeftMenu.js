@@ -10,6 +10,7 @@ import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
 import ModalComponent from '../Forms/modals/Modal'
 import Reminders from '../middle/Boards/pulses/Tbody/Reminder'
+import ReminderFilter from '../Forms/dropdownColumFilterReminders'
 
 
 function Boards (props) {
@@ -69,7 +70,8 @@ function Boards (props) {
 
     return (
       <div        
-        className="leftMenu header">
+        className="leftMenu header"
+        style={{zIndex: '10'}}>
         <div key='i' className='item leftMenu-main' style={{ textAlign: 'center' }}>
           <div onClick={() => setMHide(MHide === 'true' ? 'false' : 'true')} id="TMenu" style={{ display: 'inline-block' }}><i className='bars icon' /></div>
           <div style={{ display: 'inline-block' }}><h3>Task Manager</h3></div>
@@ -123,7 +125,8 @@ function Boards (props) {
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px' }}>
-                Reminders:                
+                Reminders: 
+                <ReminderFilter />               
               </div> 
               <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 680px)', overflowY: 'auto'}}><Reminders/></div>            
             </div>

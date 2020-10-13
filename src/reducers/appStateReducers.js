@@ -40,6 +40,10 @@ const appState = {
     onlyPrivate:false,
     onlyArchived:false
   },
+  reminderSettings: {
+    pastDays:-4,
+    futureDays:12
+  },
   expandCategory: '',
   detailId: '',
   detailName: '',

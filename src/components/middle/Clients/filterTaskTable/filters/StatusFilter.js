@@ -136,7 +136,7 @@ function Tbody(props) {
           <td >
             {format(new Date(client.createdAt), 'yyyy/MM/dd')}
           </td>
-          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: 'center' }}>
+          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: '' }}>
             {/* <i className="bullseye icon" style={{ color: client.status }} /> */}
             <StatusList client={client} />
           </td>

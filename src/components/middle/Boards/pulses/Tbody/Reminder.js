@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import _, { map } from 'lodash'
 import { useDispatch, useSelector } from "react-redux"
-import DatePicker from "react-datepicker"
 import { editState } from '../../../../../actions/appState'
 import { isEmpty } from '../../../../../actions/helperFunctions'
 import differenceInDays from 'date-fns/differenceInBusinessDays'
@@ -33,13 +32,13 @@ function Reminder(props) {
         pulse.userId === user.userId &&
         pulse.deadline.length > 0 &&
         pulse.archived === 'false'
-        && days < 12
-        && days >= -4
-        && hours > -96
+        && days < appState.reminderSettings.futureDays
+        && days >= appState.reminderSettings.pastDays
+        //&& hours > -96
       ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'' })
     })
   }
-
+  console.log(appState.reminderSettings.futureDays)
   const renderPrivateIcon = (arr) => {
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
