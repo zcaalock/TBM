@@ -35,7 +35,7 @@ function Reminder(props) {
         && days < appState.reminderSettings.futureDays
         && days >= appState.reminderSettings.pastDays
         //&& hours > -96
-      ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'' })
+      ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'', status: pulse.status === 'Done'? 'line-through':'' })
     })
   }
   //console.log(appState.reminderSettings.futureDays)
@@ -64,8 +64,8 @@ function Reminder(props) {
           <div 
           data-position="right center"
           data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
-          style={{ width: '140px', position: 'static' }}>{item.name}</div>
-          <div style={{ position: 'absolute', right: '0px', color: item.color }}>{item.difference}</div>
+          style={{ width: '140px', textDecoration: item.status }}>{item.name}</div>
+          <div style={{ position: 'absolute', right: '0px', color: item.color, textDecoration: item.status }}>{item.difference}</div>
         </Link>
 
       )

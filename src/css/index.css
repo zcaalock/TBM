@@ -277,6 +277,11 @@
   scrollbar-width: none !important /* Firefox */
 }
 
+.reminders:hover {
+  width: 800px;
+    padding-right: 590px;
+}
+
 .reminders::-webkit-scrollbar {
   display: none;
 }
