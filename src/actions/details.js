@@ -31,7 +31,7 @@ export const editDetail = (id, formValues, fetch) => async dispatch => {
   await axios.patch(`/detail/${id}`, formValues)
     .then((response) => {
       dispatch({ type: types.EDIT_DETAIL, payload: response.data.detail })
-      if (fetch === true) dispatch(fetchDetails)
+      if (fetch === true) dispatch(fetchDetail(id))
       dispatch(editState(response.data.message, 'responseMessage'))
       dispatch(editState(response.status, 'responseStatus'))
       //console.log(response.data.detail)

@@ -52,7 +52,7 @@ function Details(props) {
    const current = detailArr[_.find(detailArr, {id: id}).number]
    const prev = _.find(detailArr,{number: detailArr[_.find(detailArr, {id: id}).number].number - 1})
    //console.log(prev)
-   dispatch(editDetail(id, {createdAt: prev.createdAt}))
+   dispatch(editDetail(id, {createdAt: prev.createdAt}, true))
    dispatch(editDetail(prev.id, {createdAt: created}, true))
    
    
@@ -64,7 +64,7 @@ function Details(props) {
     const id = props.pulseId
     const detailsFiltered = _.filter(details, { pulseId: id })
     //console.log(_.sortBy(detailsFiltered, 'createdAt'))
-    console.log(detailsFiltered)
+    //console.log(detailsFiltered)
     
     return _.sortBy(detailsFiltered, 'createdAt').map(detail => {
       detailArr.push({number:detailArr.length, id:detail.id, createdAt: detail.createdAt})       
