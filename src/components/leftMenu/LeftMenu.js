@@ -10,6 +10,7 @@ import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
 import ModalComponent from '../Forms/modals/Modal'
 import Reminders from '../middle/Boards/pulses/Tbody/Reminder'
+import ReminderFilter from '../Forms/dropdownColumFilterReminders'
 
 
 function Boards (props) {
@@ -47,6 +48,11 @@ function Boards (props) {
     dispatch(editState('clients', 'id'))     
   }
 
+  const handleContactsOnClick = () => {
+    history.push('/contacts/')
+    dispatch(editState('contacts', 'id'))     
+  }
+
   const handleSelectedItem = (selector) => {
     if (appState.id === selector) return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }    
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
@@ -64,7 +70,8 @@ function Boards (props) {
 
     return (
       <div        
-        className="leftMenu header">
+        className="leftMenu header"
+        style={{zIndex: '10'}}>
         <div key='i' className='item leftMenu-main' style={{ textAlign: 'center' }}>
           <div onClick={() => setMHide(MHide === 'true' ? 'false' : 'true')} id="TMenu" style={{ display: 'inline-block' }}><i className='bars icon' /></div>
           <div style={{ display: 'inline-block' }}><h3>Task Manager</h3></div>
@@ -90,6 +97,13 @@ function Boards (props) {
                 style={handleSelectedItem('clients')}>
                 Clients
               </div>
+              <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
+              <div
+                onClick={() => handleContactsOnClick()}
+                className="header item headerSelectable"
+                style={handleSelectedItem('contacts')}>
+                Contacts
+              </div>
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
@@ -111,9 +125,10 @@ function Boards (props) {
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px' }}>
-                Reminders:                
+                Reminders: 
+                <ReminderFilter />               
               </div> 
-              <Reminders/>            
+              <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 680px)', overflowY: 'auto'}}><Reminders/></div>            
             </div>
           </div>
         </div>

@@ -19,7 +19,9 @@ import DropdownColumnFilter from '../../../../Forms/dropdownColumFilter'
 function Tbody(props) {
 
   const clients = useSelector(state => Object.values(state.clients));
-  const appState = useSelector(state => state.appState);
+  const appState = useSelector(state => state.appState)
+  const userId = useSelector(state => state.user.credentials.userId)
+  const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
 
@@ -83,29 +85,22 @@ function Tbody(props) {
   }
 
   const renderClients = () => {
-    //console.log('selector: ', this.props.selector, this.props.item)   
-    let clientsCol = {}
-    const showArchived = appState.showArchived
+     
+    let clientsCol = []
+    const showArchived = leadUser.settings.showArchived
 
-    if (showArchived === true) {
-      clientsCol = clients
+    clientsCol = clients  
 
-    }
+    if (showArchived === false) clientsCol = _.reject(clientsCol,{ archived: 'true' })    
 
-    if (showArchived === false) {
-      //clientsCol = _.chain(clients).filter({ [props.selector]: props.item }).reject({ archived: 'true' }).value()  
-      clientsCol = _.chain(clients).reject({ archived: 'true' }).value()
-    }  
-
-
-    return sortClientsBy(clientsCol).map(client => {
-      //console.log(_.includes(client.title,'test1'))
+    return sortClientsBy(clientsCol).map(client => {      
       if (
         _.includes(client.title.toLowerCase(), appState.clientSearch.toLowerCase()) === true
          || _.includes(client.phone, appState.clientSearch) === true
          || _.includes(client.mail.toLowerCase(), appState.clientSearch.toLowerCase()) === true
          || _.includes(client.project.toLowerCase(), appState.clientSearch.toLowerCase()) === true
          || _.includes(client.unit.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+         || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
       ) return (
         <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
@@ -141,7 +136,7 @@ function Tbody(props) {
           <td >
             {format(new Date(client.createdAt), 'yyyy/MM/dd')}
           </td>
-          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: 'center' }}>
+          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: '' }}>
             {/* <i className="bullseye icon" style={{ color: client.status }} /> */}
             <StatusList client={client} />
           </td>
@@ -153,10 +148,10 @@ function Tbody(props) {
   return (
     <div>
       <DropdownColumnFilter/>
-      <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
+      <table className="ui very basic table">
         <thead>
           <tr>
-            <th style={{ paddingLeft: '10px', minWidth: '10%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '10%', paddingLeft: '10px' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
             <th style={{ minWidth: '10%' }}>Phone </th>
             <th style={{ minWidth: '10%' }}>Mail</th>
             {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>Lead Person</th>)}

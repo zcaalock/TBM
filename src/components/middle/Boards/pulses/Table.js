@@ -15,7 +15,7 @@ function Table(props) {
         categoryKey={props.categoryKey}
         categoryTitle={props.categoryTitle}
         category={props.category} />
-      <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
+      <table className="ui very basic table" >
         <Thead categoryId={props.categoryKey} />
         <Tbody categoryId={props.categoryKey} />
         <AddPulse boardId={props.boardId} categoryId={props.categoryKey} />

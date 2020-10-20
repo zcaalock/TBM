@@ -10,6 +10,7 @@ import clientReducers from './clientReducers'
 import detailsReducers from './detailsReducers'
 import usersReducers from './usersReducers'
 import notepadReducers from './notepadReducers'
+import contactsReducers from './contactsReducers'
 
 import uiReducers from './uiReducers';
 
@@ -46,6 +47,7 @@ const reducers = combineReducers({
   categories: categoriesReducers,
   pulses: pulsesReducers,
   clients: clientReducers,
+  contacts: contactsReducers,
   details: detailsReducers,
   notepad: notepadReducers,
   user: usersReducers,

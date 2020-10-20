@@ -15,12 +15,12 @@ function DropdownColumnFilter (props) {
           onClick={(event) => {
             event.stopPropagation()
             event.nativeEvent.stopImmediatePropagation()
-            dispatch(editState({ ...appState.clientsSettings, [selector]: !appState.clientsSettings[selector] }, 'clientsSettings'))
+            dispatch(editState({ ...appState.contactsSettings, [selector]: !appState.contactsSettings[selector] }, 'contactsSettings'))
           }}
         >
           <Checkbox
             label={name}
-            checked={appState.clientsSettings[selector]}
+            checked={appState.contactsSettings[selector]}
             style={{ zIndex: -1 }}
           />
         </Dropdown.Item>
@@ -78,23 +78,14 @@ function DropdownColumnFilter (props) {
               checked
               label='Project'
             />
-          </Dropdown.Item>
-          {dropDownSelectable('Unit', 'showUnit')}
-          {dropDownSelectable('Price', 'showPrice')}
+          </Dropdown.Item>          
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
               label='Date'
             />
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Checkbox
-              disabled
-              checked
-              label='Status'
-            />
-          </Dropdown.Item>
+          </Dropdown.Item>          
         </Dropdown.Menu>
       </Dropdown>
     )

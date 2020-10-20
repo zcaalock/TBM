@@ -9,9 +9,11 @@ import LeftMenu from './leftMenu/LeftMenu'
 import Boards from './middle/Boards'
 import Details from './rightMenu/Details'
 import DetailsClients from './rightMenu/DetailsClients'
+import DetailsContacts from './rightMenu/DetailsContacts'
 import LandingPage from './middle/LandingPage'
 import Filters from './middle/Filters'
 import Clients from './middle/Clients'
+import Contacts from './middle/Contacts'
 
 import Signup from './Forms/Signup'
 import Login from './Forms/Login'
@@ -59,6 +61,8 @@ const App = () => {
               <Route path='/filters/pulse/:id' component={Details} />              
               <Route path='/clients/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /></div></>)} />
               <Route path='/clients/client/:id' component={DetailsClients} />
+              <Route path='/contacts/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Contacts {...props} /></div></>)} />
+              <Route path='/contacts/contact/:id' component={DetailsContacts} />
               <Route path="/boards/:id" component={(props) => (<><LeftMenu {...props} /> <Boards {...props} /></>)} />
               <Route path="/boards/:id/pulses/:id" component={Details} />              
             </Route>

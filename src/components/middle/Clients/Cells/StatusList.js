@@ -8,7 +8,7 @@ import { Dropdown } from 'semantic-ui-react'
 function StatusList(props) {
 
   const [state, defState] = useState(
-    { itemEditable: false })  
+    { itemEditable: false })
   const dispatch = useDispatch();
 
   const saveField = (title) => {
@@ -21,7 +21,9 @@ function StatusList(props) {
     let list = [
       { key: '#00A569', text: 'Rokujący', icon: 'bullseye', value: '#00A569' },
       { key: '#EDC15C', text: 'Niezdecydowany', icon: 'bullseye', value: '#EDC15C' },
-      { key: '#DC6969', text: 'Nierokujący', icon: 'bullseye', value: '#DC6969' }
+      { key: '#DC6969', text: 'Nierokujący', icon: 'bullseye', value: '#DC6969' },
+      { key: 'black', text: 'Kupujący', value: 'Kupujący' },
+      { key: 'Pośrednik', text: 'Pośrednik', value: 'Pośrednik' }
 
     ]
 
@@ -37,17 +39,23 @@ function StatusList(props) {
 
   }
 
+  const statusText = () => {
+    if (props.client.status === 'Kupujący') return 'Kupujący'
+    if (props.client.status === 'Pośrednik') return 'Pośrednik'
+    return <i className="bullseye icon" style={{ color: props.client.status }} />
+  }
+
   const renderDropDown = () => {
     if (props.client.archived === 'false') {
       //console.log('project: ', props.client.project)
       return (
         <div>
           <Dropdown
-            text={<i className="bullseye icon" style={{ color: props.client.status }} />}
+            text={statusText()}
             floating
             labeled
             style={{ marginLeft: '0px', marginRight: '10px' }}
-          >           
+          >
             <Dropdown.Menu>
               {renderItems()}
               <Dropdown.Divider />
@@ -55,7 +63,7 @@ function StatusList(props) {
                 icon='archive'
                 style={{ color: '#DC6969' }}
                 text='Archive'
-                onClick={()=>{dispatch(editClient(props.client.id, { archived: 'true' }))}}
+                onClick={() => { dispatch(editClient(props.client.id, { archived: 'true' })) }}
               />
             </Dropdown.Menu>
           </Dropdown>
@@ -64,10 +72,10 @@ function StatusList(props) {
     }
     if (props.client.archived === 'true')
       return (
-        <div 
-        data-position="bottom center"
-        data-tooltip="Archived"
-        style={{color: '#DC6969', textAlign: 'left', paddingLeft: '12px'}}>
+        <div
+          data-position="bottom center"
+          data-tooltip="Archived"
+          style={{ color: '#DC6969', textAlign: 'left', paddingLeft: '6.5px' }}>
           <i className=" archive icon" />
         </div>
       )

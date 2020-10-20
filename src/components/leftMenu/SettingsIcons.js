@@ -11,6 +11,7 @@ import { fetchDetails } from '../../actions/details'
 import { fetchNotepads } from '../../actions/notepad'
 import { fetchClients } from '../../actions/clients'
 import { editState } from '../../actions/appState'
+import { fetchContacts} from '../../actions/contacts'
 
 function SettingsIcons(props) {
 
@@ -34,6 +35,7 @@ function SettingsIcons(props) {
       dispatch(fetchCategories())
       dispatch(fetchNotepads())
       dispatch(fetchClients())
+      dispatch(fetchContacts())
     }
     dispatch(editState('true', 'refreshed'))
     setTimeout(() => { dispatch(editState('false', 'refreshed')) }, 20000)

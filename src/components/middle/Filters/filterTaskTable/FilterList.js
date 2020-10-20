@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Input, Label, Icon, Checkbox, Dropdown } from 'semantic-ui-react'
 import _ from 'lodash'
 
-import history from '../../../../history'
 import { editState } from '../../../../actions/appState'
 import { fetchStatus } from '../../../../actions/status'
 import { fetchPulses } from '../../../../actions/pulses'

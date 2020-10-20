@@ -74,13 +74,19 @@ function Tbody(props) {
   }
 
   const renderPulses = () => {
-    let leadArr = _.chain(lead).reject({ userId: userId }).value()
-    let otherLeadArrId = []
-    leadArr.map(lead => {
-      otherLeadArrId.push({ privateId: lead.userId })
+    let pulsesCol = []
+    pulses.map(item=>{
+      if(item.privateId === '') pulsesCol.push(item)
     })
 
-    let pulsesCol = _.chain(pulses).reject({ otherLeadArrId }).value()
+    let pulseColPrivate = []
+
+    pulses.map(item=>{
+      if(item.privateId === userId) pulseColPrivate.push(item)
+    })
+
+    pulsesCol = pulsesCol.concat(pulseColPrivate)      
+
     const showArchived = leadUser.settings.showArchived
     const showPrivate = appState.showPrivate
     const showEmptyDates = appState.showEmptyDates
@@ -123,7 +129,7 @@ function Tbody(props) {
       )
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
-            <td style={{ paddingLeft: '10px' }} data-label="Name">
+            <td data-label="Name" style={{paddingLeft: '10px'}}>
               <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={userId} />
             </td>
             <td >
@@ -152,7 +158,7 @@ function Tbody(props) {
 
   return (
     <div>
-      <table className="ui very basic table" style={{ paddingLeft: '15px' }}>
+      <table className="ui very basic table">
         <thead>
           <tr>
             <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
