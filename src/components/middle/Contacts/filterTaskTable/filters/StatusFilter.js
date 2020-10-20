@@ -12,13 +12,11 @@ import ContactMail from '../../Cells/ContactMail'
 import ProjectList from '../../Cells/ProjectList'
 
 import DropdownColumnFilterClients from '../../../../Forms/dropdownColumFilterClients'
-import Contacts from '../../../Contacts';
 
 function Tbody(props) {
 
   const contacts = useSelector(state => Object.values(state.contacts));
-  const appState = useSelector(state => state.appState)
-  const lead = useSelector(state => Object.values(state.lead))
+  const appState = useSelector(state => state.appState)  
   const userId = useSelector(state => state.user.credentials.userId)
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
@@ -98,13 +96,13 @@ function Tbody(props) {
 
     let contactsCol = []
     contacts.map(item=>{
-      if(item.privateId === '') contactsCol.push(item)
+      if(item.privateId === '') return contactsCol.push(item)
     })
 
     let constactsColPrivate = []
 
     contacts.map(item=>{
-      if(item.privateId === userId) constactsColPrivate.push(item)
+      if(item.privateId === userId) return constactsColPrivate.push(item)
     })
 
     contactsCol = contactsCol.concat(constactsColPrivate)    
@@ -148,6 +146,7 @@ function Tbody(props) {
           </td>          
         </tr>
       )
+      return
     })
   }
 

@@ -16,8 +16,7 @@ function Categories() {
   const details = useSelector(state => Object.values(state.details))
   const appState = useSelector(state => state.appState)
   const privateId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
-  const [stateId, setId] = useState({ id: false })
+  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))  
 
   const dispatch = useDispatch()
 
@@ -32,15 +31,7 @@ function Categories() {
         return false;
     }
     return true;
-  }
-
-  const expand = (id) => {
-    setId({ [id]: true })
-  }
-
-  const collapse = (id) => {
-    setId({ [id]: false })
-  }
+  }  
 
   const renderProgressBar = (id) => {
     let detailStorage = []

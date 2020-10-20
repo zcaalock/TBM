@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { Form, Dropdown, Input } from 'semantic-ui-react'
+import React from 'react'
+import { Form, Dropdown} from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../actions/appState'
 
@@ -7,21 +7,7 @@ import { editState } from '../../actions/appState'
 
 function DropdownColumnReminders(props) {
   const dispatch = useDispatch();
-  const appState = useSelector(state => state.appState)
-  const [past, setPast] = useState(Math.abs(appState.reminderSettings.pastDays))
-  const [future, setFuture] = useState('')
-
-  
-  const checkError = (selector) => {
-    return selector <= 0 ? true: false
-  }
-
-  const submit = (value, selector) => {
-    if(value > 0 && selector === 'past' ) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(value) }, 'reminderSettings'))
-    if(value > 0 && selector === 'future' ) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(value) }, 'reminderSettings'))
-    
-    
-  }
+  const appState = useSelector(state => state.appState)    
 
   return (
     <Dropdown
@@ -49,7 +35,7 @@ function DropdownColumnReminders(props) {
         <Dropdown.Divider />
         <Dropdown.Item >
           <Form >
-            <Form.Field error={checkError(past)} inline style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Form.Field inline style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <label>Past days:</label>
               <input  onChange={(v) =>{ if(v.target.value >= 0 ) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings'))}} value={-appState.reminderSettings.pastDays} style={{width: '75px'}} type="number" placeholder='12' />
             </Form.Field>

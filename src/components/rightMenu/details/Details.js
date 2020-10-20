@@ -10,9 +10,8 @@ import EditDetailName from './EditDetailName'
 function Details(props) {
   const [state, defState] = useState({});
   const dispatch = useDispatch();
-  const details = useSelector(state => Object.values(state.details));
-  const userId = useSelector(state => state.user.credentials.userId);
-  const appState = useSelector(state => state.appState)
+  const details = useSelector(state => Object.values(state.details))
+  const userId = useSelector(state => state.user.credentials.userId)  
 
   const removeEdit = (id) => {
     defState({ [`itemEditable${id}`]: false })
