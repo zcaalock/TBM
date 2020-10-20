@@ -1,101 +1,93 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { loginUser } from '../../actions/users'
 
-class Login extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: '',
-      errors: {}
-    }
-  }
+function Login(props) {
 
-  componentDidMount(){
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
+
+  useEffect(() => {
     localStorage.removeItem("state")
-  }
+  }, [])
 
-  componentWillReceiveProps(nextProps) {
-    
-    if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UI.errors })
+  useEffect(() => {    
+    if (props.UI.errors) {
+      setErrors(props.UI.errors )
+      
     }
-  }  
+  }, [props.UI])
 
-  handleSubmit = (event) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     const userData = {
-      email: this.state.email,
-      password: this.state.password
+      email: email,
+      password: password
     };
-    
-    this.props.loginUser(userData, this.props.history);
-    
+
+    dispatch(loginUser(userData, props.history))
+
   };
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  const handleChange = (event) => {
+    
+    if (event.target.name === 'email') setEmail(event.target.value)
+    if (event.target.name === 'password') setPassword(event.target.value)    
   };
 
-  handleCredentialError(){
-    if(this.state.errors.general) 
-     return <Message
-     error
-     header='Wrong Credentials'
-     content='Wrong email or password please try again'
-   />
+  function handleCredentialError () {
+    if (errors.general) return <Message
+        error
+        header='Wrong Credentials'
+        content='Wrong email or password please try again'
+      />
   }
-
-    
-  render() {
-    //console.log('login state: ', this.state)
-    const { errors } = this.state;
-    
-    return (
-      <div>
-        <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">
-          <div className='item leftMenu-main'><h3>Task Manager</h3></div>
-        </div>
-        <div className='login'>
-          <Form error onSubmit={this.handleSubmit} >
-            <Form.Input
-              id="email"
-              name="email"
-              type="email"
-              label="Email"
-              //helperText={errors.email}
-              //error={errors.email ? true : false}
-              error={errors.email ? errors.email : false}
-              fluid
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              //helperText={errors.password}
-              error={errors.password ? errors.password : false}
-              fluid
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            {this.handleCredentialError()}
-            <Button
-              type="submit"              
-            >
-              Login
-        </Button>
-          </Form>
-        </div>
+  console.log(errors.general)
+  return (
+    <div>
+      <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">
+        <div className='item leftMenu-main'><h3>Task Manager</h3></div>
       </div>
+      <div className='login'>
+        <Form error onSubmit={handleSubmit} >
+          <Form.Input
+            id="email"
+            name="email"
+            type="email"
+            label="Email"
+            //helperText={errors.email}
+            //error={errors.email ? true : false}
+            error={errors.email ? errors.email : false}
+            fluid
+            value={email}
+            onChange={handleChange}
+          />
+          <Form.Input
+            id="password"
+            name="password"
+            type="password"
+            label="Password"
+            //helperText={errors.password}
+            error={errors.password ? password : false}
+            fluid
+            value={password}
+            onChange={handleChange}
+          />
+          {handleCredentialError()}
+          <Button
+            type="submit"
+          >
+            Login
+        </Button>
+        </Form>
+      </div>
+    </div>
 
-    )
-  }
+  )
 }
 
 const mapStateToProps = (state) => {
