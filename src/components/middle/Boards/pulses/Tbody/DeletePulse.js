@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import {deletePulse} from '../../../../../actions/pulses'
-import history from '../../../../../history'
 
 function DeletePulse (props) {
   

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { editLead } from '../../../actions/settings'
-import { fetchPulse } from '../../../actions/pulses'
 import _ from 'lodash'
 import { Checkbox, Button } from 'semantic-ui-react'
 
