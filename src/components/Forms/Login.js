@@ -45,8 +45,7 @@ function Login(props) {
         header='Wrong Credentials'
         content='Wrong email or password please try again'
       />
-  }
-  console.log(errors.general)
+  } 
   return (
     <div>
       <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">

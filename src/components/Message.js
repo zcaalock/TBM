@@ -7,15 +7,15 @@ import _ from 'lodash'
 function ResponceMessage() {
     const appState = useSelector(state => state.appState)
     const userId = useSelector(state => state.user.credentials.userId)
-    const lead = useSelector(state => _.find(state.lead, {userId: userId}))
+    const lead = useSelector(state => _.find(state.lead, { userId: userId }))
     const dispatch = useDispatch()
-    
-    
+
+
     const renderMessage = () => {
         if (appState.responseStatus === 200 && lead && lead.settings.messages === true) {
-            setTimeout(() => { 
-                dispatch(editState('', 'responseMessage')) 
-                dispatch(editState(0, 'responseStatus')) 
+            setTimeout(() => {
+                dispatch(editState('', 'responseMessage'))
+                dispatch(editState(0, 'responseStatus'))
             }, 5000)
             return (
                 <Message compact positive>
@@ -26,9 +26,9 @@ function ResponceMessage() {
         }
 
         if (appState.responseStatus === 500 && lead && lead.settings.messages === true) {
-            setTimeout(() => { 
-                dispatch(editState('', 'responseMessage')) 
-                dispatch(editState(0, 'responseStatus')) 
+            setTimeout(() => {
+                dispatch(editState('', 'responseMessage'))
+                dispatch(editState(0, 'responseStatus'))
             }, 5000)
             return (
                 <Message compact negative>
@@ -39,9 +39,9 @@ function ResponceMessage() {
         }
 
         if (appState.responseStatus === 404 && lead && lead.settings.messages === true) {
-            setTimeout(() => { 
-                dispatch(editState('', 'responseMessage')) 
-                dispatch(editState(0, 'responseStatus')) 
+            setTimeout(() => {
+                dispatch(editState('', 'responseMessage'))
+                dispatch(editState(0, 'responseStatus'))
             }, 5000)
             return (
                 <Message compact negative>

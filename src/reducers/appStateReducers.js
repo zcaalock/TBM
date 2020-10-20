@@ -48,6 +48,7 @@ const appState = {
   detailId: '',
   detailName: '',
   error: '',
+  asyncCheck: '',
   submited: '',
   responseMessage: '',
   responseStatus: 0
