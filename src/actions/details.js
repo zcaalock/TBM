@@ -16,12 +16,26 @@ export const fetchDetails = () => async dispatch => {
   dispatch({ type: types.FETCH_DETAILS, payload: response.data })
 }
 
-export const editDetail = (id, formValues) => async dispatch => {
+export const fetchDetail = (id) => async dispatch => {
+  await axios.get(`/detail/${id}`)
+    .then((response) => {
+      dispatch({ type: types.FETCH_DETAIL, payload: response.data.detail })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+export const editDetail = (id, formValues, fetch) => async dispatch => {
+  //console.log(id, formValues)
   await axios.patch(`/detail/${id}`, formValues)
     .then((response) => {
       dispatch({ type: types.EDIT_DETAIL, payload: response.data.detail })
+      if (fetch === true) dispatch(fetchDetail(id))
       dispatch(editState(response.data.message, 'responseMessage'))
       dispatch(editState(response.status, 'responseStatus'))
+      //console.log(response.data.detail)
+
     })
     .catch((err) => {
       dispatch(editState(404, 'responseStatus'))
