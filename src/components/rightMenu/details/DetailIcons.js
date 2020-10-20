@@ -1,22 +1,34 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from "react-redux";
+import _ from 'lodash'
+import { useDispatch} from "react-redux";
 import { deleteDetail } from '../../../actions/details'
 import { editState } from '../../../actions/appState'
 
 
 function DetailIcon(props) {
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(editState('false', 'gCalendarOpen'))
   }, [])
 
+  const renderUpIcon = () => {
+    const prev = _.find(props.detailArr, { number: props.detailArr[_.find(props.detailArr, { id: props.detailId }).number].number - 1 }) 
+    if(prev) return <i onClick={()=>props.moveUp()} className="caret up icon DetailArrows" style={{position: 'absolute', marginTop: '-7px'}}  />
+  }
+
+  const renderDownIcon = () => {
+    const next = _.find(props.detailArr, { number: props.detailArr[_.find(props.detailArr, { id: props.detailId }).number].number + 1 }) 
+    if(next) return <i onClick={()=>props.moveDown()} className="caret down icon DetailArrows" style={{position: 'absolute', marginTop: '10px'}}/>
+
+  }
+
   return (
     <div>
       <div className="hideDetailArrows" style={{position: 'absolute', marginLeft: '-25px'}}>
-      <i onClick={()=>props.moveUp()} className="caret up icon DetailArrows" style={{position: 'absolute', marginTop: '-7px'}}  />
-      <i className="caret down icon DetailArrows" style={{position: 'absolute', marginTop: '10px'}}/>
+      {renderUpIcon()}
+      {renderDownIcon()}
       </div>
       <div
         onClick={() => { props.showEdit() }}
