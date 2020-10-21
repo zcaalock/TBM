@@ -4,6 +4,8 @@ import _ from 'lodash'
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 import EditClientProject from './EditClientProject'
+import { useTranslation } from "react-i18next"
+
 
 
 function UserName(props) {
@@ -12,7 +14,7 @@ function UserName(props) {
     { itemEditable: false })
   const clients = useSelector(state => Object.values(state.clients))
   const dispatch = useDispatch(); 
-
+  const { t, i18n } = useTranslation()
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
@@ -65,7 +67,7 @@ function UserName(props) {
             labeled
           >
             <Dropdown.Menu>
-              <Dropdown.Item icon='edit' content='Create name' onClick={() => saveField('Create name')} />
+              <Dropdown.Item icon='edit' content={t('Create new project')} onClick={() => saveField('Create name')} />
               <Dropdown.Divider />              
               {renderItems()}
             </Dropdown.Menu>

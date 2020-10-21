@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { createPulse, createPrivatePulse } from '../../../../../actions/pulses'
 import SingleInput from '../../../../Forms/SingleInput'
+import { useTranslation } from "react-i18next"
 
 function AddPulse(props) {
   const boards = useSelector(state => _.keyBy(Object.values(state.boards), 'id'))
@@ -12,7 +13,7 @@ function AddPulse(props) {
   const [itemEditable, setItemEditable] = useState(false)
 
   const dispatch = useDispatch()
-
+  const { t, i18n } = useTranslation()
   const removeEdit = () => {
     setItemEditable(false)
   }
@@ -34,7 +35,7 @@ function AddPulse(props) {
       return (
         <div
           data-position="bottom center"
-          data-tooltip="Create pulse">
+          data-tooltip={t("Create pulse")}>
           <i className="plus icon" />
         </div>)
     }
@@ -48,9 +49,9 @@ function AddPulse(props) {
 
   const renderName = () => {
     if (boards[props.boardId].privateId === '')
-      return <div>{renderNewPulse('New Pulse')}</div>
+      return <div>{renderNewPulse(t("Create pulse"))}</div>
     if (boards[props.boardId].privateId === userId)
-      return <div>{renderNewPulse('New Private Pulse')}</div>
+      return <div>{renderNewPulse(t('New Private Pulse'))}</div>
   }
 
   const renderNewPulse = (name) => {

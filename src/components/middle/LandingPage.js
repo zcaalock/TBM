@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
-
+import { useTranslation } from "react-i18next"
 function LandingPage() {
-
+const { t, i18n } = useTranslation()
   const goLink = (link) => {
     history.push(`/${link}`)
   }
@@ -13,7 +13,7 @@ function LandingPage() {
         <div className='item leftMenu-main'><h3>Task Manager</h3></div>
       </div>
       <div className='login' style={{ textAlign: 'center' }}>
-        <Button onClick={() => goLink('login')}>Login</Button>
+        <Button onClick={() => goLink('login')}>{t('Login')}</Button>
       </div>
     </div>
   )

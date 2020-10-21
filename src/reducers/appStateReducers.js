@@ -51,7 +51,8 @@ const appState = {
   asyncCheck: '',
   submited: '',
   responseMessage: '',
-  responseStatus: 0
+  responseStatus: 0,
+  languange: 'pl'
 }
 
 export default (state = appState, action) => {

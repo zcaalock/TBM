@@ -7,7 +7,7 @@ import { editPulse} from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
 import history from '../../history'
-
+import { useTranslation } from "react-i18next"
 let boardsArr = []
 let boardsPrivateArr = []
 let categoriesArr = []
@@ -34,7 +34,7 @@ function PulseModal() {
   const [boardId, setBoardId] = useState('')
 
   const dispatch = useDispatch()
-
+const { t, i18n } = useTranslation()
   useEffect(() => {
     if (isEmpty(boards)) dispatch(fetchBoards())
     if (isEmpty(lead)) dispatch(fetchLead())
@@ -127,7 +127,7 @@ function PulseModal() {
   return (
     <div>
       <Modal size='tiny' dimmer='inverted' open={defaulCheck(editPulseOpen)} onClose={close}>
-        <Modal.Header>Create new Pulse</Modal.Header>
+        <Modal.Header>{t('Edit Pulse')}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form
@@ -136,8 +136,8 @@ function PulseModal() {
                 id='name'
                 name='name'
                 control={Input}
-                label='Pulse name'
-                placeholder='Pulse name'
+                label={t('Pulse name')}
+                placeholder={t('Pulse name')}
                 defaultValue={name}
                 onChange={(e, { value }) => setName(value)}
               />
@@ -146,7 +146,7 @@ function PulseModal() {
                 name='userId'
                 control={Select}                
                 options={leadArr}                
-                label='Lead Person'
+                label={t('Lead Person')}
                 placeholder={leadKey[userId] ? leadKey[userId].title : ''}
                 searchInput={{ id: 'userId' }}
                 onChange={(e, { value }) => setUserId(value)}
@@ -156,7 +156,7 @@ function PulseModal() {
                 name='boardId'
                 control={Select}
                 options={boardsArr}
-                label='Board name'
+                label={t('Board name')}
                 placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}                
                 onChange={(e, { value }) => {
                   setBoardId(value)
@@ -170,8 +170,8 @@ function PulseModal() {
                 name='categoryId'
                 control={Select}
                 options={categoriesArr}
-                label='Category name'
-                placeholder='Cateogry name'
+                label={t('Category name')}
+                placeholder={t('Cateogry name')}
                 searchInput={{ id: 'categoryId' }}
                 onChange={(e, { value }) => setCategoryId(value)}
               />
@@ -185,11 +185,11 @@ function PulseModal() {
               setMakeprivate(!makePrivate)
             }}
             checked={(boardKey[boardId] && boardKey[boardId].privateId === userId) || makePrivate === true ? true : false}
-            label='Make private'
+            label={t('Make private')}
             disabled={boardKey[boardId] && boardKey[boardId].privateId === userId ? true : false}
           />
           <Button onClick={close}>
-            Cancel
+            {t('Cancel')}
             </Button>
           <Button
             disabled={activateSubmit()}
@@ -197,7 +197,7 @@ function PulseModal() {
             onClick={() => handleSubmit()}
             icon='checkmark'
             labelPosition='right'
-            content="Edit pulse"
+            content={t("Edit Pulse")}
           />
         </Modal.Actions>
       </Modal>

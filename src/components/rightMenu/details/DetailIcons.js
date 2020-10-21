@@ -2,20 +2,20 @@ import React, { useEffect } from 'react'
 import _ from 'lodash'
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetail, editDetail } from '../../../actions/details'
-import { editState } from '../../../actions/appState'
 import { Popup } from 'semantic-ui-react'
 import { format } from 'date-fns'
-
+import { useTranslation } from "react-i18next"
 
 function DetailIcon(props) {
   const userId = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch();
-
+  const { t, i18n } = useTranslation()
   const handleOnClick = (id, bool) => {
     console.log(bool)
-    if (bool === 'false' || !bool) {      
-      dispatch(editDetail(id, { flag: 'true' }, userId, true))    }
-    if (bool === 'true') {      
+    if (bool === 'false' || !bool) {
+      dispatch(editDetail(id, { flag: 'true' }, userId, true))
+    }
+    if (bool === 'true') {
       dispatch(editDetail(id, { flag: 'false' }, userId, true))
     }
   }
@@ -26,7 +26,7 @@ function DetailIcon(props) {
         onClick={() => { handleOnClick(props.detailId, props.detail.flag) }}
         className="hideDetailArrows"
         data-position="bottom center"
-        data-tooltip="Flag detail"
+        data-tooltip={t("Flag detail")}
         style={{
           display: 'inline-block',
           //paddingLeft: '0px',
@@ -34,21 +34,21 @@ function DetailIcon(props) {
           //color: props.detail.flag === 'true' ? '#DC6969' : '',
           cursor: 'pointer'
         }}>
-        <i style={{color: props.detail.flag === 'true' ? '#DC6969' : ''}} className="flag icon" />
+        <i style={{ color: props.detail.flag === 'true' ? '#DC6969' : '' }} className="flag icon" />
       </div>
       <Popup position='top right' style={{ display: 'inline-block' }} trigger={<i className="articleIcon info icon" />}>
         {/* <Popup.Header>User Rating</Popup.Header> */}
         <Popup.Content>
-          Created by: {props.createdUser ? props.createdUser.title : 'no info'} <br />
-              Edited by: {props.editedUser ? props.editedUser.title : 'no info'} <br />
-              Edited at: {props.editedAt ? format(new Date(props.editedAt), 'dd/MM/yyyy | HH:mm:ss') : 'no info'}
+          {t('Created by')}: {props.createdUser ? props.createdUser.title : t('no info')} <br />
+              {t('Edited by')}: {props.editedUser ? props.editedUser.title : t('no info')} <br />
+              {t('Edited at')}: {props.editedAt ? format(new Date(props.editedAt), 'dd/MM/yyyy | HH:mm:ss') : t('no info')}
         </Popup.Content>
       </Popup>
       <div
         onClick={() => { props.showEdit() }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Edit"
+        data-tooltip={t("Edit")}
         style={{
           display: 'inline-block',
           //paddingLeft: '0px',
@@ -61,7 +61,7 @@ function DetailIcon(props) {
         onClick={() => { dispatch(deleteDetail(props.detailId)) }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Delete"
+        data-tooltip={t("Delete")}
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />
       </div>

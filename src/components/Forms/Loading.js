@@ -1,7 +1,7 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, {useEffect} from 'react'
+import { useDispatch } from 'react-redux'
 import history from '../../history'
-import { Dimmer, Loader} from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 import { editState } from '../../actions/appState'
 import { fetchStatus } from '../../actions/status'
@@ -11,56 +11,33 @@ import { fetchBoards } from '../../actions/boards'
 import { fetchLead } from '../../actions/settings'
 import { fetchDetails } from '../../actions/details'
 import { fetchNotepads } from '../../actions/notepad'
+import { fetchClients } from '../../actions/clients'
+import { fetchContacts } from '../../actions/contacts'
 
-
-
-
-class Loading extends React.Component {
-
- 
-
-  handleAuth() {
-    if (this.props.user.loading === false) {
-      if (this.props.user.authenticated === false)
-        history.push('/unAuth')
-    }
-  }
-  componentDidMount() {
-    this.props.fetchBoards()
-      this.props.fetchStatus()
-      this.props.fetchPulses()
-      this.props.fetchDetails()
-      this.props.fetchLead()
-      this.props.fetchCategories()
-      this.props.fetchNotepads()
-      
+function Loading () {  
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchBoards())
+    dispatch(fetchStatus())
+    dispatch(fetchPulses())
+    dispatch(fetchDetails())
+    dispatch(fetchLead())
+    dispatch(fetchCategories())
+    dispatch(fetchNotepads())
+    dispatch(fetchClients())
+    dispatch(fetchContacts())
+    dispatch(editState('filters', 'id'))
     setTimeout(() => { history.push(`/filters`) }, 4000);
-  }
-
+  },[])
   
-
-  render() {
     return (
       <div >
-        
-      <Dimmer active inverted>
-        <Loader size='large'>Loading</Loader>
-      </Dimmer>
-
-      
-    
+        <Dimmer active inverted>
+          <Loader size='large'>Loading</Loader>
+        </Dimmer>
       </div>
-    )
-  }
-
+    )  
 }
 
-const mapStateToProps = (state) => {
 
-  return {    
-    appState: state.appState,
-    user: state.user
-  }
-}
-
-export default connect(mapStateToProps, { editState, fetchBoards, fetchCategories, fetchDetails, fetchLead, fetchPulses, fetchStatus, fetchNotepads })(Loading)
+export default Loading

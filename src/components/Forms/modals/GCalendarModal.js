@@ -7,10 +7,12 @@ import addHours from 'date-fns/addHours'
 import { Button, Modal, Form, Input, Message, Select } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
 import CREDENTIALS from '../../../GCAPI'
+import { useTranslation } from "react-i18next"
+
 
 function GCalendarModal(props) {
   let calendar = {}
-
+  
   const calendarIdArr = [
     { key: 'primary', 'text': 'Main', 'value': 'primary' },
     { key: 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com', 'text': 'Tribeach', 'value': 'tgbh1iaftfa92bo9k6qb1c1i58@group.calendar.google.com' }
@@ -64,7 +66,7 @@ function GCalendarModal(props) {
   const [emailShow, setEmailshow] = useState(false)
 
   const dispatch = useDispatch()
-
+  const { t, i18n } = useTranslation()
   useEffect(() => {    
     dispatch(editState('', 'error'))
     dispatch(editState('', 'submited'))
@@ -175,15 +177,15 @@ function GCalendarModal(props) {
     if (appState.error === 'generic') {
       setTimeout(() => { dispatch(editState('', 'error')) }, 4000)
       return <Message negative>
-        <Message.Header>Something went wrong</Message.Header>
-        <p>Try again</p>
+        <Message.Header>{t('Something went wrong')}</Message.Header>
+        <p>{t('Try again')}</p>
       </Message>
     }
   }
   
   return (
     <>      
-        <Modal.Header>Create Google Calendar Event</Modal.Header>
+        <Modal.Header>{t('Create Google Calendar Event')}</Modal.Header>
         {showError()}
         <Modal.Content>
           <Modal.Description>
@@ -193,8 +195,8 @@ function GCalendarModal(props) {
                 id={`name_${props.detailId}`}
                 name='name'
                 control={Input}
-                label='Title'
-                placeholder='Title'
+                label={t('Title')}
+                placeholder={t('Title')}
                 //defaultValue={props.detailTitle}
                 onChange={(e, { value }) => setSummary(value)}
               />
@@ -202,8 +204,8 @@ function GCalendarModal(props) {
                 id={`description_${props.detailId}`}
                 name='decription'
                 control={Input}
-                label='Description'
-                placeholder='Description'
+                label={t('Description')}
+                placeholder={t('Description')}
                 //defaultValue={description}
                 onChange={(e, { value }) => setDescription(value)}
               />
@@ -215,14 +217,14 @@ function GCalendarModal(props) {
                 //onFocus={this.handleBoardList()}
                 options={calendarIdArr}
                 //value='Alek'
-                label='Calendar Id'
+                label={t('Calendar Id')}
                 placeholder={calendarIdArr[1].text}
                 //searchInput={{ id: 'id' }}
                 onChange={(e, { value }) => setCalendarName(value)}
               />
               <Form.Field
                 id='startdatetime'
-                label='Start Date & Time'
+                label={t('Start Date & Time')}
                 style={{ marginBottom: '0px' }}
               />
               <Form.Field >
@@ -249,7 +251,7 @@ function GCalendarModal(props) {
                   pointing: 'below'
                 } : false}
                 id='enddatetime'
-                label='End Date & Time'
+                label={t('End Date & Time')}
                 style={{ marginBottom: '0px' }}
               />
               <Form.Field error={errorDate}>
@@ -281,8 +283,8 @@ function GCalendarModal(props) {
                   id='location'
                   name='location'
                   control={Input}
-                  label='Location'
-                  placeholder='Location'
+                  label={t('Location')}
+                  placeholder={t('Location')}
                   //defaultValue={location}
                   value={location}
                   onChange={(e, { value }) => setLocation(value)}
@@ -302,7 +304,7 @@ function GCalendarModal(props) {
                   disabled={!emailShow}
                   id='form-input-control-error-email'
                   control={Input}
-                  label='Email'
+                  label='E-mail'
                   style={{ width: 'auto' }}
                   placeholder='mail@mail.com'
                   onChange={(e, { value }) => {
@@ -312,7 +314,7 @@ function GCalendarModal(props) {
                   }
                   value={email}
                   error={errorEmail === true ? {
-                    content: 'Please enter a valid email address',
+                    content: t('Please enter a valid email address'),
                     pointing: 'left',
                     width: 'auto'
                   } : false}
@@ -327,10 +329,10 @@ function GCalendarModal(props) {
             style={{display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px'}}
             onChange={(e, { checked }) => {setopenCalendar(!openCalendar)}
             }
-            label='Open calendar'
+            label={t('Open calendar')}
           />
           <Button onClick={close}>
-            Cancel
+            {t('Cancel')}
             </Button>
           <Button
             disabled={summary === '' || errorDate === true || errorEmail === true ? true : false}
@@ -338,7 +340,7 @@ function GCalendarModal(props) {
             onClick={() => handleSubmit()}
             icon='checkmark'
             labelPosition='right'
-            content="Create event"
+            content={t("Create Event")}
           />
         </Modal.Actions>
     </>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoards } from '../../actions/boards'
 import { editState } from '../../actions/appState'
-
+import { useTranslation } from "react-i18next"
 
 function BoardsList(props) {
 
@@ -16,7 +16,7 @@ function BoardsList(props) {
   const lead = useSelector(state => _.find(state.lead, {userId: userId}))
 
   const dispatch = useDispatch()
-
+const { t, i18n } = useTranslation() 
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -87,7 +87,7 @@ function BoardsList(props) {
       return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div style={{zIndex:10}} key={new Date()} className='notificationBoard' data-position="left center" data-tooltip="Unreaded content">{notoficationStorage}</div>
+    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div style={{zIndex:10}} key={new Date()} className='notificationBoard' data-position="left center" data-tooltip={t("Unreaded content")}>{notoficationStorage}</div>
   }
 
   return (

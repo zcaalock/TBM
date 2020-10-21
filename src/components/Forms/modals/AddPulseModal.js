@@ -7,7 +7,7 @@ import { editState } from '../../../actions/appState'
 import { createPulse, createPrivatePulse } from '../../../actions/pulses'
 import { fetchLead } from '../../../actions/settings'
 import { fetchBoards } from '../../../actions/boards'
-
+import { useTranslation } from "react-i18next"
 
 
 let boardsArr = []
@@ -16,6 +16,9 @@ let categoriesArr = []
 let leadArr = []
 
 function PulseModal() {
+
+
+  const { t, i18n } = useTranslation()
 
   const [name, setName] = useState('')
   const [boardId, setBoardid] = useState('')
@@ -52,12 +55,12 @@ function PulseModal() {
     }
     if (isPrivate === false) dispatch(createPulse(userData, categoryId, userId))
     if (isPrivate === true) dispatch(createPrivatePulse(userData, categoryId, userId))
-    dispatch(editState(false, 'modalOpen'))    
+    dispatch(editState(false, 'modalOpen'))
     dispatch(editState(categoryId, 'expandCategory'))
     history.push(`/boards/${boardId}/pulses/${categoryId}`)
   }
 
-  const generateLeadList = () => {    
+  const generateLeadList = () => {
     if (lead.length > 0)
       lead.map(leadItems => {
         leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
@@ -99,7 +102,7 @@ function PulseModal() {
 
   return (
     <>
-      <Modal.Header>Create new Pulse</Modal.Header>
+      <Modal.Header>{t('Create new Pulse')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form
@@ -108,8 +111,8 @@ function PulseModal() {
               id='name'
               name='name'
               control={Input}
-              label='Pulse name'
-              placeholder='Pulse name'
+              label={t('Pulse name')}
+              placeholder={t('Pulse name')}
               //value={this.state.name}
               onChange={(e, { value }) => setName(value)}
             />
@@ -120,8 +123,8 @@ function PulseModal() {
               control={Select}
               //onFocus={this.handleBoardList()}
               options={leadArr}
-              label='Lead Person'
-              placeholder='Lead Person'
+              label={t('Lead Person')}
+              placeholder={t('Lead Person')}
               searchInput={{ id: 'userId' }}
               onChange={(e, { value }) => setUserid(value)}
             />
@@ -132,8 +135,8 @@ function PulseModal() {
               control={Select}
               //onFocus={this.handleBoardList()}
               options={boardsArr}
-              label='Board name'
-              placeholder='Board name'
+              label={t('Board name')}
+              placeholder={t('Board name')}
               searchInput={{ id: 'boardId' }}
               onChange={(e, { value }) => { setBoardid(value); categoriesArr = [] }}
             />
@@ -144,8 +147,8 @@ function PulseModal() {
               control={Select}
               //onFocus={this.handleBoardList()}
               options={categoriesArr}
-              label='Category name'
-              placeholder='Cateogry name'
+              label={t('Category name')}
+              placeholder={t('Cateogry name')}
               searchInput={{ id: 'categoryId' }}
               onChange={(e, { value }) => setCategoryid(value)}
             />
@@ -157,10 +160,10 @@ function PulseModal() {
           style={{ display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px' }}
           onChange={(e, { checked }) => { setIsPrivate(!isPrivate) }
           }
-          label='Make private'
+          label={t('Make private')}
         />
         <Button onClick={() => dispatch(editState(false, 'modalOpen'))}>
-          Cancel
+          {t('Cancel')}
             </Button>
         <Button
           disabled={activateSubmit()}
@@ -168,7 +171,7 @@ function PulseModal() {
           onClick={() => handleSubmit()}
           icon='checkmark'
           labelPosition='right'
-          content="Create pulse"
+          content={t("Create pulse")}
         />
       </Modal.Actions>
     </>

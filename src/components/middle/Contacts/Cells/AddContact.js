@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import {createContact } from '../../../../actions/contacts'
 import SingleInput from '../../../Forms/SingleInput'
-
+import { useTranslation } from "react-i18next"
 function AddContact(props) {
   
   const userId = useSelector(state => state.user.credentials.userId)
-
+const { t, i18n } = useTranslation() 
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
@@ -33,7 +33,7 @@ function AddContact(props) {
       return (
         <div
           data-position="bottom center"
-          data-tooltip="Add contact">
+          data-tooltip={t("Create Contact")}>
           <i className="plus icon" />
         </div>)
     }
@@ -74,7 +74,7 @@ function AddContact(props) {
     
         <div className="tableNewPulse" style={{ paddingLeft: '26px', cursor: 'pointer', height: '40px' }} data-label="Name">
           {/* {this.renderNewPulse()} */}
-          {renderNewPulse('Add contact')}
+          {renderNewPulse(t('Create Contact'))}
         </div>
         
   )}

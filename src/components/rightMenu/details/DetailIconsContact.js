@@ -1,9 +1,11 @@
 import React from 'react'
 import { useDispatch} from "react-redux";
 import { deleteDetail } from '../../../actions/details'
+import { useTranslation } from "react-i18next"
+
 
 function DetailIcon(props) {  
-
+  const { t, i18n } = useTranslation() 
    const dispatch = useDispatch();
     return (
     <div> 
@@ -11,7 +13,7 @@ function DetailIcon(props) {
         onClick={() => {props.showEdit() }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Edit"
+        data-tooltip={t("Edit")}
         style={{
           display: 'inline-block',
           paddingLeft: '0px',
@@ -24,7 +26,7 @@ function DetailIcon(props) {
         onClick={() => { dispatch(deleteDetail(props.detailId)) }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Delete"
+        data-tooltip={t("Delete")}
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />
       </div>      

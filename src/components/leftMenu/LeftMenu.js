@@ -4,7 +4,7 @@ import history from '../../history'
 import _ from 'lodash'
 
 import { editState } from '../../actions/appState'
-
+import { useTranslation } from 'react-i18next'
 import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
@@ -22,7 +22,7 @@ function Boards (props) {
   const boards = useSelector(state => Object.values(state.boards))
 
   const dispatch = useDispatch()
-
+  const { t, i18n } = useTranslation()
   useEffect(()=>{
     handleAuth()
   })  
@@ -81,51 +81,51 @@ function Boards (props) {
           <div key='d' className="item" style={{ width: '100%', margin: 'auto' }}>
             <div              
               className="menu" style={{ width: '100%' }}>
-              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip="Add pulse, client or calendar event " className="refreshDB" style={{ paddingTop: '0', paddingBottom: '15px', borderBottom: '1px solid #DDDDDD' }}>
+              <div onClick={() => dispatch(editState(true, 'modalOpen'))} data-position="bottom center" data-tooltip={t("Add pulse, client or calendar event")} className="refreshDB" style={{ paddingTop: '0', paddingBottom: '15px', borderBottom: '1px solid #DDDDDD' }}>
                 <i className="plus square outline large icon" />
               </div>
               <div
                 onClick={() => handleFiltersOnClick()}
                 className="header item headerSelectable"
                 style={handleSelectedItem('filters')}>
-                Find
+                {t('Find')}
               </div>
               <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
               <div
                 onClick={() => handleClientsOnClick()}
                 className="header item headerSelectable"
                 style={handleSelectedItem('clients')}>
-                Clients
+                {t('Clients')}
               </div>
               <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
               <div
                 onClick={() => handleContactsOnClick()}
                 className="header item headerSelectable"
                 style={handleSelectedItem('contacts')}>
-                Contacts
+                {t('Contacts')}
               </div>
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
-                Boards:
+                {t('Boards')}:
               </div>
               <BoardsList privateId='' />
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
-                <AddBoard name={'New Board'} />
+                <AddBoard name={t('New Board')} />
               </div>
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px' }}>
-                Private Boards:
+                {t('Private Boards')}:
               </div>
               {renderPrivateBoardList()}
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
-                <AddBoard name={'New Private Board'} />
+                <AddBoard name={t('New Private Board')} />
               </div> 
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px' }}>
-                Reminders: 
+                {t('Reminders')}: 
                 <ReminderFilter />               
               </div> 
               <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 680px)', overflowY: 'auto'}}><Reminders/></div>            

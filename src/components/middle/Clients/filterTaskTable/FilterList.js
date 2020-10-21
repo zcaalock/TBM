@@ -5,6 +5,8 @@ import _ from 'lodash'
 import { editState } from '../../../../actions/appState'
 import { fetchClients } from '../../../../actions/clients'
 import { editLead } from '../../../../actions/settings'
+import { useTranslation } from "react-i18next"
+
 
 function SearchFilter(props) {
   const clients = useSelector(state => Object.values(state.clients))
@@ -13,7 +15,7 @@ function SearchFilter(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-
+  const { t, i18n } = useTranslation()
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -37,7 +39,7 @@ function SearchFilter(props) {
   return (
     <div>
       <div style={{ display: 'inline-block' }}>
-        <Input icon placeholder='Search...'>
+        <Input icon placeholder={`${t('Search')}...`}>
           <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'clientSearch'))}>x</Label>
           <input value={appState.clientSearch} onChange={(v) => { dispatch(editState(v.target.value, 'clientSearch')) }} style={{ borderRadius: '0 25px 25px 0' }} />
           <Icon name='search' />
@@ -50,7 +52,7 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >Show archived</label>
+        <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
       </div>
     </div>
   )

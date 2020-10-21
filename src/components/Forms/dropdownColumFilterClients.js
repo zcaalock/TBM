@@ -2,25 +2,24 @@ import React from 'react'
 import { Checkbox, Dropdown } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../actions/appState'
-
-
+import { useTranslation } from "react-i18next"
 
 function DropdownColumnFilter (props) {
     const dispatch = useDispatch();
     const appState = useSelector(state => state.appState)
-
+const { t, i18n } = useTranslation()
     const dropDownSelectable = (name, selector) => {
         return <Dropdown.Item
           style={{ zIndex: 10 }}
           onClick={(event) => {
             event.stopPropagation()
             event.nativeEvent.stopImmediatePropagation()
-            dispatch(editState({ ...appState.contactsSettings, [selector]: !appState.contactsSettings[selector] }, 'contactsSettings'))
+            dispatch(editState({ ...appState.clientsSettings, [selector]: !appState.clientsSettings[selector] }, 'clientsSettings'))
           }}
         >
           <Checkbox
             label={name}
-            checked={appState.contactsSettings[selector]}
+            checked={appState.clientsSettings[selector]}
             style={{ zIndex: -1 }}
           />
         </Dropdown.Item>
@@ -47,45 +46,54 @@ function DropdownColumnFilter (props) {
             event.nativeEvent.stopImmediatePropagation()
           }}
         >
-          <Dropdown.Header icon='tags' content='Choose collumns' />
+          <Dropdown.Header icon='tags' content={t('Choose collumns')} />
           <Dropdown.Divider />
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
-              label='Name'
+              label={t('Name')}
             />
           </Dropdown.Item>
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
-              label='Phone'
+              label={t('Phone')}
             />
           </Dropdown.Item>
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
-              label='Mail'
+              label={t('Mail')}
             />
           </Dropdown.Item>
-          {dropDownSelectable('Lead Person', 'showLead')}
+          {dropDownSelectable(t('Lead Person'), 'showLead')}
           {/* {dropDownSelectable('Project', 'showProject')} */}
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
-              label='Project'
+              label={t('Project')}
             />
-          </Dropdown.Item>          
+          </Dropdown.Item>
+          {dropDownSelectable(t('Unit'), 'showUnit')}
+          {dropDownSelectable(t('Price'), 'showPrice')}
           <Dropdown.Item>
             <Checkbox
               disabled
               checked
-              label='Date'
+              label={t('Date')}
             />
-          </Dropdown.Item>          
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Checkbox
+              disabled
+              checked
+              label={t('Status')}
+            />
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )

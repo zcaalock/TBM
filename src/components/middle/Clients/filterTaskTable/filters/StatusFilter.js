@@ -14,7 +14,9 @@ import ProjectList from '../../Cells/ProjectList'
 import UnitList from '../../Cells/UnitList'
 import StatusList from '../../Cells/StatusList'
 
-import DropdownColumnFilter from '../../../../Forms/dropdownColumFilter'
+import DropdownColumnFilter from '../../../../Forms/dropdownColumFilterClients'
+
+import { useTranslation } from "react-i18next"
 
 function Tbody(props) {
 
@@ -24,7 +26,7 @@ function Tbody(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-
+  const { t, i18n } = useTranslation()
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
   }, [])
@@ -151,15 +153,15 @@ function Tbody(props) {
       <table className="ui very basic table">
         <thead>
           <tr>
-            <th style={{ minWidth: '10%', paddingLeft: '10px' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ minWidth: '10%' }}>Phone </th>
-            <th style={{ minWidth: '10%' }}>Mail</th>
-            {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>Lead Person</th>)}
-            <th style={{ minWidth: '10%' }}>Project</th>
-            {checkShowCollumns('showUnit', <th style={{ minWidth: '10%' }}>Unit</th>)}
-            {checkShowCollumns('showPrice', <th style={{ minWidth: '10%' }}>Price</th>)}
-            <th style={{ minWidth: '10%' }}>Date <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
-            <th style={{ paddingLeft: '0px', minWidth: '10%' }}>Status</th>
+            <th style={{ minWidth: '10%', paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '10%' }}>{t('Phone')} </th>
+            <th style={{ minWidth: '10%' }}>{t('Mail')}</th>
+            {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>{t('Lead Person')}</th>)}
+            <th style={{ minWidth: '10%' }}>{t('Project')}</th>
+            {checkShowCollumns('showUnit', <th style={{ minWidth: '10%' }}>{t('Unit')}</th>)}
+            {checkShowCollumns('showPrice', <th style={{ minWidth: '10%' }}>{t('Price')}</th>)}
+            <th style={{ minWidth: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
+            <th style={{ paddingLeft: '0px', minWidth: '10%' }}>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>

@@ -10,6 +10,8 @@ import Status from '../../../Boards/pulses/Tbody/Status'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
 import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 
+import { useTranslation } from "react-i18next"
+
 function Tbody(props) {
 
   const pulses = useSelector(state => Object.values(state.pulses));
@@ -21,7 +23,8 @@ function Tbody(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const appState = useSelector(state => state.appState);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
@@ -161,13 +164,13 @@ function Tbody(props) {
       <table className="ui very basic table">
         <thead>
           <tr>
-            <th style={{ paddingLeft: '10px', width: '30%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ minWidth: '15%' }}>Board </th>
-            <th style={{ width: '10%' }}>Category</th>
-            <th style={{ width: '10%' }}>Lead Person</th>
-            <th style={{ width: '120px' }}>Status</th>
-            <th style={{ width: '10%' }}>Deadline <i onClick={() => handleFilterClick('deadline')} className={sortIconClass('deadline')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('deadline')}</th>
-            <th style={{ width: '10%' }}>Details</th>
+            <th style={{ paddingLeft: '10px', width: '30%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '15%' }}>{t('Board')}</th>
+            <th style={{ width: '10%' }}>{t('Category')}</th>
+            <th style={{ width: '10%' }}>{t('Lead Person')}</th>
+            <th style={{ width: '120px' }}>{t('Status')}</th>
+            <th style={{ width: '10%' }}>{t('Deadline')} <i onClick={() => handleFilterClick('deadline')} className={sortIconClass('deadline')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('deadline')}</th>
+            <th style={{ width: '10%' }}>{t('Details')}</th>
           </tr>
         </thead>
         <tbody>

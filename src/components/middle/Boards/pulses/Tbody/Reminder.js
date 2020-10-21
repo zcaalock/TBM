@@ -33,12 +33,10 @@ function Reminder(props) {
         pulse.deadline.length > 0 &&
         pulse.archived === 'false'
         && days < appState.reminderSettings.futureDays
-        && days >= appState.reminderSettings.pastDays
-        //&& hours > -96
+        && days >= appState.reminderSettings.pastDays        
       ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'', status: pulse.status === 'Done'? 'line-through':'' })
     })
-  }
-  //console.log(appState.reminderSettings.futureDays)
+  }  
   const renderPrivateIcon = (arr) => {
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
@@ -53,8 +51,7 @@ function Reminder(props) {
           onClick={() => {
             dispatch(editState('', 'pulseId'))
             dispatch(editState(item.categoryId, 'expandCategory'))
-            dispatch(editState(item.id, 'pulseId'))
-            //dispatch(editState(item.name, 'id'))
+            dispatch(editState(item.id, 'pulseId'))            
           }}
           to={`/boards/${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).id}/pulses/${item.id}`}
           className={`item ${selectedCheck(item.id)}`}
@@ -84,10 +81,6 @@ function Reminder(props) {
     return { paddingLeft: '0', justifyContent: 'space-between' }
   }
 
-
-
-
-  //console.log(reminderArr)
   return (
     <>
       {renderReminders(reminderArr)}

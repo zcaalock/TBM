@@ -6,16 +6,19 @@ import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
 import { createContact } from '../../../actions/contacts'
 import history from '../../../history'
+import { useTranslation } from "react-i18next"
+
 
 let leadArr = []
 
 function AddContact() {
-
+  const { t, i18n } = useTranslation()
   const contacts = useSelector(state => Object.values(state.contacts))
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => Object.values(state.lead))
 
   const [name, setName] = useState('')
+  const [company, setCompany] = useState('')
   const [phone, setPhone] = useState('')
   const [mail, setMail] = useState('')
   const [project, setProject] = useState('')
@@ -38,6 +41,7 @@ function AddContact() {
 
     const userData = {
       title: name,
+      company,
       phone,
       mail,
       project,
@@ -59,7 +63,7 @@ function AddContact() {
   }
 
   const generateProjectList = () => {
-    let projectArr = [{ key: 'Create new project', text: 'Create new project', value: 'Create new project', icon: 'edit', 'onClick': () => setNewproject(true) }]
+    let projectArr = [{ key: t('Create new project'), text: t('Create new project'), value: t('Create new project'), icon: 'edit', 'onClick': () => setNewproject(true) }]
     if (contacts.length > 0)
       contacts.map(contact => {
         projectArr.push({ key: contact.id, text: contact.project, value: contact.project })
@@ -75,8 +79,8 @@ function AddContact() {
         name='project'
         control={Select}
         options={generateProjectList()}
-        label='Project'
-        placeholder='Select project'
+        label={t('Project')}
+        placeholder={t('Select project')}
         searchInput={{ id: 'key' }}
         onChange={(e, { value }) => setProject(value)}
       />
@@ -87,8 +91,8 @@ function AddContact() {
         id='project'
         name='project'
         control={Input}
-        label='Project'
-        placeholder='New project name'
+        label={t('Project')}
+        placeholder={t('New project name')}
         onChange={(e, { value }) => setProject(value)}
       />
     )
@@ -97,7 +101,7 @@ function AddContact() {
   if (isEmpty(leadArr)) generateLeadList()
   return (
     <>
-      <Modal.Header>Create new Contact</Modal.Header>
+      <Modal.Header>{t('Create new Contact')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form
@@ -106,24 +110,32 @@ function AddContact() {
               id='name'
               name='name'
               control={Input}
-              label='Contact name'
-              placeholder='Contact name'
+              label={t('Contact name')}
+              placeholder={t('Contact name')}
               onChange={(e, { value }) => setName(value)}
+            />
+            <Form.Field
+              id='company'
+              name='company'
+              control={Input}
+              label={t('Company')}
+              placeholder={t('Company')}
+              onChange={(e, { value }) => setCompany(value)}
             />
             <Form.Field
               id='phone'
               name='phone'
               control={Input}
-              label='Contact phone'
-              placeholder='Contact phone'
+              label={t('Contact phone')}
+              placeholder={t('Contact phone')}
               onChange={(e, { value }) => setPhone(value)}
             />
             <Form.Field
               id='mail'
               name='mail'
               control={Input}
-              label='Contact email'
-              placeholder='Contact email'
+              label={t('Contact email')}
+              placeholder={t('Contact email')}
               onChange={(e, { value }) => setMail(value)}
             />
             {projectOptions()}
@@ -133,8 +145,8 @@ function AddContact() {
               name='lead'
               control={Select}
               options={leadArr}
-              label='Lead Person'
-              placeholder='Lead Person'
+              label={t('Lead Person')}
+              placeholder={t('Lead Person')}
               searchInput={{ id: 'text1' }}
               onChange={(e, { value }) => setUserid(value.userId)}
             />
@@ -146,10 +158,10 @@ function AddContact() {
           style={{ display: 'inline-block', float: 'left', marginTop: '10px', marginLeft: '5px' }}
           onChange={(e, { checked }) => { setIsPrivate(!isPrivate) }
           }
-          label='Make private'
+          label={t('Make private')}
         />
         <Button onClick={() => dispatch(editState(false, 'modalOpen'))}>
-          Cancel
+          {t('Cancel')}
             </Button>
         <Button
           disabled={name !== '' && (mail !== '' || phone !== '') ? false : true}
@@ -157,7 +169,7 @@ function AddContact() {
           onClick={() => handleSubmit()}
           icon='checkmark'
           labelPosition='right'
-          content="Create pulse"
+          content={t("Create Contact")}
         />
       </Modal.Actions>
     </>

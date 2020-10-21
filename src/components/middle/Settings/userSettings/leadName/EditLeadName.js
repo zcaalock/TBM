@@ -17,12 +17,12 @@ function EditBoardName(props) {
     const userId = props.userId
     const userLead = _.filter(props.lead, { userId: userId })[0]    
     if (props.editState === true && userId !== undefined) {
-      console.log(userLead.title)      
+      //console.log(userLead.title)      
       return (        
         <SingleInput
           propStyle={{ marginTop: '-2px', marginLeft: '-5px', padding: '0px' }}
           propChildStyle={{ padding: '0px' }}
-          initialValues={_.pick(userLead.title, 'title')}
+          initialValues={_.pick(userLead, 'title')}
           removeEdit={() => props.removeEdit()}
           onSubmit={(formValues) => onSubmit(formValues, userLead.id)} />
       )

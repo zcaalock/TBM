@@ -12,9 +12,10 @@ import { fetchBoards } from '../../../../actions/boards'
 import { fetchLead } from '../../../../actions/settings'
 import { fetchDetails } from '../../../../actions/details'
 
+import { useTranslation } from "react-i18next"
 
 function SearchFilter(props) {
-
+  const { t, i18n } = useTranslation()
   const userId = useSelector(state => state.user.credentials.userId);
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const appState = useSelector(state => state.appState);
@@ -57,7 +58,7 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() => dispatch(editState(!appState.showPrivate, 'showPrivate'))} className={renderCheckBoxLabelStyle(appState.showPrivate)} >Show private pulses</label>
+        <label onClick={() => dispatch(editState(!appState.showPrivate, 'showPrivate'))} className={renderCheckBoxLabelStyle(appState.showPrivate)} >{t('Show private')}</label>
       </div>
     )
   }
@@ -85,26 +86,20 @@ function SearchFilter(props) {
             event.nativeEvent.stopImmediatePropagation()
           }}
         >
-          <Dropdown.Header icon='tags' content=' Search in:' />
+          <Dropdown.Header icon='tags' content={`${t("Search in")}:`} />
           <Dropdown.Divider />
-          {dropDownSelectable('Title', 'searchTitle')}
-          {dropDownSelectable('Board', 'searchBoard')}
-          {dropDownSelectable('Category', 'searchCategory')}
-          {dropDownSelectable('Lead', 'searchLead')}
+          {dropDownSelectable(t('Title'), 'searchTitle')}
+          {dropDownSelectable(t('Board'), 'searchBoard')}
+          {dropDownSelectable(t('Category'), 'searchCategory')}
+          {dropDownSelectable(t('Lead'), 'searchLead')}
           {dropDownSelectable('Status', 'searchStatus')}
           <Dropdown.Divider />
-          {dropDownSelectable('Only archived', 'onlyArchived')}
-          {dropDownSelectable('Only private', 'onlyPrivate')}
+          {dropDownSelectable(t('Only archived'), 'onlyArchived')}
+          {dropDownSelectable(t('Only private'), 'onlyPrivate')}
         </Dropdown.Menu>
       </Dropdown>
     )
   }
-
-  const renderColor = (selector) => {
-    if (selector === 'searchArchived') return '#DC6969'
-    if (selector === 'searchPrivate') return '#00A569'
-  }
-
 
   const dropDownSelectable = (name, selector) => {
     return <Dropdown.Item
@@ -129,12 +124,12 @@ function SearchFilter(props) {
   return (
     <div>
       <div style={{ display: 'inline-block' }}>
-        <Input icon placeholder='Search...'>
+        <Input icon placeholder={`${t('Search')}...`}>
           {renderDropdownFilter()}
           <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'pulseSearch'))}>x</Label>
           <input 
           value={appState.pulseSearch} 
-          initlialvalue={leadUser.title} 
+          initlialvalue={leadUser?leadUser.title:''} 
           onChange={(v) => { dispatch(editState(v.target.value, 'pulseSearch')) }} 
           style={{ borderRadius: '0 25px 25px 0' }} />
           <Icon name='search' />
@@ -149,7 +144,7 @@ function SearchFilter(props) {
           style={{ marginBottom: '-4px', }}
         />
         <label onClick={() =>
-          dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >Show archived</label>
+          dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
       </div>
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox
@@ -158,7 +153,7 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() => dispatch(editState(!appState.showEmptyDates, 'showEmptyDates'))} className={renderCheckBoxLabelStyle(appState.showEmptyDates)} >Show empty dates</label>
+        <label onClick={() => dispatch(editState(!appState.showEmptyDates, 'showEmptyDates'))} className={renderCheckBoxLabelStyle(appState.showEmptyDates)} >{t('Show empty dates')}</label>
       </div>
       {renderPrivateCheckBox()}
     </div>
