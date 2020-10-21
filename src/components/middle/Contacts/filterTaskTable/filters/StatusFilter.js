@@ -9,6 +9,7 @@ import LeadPerson from '../../Cells/LeadPerson'
 import ContactName from '../../Cells/ContactName';
 import ContactNumber from '../../Cells/ContactNumber'
 import ContactMail from '../../Cells/ContactMail'
+import ContactCompany from '../../Cells/ContactCompany'
 import ProjectList from '../../Cells/ProjectList'
 
 import DropdownColumnFilterClients from '../../../../Forms/dropdownColumFilterClients'
@@ -117,13 +118,17 @@ function Tbody(props) {
       //console.log(_.includes(contact.title,'tes'))
       if (
         _.includes(contact.title.toLowerCase(), appState.contactSearch.toLowerCase()) === true
-         || _.includes(contact.phone, appState.contactSearch) === true
-         || _.includes(contact.mail.toLowerCase(), appState.contactSearch.toLowerCase()) === true
-         || _.includes(contact.project.toLowerCase(), appState.contactSearch.toLowerCase()) === true         
+         || (contact.phone &&_.includes(contact.phone, appState.contactSearch) === true)
+         || (contact.mail &&_.includes(contact.mail.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
+         || (contact.project &&_.includes(contact.project.toLowerCase(), appState.contactSearch.toLowerCase()) === true  )
+         || (contact.company && _.includes(contact.company.toLowerCase(), appState.contactSearch.toLowerCase()) === true   )      
       ) return (
         <tr key={contact.id} style={renderSelect(contact)} className='tableRow' onClick={() => goLink(contact.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
             <ContactName contactId={contact.id} contactName={contact.title} contact={contact} />
+          </td>
+          <td >
+            <ContactCompany contactId={contact.id} contactName={contact.phone} contact={contact} />
           </td>
           <td >
             <ContactNumber contactId={contact.id} contactName={contact.phone} contact={contact} />
@@ -157,6 +162,7 @@ function Tbody(props) {
         <thead>
           <tr>
             <th style={{ paddingLeft: '10px', minWidth: '10%' }}>Name <i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '10%' }}>Company </th>
             <th style={{ minWidth: '10%' }}>Phone </th>
             <th style={{ minWidth: '15%' }}>Mail</th>
             {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>Lead Person</th>)}

@@ -132,7 +132,11 @@ function SearchFilter(props) {
         <Input icon placeholder='Search...'>
           {renderDropdownFilter()}
           <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'pulseSearch'))}>x</Label>
-          <input value={appState.pulseSearch} initlialValue={leadUser.title} onChange={(v) => { dispatch(editState(v.target.value, 'pulseSearch')) }} style={{ borderRadius: '0 25px 25px 0' }} />
+          <input 
+          value={appState.pulseSearch} 
+          initlialvalue={leadUser.title} 
+          onChange={(v) => { dispatch(editState(v.target.value, 'pulseSearch')) }} 
+          style={{ borderRadius: '0 25px 25px 0' }} />
           <Icon name='search' />
         </Input>
       </div >

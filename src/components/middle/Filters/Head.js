@@ -7,7 +7,7 @@ function Head () {
   
     return (
       <div className="head-vertical-segment" style={{paddingBottom: '20px'}}>
-        <h3>Filters: {appState.filter.selector}/{appState.filter.value}</h3>
+        <h3>Find pulse:</h3>
       </div>
     )  
 }

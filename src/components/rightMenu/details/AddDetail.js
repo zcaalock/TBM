@@ -38,7 +38,7 @@ function AddDetail(props) {
   }
 
   const onSubmit = (formValues) => {
-    dispatch(createDetail(formValues, props.pulseId))
+    dispatch(createDetail(formValues, props.pulseId, userId))
     removeEdit()
     dispatch(editPulse(props.pulseId, { readed: [userId] }))
   }

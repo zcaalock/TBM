@@ -285,3 +285,16 @@
 .reminders::-webkit-scrollbar {
   display: none;
 }
+
+.hideDetailArrows{
+  color: #f5f5f5
+}
+
+.hideDetailArrows:hover{
+  color: #cecece;
+  cursor: pointer;
+}
+
+.DetailArrows:hover{
+  color: black
+}
