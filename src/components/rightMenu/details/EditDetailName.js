@@ -1,16 +1,16 @@
 import React from 'react'
 import _ from 'lodash'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editDetail } from '../../../actions/details'
 import { editPulse } from '../../../actions/pulses'
 import SingleInput from '../../Forms/SingleInput'
 
 function EditDetailName(props) {
-
+  const userId = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch();
 
   const onSubmit = (formValues) => {
-    dispatch(editDetail(props.detail.id, formValues))
+    dispatch(editDetail(props.detail.id, formValues, userId, true))
     dispatch(props.removeEdit)
     dispatch(editPulse(props.pulseId, { readed: [props.userId] }))
   }

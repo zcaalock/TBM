@@ -34,7 +34,7 @@ export const editDetail = (id, formValues, editedId, fetch) => async dispatch =>
       if (fetch === true) dispatch(fetchDetail(id))
       dispatch(editState(response.data.message, 'responseMessage'))
       dispatch(editState(response.status, 'responseStatus'))
-      console.log(response.data.detail)
+      console.log(editedId, fetch)
 
     })
     .catch((err) => {
