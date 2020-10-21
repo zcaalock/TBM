@@ -32,11 +32,11 @@ function Details(props) {
   const handleOnClick = (id, bool) => {
     if (bool === 'false') {
       dispatch(editPulse(props.pulseId, { readed: [userId] }))
-      dispatch(editDetail(id, { check: 'true' }))
+      dispatch(editDetail(id, { check: 'true', editedId: userId }))
     }
     if (bool === 'true') {
       dispatch(editPulse(props.pulseId, { readed: [userId] }))
-      dispatch(editDetail(id, { check: 'false' }))
+      dispatch(editDetail(id, { check: 'false', editedId: userId }))
     }
   }
 
@@ -51,14 +51,14 @@ function Details(props) {
     // dispatch(editDetail(_.find()))
     //const current = detailArr[_.find(detailArr, { id: id }).number]
     const prev = _.find(detailArr, { number: detailArr[_.find(detailArr, { id: id }).number].number - 1 })    
-    if (prev) dispatch(editDetail(id, { createdAt: prev.createdAt }, true))    
-    if (prev) dispatch(editDetail(prev.id, { createdAt: created }, true))
+    if (prev) dispatch(editDetail(id, { createdAt: prev.createdAt }, userId, true))    
+    if (prev) dispatch(editDetail(prev.id, { createdAt: created }, userId, true))
   }
 
   const moveDown = (id, created) => {    
     const next = _.find(detailArr, { number: detailArr[_.find(detailArr, { id: id }).number].number + 1 })    
-    if (next) dispatch(editDetail(id, { createdAt: next.createdAt }, true))    
-    if (next) dispatch(editDetail(next.id, { createdAt: created }, true))
+    if (next) dispatch(editDetail(id, { createdAt: next.createdAt }, userId, true))    
+    if (next) dispatch(editDetail(next.id, { createdAt: created }, userId, true))
   }
 
   const renderDetails = () => {
