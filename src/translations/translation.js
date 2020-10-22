@@ -129,7 +129,8 @@ export const resources = {
             "Past days":"Past days",
             "Future Days":"Future Days",
             "Select days":"Select days",
-            "Choose collumns":"Choose collumns"
+            "Choose collumns":"Choose collumns",
+            "Only promising":"Only promising"
 
 
 
@@ -268,7 +269,8 @@ export const resources = {
             "Past days":"Dni wstecz",
             "Future Days":"Dni w przód",
             "Select days":"Wybierz zakres",
-            "Choose collumns":"Wybierz kolumny"
+            "Choose collumns":"Wybierz kolumny",
+            "Only promising":"Tylko rokujący"
 
 
 

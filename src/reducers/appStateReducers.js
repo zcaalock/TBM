@@ -21,7 +21,8 @@ const appState = {
     showUnit: true,
     showPrice: true,
     showDate: true,
-    showStatus: true
+    showStatus: true,
+    onlyPromising: false
   },
   contactsSettings: {
     showLead: true,

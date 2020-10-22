@@ -54,6 +54,15 @@ function SearchFilter(props) {
         />
         <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
       </div>
+      <div style={{ marginBottom: '10px', display: 'inline-block', marginLeft: '10px' }}>
+        <Checkbox
+          onClick={() => dispatch(editState({ ...appState.clientsSettings, onlyPromising: !appState.clientsSettings.onlyPromising }, 'clientsSettings'))}
+          checked={appState.clientsSettings.onlyPromising}
+          slider
+          style={{ marginBottom: '-4px', }}
+        />
+        <label onClick={() => dispatch(editState({ ...appState.clientsSettings, onlyPromising: !appState.clientsSettings.onlyPromising }, 'clientsSettings'))} className={renderCheckBoxLabelStyle(appState.clientsSettings.onlyPromising)} >{t('Only promising')}</label>
+      </div>
     </div>
   )
 }

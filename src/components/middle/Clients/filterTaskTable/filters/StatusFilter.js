@@ -87,22 +87,24 @@ function Tbody(props) {
   }
 
   const renderClients = () => {
-     
+
     let clientsCol = []
-    const showArchived = leadUser.settings?leadUser.settings.showArchived:''
+    const showArchived = leadUser.settings ? leadUser.settings.showArchived : ''
+    const onlyPromising = appState.clientsSettings.onlyPromising
+    clientsCol = clients
 
-    clientsCol = clients  
+    if (showArchived === false) clientsCol = _.reject(clientsCol, { archived: 'true' })
+    if (onlyPromising === true) clientsCol = _.filter(clientsCol, { status: '#00A569' })   
+    
 
-    if (showArchived === false) clientsCol = _.reject(clientsCol,{ archived: 'true' })    
-
-    return sortClientsBy(clientsCol).map(client => {      
+    return sortClientsBy(clientsCol).map(client => {
       if (
         _.includes(client.title.toLowerCase(), appState.clientSearch.toLowerCase()) === true
-         || _.includes(client.phone, appState.clientSearch) === true
-         || _.includes(client.mail.toLowerCase(), appState.clientSearch.toLowerCase()) === true
-         || _.includes(client.project.toLowerCase(), appState.clientSearch.toLowerCase()) === true
-         || _.includes(client.unit.toLowerCase(), appState.clientSearch.toLowerCase()) === true
-         || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+        || _.includes(client.phone, appState.clientSearch) === true
+        || _.includes(client.mail.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+        || _.includes(client.project.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+        || _.includes(client.unit.toLowerCase(), appState.clientSearch.toLowerCase()) === true
+        || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
       ) return (
         <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
@@ -149,7 +151,7 @@ function Tbody(props) {
 
   return (
     <div>
-      <DropdownColumnFilter/>
+      <DropdownColumnFilter />
       <table className="ui very basic table">
         <thead>
           <tr>
