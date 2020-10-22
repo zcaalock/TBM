@@ -24,7 +24,7 @@ function DetailIcon(props) {
       <div
         onClick={() => { handleOnClick(props.detailId, props.detail.flag) }}
         className="hideDetailArrows"
-        data-position="bottom center"
+        data-position="top right"
         data-tooltip={t("Flag detail")}
         style={{
           display: 'inline-block',
@@ -46,7 +46,7 @@ function DetailIcon(props) {
       <div
         onClick={() => { props.showEdit() }}
         className="articleIcon"
-        data-position="bottom center"
+        data-position="top right"
         data-tooltip={t("Edit")}
         style={{
           display: 'inline-block',
@@ -59,7 +59,7 @@ function DetailIcon(props) {
       <div
         onClick={() => { dispatch(deleteDetail(props.detailId)) }}
         className="articleIcon"
-        data-position="bottom center"
+        data-position="top right"
         data-tooltip={t("Delete")}
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />

@@ -73,7 +73,7 @@ function DetailsClients(props) {
             </div>
           </Table.Cell>
           <Table.Cell style={{ 
-            width: '20px' 
+            width: '52px' 
             }}>
             <DetailIconsClient showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
           </Table.Cell>
