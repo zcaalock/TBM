@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import {deletePulse} from '../../../../../actions/pulses'
+import { useTranslation } from "react-i18next"
 
 function DeletePulse (props) {
   
@@ -10,7 +11,7 @@ function DeletePulse (props) {
   const boardId = useSelector(state => state.appState.id)  
 
   const dispatch = useDispatch();
-
+  const { t } = useTranslation()
   const renderDelete = () => {    
     const detailsFiltered = _.filter(details, {pulseId: props.pulseId})
     const notepadFiltered = _.filter(notepad, {pulseId: props.pulseId})    
@@ -19,7 +20,7 @@ function DeletePulse (props) {
       return (
         <div               
         data-position="left center"
-        data-tooltip="Remove all items before delete"
+        data-tooltip={t("Remove all items before delete")}
         style={{ display: 'inline-block' }}>
         <i className="trash icon" style={{ 
           //paddingLeft: '10px', 
@@ -35,7 +36,7 @@ function DeletePulse (props) {
         }}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Delete"
+        data-tooltip={t("Delete")}
         style={{ display: 'inline-block',cursor: 'pointer' }}>
         <i className=" trash icon" />        
       </div>

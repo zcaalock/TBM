@@ -8,6 +8,7 @@ import { fetchNotepads } from '../../../actions/notepad'
 import { createNotepad, editNotepad, deleteNotepad } from '../../../actions/notepad'
 import NotepadIcons from './NotepadIcons'
 import Editor from '../../Forms/Editor'
+import { useTranslation } from "react-i18next"
 
 function Notepad(props) {
 
@@ -16,7 +17,7 @@ function Notepad(props) {
   const notepad = useSelector(state => Object.values(state.notepad));  
   const appState = useSelector(state => state.appState);
   const userId = useSelector(state => state.user.credentials.userId);
-
+  const { t } = useTranslation() 
   useEffect(() => {
     if (isEmpty(notepad)) dispatch(fetchNotepads())
     const note = _.find(notepad, { pulseId: appState.pulseId })
@@ -24,16 +25,16 @@ function Notepad(props) {
   },[])
 
   const createNewNotepad = () => {
-    dispatch(createNotepad({ content: '<p>Enter notes here...</p>' }, props.clientId))
-    defState({ data: '<p>Enter notes here...</p>' })
+    dispatch(createNotepad({ content: `<p>${t('Enter notes here')}...</p>` }, props.clientId))
+    defState({ data: `<p>${t('Enter notes here')}...</p>` })
     dispatch(editClient(appState.pulseId, { readed: [userId] }))
   }  
 
   const renderSaveButton = (notepadId) => {
     const note = _.find(notepad, { pulseId: appState.pulseId })
-    if (state.data === note.content) return <Button disabled>Save</Button>
+    if (state.data === note.content) return <Button disabled>{t('Save')}</Button>
     if (state.data !== note.content) {
-      return <Button onClick={() => CKEditorSaveToDB(notepadId)} style={{ color: '#00A569' }} data-position="right center" data-tooltip="Save to database">Save</Button>
+      return <Button onClick={() => CKEditorSaveToDB(notepadId)} style={{ color: '#00A569' }}>{t('Save')}</Button>
     }
   }
 
@@ -54,7 +55,7 @@ function Notepad(props) {
         <div className="rightMenu-header" style={{ paddingTop: '15px' }}>
           <div className='' style={{ display: 'inline-block' }}>
             <h3>
-              Notepad:
+              {t('Notepad')}:
           </h3>
           </div>
           <div style={{ display: 'inline-block', float: 'right', paddingRight: '4px' }}>
@@ -73,7 +74,7 @@ function Notepad(props) {
       <div className="rightMenu-header" style={{ paddingTop: '15px' }}>
         <div className='' style={{ display: 'inline-block' }}>
           <h3>
-            Notepad:
+            {t('Notepad')}:
           </h3>
         </div>
         <div style={{ display: 'inline-block', float: 'right', width: '35px' }}>
@@ -81,7 +82,7 @@ function Notepad(props) {
             onClick={() => createNewNotepad()}
             className="articleIcon"
             data-position="bottom center"
-            data-tooltip="New Note"
+            data-tooltip={t("New Note")}
             style={{
               display: 'inline-block',
               paddingLeft: '10px',

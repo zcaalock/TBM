@@ -5,6 +5,8 @@ import _ from 'lodash'
 import { editState } from '../../../../actions/appState'
 import { fetchContacts } from '../../../../actions/contacts'
 import { editLead } from '../../../../actions/settings'
+import { useTranslation } from "react-i18next"
+
 
 function SearchFilter(props) {
   const contacts = useSelector(state => Object.values(state.contacts))
@@ -13,7 +15,7 @@ function SearchFilter(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-
+  const { t } = useTranslation()
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -42,7 +44,7 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() => dispatch(editState(!appState.showPrivate, 'showPrivate'))} className={renderCheckBoxLabelStyle(appState.showPrivate)} >Show private contacts</label>
+        <label onClick={() => dispatch(editState(!appState.showPrivate, 'showPrivate'))} className={renderCheckBoxLabelStyle(appState.showPrivate)} >{t('Show private')}</label>
       </div>
     )
   }
@@ -51,7 +53,7 @@ function SearchFilter(props) {
   return (
     <div>
       <div style={{ display: 'inline-block' }}>
-        <Input icon placeholder='Search...'>
+        <Input icon placeholder={`${t('Search')}...`}>
           <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'contactSearch'))}>x</Label>
           <input value={appState.contactSearch} onChange={(v) => { dispatch(editState(v.target.value, 'contactSearch')) }} style={{ borderRadius: '0 25px 25px 0' }} />
           <Icon name='search' />
@@ -64,7 +66,7 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >Show archived</label>
+        <label onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
       </div>
       {renderPrivateCheckBox()}
     </div>

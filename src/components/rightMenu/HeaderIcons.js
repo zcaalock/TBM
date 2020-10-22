@@ -5,9 +5,12 @@ import ArchivePulse from '../middle/Boards/pulses/Tbody/ArchivePulse'
 import PrivatePulse from '../middle/Boards/pulses/Tbody/PrivatePulse'
 import {editState} from '../../actions/appState'
 import EditPulseModal from '../Forms/EditPulseModal'
+import { useTranslation } from "react-i18next"
+
 
 function HeaderIcons(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const { t } = useTranslation() 
   const appState = useSelector(state => state.appState)  
   const ShowEditPulseModal = () => {
     return appState.editPulseOpen === 'true' ?  <EditPulseModal/> : null
@@ -16,13 +19,12 @@ function HeaderIcons(props) {
   return (
     <div>
       <div
-          onClick={() => { 
-            //props.showEdit()
+          onClick={() => {             
             dispatch(editState('true', 'editPulseOpen'))
            }}
           className="articleIcon"
           data-position="bottom center"
-          data-tooltip="Edit"
+          data-tooltip={t("Edit")}
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>      

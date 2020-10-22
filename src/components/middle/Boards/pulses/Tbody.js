@@ -10,6 +10,7 @@ import LeadPerson from './Tbody/LeadPerson'
 import Status from './Tbody/Status'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
 import Deadline from '../../Boards/pulses/Tbody/Deadline'
+import { useTranslation } from "react-i18next"
 
 function Tbody(props) {
 
@@ -20,7 +21,7 @@ function Tbody(props) {
   const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
 
   const dispatch = useDispatch();
-
+const { t } = useTranslation() 
   useEffect(() => {
     if (isEmpty(pulses)) dispatch(fetchDetails())
   }, [])
@@ -81,7 +82,7 @@ function Tbody(props) {
   const renderPulseNotification = (pulse) => {
     let findUser = undefined
     if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
-    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && lead.settings.notifications === true && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip="Unreaded content">i</div>
+    if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && lead.settings.notifications === true && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip={t("Unreaded content")}>i</div>
   }
 
   return (

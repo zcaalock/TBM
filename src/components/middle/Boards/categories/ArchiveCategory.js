@@ -2,13 +2,14 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { editCategory } from '../../../../actions/categories'
+import { useTranslation } from "react-i18next"
 
 function ArchiveCategory(props) {
   
   const categories = useSelector(state => Object.values(state.categories)) 
 
   const dispatch = useDispatch()
-
+  const { t } = useTranslation()
   const renderArchive = () => {
     const findCategory = _.filter(categories, { id: props.categoryId })
     const isArchived = findCategory[0].archived
@@ -18,9 +19,9 @@ function ArchiveCategory(props) {
         <div
           onClick={() => dispatch(editCategory(props.categoryId, { archived: 'false' }))}
           data-position="left center"
-          data-tooltip="Unarchive Category"
+          data-tooltip={t("Unarchive")}
           style={{ display: 'inline-block', color: '#DC6969', paddingRight: '5px', cursor: 'pointer' }}>
-          <i className=" archive icon" /> archived
+          <i className=" archive icon" /> {t('Archived')}
         </div>
       )
     } else return (
@@ -28,7 +29,7 @@ function ArchiveCategory(props) {
         onClick={() => dispatch(editCategory(props.categoryId, { archived: 'true' }))}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Archive"
+        data-tooltip={t("Archive")}
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className=" archive icon" />
       </div>

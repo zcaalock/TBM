@@ -1,13 +1,11 @@
 import React from 'react'
-import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next"
 
 function Head () {
-  
-  const appState = useSelector(state => state.appState);
-  
+  const { t } = useTranslation()  
     return (
       <div className="head-vertical-segment" style={{paddingBottom: '20px'}}>
-        <h3>Find pulse:</h3>
+        <h3>{t('Find pulse')}:</h3>
       </div>
     )  
 }

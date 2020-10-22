@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import {createClient } from '../../../../actions/clients'
 import SingleInput from '../../../Forms/SingleInput'
-
+import { useTranslation } from "react-i18next"
 function AddClient(props) {
   
   const userId = useSelector(state => state.user.credentials.userId)
@@ -11,7 +11,7 @@ function AddClient(props) {
   const [itemEditable, setItemEditable] = useState(false)
 
   const dispatch = useDispatch()
-
+const { t } = useTranslation() 
   const removeEdit = () => {
     setItemEditable(false)
   }
@@ -32,8 +32,8 @@ function AddClient(props) {
     if (isHovering === true) {
       return (
         <div
-          data-position="bottom center"
-          data-tooltip="Add client">
+          data-position="top center"
+          data-tooltip={t("Create Client")}>
           <i className="plus icon" />
         </div>)
     }
@@ -74,7 +74,7 @@ function AddClient(props) {
     
         <div className="tableNewPulse" style={{ paddingLeft: '26px', cursor: 'pointer', height: '40px' }} data-label="Name">
           {/* {this.renderNewPulse()} */}
-          {renderNewPulse('Add client')}
+          {renderNewPulse(t('Create Client'))}
         </div>
         
   )}

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { createBoard, createPrivateBoard } from '../../actions/boards'
 import SingleInput from '../Forms/SingleInput'
+import { useTranslation } from 'react-i18next'
+
 
 function AddBoard(props) {
   const [isHovering, setIsHovering] = useState(false)
@@ -11,7 +13,7 @@ function AddBoard(props) {
   const userId = useSelector(state => state.user.credentials.userId)
 
   const dispatch = useDispatch()
-
+  const { t } = useTranslation()
   const removeEdit = () => {
     setItemEditable(false)
   }
@@ -34,7 +36,7 @@ function AddBoard(props) {
         <div
           style={{ cursor: 'pointer' }}
           data-position="right center"
-          data-tooltip="Create board">
+          data-tooltip={t("Create board")}>
           <i className="plus icon" />
         </div>)
     }

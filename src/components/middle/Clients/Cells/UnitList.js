@@ -4,6 +4,8 @@ import _ from 'lodash'
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 import EditClientUnit from './EditClientUnit'
+import { useTranslation } from "react-i18next"
+
 
 function UnitList(props) {
 
@@ -11,7 +13,7 @@ function UnitList(props) {
     { itemEditable: false })
   const clients = useSelector(state => Object.values(state.clients))
   const dispatch = useDispatch();
-
+  const { t } = useTranslation()
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
@@ -36,7 +38,7 @@ function UnitList(props) {
     let list = []
     clients.map(client => {
 
-      list.push({ key: client.id, text: client.unit, icon: '', value: client.unit })
+    return  list.push({ key: client.id, text: client.unit, icon: '', value: client.unit })
     })
 
     return _.uniqBy(list, 'text').map(unit => {
@@ -65,7 +67,7 @@ function UnitList(props) {
           >
             <Dropdown.Menu>
             
-              <Dropdown.Item icon='edit' content='Create name' onClick={() => saveField('Create name')} />
+              <Dropdown.Item icon='edit' content={t('Create new unit')} onClick={() => saveField('Create name')} />
               <Dropdown.Divider />
               {renderItems()}
             </Dropdown.Menu>

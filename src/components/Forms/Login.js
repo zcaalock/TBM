@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch} from "react-redux"
 import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { loginUser } from '../../actions/users'
+import { useTranslation } from "react-i18next"
 
 function Login(props) {
 
@@ -22,7 +23,7 @@ function Login(props) {
   }, [props.UI])
 
   const dispatch = useDispatch();
-
+const { t } = useTranslation()
   const handleSubmit = (event) => {
     event.preventDefault();
     const userData = {
@@ -42,8 +43,8 @@ function Login(props) {
   function handleCredentialError () {
     if (errors.general) return <Message
         error
-        header='Wrong Credentials'
-        content='Wrong email or password please try again'
+        header={t('Wrong Credentials')}
+        content={t('Wrong email or password please try again')}
       />
   } 
   return (
@@ -57,7 +58,7 @@ function Login(props) {
             id="email"
             name="email"
             type="email"
-            label="Email"
+            label="E-mail"
             //helperText={errors.email}
             //error={errors.email ? true : false}
             error={errors.email ? errors.email : false}
@@ -69,7 +70,7 @@ function Login(props) {
             id="password"
             name="password"
             type="password"
-            label="Password"
+            label={t("Password")}
             //helperText={errors.password}
             error={errors.password ? password : false}
             fluid
@@ -80,7 +81,7 @@ function Login(props) {
           <Button
             type="submit"
           >
-            Login
+            {t('Login')}
         </Button>
         </Form>
       </div>

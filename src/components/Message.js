@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { Message } from 'semantic-ui-react'
 import { editState } from '../actions/appState'
 import _ from 'lodash'
+import { useTranslation } from "react-i18next"
 
 function ResponceMessage() {
     const appState = useSelector(state => state.appState)
     const userId = useSelector(state => state.user.credentials.userId)
     const lead = useSelector(state => _.find(state.lead, { userId: userId }))
     const dispatch = useDispatch()
-
+    const { t } = useTranslation()
 
     const renderMessage = () => {
         if (appState.responseStatus === 200 && lead && lead.settings.messages === true) {
@@ -32,7 +33,7 @@ function ResponceMessage() {
             }, 5000)
             return (
                 <Message compact negative>
-                    <Message.Header>Something went wrong</Message.Header>
+                    <Message.Header>{t('Something went wrong')}</Message.Header>
                     <p>status: 500</p>
                 </Message>
             )
@@ -45,8 +46,22 @@ function ResponceMessage() {
             }, 5000)
             return (
                 <Message compact negative>
-                    <Message.Header>Something went wrong</Message.Header>
+                    <Message.Header>{t('Something went wrong')}</Message.Header>
                     <p>status: 404</p>
+                </Message>
+            )
+        }
+
+        if (appState.responseStatus === 666 && lead && lead.settings.messages === true) {
+            setTimeout(() => {
+                dispatch(editState('', 'responseMessage'))
+                dispatch(editState(0, 'responseStatus'))
+            }, 5000)
+            return (
+                <Message compact negative>
+                    <Message.Header>{t('Something went wrong')}</Message.Header>
+                    <label>{appState.responseMessage}</label>
+                    <p>status: 666</p>
                 </Message>
             )
         }

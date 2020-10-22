@@ -6,11 +6,13 @@ import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
 import { createClient } from '../../../actions/clients'
 import history from '../../../history'
+import { useTranslation } from "react-i18next"
+
 
 let leadArr = []
 
 function AddClient() {
-
+  const { t } = useTranslation()
   const clients = useSelector(state => Object.values(state.clients))  
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => Object.values(state.lead))
@@ -60,7 +62,7 @@ function AddClient() {
   }
 
   const generateProjectList = () => {
-    let projectArr = [{ key: 'Create new project', text: 'Create new project', value: 'Create new project', icon: 'edit', 'onClick': ()=>setNewproject(true) }]
+    let projectArr = [{ key: t('Create new project'), text: t('Create new project'), value: t('Create new project'), icon: 'edit', 'onClick': ()=>setNewproject(true) }]
     if (clients.length > 0)
       clients.map(client => {
         projectArr.push({ key: client.id, text: client.project, value: client.project })
@@ -70,7 +72,7 @@ function AddClient() {
   }
 
   const generateUnitList = () => {
-    let unitArr = [{ key: 'Create new unit', text: 'Create new unit', value: 'Create new unit', icon: 'edit', 'onClick': ()=>setnewUnit(true) }]
+    let unitArr = [{ key: t('Create new unit'), text: t('Create new unit'), value: t('Create new unit'), icon: 'edit', 'onClick': ()=>setnewUnit(true) }]
     if (clients.length > 0)
       clients.map(client => {
         unitArr.push({ key: client.id, text: client.unit, value: client.unit })
@@ -86,8 +88,8 @@ function AddClient() {
         name='project'
         control={Select}
         options={generateProjectList()}
-        label='Project'
-        placeholder='Select project'
+        label={t('Project')}
+        placeholder={t('Select project')}
         searchInput={{ id: 'key' }}
         onChange={(e, { value }) => setProject(value)}
       />
@@ -98,8 +100,8 @@ function AddClient() {
         id='project'
         name='project'
         control={Input}
-        label='Project'
-        placeholder='New project name'        
+        label={t('Project')}
+        placeholder={t('New project name' )}       
         onChange={(e, { value }) => setProject(value)}
       />
     )
@@ -112,8 +114,8 @@ function AddClient() {
         name='unit'
         control={Select}
         options={generateUnitList()}
-        label='Unit'
-        placeholder='Select unit'
+        label={t('Unit')}
+        placeholder={t('Select unit')}
         searchInput={{ id: 'text' }}
         onChange={(e, { value }) => setUnit(value)}
       />
@@ -124,8 +126,8 @@ function AddClient() {
         id='unit'
         name='unit'
         control={Input}
-        label='Unit'
-        placeholder='New unit name (fe. "A2")'        
+        label={t('Unit')}
+        placeholder={t("New unit name (fe. 'A2')")}        
         onChange={(e, { value }) => setUnit(value)}
       />
     )
@@ -134,7 +136,7 @@ function AddClient() {
   if (isEmpty(leadArr)) generateLeadList()  
   return (
     <>
-      <Modal.Header>Create new Client</Modal.Header>
+      <Modal.Header>{t('Create new Client')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form
@@ -143,24 +145,24 @@ function AddClient() {
               id='name'
               name='name'
               control={Input}
-              label='Client name'
-              placeholder='Client name'              
+              label={t('Client name')}
+              placeholder={t('Client name')}              
               onChange={(e, { value }) => setName(value)}
             />
             <Form.Field
               id='phone'
               name='phone'
               control={Input}
-              label='Client phone'
-              placeholder='Client phone'              
+              label={t('Client phone')}
+              placeholder={t('Client phone')}             
               onChange={(e, { value }) => setPhone(value)}
             />
             <Form.Field
               id='mail'
               name='mail'
               control={Input}
-              label='Client email'
-              placeholder='Client email'              
+              label={t('Client email')}
+              placeholder={t('Client email')}              
               onChange={(e, { value }) => setMail(value)}
             />
             {projectOptions()}
@@ -169,8 +171,8 @@ function AddClient() {
               id='price'
               name='price'
               control={Input}
-              label='Proposed price'
-              placeholder='Proposed price'              
+              label={t('Proposed price')}
+              placeholder={t('Proposed price')}              
               onChange={(e, { value }) => setPrice(value)}
             />
             <Form.Field
@@ -179,8 +181,8 @@ function AddClient() {
               name='lead'
               control={Select}              
               options={leadArr}
-              label='Lead Person'
-              placeholder='Lead Person'
+              label={t('Lead Person')}
+              placeholder={t('Lead Person')}
               searchInput={{ id: 'text1' }}
               onChange={(e, { value }) => setUserid(value.userId)}
             />
@@ -189,7 +191,7 @@ function AddClient() {
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={() => dispatch(editState(false, 'modalOpen'))}>
-          Cancel
+          {t('Cancel')}
             </Button>
         <Button
           disabled={name !== '' || mail !== '' || phone !== '' ? false : true}
@@ -197,7 +199,7 @@ function AddClient() {
           onClick={() => handleSubmit()}
           icon='checkmark'
           labelPosition='right'
-          content="Create pulse"
+          content={t("Create Client")}
         />
       </Modal.Actions>
     </>

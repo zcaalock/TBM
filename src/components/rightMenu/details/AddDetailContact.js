@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createDetail } from '../../../actions/details'
 import { editContact } from '../../../actions/contacts'
 import SingleInput from '../../Forms/SingleInput'
+import { useTranslation } from "react-i18next"
+
 
 function AddDetail(props) {
 
@@ -10,7 +12,7 @@ function AddDetail(props) {
   const [isHovering, setHovering] = useState(false);
   const [itemEditable, setEditable] = useState(false)  
   const userId = useSelector(state => state.user.credentials.userId);
-
+  const { t } = useTranslation() 
   const removeEdit = () => {
     setEditable(false)
   }
@@ -31,7 +33,7 @@ function AddDetail(props) {
     if (isHovering === true) {
       return (
         <div data-position="bottom center"
-          data-tooltip="Add check list item">
+          data-tooltip={t("Add item")}>
           <i className="plus icon" />
         </div>)
     }
@@ -63,7 +65,7 @@ function AddDetail(props) {
           onDoubleClick={() => showEdit()}>
           <div style={{ cursor: 'pointer' }}>
             <div onClick={() => showEdit()} style={{ display: 'inline-block' }}>{showHover()}</div>
-            <div style={{ display: 'inline-block' }}>Add item</div>
+            <div style={{ display: 'inline-block' }}>{t('Add item')}</div>
           </div>
         </div>
       )

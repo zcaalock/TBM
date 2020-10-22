@@ -2,13 +2,12 @@ import React from 'react'
 import { Form, Dropdown} from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../actions/appState'
-
-
+import { useTranslation } from "react-i18next"
 
 function DropdownColumnReminders(props) {
   const dispatch = useDispatch();
   const appState = useSelector(state => state.appState)    
-
+const { t } = useTranslation()
   return (
     <Dropdown
       style={{
@@ -31,12 +30,12 @@ function DropdownColumnReminders(props) {
           event.nativeEvent.stopImmediatePropagation()
         }}
       >
-        <Dropdown.Header icon='tags' content='Select days' />
+        <Dropdown.Header icon='tags' content={t('Select days')} />
         <Dropdown.Divider />
         <Dropdown.Item >
           <Form >
             <Form.Field inline style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-              <label>Past days:</label>
+              <label>{t('Past days')}:</label>
               <input  onChange={(v) =>{ if(v.target.value >= 0 ) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings'))}} value={-appState.reminderSettings.pastDays} style={{width: '75px'}} type="number" placeholder='12' />
             </Form.Field>
           </Form>
@@ -44,7 +43,7 @@ function DropdownColumnReminders(props) {
         <Dropdown.Item>
           <Form>
             <Form.Field inline>
-              <label>Future Days</label>
+              <label>{t('Future Days')}</label>
               <input  onChange={(v) =>{ if(v.target.value >= 0 ) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(v.target.value) }, 'reminderSettings'))}} value={appState.reminderSettings.futureDays} style={{width: '75px'}} type="number" placeholder='12' />
             </Form.Field>
           </Form>

@@ -1,10 +1,10 @@
 import React from 'react'
 import DeleteClient from '../middle/Clients/Cells/DeleteClient'
 import ArchiveClient from '../middle/Clients/Cells/ArchiveClient'
-
+import { useTranslation } from "react-i18next"
 
 function HeaderIcons(props) { 
-     
+  const { t } = useTranslation()   
   return (
     <div>
       <div
@@ -14,7 +14,7 @@ function HeaderIcons(props) {
            }}
           className="articleIcon"
           data-position="bottom center"
-          data-tooltip="Edit"
+          data-tooltip={t("Edit")}
           style={{ display: 'inline-block', cursor: 'pointer' }}>
           <i className=" edit icon" />
         </div>      

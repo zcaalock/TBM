@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { createCategory } from '../../../../actions/categories'
 import SingleInput from '../../../Forms/SingleInput'
+import { useTranslation } from "react-i18next"
 
 function AddCategory() {
 
   const boardID = useSelector(state => state.appState.id)   
-
+  const { t } = useTranslation()
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 
@@ -34,7 +35,7 @@ function AddCategory() {
         <div
           style={{ cursor: 'pointer' }}
           data-position="bottom center"
-          data-tooltip="Create category">
+          data-tooltip={t("Create category")}>
           <i className="plus icon" />
         </div>)
     }
@@ -65,7 +66,7 @@ function AddCategory() {
           onMouseEnter={() => showIcon()}
           onClick={() => showEdit()}>
           {showHover()}
-          New Category
+          {t('Create category')}
         </div>
       )
     }

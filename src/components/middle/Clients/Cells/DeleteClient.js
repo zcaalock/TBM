@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import {deleteClient} from '../../../../actions/clients'
-
+import { useTranslation } from "react-i18next"
 function DeleteClient (props) {
   
   const details = useSelector(state => Object.values(state.details))
@@ -10,7 +10,7 @@ function DeleteClient (props) {
     
 
   const dispatch = useDispatch();
-
+const { t } = useTranslation() 
   const renderDelete = () => {    
     const detailsFiltered = _.filter(details, {pulseId: props.clientId})
     const notepadFiltered = _.filter(notepad, {pulseId: props.clientId})    
@@ -19,7 +19,7 @@ function DeleteClient (props) {
       return (
         <div               
         data-position="left center"
-        data-tooltip="Remove all items before delete"
+        data-tooltip={t("Remove all items before delete")}
         style={{ display: 'inline-block' }}>
         <i className="trash icon" style={{ color: '#cecece'}} />        
       </div>
@@ -29,7 +29,7 @@ function DeleteClient (props) {
         onClick={() => dispatch(deleteClient(props.clientId))}
         className="articleIcon"
         data-position="bottom center"
-        data-tooltip="Delete"
+        data-tooltip={t("Delete")}
         style={{ display: 'inline-block',cursor: 'pointer' }}>
         <i className=" trash icon" />        
       </div>
