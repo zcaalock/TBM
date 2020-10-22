@@ -12,7 +12,7 @@ function DeleteBoard() {
   const user = useSelector(state => state.user.credentials)
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderDelete = () => {
     const board = _.filter(categories, { boardId: boardId })
     if (board.length > 0) {

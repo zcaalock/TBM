@@ -14,7 +14,7 @@ function UserName(props) {
     { itemEditable: false })
   const clients = useSelector(state => Object.values(state.clients))
   const dispatch = useDispatch(); 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
@@ -39,7 +39,7 @@ function UserName(props) {
     let projectList = []
     clients.map(client => {
 
-      projectList.push({ key: client.id, text: client.project, icon: '', value: client.project })
+    return  projectList.push({ key: client.id, text: client.project, icon: '', value: client.project })
     })
     
     return _.uniqBy(projectList, 'text').map(project => {

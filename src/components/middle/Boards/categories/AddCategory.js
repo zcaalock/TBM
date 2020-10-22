@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 function AddCategory() {
 
   const boardID = useSelector(state => state.appState.id)   
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 

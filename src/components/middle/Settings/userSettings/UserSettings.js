@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { format } from 'date-fns'
 import { fetchLead, createLead, deleteLead } from '../../../../actions/settings'
 import { editState } from '../../../../actions/appState'
 import { fetchPulses } from '../../../../actions/pulses'
-import { Item, Button, Message } from 'semantic-ui-react'
+import { Item, Button } from 'semantic-ui-react'
 import { useTranslation } from "react-i18next"
 import LeadName from './leadName/LeadName'
 
 function UserSettings() {
 
-  const dispatch = useDispatch();
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrormessage] = useState('')
+  const dispatch = useDispatch() 
 
   const user = useSelector(state => state.user.credentials);
   const lead = useSelector(state => state.lead);
   const pulses = useSelector(state => state.pulses);
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -39,22 +37,7 @@ function UserSettings() {
 
   const handleDeleteLead = (id) => {
     dispatch(deleteLead(id))
-  }
-
-  const renderErrorMessage = () => {
-    if (errorMessage.length > 0)
-      return (
-        <Message negative>
-          <Message.Header>{t('Cannot preceed with the request')}</Message.Header>
-          <p>{errorMessage}</p>
-        </Message>
-      )
-  }
-
-  const tiggerError = () => {
-    setShowError(true)
-    setTimeout(() => { setShowError(false) }, 5000);
-  }
+  }  
 
   const renderCreateLeadButton = () => {
     const pulsesFiltered = _.filter(pulses, { userId: user.userId })
@@ -103,8 +86,7 @@ function UserSettings() {
 
   const renderItem = () => {
     return (
-      <Item.Group>
-        {renderErrorMessage()}
+      <Item.Group>        
         <Item>
           <Item.Image size='tiny' src='/images/no-image.png' />
           <Item.Content>

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 
 function NotepadIcons(props) {
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
   return (
     <div>
       <div

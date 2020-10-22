@@ -13,7 +13,7 @@ function UnitList(props) {
     { itemEditable: false })
   const clients = useSelector(state => Object.values(state.clients))
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
@@ -38,7 +38,7 @@ function UnitList(props) {
     let list = []
     clients.map(client => {
 
-      list.push({ key: client.id, text: client.unit, icon: '', value: client.unit })
+    return  list.push({ key: client.id, text: client.unit, icon: '', value: client.unit })
     })
 
     return _.uniqBy(list, 'text').map(unit => {

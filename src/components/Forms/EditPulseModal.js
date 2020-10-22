@@ -24,8 +24,7 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
-  const [makePrivate, setMakeprivate] = useState(false)
-  const [boardIsPrivate, setBoardPrivate] = useState(false)
+  const [makePrivate, setMakeprivate] = useState(false)  
 
   const privateId = useSelector(state => state.user.credentials.userId)
   const [name, setName] = useState('')
@@ -34,7 +33,7 @@ function PulseModal() {
   const [boardId, setBoardId] = useState('')
 
   const dispatch = useDispatch()
-const { t, i18n } = useTranslation()
+const { t } = useTranslation()
   useEffect(() => {
     if (isEmpty(boards)) dispatch(fetchBoards())
     if (isEmpty(lead)) dispatch(fetchLead())
@@ -162,7 +161,7 @@ const { t, i18n } = useTranslation()
                   setBoardId(value)
                   generateCategoriesList()
                   setCategoryId('')
-                  if (boardKey[value].privateId === userId) { setBoardPrivate(true); setMakeprivate(true) }
+                  if (boardKey[value].privateId === userId) setMakeprivate(true)
                 }}
               />
               <Form.Field

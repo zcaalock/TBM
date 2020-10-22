@@ -18,7 +18,7 @@ function Notepad(props) {
   const notepad = useSelector(state => Object.values(state.notepad));  
   const appState = useSelector(state => state.appState);
   const userId = useSelector(state => state.user.credentials.userId);
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
   useEffect(() => {
     if (isEmpty(notepad)) dispatch(fetchNotepads())
     const note = _.find(notepad, { pulseId: appState.pulseId })

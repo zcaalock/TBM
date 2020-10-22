@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 function DropdownColumnReminders(props) {
   const dispatch = useDispatch();
   const appState = useSelector(state => state.appState)    
-const { t, i18n } = useTranslation()
+const { t } = useTranslation()
   return (
     <Dropdown
       style={{

@@ -7,7 +7,7 @@ function PulseName(props) {
 
   const [state, defState] = useState(
     { itemEditable: false });
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderPrivateIcon = () => {
     if (props.pulse.privateId === props.privateId) {
       return (

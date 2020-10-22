@@ -9,7 +9,7 @@ function ArchiveContact(props) {
   const contacts = useSelector(state => Object.values(state.contacts))
   
   const dispatch = useDispatch()
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const renderArchive = () => {
     const findContact = _.filter(Object.assign(contacts, contacts), { id: props.contactId })
     const isArchived = findContact[0].archived

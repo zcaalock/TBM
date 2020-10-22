@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next"
 
 
 function Notepad(props) {
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
   const [state, defState] = useState({});
   const dispatch = useDispatch();
   const notepad = useSelector(state => Object.values(state.notepad));  

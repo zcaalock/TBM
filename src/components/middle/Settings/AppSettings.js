@@ -9,7 +9,7 @@ function AppSettings() {
   const userId = useSelector(state => state.user.credentials.userId)
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)
       return 'archivedColorRed'

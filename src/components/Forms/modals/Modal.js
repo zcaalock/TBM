@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import _ from 'lodash'
 
 import { Modal, Menu } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
@@ -14,7 +13,7 @@ import { useTranslation } from "react-i18next"
 
 
 function ModalComponent() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const appState = useSelector(state => state.appState)
   const [activeItem, setActive] = useState(t('New pulse'))
   const dispatch = useDispatch()

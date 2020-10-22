@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next"
 let leadArr = []
 
 function AddClient() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const clients = useSelector(state => Object.values(state.clients))  
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => Object.values(state.lead))

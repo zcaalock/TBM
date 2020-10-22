@@ -26,7 +26,7 @@ function Tbody(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
   }, [])
@@ -89,7 +89,7 @@ function Tbody(props) {
   const renderClients = () => {
      
     let clientsCol = []
-    const showArchived = leadUser.settings.showArchived
+    const showArchived = leadUser.settings?leadUser.settings.showArchived:''
 
     clientsCol = clients  
 

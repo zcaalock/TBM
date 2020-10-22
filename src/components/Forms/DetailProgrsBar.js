@@ -4,7 +4,7 @@ import ProgressBar from './ProgressBar'
 import { useTranslation } from "react-i18next"
 
 function DetailProgressBar(props) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const renderProgressBar = (id) => {
     //console.log('archived:', props.pulse.archived )

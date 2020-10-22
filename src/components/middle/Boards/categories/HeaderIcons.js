@@ -4,7 +4,7 @@ import ArchiveCategory from './ArchiveCategory'
 import { useTranslation } from "react-i18next"
 
 function HeaderIcons(props) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderNotifications = () => {
     if (props.notifications > 0 && props.appState === true) return <div className='notificationCategory' data-tooltip={t("Unreaded content")}>{props.notifications}</div>
   }

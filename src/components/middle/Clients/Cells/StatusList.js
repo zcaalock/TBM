@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react'
+import { useDispatch } from "react-redux";
 import _ from 'lodash'
 
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 
 function StatusList(props) {
-
-  const [state, defState] = useState(
-    { itemEditable: false })
+  
   const dispatch = useDispatch();
 
-  const saveField = (title) => {
-    //console.log('title: ', title)
-    if (title === 'Create name') defState({ itemEditable: true })
-    else dispatch(editClient(props.client.id, { status: title }))
+  const saveField = (title) => {    
+    dispatch(editClient(props.client.id, { status: title }))
   }
 
   function renderItems() {

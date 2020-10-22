@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import _ from 'lodash'
+import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetail, editDetail } from '../../../actions/details'
 import { Popup } from 'semantic-ui-react'
@@ -9,7 +8,7 @@ import { useTranslation } from "react-i18next"
 function DetailIcon(props) {
   const userId = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const handleOnClick = (id, bool) => {
     console.log(bool)
     if (bool === 'false' || !bool) {

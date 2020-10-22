@@ -8,7 +8,7 @@ function DeleteContact(props) {
   const details = useSelector(state => Object.values(state.details))
   const notepad = useSelector(state => Object.values(state.notepad))
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const dispatch = useDispatch();
 
   const renderDelete = () => {

@@ -10,7 +10,7 @@ function DeleteClient (props) {
     
 
   const dispatch = useDispatch();
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const renderDelete = () => {    
     const detailsFiltered = _.filter(details, {pulseId: props.clientId})
     const notepadFiltered = _.filter(notepad, {pulseId: props.clientId})    

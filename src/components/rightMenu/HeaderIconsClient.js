@@ -4,7 +4,7 @@ import ArchiveClient from '../middle/Clients/Cells/ArchiveClient'
 import { useTranslation } from "react-i18next"
 
 function HeaderIcons(props) { 
-  const { t, i18n } = useTranslation()   
+  const { t } = useTranslation()   
   return (
     <div>
       <div

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 function AddContact(props) {
   
   const userId = useSelector(state => state.user.credentials.userId)
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const [isHovering, setIsHovering] = useState(false)
   const [itemEditable, setItemEditable] = useState(false)
 

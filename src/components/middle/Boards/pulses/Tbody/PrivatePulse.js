@@ -7,7 +7,7 @@ function ArchivePulse (props) {
   
   const user = useSelector(state => state.user.credentials)  
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderArchive = () => {     
 
     if (props.pulse.privateId && props.pulse.privateId === user.userId) {

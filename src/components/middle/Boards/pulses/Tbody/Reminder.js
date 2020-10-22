@@ -34,7 +34,7 @@ function Reminder(props) {
         pulse.archived === 'false'
         && days < appState.reminderSettings.futureDays
         && days >= appState.reminderSettings.pastDays        
-      ) reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'', status: pulse.status === 'Done'? 'line-through':'' })
+      ) return reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'', status: pulse.status === 'Done'? 'line-through':'' })
     })
   }  
   const renderPrivateIcon = (arr) => {

@@ -12,7 +12,7 @@ function AddDetail(props) {
   const [isHovering, setHovering] = useState(false);
   const [itemEditable, setEditable] = useState(false)  
   const userId = useSelector(state => state.user.credentials.userId);
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
   const removeEdit = () => {
     setEditable(false)
   }

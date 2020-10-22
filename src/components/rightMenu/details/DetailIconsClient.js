@@ -4,7 +4,7 @@ import { deleteDetail } from '../../../actions/details'
 import { useTranslation } from "react-i18next"
 
 function DetailIcon(props) {  
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
    const dispatch = useDispatch();
     return (
     <div> 

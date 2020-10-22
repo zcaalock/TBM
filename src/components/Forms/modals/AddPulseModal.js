@@ -18,7 +18,7 @@ let leadArr = []
 function PulseModal() {
 
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [name, setName] = useState('')
   const [boardId, setBoardid] = useState('')

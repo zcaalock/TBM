@@ -10,7 +10,7 @@ function DeleteCategory(props) {
   const boardId = useSelector(state => state.appState.id);
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderDelete = () => {
     const puls = _.filter(pulses, { categoryId: props.categoryId })
     if (puls.length > 0) {

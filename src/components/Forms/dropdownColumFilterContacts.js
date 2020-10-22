@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 function DropdownColumnFilter(props) {
   const dispatch = useDispatch();
   const appState = useSelector(state => state.appState)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const dropDownSelectable = (name, selector) => {
     return <Dropdown.Item
       style={{ zIndex: 10 }}

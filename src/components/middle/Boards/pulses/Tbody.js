@@ -21,7 +21,7 @@ function Tbody(props) {
   const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
 
   const dispatch = useDispatch();
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   useEffect(() => {
     if (isEmpty(pulses)) dispatch(fetchDetails())
   }, [])

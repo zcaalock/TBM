@@ -13,7 +13,7 @@ function AddBoard(props) {
   const userId = useSelector(state => state.user.credentials.userId)
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const removeEdit = () => {
     setItemEditable(false)
   }

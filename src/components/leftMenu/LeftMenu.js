@@ -22,7 +22,7 @@ function Boards (props) {
   const boards = useSelector(state => Object.values(state.boards))
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   useEffect(()=>{
     handleAuth()
   })  

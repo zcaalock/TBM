@@ -10,7 +10,7 @@ function ResponceMessage() {
     const userId = useSelector(state => state.user.credentials.userId)
     const lead = useSelector(state => _.find(state.lead, { userId: userId }))
     const dispatch = useDispatch()
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const renderMessage = () => {
         if (appState.responseStatus === 200 && lead && lead.settings.messages === true) {

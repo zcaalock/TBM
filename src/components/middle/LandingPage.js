@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
 function LandingPage() {
-const { t, i18n } = useTranslation()
+const { t } = useTranslation()
   const goLink = (link) => {
     history.push(`/${link}`)
   }

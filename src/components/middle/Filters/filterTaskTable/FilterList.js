@@ -15,7 +15,7 @@ import { fetchDetails } from '../../../../actions/details'
 import { useTranslation } from "react-i18next"
 
 function SearchFilter(props) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const userId = useSelector(state => state.user.credentials.userId);
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const appState = useSelector(state => state.appState);

@@ -11,7 +11,7 @@ function DeletePulse (props) {
   const boardId = useSelector(state => state.appState.id)  
 
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderDelete = () => {    
     const detailsFiltered = _.filter(details, {pulseId: props.pulseId})
     const notepadFiltered = _.filter(notepad, {pulseId: props.pulseId})    

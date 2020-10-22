@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next"
 
 function HeaderIcons(props) {
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation() 
+  const { t } = useTranslation() 
   const appState = useSelector(state => state.appState)  
   const ShowEditPulseModal = () => {
     return appState.editPulseOpen === 'true' ?  <EditPulseModal/> : null

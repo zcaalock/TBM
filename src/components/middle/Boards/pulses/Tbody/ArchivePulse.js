@@ -1,6 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import _ from 'lodash'
+import { useDispatch, useSelector } from "react-redux"
 import { editPulse } from '../../../../../actions/pulses'
 import { useTranslation } from "react-i18next"
 
@@ -9,7 +8,7 @@ function ArchivePulse(props) {
 
   const pulses = useSelector(state => state.pulses)   
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderArchive = () => {       
     if (pulses[props.pulseId] && pulses[props.pulseId].archived === 'true') return (
         <div

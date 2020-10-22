@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch} from "react-redux"
 import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { loginUser } from '../../actions/users'
@@ -23,7 +23,7 @@ function Login(props) {
   }, [props.UI])
 
   const dispatch = useDispatch();
-const { t, i18n } = useTranslation()
+const { t } = useTranslation()
   const handleSubmit = (event) => {
     event.preventDefault();
     const userData = {

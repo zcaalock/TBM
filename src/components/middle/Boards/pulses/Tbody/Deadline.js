@@ -9,7 +9,7 @@ function Deadline(props) {
 
   const [date, setDate] = useState('');  
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {
     setDate(props.pulse.deadline)
   }, [])

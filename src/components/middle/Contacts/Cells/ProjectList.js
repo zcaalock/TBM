@@ -12,7 +12,7 @@ function UserName(props) {
     { itemEditable: false })
   const contacts = useSelector(state => Object.values(state.contacts))
   const dispatch = useDispatch(); 
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })

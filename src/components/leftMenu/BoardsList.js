@@ -16,7 +16,7 @@ function BoardsList(props) {
   const lead = useSelector(state => _.find(state.lead, {userId: userId}))
 
   const dispatch = useDispatch()
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))

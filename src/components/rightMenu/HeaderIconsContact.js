@@ -5,7 +5,7 @@ import PrivateContact from '../middle/Contacts/Cells/PrivateContact'
 import { useTranslation } from "react-i18next"
 
 function HeaderIcons(props) { 
-  const { t, i18n } = useTranslation()  
+  const { t } = useTranslation()  
   return (
     <div>
       <div

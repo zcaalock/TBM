@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import _ from 'lodash'
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,33 +18,33 @@ function GCalendarModal(props) {
   ]
 
 
-  const ex = {
-    'summary': 'Google I/O 2015',
-    'location': '800 Howard St., San Francisco, CA 94103',
-    'description': 'A chance to hear more about Google\'s developer products.',
-    'start': {
-      'dateTime': '2015-05-28T09:00:00-07:00',
-      'timeZone': 'Europe/Warsaw'
-    },
-    'end': {
-      'dateTime': '2015-05-28T17:00:00-07:00',
-      'timeZone': 'Europe/Warsaw'
-    },
-    'recurrence': [
-      'RRULE:FREQ=DAILY;COUNT=2'
-    ],
-    'attendees': [
-      { 'email': 'lpage@example.com' },
-      { 'email': 'sbrin@example.com' }
-    ],
-    'reminders': {
-      'useDefault': false,
-      'overrides': [
-        { 'method': 'email', 'minutes': 24 * 60 },
-        { 'method': 'popup', 'minutes': 10 }
-      ]
-    }
-  }
+  // const ex = {
+  //   'summary': 'Google I/O 2015',
+  //   'location': '800 Howard St., San Francisco, CA 94103',
+  //   'description': 'A chance to hear more about Google\'s developer products.',
+  //   'start': {
+  //     'dateTime': '2015-05-28T09:00:00-07:00',
+  //     'timeZone': 'Europe/Warsaw'
+  //   },
+  //   'end': {
+  //     'dateTime': '2015-05-28T17:00:00-07:00',
+  //     'timeZone': 'Europe/Warsaw'
+  //   },
+  //   'recurrence': [
+  //     'RRULE:FREQ=DAILY;COUNT=2'
+  //   ],
+  //   'attendees': [
+  //     { 'email': 'lpage@example.com' },
+  //     { 'email': 'sbrin@example.com' }
+  //   ],
+  //   'reminders': {
+  //     'useDefault': false,
+  //     'overrides': [
+  //       { 'method': 'email', 'minutes': 24 * 60 },
+  //       { 'method': 'popup', 'minutes': 10 }
+  //     ]
+  //   }
+  // }
 
   const appState = useSelector(state => state.appState)  
 
@@ -66,7 +65,7 @@ function GCalendarModal(props) {
   const [emailShow, setEmailshow] = useState(false)
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {    
     dispatch(editState('', 'error'))
     dispatch(editState('', 'submited'))

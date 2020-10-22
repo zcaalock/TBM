@@ -24,7 +24,7 @@ function Tbody(props) {
   const appState = useSelector(state => state.appState);
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))

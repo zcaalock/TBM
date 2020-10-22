@@ -6,7 +6,7 @@ function MakePrivate(props) {
 
   const user = useSelector(state => state.user.credentials)
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderArchive = () => {
 
     if (props.contact.privateId && props.contact.privateId === user.userId) {

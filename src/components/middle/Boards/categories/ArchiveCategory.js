@@ -9,7 +9,7 @@ function ArchiveCategory(props) {
   const categories = useSelector(state => Object.values(state.categories)) 
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const renderArchive = () => {
     const findCategory = _.filter(categories, { id: props.categoryId })
     const isArchived = findCategory[0].archived

@@ -9,7 +9,7 @@ function ArchiveClient(props) {
   const clients = useSelector(state => Object.values(state.clients))
   
   const dispatch = useDispatch()
-const { t, i18n } = useTranslation() 
+const { t } = useTranslation() 
   const renderArchive = () => {
     const findClient = _.filter(Object.assign(clients, clients), { id: props.clientId })
     const isArchived = findClient[0].archived

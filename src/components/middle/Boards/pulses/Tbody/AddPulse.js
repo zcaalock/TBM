@@ -13,7 +13,7 @@ function AddPulse(props) {
   const [itemEditable, setItemEditable] = useState(false)
 
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const removeEdit = () => {
     setItemEditable(false)
   }
