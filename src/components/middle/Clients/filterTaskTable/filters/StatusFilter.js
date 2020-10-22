@@ -90,7 +90,7 @@ function Tbody(props) {
 
     let clientsCol = []
     const showArchived = leadUser.settings ? leadUser.settings.showArchived : ''
-    const onlyPromising = appState.clientsSettings.onlyPromising
+    const onlyPromising = appState.clientsSettings.onlyPromising ? appState.clientsSettings.onlyPromising : false
     clientsCol = clients
 
     if (showArchived === false) clientsCol = _.reject(clientsCol, { archived: 'true' })

@@ -33,9 +33,7 @@ export const editDetail = (id, formValues, editedId, fetch) => async dispatch =>
       dispatch({ type: types.EDIT_DETAIL, payload: response.data.detail })
       if (fetch === true) dispatch(fetchDetail(id))
       dispatch(editState(response.data.message, 'responseMessage'))
-      dispatch(editState(response.status, 'responseStatus'))
-      console.log(editedId, fetch)
-
+      dispatch(editState(response.status, 'responseStatus')) 
     })
     .catch((err) => {
       dispatch(editState(404, 'responseStatus'))

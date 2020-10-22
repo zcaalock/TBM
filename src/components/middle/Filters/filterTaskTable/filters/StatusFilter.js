@@ -6,9 +6,9 @@ import _ from 'lodash'
 import { editState } from '../../../../../actions/appState'
 import PulseName from '../../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../../Boards/pulses/Tbody/LeadPerson'
-import Status from '../../../Boards/pulses/Tbody/Status'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
 import Deadline from '../../../Boards/pulses/Tbody/Deadline'
+import StatusList from '../../../Boards/pulses/Tbody/StatusList'
 
 import { useTranslation } from "react-i18next"
 
@@ -145,7 +145,7 @@ function Tbody(props) {
               <LeadPerson pulse={pulse} />
             </td>
             <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
-              <Status pulse={pulse} />
+              <StatusList pulse={pulse} />
             </td>
             <td >
               <Deadline pulse={pulse} />
@@ -168,7 +168,7 @@ function Tbody(props) {
             <th style={{ minWidth: '15%' }}>{t('Board')}</th>
             <th style={{ width: '10%' }}>{t('Category')}</th>
             <th style={{ width: '10%' }}>{t('Lead Person')}</th>
-            <th style={{ width: '120px' }}>{t('Status')}</th>
+            <th style={{ width: '10%' }}>{t('Status')}</th>
             <th style={{ width: '10%' }}>{t('Deadline')} <i onClick={() => handleFilterClick('deadline')} className={sortIconClass('deadline')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('deadline')}</th>
             <th style={{ width: '10%' }}>{t('Details')}</th>
           </tr>

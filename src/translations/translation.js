@@ -130,7 +130,13 @@ export const resources = {
             "Future Days":"Future Days",
             "Select days":"Select days",
             "Choose collumns":"Choose collumns",
-            "Only promising":"Only promising"
+            "Only promising":"Only promising",
+            "Before Start":"Before Start",
+            "In Progress":"In Progress",
+            "Done":"Done",
+            "Canceled":"Canceled",
+            "On Hold":"On Hold",
+            "Continous":"Continous"
 
 
 
@@ -270,7 +276,13 @@ export const resources = {
             "Future Days":"Dni w przód",
             "Select days":"Wybierz zakres",
             "Choose collumns":"Wybierz kolumny",
-            "Only promising":"Tylko rokujący"
+            "Only promising":"Tylko rokujący",
+            "Before Start":"Przygotowanie",
+            "In Progress":"W trakcie",
+            "Done":"Zakończone",
+            "Canceled":"Anulowane",
+            "On Hold":"Wstrzymane",
+            "Continous":"Ciągły"
 
 
 

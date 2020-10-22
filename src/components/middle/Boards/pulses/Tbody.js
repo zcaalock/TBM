@@ -7,7 +7,7 @@ import { fetchDetails } from '../../../../actions/details'
 import { editState } from '../../../../actions/appState'
 import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
-import Status from './Tbody/Status'
+import StatusList from './Tbody/StatusList'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
 import Deadline from '../../Boards/pulses/Tbody/Deadline'
 import { useTranslation } from "react-i18next"
@@ -64,7 +64,7 @@ const { t } = useTranslation()
               <LeadPerson pulse={pulse} />
             </td>
             <td data-label="Status" style={{ overflow: "visible", width: '120px' }}>
-              <Status pulse={pulse} />
+              <StatusList pulse={pulse} />
             </td>
             <td style={{ width: '165px' }}>
               <Deadline pulse={pulse} />
