@@ -141,7 +141,7 @@ function SearchFilter(props) {
           //initialDate={format(new Date(),'dd-mm-yyyy')}          
           name={value}
           closable
-          style={{color: 'red'}}
+          //style={{color: 'red'}}
           //pickerStyle={{color: 'red', zIndex: 99990 }}
           startMode='year'
           clearable

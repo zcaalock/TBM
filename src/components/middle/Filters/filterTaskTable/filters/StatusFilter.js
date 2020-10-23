@@ -9,8 +9,6 @@ import LeadPerson from '../../../Boards/pulses/Tbody/LeadPerson'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
 import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 import StatusList from '../../../Boards/pulses/Tbody/StatusList'
-import differenceInYears from 'date-fns/differenceInYears'
-import parseISO from 'date-fns/parseISO'
 
 import { useTranslation } from "react-i18next"
 

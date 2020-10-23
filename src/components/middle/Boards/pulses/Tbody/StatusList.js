@@ -24,7 +24,7 @@ function StatusList(props) {
 
     ]
 
-    return _.uniqBy(list, 'key').map(unit => {
+    _.uniqBy(list, 'key').map(unit => {
       return <Dropdown.Item
         key={unit.key}
         onClick={() => saveField(unit.value)}

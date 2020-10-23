@@ -25,7 +25,7 @@ function Reminder(props) {
       const hours = differenceInHours(parseISO(pulse.deadline), new Date())
       const renderDifs = (x) => {
         if (x < -1) return `${days} d`
-        if (1 > x && x >= -1) return `${hours + 24} h` 
+        if (1 > x && x >= -1) return `${hours + 24} h`
         if (x >= 1) return `${days} d`
       }
       if (
@@ -33,10 +33,12 @@ function Reminder(props) {
         pulse.deadline.length > 0 &&
         pulse.archived === 'false'
         && days < appState.reminderSettings.futureDays
-        && days >= appState.reminderSettings.pastDays        
-      ) return reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days<0?'#DC6969':'', status: pulse.status === 'Done'? 'line-through':'' })
+        && days >= appState.reminderSettings.pastDays
+      ) return reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days < 0 ? '#DC6969' : '', status: pulse.status === 'Done' ? 'line-through' : '' })
+      return
     })
-  }  
+    return
+  }
   const renderPrivateIcon = (arr) => {
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
@@ -47,21 +49,21 @@ function Reminder(props) {
     return sorted.map(item => {
       return (
         <Link
-          
+
           onClick={() => {
             dispatch(editState('', 'pulseId'))
             dispatch(editState(item.categoryId, 'expandCategory'))
-            dispatch(editState(item.id, 'pulseId'))            
+            dispatch(editState(item.id, 'pulseId'))
           }}
           to={`/boards/${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).id}/pulses/${item.id}`}
           className={`item ${selectedCheck(item.id)}`}
           key={item.name}
           style={selectedStyle(item.id)}>
           {renderPrivateIcon(item)}
-          <div 
-          data-position="right center"
-          data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
-          style={{ width: '140px', textDecoration: item.status }}>{item.name}</div>
+          <div
+            data-position="right center"
+            data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
+            style={{ width: '140px', textDecoration: item.status }}>{item.name}</div>
           <div style={{ position: 'absolute', right: '0px', color: item.color, textDecoration: item.status }}>{item.difference}</div>
         </Link>
 
