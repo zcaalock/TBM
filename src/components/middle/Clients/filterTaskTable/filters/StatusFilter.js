@@ -5,13 +5,13 @@ import history from '../../../../../history'
 import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
+import {editClient} from '../../../../../actions/clients'
 import LeadPerson from '../../Cells/LeadPerson'
 import ClientName from '../../Cells/ClientName';
 import ClientNumber from '../../Cells/ClientNumber'
 import ClientMail from '../../Cells/ClientMail'
 import ClientPrice from '../../Cells/ClientPrice'
-import ProjectList from '../../Cells/ProjectList'
-import UnitList from '../../Cells/UnitList'
+import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 import StatusList from '../../Cells/StatusList'
 
 import DropdownColumnFilter from '../../../../Forms/dropdownColumFilterClients'
@@ -123,12 +123,12 @@ function Tbody(props) {
             </td>
           )}
           <td data-label="Project" style={{ overflow: "visible" }}>
-            <ProjectList client={client} />
+            <DropdownAdditions item={client} items={clients} selector='project' dispatch={editClient} />
           </td>
           {checkShowCollumns(
             'showUnit',
             <td data-label="Unit" style={{ overflow: "visible" }}>
-              <UnitList client={client} />
+              <DropdownAdditions item={client} items={clients} selector='unit' dispatch={editClient} />
             </td>
           )}
           {checkShowCollumns(

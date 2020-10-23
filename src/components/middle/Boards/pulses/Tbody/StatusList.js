@@ -6,10 +6,10 @@ import { editPulse } from '../../../../../actions/pulses'
 import { Dropdown } from 'semantic-ui-react'
 
 function StatusList(props) {
-  
+
   const dispatch = useDispatch();
-const { t } = useTranslation()
-  const saveField = (value) => {    
+  const { t } = useTranslation()
+  const saveField = (value) => {
     dispatch(editPulse(props.pulse.id, { status: value }))
   }
 
@@ -20,14 +20,14 @@ const { t } = useTranslation()
       { key: 'Done', text: t('Done'), value: 'Done' },
       { key: 'Canceled', text: t('Canceled'), value: 'Canceled' },
       { key: 'On Hold', text: t('On Hold'), value: 'On Hold' },
-      { key: 'Continous', text: t('Continous'), value: 'Continous' },      
+      { key: 'Continous', text: t('Continous'), value: 'Continous' },
 
     ]
 
     return _.uniqBy(list, 'key').map(unit => {
       return <Dropdown.Item
         key={unit.key}
-        onClick={() => saveField(unit.value)}        
+        onClick={() => saveField(unit.value)}
         text={unit.text}
       //floating
       />
@@ -36,7 +36,7 @@ const { t } = useTranslation()
   }
 
   const renderDropDown = () => {
-    if (props.pulse.archived === 'false') {      
+    if (props.pulse.archived === 'false') {
       return (
         <div>
           <Dropdown
@@ -59,7 +59,7 @@ const { t } = useTranslation()
         </div>
       )
     }
-    if (props.client.archived === 'true')
+    if (props.client && props.client.archived === 'true')
       return (
         <div
           data-position="bottom center"

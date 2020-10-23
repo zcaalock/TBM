@@ -10,11 +10,12 @@ import ContactName from '../../Cells/ContactName';
 import ContactNumber from '../../Cells/ContactNumber'
 import ContactMail from '../../Cells/ContactMail'
 import ContactCompany from '../../Cells/ContactCompany'
-import ProjectList from '../../Cells/ProjectList'
+import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 
 import DropdownColumnFilterContacts from '../../../../Forms/dropdownColumFilterContacts'
 
 import { useTranslation } from "react-i18next"
+import { editContact } from '../../../../../actions/contacts';
 
 
 function Tbody(props) {
@@ -146,7 +147,7 @@ function Tbody(props) {
             </td>
           )}
           <td data-label="Project" style={{ overflow: "visible" }}>
-            <ProjectList contact={contact} />
+          <DropdownAdditions item={contact} items={contacts} selector='project' dispatch={editContact} />
           </td>                  
           <td >
             {format(new Date(contact.createdAt), 'yyyy/MM/dd')}

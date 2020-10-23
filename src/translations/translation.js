@@ -136,7 +136,10 @@ export const resources = {
             "Done":"Done",
             "Canceled":"Canceled",
             "On Hold":"On Hold",
-            "Continous":"Continous"
+            "Continous":"Continous",
+            "Time range":"Time range",
+            "Future":"Future",
+            "Past":"Past"
 
 
 
@@ -282,7 +285,10 @@ export const resources = {
             "Done":"Zakończone",
             "Canceled":"Anulowane",
             "On Hold":"Wstrzymane",
-            "Continous":"Ciągły"
+            "Continous":"Ciągły",
+            "Time range":"Zakres dat",
+            "Future":"Górny zakres",
+            "Past":"Dolny zakres"
 
 
 

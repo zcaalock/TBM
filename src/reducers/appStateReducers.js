@@ -39,7 +39,9 @@ const appState = {
     searchArchived:false,
     searchPrivate:false, 
     onlyPrivate:false,
-    onlyArchived:false
+    onlyArchived:false,
+    Future:'',
+    Past:''
   },
   reminderSettings: {
     pastDays:-4,
