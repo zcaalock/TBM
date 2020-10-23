@@ -139,7 +139,9 @@ export const resources = {
             "Continous":"Continous",
             "Time range":"Time range",
             "Future":"Future",
-            "Past":"Past"
+            "Past":"Past",
+            "Show status":"Show status",
+            "Filters":"Filters"
 
 
 
@@ -288,7 +290,9 @@ export const resources = {
             "Continous":"Ciągły",
             "Time range":"Zakres dat",
             "Future":"Górny zakres",
-            "Past":"Dolny zakres"
+            "Past":"Dolny zakres",
+            "Show status":"Pokaż status",
+            "Filters":"Filtry"
 
 
 

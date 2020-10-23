@@ -71,7 +71,7 @@ function Boards (props) {
     return (
       <div        
         className="leftMenu header"
-        style={{zIndex: '10'}}>
+        style={{zIndex: '1'}}>
         <div key='i' className='item leftMenu-main' style={{ textAlign: 'center' }}>
           <div onClick={() => setMHide(MHide === 'true' ? 'false' : 'true')} id="TMenu" style={{ display: 'inline-block' }}><i className='bars icon' /></div>
           <div style={{ display: 'inline-block' }}><h3>Task Manager</h3></div>

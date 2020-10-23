@@ -7,18 +7,21 @@ import differenceInDays from 'date-fns/differenceInBusinessDays'
 import differenceInHours from 'date-fns/differenceInHours'
 import parseISO from 'date-fns/parseISO'
 import { Link } from 'react-router-dom'
-
+import { Popup } from 'semantic-ui-react'
 function Reminder(props) {
 
   const user = useSelector(state => state.user.credentials)
   const appState = useSelector(state => state.appState)
   const pulses = useSelector(state => Object.values(state.pulses))
   const boards = useSelector(state => state.boards)
+  const details = useSelector(state => state.details)
   const categories = useSelector(state => state.categories)
   const reminderArr = []
+  const continousArr = []
   const dispatch = useDispatch()
 
   if (isEmpty(reminderArr)) makeCollection()
+  if (isEmpty(continousArr) && appState.reminderSettings.showContinous === true) makeContinousColection()
   function makeCollection() {
     pulses.map(pulse => {
       const days = differenceInDays(parseISO(pulse.deadline), new Date())
@@ -39,9 +42,28 @@ function Reminder(props) {
     })
     return
   }
-  const renderPrivateIcon = (arr) => {
+  const renderIcon = (arr) => {
+    let findFlag = _.filter(details, { pulseId: arr.id, flag: 'true' })//.map(a=>{return `${a.title}, `})
+    let flagArr = []
+    if (findFlag.length > 0) findFlag.map(a => { return flagArr.push(`${a.title}t | `) })
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
+    if (_.find(details, { pulseId: arr.id, flag: 'true' })) return <div data-position="right center" data-tooltip={flagArr} style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller' }}><i className=" flag icon" /></div>
+    // return <Popup style={{ zIndex: 9999999 }}  position='right center' trigger={<i style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller', zIndex:100  }} className=" flag icon" />}>
+    //   <Popup.Content >
+    //     test
+    //   </Popup.Content>
+    // </Popup>
+  }
+
+  function makeContinousColection() {
+    pulses.map(pulse => {
+      if (
+        pulse.userId === user.userId &&
+        pulse.status === 'Continous' &&
+        pulse.archived === 'false'
+      ) return continousArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, categoryId: pulse.categoryId, privateId: pulse.privateId, status: pulse.status === 'Done' ? 'line-through' : '' })
+    })
   }
 
   const renderReminders = (arr) => {
@@ -49,7 +71,6 @@ function Reminder(props) {
     return sorted.map(item => {
       return (
         <Link
-
           onClick={() => {
             dispatch(editState('', 'pulseId'))
             dispatch(editState(item.categoryId, 'expandCategory'))
@@ -59,7 +80,7 @@ function Reminder(props) {
           className={`item ${selectedCheck(item.id)}`}
           key={item.name}
           style={selectedStyle(item.id)}>
-          {renderPrivateIcon(item)}
+          {renderIcon(item)}
           <div
             data-position="right center"
             data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
@@ -69,6 +90,36 @@ function Reminder(props) {
 
       )
     })
+  }
+
+  const renderContinous = (arr) => {
+    const sorted = _.sortBy(arr, 'name')
+    if (appState.reminderSettings.showContinous === true) return (
+      <>
+        {sorted.map(item => {
+          return (
+            <Link
+              onClick={() => {
+                dispatch(editState('', 'pulseId'))
+                dispatch(editState(item.categoryId, 'expandCategory'))
+                dispatch(editState(item.id, 'pulseId'))
+              }}
+              to={`/boards/${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).id}/pulses/${item.id}`}
+              className={`item ${selectedCheck(item.id)}`}
+              key={item.name}
+              style={selectedStyle(item.id)}>
+              {renderIcon(item)}
+              <div
+                data-position="right center"
+                data-tooltip={`"${_.find(categories, { id: item.categoryId }).title}" w "${_.find(boards, { id: _.find(categories, { id: item.categoryId }).boardId }).title}" | data: ${item.date}`}
+                style={{ width: '140px', textDecoration: item.status }}>{item.name}</div>
+              <div style={{ position: 'absolute', right: '0px', color: item.color, textDecoration: item.status }}>∞</div>
+            </Link>
+          )
+        })}
+        <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}></div>
+      </>
+    )
   }
 
   const selectedCheck = (id) => {
@@ -85,6 +136,7 @@ function Reminder(props) {
 
   return (
     <>
+      {renderContinous(continousArr)}
       {renderReminders(reminderArr)}
     </>
   )

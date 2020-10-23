@@ -45,7 +45,8 @@ const appState = {
   },
   reminderSettings: {
     pastDays:-4,
-    futureDays:12
+    futureDays:12, 
+    showContinous: true
   },
   expandCategory: '',
   detailId: '',

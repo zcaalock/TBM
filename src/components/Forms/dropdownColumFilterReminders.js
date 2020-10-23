@@ -1,13 +1,36 @@
 import React from 'react'
-import { Form, Dropdown} from 'semantic-ui-react'
+import { Form, Dropdown, Checkbox } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../actions/appState'
 import { useTranslation } from "react-i18next"
 
 function DropdownColumnReminders(props) {
   const dispatch = useDispatch();
-  const appState = useSelector(state => state.appState)    
-const { t } = useTranslation()
+  const appState = useSelector(state => state.appState)
+  const { t } = useTranslation()
+
+  const dropDownSelectable = (name, selector) => {
+    return <Dropdown.Item
+      style={{ zIndex: 10 }}
+      onClick={(event) => {
+        event.stopPropagation()
+        event.nativeEvent.stopImmediatePropagation()
+        dispatch(editState({ ...appState.reminderSettings, [selector]: !appState.reminderSettings[selector] }, 'reminderSettings'))
+      }}
+    >
+      <Checkbox
+        label={name}
+        checked={appState.reminderSettings[selector]}
+        style={{ zIndex: -1 }}
+      />
+    </Dropdown.Item>
+  }
+
+
+
+
+
+
   return (
     <Dropdown
       style={{
@@ -22,32 +45,35 @@ const { t } = useTranslation()
       compact
       className='mouseHoverBlack'
       icon='filter'
-      floating      
+      floating
+      pointing='left'
     >
-      <Dropdown.Menu       
+      <Dropdown.Menu
         onClick={(event) => {
           event.stopPropagation()
           event.nativeEvent.stopImmediatePropagation()
         }}
       >
-        <Dropdown.Header icon='tags' content={t('Select days')} />
-        <Dropdown.Divider />
+        <Dropdown.Header icon='tags' content={t('Select days')} />        
         <Dropdown.Item >
           <Form >
-            <Form.Field inline style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Form.Field >
               <label>{t('Past days')}:</label>
-              <input  onChange={(v) =>{ if(v.target.value >= 0 ) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings'))}} value={-appState.reminderSettings.pastDays} style={{width: '75px'}} type="number" placeholder='12' />
+              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings')) }} value={-appState.reminderSettings.pastDays}  type="number" placeholder='12' />
             </Form.Field>
           </Form>
-        </Dropdown.Item>
+        </Dropdown.Item>        
         <Dropdown.Item>
           <Form>
-            <Form.Field inline>
+            <Form.Field >
               <label>{t('Future Days')}</label>
-              <input  onChange={(v) =>{ if(v.target.value >= 0 ) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(v.target.value) }, 'reminderSettings'))}} value={appState.reminderSettings.futureDays} style={{width: '75px'}} type="number" placeholder='12' />
+              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(v.target.value) }, 'reminderSettings')) }} value={appState.reminderSettings.futureDays}  type="number" placeholder='12' />
             </Form.Field>
           </Form>
         </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Header icon='tags' content={`${t('Filters')}:`} />        
+        {dropDownSelectable(`${t('Show status')}: ${t(`Continous`)}`, 'showContinous')}
       </Dropdown.Menu>
     </Dropdown>
   )
