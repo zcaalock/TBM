@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 import { useTranslation } from "react-i18next"
 import { Dropdown } from 'semantic-ui-react'
-import { editCategory } from '../../../../actions/categories'
+import { editCategory,deleteCategory } from '../../../../actions/categories'
 import { editState } from '../../../../actions/appState'
 
 
@@ -38,7 +38,7 @@ function HeaderIcons(props) {
       )
     } return (
       <Dropdown.Item
-        //onClick={() => { dispatch(deletePulse(props.pulseId)) }}
+        onClick={() => { dispatch(deleteCategory(id)) }}
         content={t("Delete")}
         icon="trash"
       />

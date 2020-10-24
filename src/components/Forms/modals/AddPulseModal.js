@@ -7,8 +7,8 @@ import { editState } from '../../../actions/appState'
 import { createPulse, createPrivatePulse } from '../../../actions/pulses'
 import { fetchLead } from '../../../actions/settings'
 import { fetchBoards } from '../../../actions/boards'
+import { createCategory } from '../../../actions/categories'
 import { useTranslation } from "react-i18next"
-
 
 let boardsArr = []
 let boardsPrivateArr = []
@@ -43,9 +43,9 @@ function PulseModal() {
 
   useEffect(() => {
     if (isEmpty(boards)) dispatch(fetchBoards())
-    if (isEmpty(lead)) dispatch(fetchLead())
-
-  }, [])
+    if (isEmpty(lead)) dispatch(fetchLead())  
+    categoriesArr = []  
+  }, [categories])
 
   const handleSubmit = () => {
     //console.log('formValues', formValues)
@@ -140,6 +140,7 @@ function PulseModal() {
               searchInput={{ id: 'boardId' }}
               onChange={(e, { value }) => { setBoardid(value); categoriesArr = [] }}
             />
+
             <Form.Field
               search
               disabled={activateCategoryField()}
@@ -151,6 +152,10 @@ function PulseModal() {
               placeholder={t('Cateogry name')}
               searchInput={{ id: 'categoryId' }}
               onChange={(e, { value }) => setCategoryid(value)}
+              allowAdditions
+              placeholder='Dodaj'
+              value={categoriesArr.currentValue}
+              onAddItem={(e, { value },d) => dispatch(createCategory({ title: value, privateId: isPrivate === true ? privateId : '' }, boardId))}
             />
           </Form>
         </Modal.Description>
@@ -164,7 +169,7 @@ function PulseModal() {
         />
         <Button onClick={() => dispatch(editState(false, 'modalOpen'))}>
           {t('Cancel')}
-            </Button>
+        </Button>
         <Button
           disabled={activateSubmit()}
           form='my-form'
