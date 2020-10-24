@@ -18,15 +18,16 @@ function DropdownAdditions(props) {
   list = _.uniqBy(list, 'text')
   if (props.item.archived === 'false') {
     return <Dropdown
-        style={{ width: '120px' }}
+        style={{ width: '150px' }}
         value={list.currentValue}
         search
         options={list}
-        text={props.item[props.selector]}
+        defaultValue={props.item[props.selector]}               
         fluid
         labeled
         allowAdditions
         selection
+        placeholder='Dodaj'
         onChange={(e, { value }) => saveField(value)}
         onAddItem={(e, { value }) => saveField(value)}
       />

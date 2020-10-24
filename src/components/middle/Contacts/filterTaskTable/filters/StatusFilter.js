@@ -21,7 +21,7 @@ import { editContact } from '../../../../../actions/contacts';
 function Tbody(props) {
 
   const contacts = useSelector(state => Object.values(state.contacts));
-  const appState = useSelector(state => state.appState)  
+  const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
@@ -43,7 +43,7 @@ function Tbody(props) {
 
   //sorting collumns
 
-  const handleFilterClick = (name) => {    
+  const handleFilterClick = (name) => {
     const sortBy = appState.sortBy
     if (name === 'title' && sortBy.name === 'createdAt') dispatch(editState({ name: 'title', direction: 'asc' }, 'sortBy'))
     if (name === 'created' && sortBy.name === 'createdAt') dispatch(editState({ name: 'created', direction: 'asc' }, 'sortBy'))
@@ -54,7 +54,7 @@ function Tbody(props) {
   const renderRemoveSortIcon = (name) => {
     const sortBy = appState.sortBy
     if (sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={() => dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{ paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer' }}>x</label>
-    
+
   }
 
   const sortContactsBy = (arr) => {
@@ -85,47 +85,47 @@ function Tbody(props) {
     if (appState.contactsSettings[name] === true) return content
   }
 
-  const renderArchivedIcon = (archived)=> {
+  const renderArchivedIcon = (archived) => {
     if (archived === 'true')
       return (
-        <div 
-        data-position="bottom center"
-        data-tooltip="Archived"
-        style={{color: '#DC6969', paddingLeft: '36.5px', marginTop: '-2px', position: 'absolute', display: 'inline-block'}}>
+        <div
+          data-position="bottom center"
+          data-tooltip="Archived"
+          style={{ color: '#DC6969', paddingLeft: '36.5px', marginTop: '-2px', position: 'absolute', display: 'inline-block' }}>
           <i className=" archive icon" />
         </div>
       )
   }
 
-  const renderContacts = () => {     
+  const renderContacts = () => {
 
     let contactsCol = []
-    contacts.map(item=>{
-      if(item.privateId === '') return contactsCol.push(item)
+    contacts.map(item => {
+      if (item.privateId === '') return contactsCol.push(item)
     })
 
     let constactsColPrivate = []
 
-    contacts.map(item=>{
-      if(item.privateId === userId) return constactsColPrivate.push(item)
+    contacts.map(item => {
+      if (item.privateId === userId) return constactsColPrivate.push(item)
     })
 
-    contactsCol = contactsCol.concat(constactsColPrivate)    
+    contactsCol = contactsCol.concat(constactsColPrivate)
 
     const showArchived = leadUser.settings.showArchived
-    const showPrivate = appState.showPrivate    
-    
-    if (showArchived === false) contactsCol = _.reject(contactsCol,{ archived: 'true' })    
-    if (showPrivate === false) contactsCol = _.reject(contactsCol,{ privateId: userId })  
+    const showPrivate = appState.showPrivate
+
+    if (showArchived === false) contactsCol = _.reject(contactsCol, { archived: 'true' })
+    if (showPrivate === false) contactsCol = _.reject(contactsCol, { privateId: userId })
 
     return sortContactsBy(contactsCol).map(contact => {
       //console.log(_.includes(contact.title,'tes'))
       if (
         _.includes(contact.title.toLowerCase(), appState.contactSearch.toLowerCase()) === true
-         || (contact.phone &&_.includes(contact.phone, appState.contactSearch) === true)
-         || (contact.mail &&_.includes(contact.mail.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
-         || (contact.project &&_.includes(contact.project.toLowerCase(), appState.contactSearch.toLowerCase()) === true  )
-         || (contact.company && _.includes(contact.company.toLowerCase(), appState.contactSearch.toLowerCase()) === true   )      
+        || (contact.phone && _.includes(contact.phone, appState.contactSearch) === true)
+        || (contact.mail && _.includes(contact.mail.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
+        || (contact.project && _.includes(contact.project.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
+        || (contact.company && _.includes(contact.company.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
       ) return (
         <tr key={contact.id} style={renderSelect(contact)} className='tableRow' onClick={() => goLink(contact.id)}>
           <td style={{ paddingLeft: '10px' }} data-label="Name">
@@ -140,19 +140,18 @@ function Tbody(props) {
           <td>
             <ContactMail contactId={contact.id} contactName={contact.phone} contact={contact} />
           </td>
-          {checkShowCollumns(
-            'showLead',
-            <td data-label="LeadPerson" style={{ overflow: "visible" }}>
-              <LeadPerson contact={contact} />
-            </td>
-          )}
-          <td data-label="Project" style={{ overflow: "visible" }}>
-          <DropdownAdditions item={contact} items={contacts} selector='project' dispatch={editContact} />
-          </td>                  
+
+          <td >
+            <LeadPerson contact={contact} />
+          </td>
+
+          <td >
+            <DropdownAdditions item={contact} items={contacts} selector='project' dispatch={editContact} />
+          </td>
           <td >
             {format(new Date(contact.createdAt), 'yyyy/MM/dd')}
-            {renderArchivedIcon(contact.archived)} 
-          </td>          
+            {renderArchivedIcon(contact.archived)}
+          </td>
         </tr>
       )
       return
@@ -161,17 +160,17 @@ function Tbody(props) {
 
   return (
     <div>
-      <DropdownColumnFilterContacts/>
+      <DropdownColumnFilterContacts />
       <table className="ui very basic table" >
         <thead>
           <tr>
-            <th style={{ paddingLeft: '10px', minWidth: '10%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ minWidth: '10%' }}>{t('Company')} </th>
-            <th style={{ minWidth: '10%' }}>{t('Phone')} </th>
-            <th style={{ minWidth: '15%' }}>{t('Mail')}</th>
-            {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>{t('Lead Person')}</th>)}
-            <th style={{ minWidth: '10%' }}>{t('Project')}</th>            
-            <th style={{ minWidth: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>            
+            <th style={{ paddingLeft: '20px', Width: '10%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ Width: '10%' }}>{t('Company')} </th>
+            <th style={{ Width: '10%' }}>{t('Phone')} </th>
+            <th style={{ Width: '20%' }}>{t('Mail')}</th>
+            <th style={{ Width: '10%' }}>{t('Lead Person')}</th>
+            <th style={{ Width: '20%' }}>{t('Project')}</th>
+            <th style={{ Width: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
           </tr>
         </thead>
         <tbody>

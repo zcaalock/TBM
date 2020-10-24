@@ -5,7 +5,7 @@ import history from '../../../../../history'
 import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
-import {editClient} from '../../../../../actions/clients'
+import { editClient } from '../../../../../actions/clients'
 import LeadPerson from '../../Cells/LeadPerson'
 import ClientName from '../../Cells/ClientName';
 import ClientNumber from '../../Cells/ClientNumber'
@@ -94,8 +94,8 @@ function Tbody(props) {
     clientsCol = clients
 
     if (showArchived === false) clientsCol = _.reject(clientsCol, { archived: 'true' })
-    if (onlyPromising === true) clientsCol = _.filter(clientsCol, { status: '#00A569' })   
-    
+    if (onlyPromising === true) clientsCol = _.filter(clientsCol, { status: '#00A569' })
+
 
     return sortClientsBy(clientsCol).map(client => {
       if (
@@ -116,32 +116,22 @@ function Tbody(props) {
           <td>
             <ClientMail clientId={client.id} clientName={client.phone} client={client} />
           </td>
-          {checkShowCollumns(
-            'showLead',
-            <td data-label="LeadPerson" style={{ overflow: "visible" }}>
-              <LeadPerson client={client} />
-            </td>
-          )}
-          <td data-label="Project" style={{ overflow: "visible" }}>
+          <td >
+            <LeadPerson client={client} />
+          </td>
+          <td >
             <DropdownAdditions item={client} items={clients} selector='project' dispatch={editClient} />
           </td>
-          {checkShowCollumns(
-            'showUnit',
-            <td data-label="Unit" style={{ overflow: "visible" }}>
-              <DropdownAdditions item={client} items={clients} selector='unit' dispatch={editClient} />
-            </td>
-          )}
-          {checkShowCollumns(
-            'showPrice',
-            <td data-label="Price" style={{ overflow: "visible" }}>
-              <ClientPrice clientId={client.id} clientName={client.price} client={client} />
-            </td>
-          )}
+          <td >
+            <DropdownAdditions item={client} items={clients} selector='unit' dispatch={editClient} />
+          </td>
+          <td>
+            <ClientPrice clientId={client.id} clientName={client.price} client={client} />
+          </td>
           <td >
             {format(new Date(client.createdAt), 'yyyy/MM/dd')}
           </td>
           <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: '' }}>
-            {/* <i className="bullseye icon" style={{ color: client.status }} /> */}
             <StatusList client={client} />
           </td>
         </tr>
@@ -155,15 +145,15 @@ function Tbody(props) {
       <table className="ui very basic table">
         <thead>
           <tr>
-            <th style={{ minWidth: '10%', paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ minWidth: '10%' }}>{t('Phone')} </th>
-            <th style={{ minWidth: '10%' }}>{t('Mail')}</th>
-            {checkShowCollumns('showLead', <th style={{ minWidth: '10%' }}>{t('Lead Person')}</th>)}
-            <th style={{ minWidth: '10%' }}>{t('Project')}</th>
-            {checkShowCollumns('showUnit', <th style={{ minWidth: '10%' }}>{t('Unit')}</th>)}
-            {checkShowCollumns('showPrice', <th style={{ minWidth: '10%' }}>{t('Price')}</th>)}
-            <th style={{ minWidth: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
-            <th style={{ paddingLeft: '0px', minWidth: '10%' }}>{t('Status')}</th>
+            <th style={{ Width: '10%', paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ Width: '10%' }}>{t('Phone')} </th>
+            <th style={{ Width: '15%' }}>{t('Mail')}</th>
+            <th style={{ Width: '10%' }}>{t('Lead Person')}</th>
+            <th style={{ Width: '15%' }}>{t('Project')}</th>
+            <th style={{ Width: '10%' }}>{t('Unit')}</th>
+            <th style={{ Width: '10%' }}>{t('Price')}</th>
+            <th style={{ Width: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
+            <th style={{ paddingLeft: '0px', Width: '10%' }}>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>
