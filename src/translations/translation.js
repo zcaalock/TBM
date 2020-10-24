@@ -99,7 +99,8 @@ export const resources = {
             "Enter notes here":"Enter notes here",
             "Notepad":"Notepad",
             "New Note":"New Note",
-            "Flag detail":"Flag detail",
+            "Add flag":"Add flag",
+            "Remove flag":"Remove flag",
             "Created by":"Created by",
             "Edited by":"Edited by",
             "Edited at":"Edited at",
@@ -141,13 +142,12 @@ export const resources = {
             "Future":"Future",
             "Past":"Past",
             "Show status":"Show status",
-            "Filters":"Filters"
-
-
-
-
-
-
+            "Filters":"Filters",
+            "Move":"Move",
+            "Move up":"Move up",
+            "Move down":"Move down",
+            "Edit Category":"Edit Category",
+            "Edit Board":"Edit Board"
 
         }
     },
@@ -242,7 +242,7 @@ export const resources = {
             "New Private Pulse":"Utwórz prywatny Puls",
             "Unarchive":"Przyróć",
             "Archive":"Archiwizuj",
-            "Archived":"Zarchiwizowane",
+            "Archived":"Zarchiwizowany",
             "Save":"Zapisz",
             "Make public":"Upublicznij",            
             "Private":"Prywatny",
@@ -250,7 +250,8 @@ export const resources = {
             "Enter notes here":"Pisz tutaj",
             "Notepad":"Notatnik",
             "New Note":"Dodaj notatnik",
-            "Flag detail":"Dodaj flagę",
+            "Add flag":"Dodaj flagę",
+            "Remove flag":"Usuń flagę",
             "Created by":"Utworzone przez",
             "Edited by":"Edytowane przez",
             "Edited at":"Edytowane dnia",
@@ -292,14 +293,12 @@ export const resources = {
             "Future":"Górny zakres",
             "Past":"Dolny zakres",
             "Show status":"Pokaż status",
-            "Filters":"Filtry"
-
-
-
-
-
-
-
+            "Filters":"Filtry",
+            "Move":"Przesuń",
+            "Move up":"Przesuń w górę",
+            "Move down":"Przesuń w dół",
+            "Edit Category":"Edytuj kategorię",
+            "Edit Board":"Edytuj tablicę"
         }
     }
 }

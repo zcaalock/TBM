@@ -9,6 +9,7 @@ import AddBoard from './AddBoard'
 import BoardsList from './BoardsList'
 import SettingsIcons from './SettingsIcons'
 import ModalComponent from '../Forms/modals/Modal'
+import EditBoardModal from '../Forms/EditBoardModal'
 import Reminders from '../middle/Boards/pulses/Tbody/Reminder'
 import ReminderFilter from '../Forms/dropdownColumFilterReminders'
 
@@ -68,6 +69,10 @@ function Boards (props) {
     return <div style={{ display: 'none' }}></div>
   }
 
+  const showEditBoardModal = () => {
+    return appState.editBoardOpen === true ? <EditBoardModal /> : null
+  }
+
     return (
       <div        
         className="leftMenu header"
@@ -111,7 +116,7 @@ function Boards (props) {
               </div>
               <BoardsList privateId='' />
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
-                <AddBoard name={t('New Board')} />
+                <AddBoard name={'New Board'} />
               </div>
               <div
                 className="header item"
@@ -120,7 +125,7 @@ function Boards (props) {
               </div>
               {renderPrivateBoardList()}
               <div style={{ borderBottom: '1px solid #DDDDDD', paddingBottom: '5px', marginBottom: '5px' }}>
-                <AddBoard name={t('New Private Board')} />
+                <AddBoard name={'New Private Board'} />
               </div> 
               <div
                 className="header item"
@@ -133,7 +138,7 @@ function Boards (props) {
           </div>
         </div>
         <ModalComponent className={showMobileMenu()} />
-
+        {showEditBoardModal()}
       </div>
     )
 }

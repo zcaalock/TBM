@@ -12,7 +12,6 @@ import { fetchCategories } from '../../../../actions/categories'
 import { fetchBoards } from '../../../../actions/boards'
 import { fetchLead } from '../../../../actions/settings'
 import { fetchDetails } from '../../../../actions/details'
-import { format } from 'date-fns'
 import { useTranslation } from "react-i18next"
 
 function SearchFilter(props) {
@@ -43,11 +42,7 @@ function SearchFilter(props) {
     dispatch(editState(leadUser.title, 'pulseSearch'))
 
     dispatch(editState(userId, 'selectedUserId'))
-  }, [])
-
-  // useEffect(() => {
-  //   setMenuopen(undefined)
-  // }, [state])
+  }, [])  
 
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)
@@ -133,8 +128,7 @@ function SearchFilter(props) {
     return <Dropdown.Item onClick={(event) => {
       event.stopPropagation()
       event.nativeEvent.stopImmediatePropagation()
-    }}>  
-    {disableCalendar()}    
+    }}>          
       <label>{name}:</label>      
         <DateInput
           dateFormat={'YYYY-MM-DD'}

@@ -1,23 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector } from "react-redux";
 import _ from 'lodash'
-import HeaderIcons from './HeaderIcons'
-import EditHeaderName from './editHeaderName'
+import CategoryMenu from './CategoryMenu'
 
 function Header(props) {
   const pulses = useSelector(state => Object.values(state.pulses))
   const userId = useSelector(state => state.user.credentials.userId)
   const selectedBoard = useSelector(state=> _.find(state.boards, {id: props.category.boardId}))
-  const [isHovering, setIsHovering] = useState(false)
-  const [itemEditable, setItemEditable] = useState(false)
-
-  const removeEdit = () => {
-    setItemEditable(false)
-  }
-
-  const showEdit = () => {
-    setItemEditable(true)
-  }
+  const [isHovering, setIsHovering] = useState(false)  
 
   const hideIcon = () => {
     setIsHovering(false)
@@ -48,13 +38,11 @@ function Header(props) {
     return notoficationStorage
   }
 
-  const mapPulses = () => {
-    //console.log(props.id)
+  const mapPulses = () => {    
     const pulseCount = _.filter(pulses, { categoryId: props.id, privateId: '', archived: 'false' })
     const privatePulseCount = _.filter(pulses, { categoryId: props.id, archived: 'false' })
     if(selectedBoard.privateId === userId) return privatePulseCount.length
     return pulseCount.length
-
   }
   //console.log('debug: ', props)
   return (
@@ -66,22 +54,16 @@ function Header(props) {
           onClick={() => props.expandCollapse()}
           className="header item" style={{ cursor: 'pointer' }}>
           {showHover()}
-          <EditHeaderName
-            title={props.categoryTitle}
-            category={props.category}
-            editState={itemEditable}
-            showEdit={() => showEdit()}
-            removeEdit={() => removeEdit()}
-          />
+          {props.categoryTitle}
           <div style={{marginLeft: '3px'}}>({mapPulses()})</div>
         </div>
       </div>
-      <div className="header item" style={{ float: 'right', paddingRight: '25px' }}>
-        <HeaderIcons
-          showEdit={() => showEdit()}
-          categoryId={props.categoryKey}
+      <div className="header item" style={{ float: 'right', fontSize: '1em' }}>
+        <CategoryMenu
+          
+          category={props.category}
           notifications={mapNotifications()}
-          appState={props.appState}
+          
         />
       </div>
     </div>

@@ -3,28 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { editPulse } from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
+import { editCategory } from '../../actions/categories';
 let boardsArr = []
 let boardsPrivateArr = []
-let categoriesArr = []
 let leadArr = []
 
-function PulseModal() {
+function CategoryModal() {
 
-  const pulseIdSelected = useSelector(state => state.appState.pulseId)
-  const pulseKey = useSelector(state => _.keyBy(state.pulses, 'id'))
-  const categoryKey = useSelector(state => _.keyBy(state.categories, 'id'))
   const boards = useSelector(state => Object.values(state.boards))
   const boardKey = useSelector(state => _.keyBy(state.boards, 'id'))
-  const categories = useSelector(state => Object.values(state.categories))
   const lead = useSelector(state => Object.values(state.lead))
-  const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
   const [makePrivate, setMakeprivate] = useState(false)
+
+  const id = appState.categoryId.id
+  const category = appState.categoryId
 
   const privateId = useSelector(state => state.user.credentials.userId)
   const [name, setName] = useState('')
@@ -38,15 +35,12 @@ function PulseModal() {
     if (isEmpty(boards)) dispatch(fetchBoards())
     if (isEmpty(lead)) dispatch(fetchLead())
 
-    setName(pulseKey[appState.pulseId].title)
-    setUserId(pulseKey[appState.pulseId].userId)
-    setCategoryId(pulseKey[appState.pulseId].categoryId)
-    setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
-
+    setName(category.title)
+    setCategoryId(category.id)
+    setBoardId(category.boardId)
+    setUserId(privateId)
     generateBoardList()
-    generateCategoriesList()
     generateLeadList()
-
   }, [])
 
   const isEmpty = (obj) => {
@@ -60,12 +54,10 @@ function PulseModal() {
   const handleSubmit = () => {
     const userData = {
       title: name,
-      categoryId: categoryId,
-      userId: userId,
       boardId: boardId,
       privateId: makePrivate === true ? userId : ''
     };
-    dispatch(editPulse(pulseIdSelected, userData))
+    dispatch(editCategory(id, userData, true))
     close()
     dispatch(editState(categoryId, 'expandCategory'))
     history.push(`/boards/${boardId}/pulses/${categoryId}`)
@@ -91,34 +83,23 @@ function PulseModal() {
     return boardsArr = _.uniqBy(boardsArr.concat(boardsPrivateArr), 'text')
   }
 
-  const generateCategoriesList = () => {
-    categoriesArr = [];
-    if (categories.length > 0) {
-      _.filter(categories, { boardId: boardId })
-        .map(category => {
-          categoriesArr.push({ key: category.id, text: category.title, value: category.id })
-          return categoriesArr
-        })
-    }
-    return categoriesArr = _.uniqBy(categoriesArr, 'text')
-
-  }
-
-  const activateSubmit = () => { return categoryId === '' ? true : false }
+  const activateSubmit = () => { return (name === '') ? true : false }
 
   const close = () => {
-    dispatch(editState(false, 'editPulseOpen'))
-    dispatch(editState('', 'pulseId'))
+    dispatch(editState(false, 'editCategoryOpen'))
+    dispatch(editState('', 'categoryId'))
     setName('')
     setBoardId('')
     setCategoryId('')
     setUserId('')
   }
 
+
+
   return (
     <div>
-      <Modal size='tiny' dimmer='inverted' open={appState.editPulseOpen} onClose={close}>
-        <Modal.Header>{t('Edit Pulse')}</Modal.Header>
+      <Modal size='tiny' dimmer='inverted' open={appState.editCategoryOpen} onClose={close}>
+        <Modal.Header>{t('Edit Category')}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form
@@ -127,20 +108,10 @@ function PulseModal() {
                 id='name'
                 name='name'
                 control={Input}
-                label={t('Pulse name')}
-                placeholder={t('Pulse name')}
+                label={t('Title')}
+                placeholder={t('Title')}
                 defaultValue={name}
                 onChange={(e, { value }) => setName(value)}
-              />
-              <Form.Field
-                search
-                name='userId'
-                control={Select}
-                options={leadArr}
-                label={t('Lead Person')}
-                placeholder={leadKey[userId] ? leadKey[userId].title : ''}
-                searchInput={{ id: 'userId' }}
-                onChange={(e, { value }) => setUserId(value)}
               />
               <Form.Field
                 search
@@ -151,20 +122,9 @@ function PulseModal() {
                 placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}
                 onChange={(e, { value }) => {
                   setBoardId(value)
-                  generateCategoriesList()
-                  setCategoryId('')
                   if (boardKey[value].privateId === userId) setMakeprivate(true)
+                  if (boardKey[value].privateId === '') setMakeprivate(false)
                 }}
-              />
-              <Form.Field
-                search
-                name='categoryId'
-                control={Select}
-                options={categoriesArr}
-                label={t('Category name')}
-                placeholder={t('Cateogry name')}
-                searchInput={{ id: 'categoryId' }}
-                onChange={(e, { value }) => setCategoryId(value)}
               />
             </Form>
           </Modal.Description>
@@ -188,7 +148,7 @@ function PulseModal() {
             onClick={() => handleSubmit()}
             icon='checkmark'
             labelPosition='right'
-            content={t("Edit Pulse")}
+            content={t("Edit Category")}
           />
         </Modal.Actions>
       </Modal>
@@ -196,4 +156,4 @@ function PulseModal() {
   )
 }
 
-export default PulseModal
+export default CategoryModal

@@ -59,7 +59,7 @@ function Notepad(props) {
               {t('Notepad')}:
           </h3>
           </div>
-          <div style={{ display: 'inline-block', float: 'right', paddingRight: '4px' }}>
+          <div style={{ display: 'inline-block', float: 'right' }}>
             <NotepadIcons showEdit={() => this.showEdit(note.id)} notepadId={note.id} />
           </div>
         </div>
@@ -78,16 +78,14 @@ function Notepad(props) {
             {t('Notepad')}:
           </h3>
         </div>
-        <div style={{ display: 'inline-block', float: 'right', width: '35px' }}>
+        <div style={{ display: 'inline-block', float: 'right' }}>
           <div
             onClick={() => createNewNotepad()}
             className="articleIcon"
-            data-position="bottom center"
+            data-position="top right"
             data-tooltip={t("New Note")}
             style={{
-              display: 'inline-block',
-              paddingLeft: '10px',
-              paddingRight: '10px',
+              display: 'inline-block',              
               cursor: 'pointer'
             }}>
             <i className=" plus icon" />

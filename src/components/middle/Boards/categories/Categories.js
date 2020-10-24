@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { fetchCategories } from '../../../../actions/categories'
 import { fetchPulses } from '../../../../actions/pulses'
-
+import EditCategoryModal from '../../../Forms/EditCategoryModal'
 import Header from './Header'
 import Table from '../pulses/Table'
 import ProgressBar from '../../../Forms/ProgressBar'
@@ -16,7 +16,7 @@ function Categories() {
   const details = useSelector(state => Object.values(state.details))
   const appState = useSelector(state => state.appState)
   const privateId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))  
+  const lead = useSelector(state => _.find(state.lead, { userId: privateId }))
 
   const dispatch = useDispatch()
 
@@ -31,7 +31,7 @@ function Categories() {
         return false;
     }
     return true;
-  }  
+  }
 
   const renderProgressBar = (id) => {
     let detailStorage = []
@@ -79,40 +79,32 @@ function Categories() {
     )
   }
 
+  const showEditCategoryModal = () => {
+    return appState.editCategoryOpen === true ? <EditCategoryModal /> : null
+  }
+
   const renderCategories = () => {
+    let catArr = _.filter(categories, { boardId: appState.id })
+    let privateArr = _.filter(categories, { privateId: lead.userId, boardId: appState.id })
+    const showArchived = lead.settings.showArchived
+    
+    catArr = _.filter(catArr, { privateId: '' })    
+    catArr = catArr.concat(privateArr)
 
-    return categories.map(category => {
-      if (category.boardId === appState.id && category.privateId === "" && category.archived !== "true") {
-
-        return (
-          <div key={category.id}>
-            {renderProgressBar(category.id)}
-            {renderColapsingMenu(category, category.id)}</div>
-        )
-      } return null
+    if (showArchived === false) catArr = _.reject(catArr, { archived: 'true' })    
+    return _.filter(catArr, _.size).map(category => {
+      return (
+        <div key={category.id}>
+          {renderProgressBar(category.id)}
+          {renderColapsingMenu(category, category.id)}</div>
+      )
     })
-  }
-
-  const renderCategoriesWithArchived = () => {
-    return categories.map(category => {
-      if (category.boardId === appState.id && category.privateId === "") {
-        return (
-          <div key={category.id}>
-            {renderProgressBar(category.id)}
-            {renderColapsingMenu(category, category.id)}</div>
-        )
-      } return null
-    })
-  }
-
-  const checkIfArchived = () => {
-    if (appState.showArchived === true) return renderCategoriesWithArchived()
-    return renderCategories()
-  }
+  } 
 
   return (
     <div>
-      {checkIfArchived()}
+      {renderCategories()}
+      {showEditCategoryModal()}
     </div>
   )
 }

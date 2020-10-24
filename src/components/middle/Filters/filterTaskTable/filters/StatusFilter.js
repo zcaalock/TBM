@@ -12,7 +12,7 @@ import StatusList from '../../../Boards/pulses/Tbody/StatusList'
 
 import { useTranslation } from "react-i18next"
 
-function Tbody(props) {
+function Tbody() {
 
   const pulses = useSelector(state => Object.values(state.pulses));
   const boards = useSelector(state => Object.values(state.boards));
@@ -118,24 +118,34 @@ function Tbody(props) {
       pulsesCol = _.filter(pulsesCol, { archived: 'true' })
     }
 
-    if (future !== '' && past !=='' && appState.showEmptyDates === false) {
+    if (future !== '' && past !=='') {
       let newArr = []
       pulsesCol.map(p=>{
-        if(new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()) newArr.push(p)
+        if(new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()||p.deadline==='') newArr.push(p)
       })
       pulsesCol = newArr
     }
 
-    
+    if (future !== '' && past ==='') {
+      let newArr = []
+      pulsesCol.map(p=>{
+        if(new Date(p.deadline).getTime() < new Date(future).getTime()||p.deadline==='') newArr.push(p)
+      })
+      pulsesCol = newArr
+    }
 
-    //|| (new Date(pulse.deadline).getTime() - past.getTime() > 0  && new Date(pulse.deadline).getTime() - future.getTime() <= 0 )
+    if (future === '' && past !=='') {
+      let newArr = []
+      pulsesCol.map(p=>{
+        if(new Date(p.deadline).getTime() > new Date(past).getTime()||p.deadline==='') newArr.push(p)
+      })
+      pulsesCol = newArr
+    }  
 
     return sortPulsesBy(pulsesCol).map(pulse => {
       let category = _.find(categories, { id: pulse.categoryId })
       let board = _.find(boards, { id: category.boardId })
       let leadCol = _.find(lead, { userId: pulse.userId })      
-      //let present = new Date(appState.filterSettings.Present)
-      
 
       if (
         (_.includes(pulse.title.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchTitle === true)
@@ -145,7 +155,7 @@ function Tbody(props) {
         || (_.includes(pulse.status.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchStatus === true)        
 
       )
-      ///console.log(Date.parse(pulse.deadline)-past)
+      
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
             <td data-label="Name" style={{ paddingLeft: '10px' }}>

@@ -2,10 +2,10 @@ import React from 'react'
 import Categories from './categories/Categories'
 import AddCategory from './categories/AddCategory'
 
-function Body() {
+function Body() { 
 
   return (
-    <>
+    <>      
       <Categories />
       <AddCategory />
     </>

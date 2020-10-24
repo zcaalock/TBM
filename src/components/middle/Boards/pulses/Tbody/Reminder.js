@@ -7,8 +7,8 @@ import differenceInDays from 'date-fns/differenceInBusinessDays'
 import differenceInHours from 'date-fns/differenceInHours'
 import parseISO from 'date-fns/parseISO'
 import { Link } from 'react-router-dom'
-import { Popup } from 'semantic-ui-react'
-function Reminder(props) {
+
+function Reminder() {
 
   const user = useSelector(state => state.user.credentials)
   const appState = useSelector(state => state.appState)
@@ -43,12 +43,12 @@ function Reminder(props) {
     return
   }
   const renderIcon = (arr) => {
-    let findFlag = _.filter(details, { pulseId: arr.id, flag: 'true' })//.map(a=>{return `${a.title}, `})
+    let findFlag = _.filter(details, { pulseId: arr.id, flag: true })//.map(a=>{return `${a.title}, `})
     let flagArr = []
     if (findFlag.length > 0) findFlag.map(a => { return flagArr.push(`${a.title}t | `) })
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
-    if (_.find(details, { pulseId: arr.id, flag: 'true' })) return <div data-position="right center" data-tooltip={flagArr} style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller' }}><i className=" flag icon" /></div>
+    if (_.find(details, { pulseId: arr.id, flag: true })) return <div data-position="right center" data-tooltip={flagArr} style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller' }}><i className=" flag icon" /></div>
     // return <Popup style={{ zIndex: 9999999 }}  position='right center' trigger={<i style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller', zIndex:100  }} className=" flag icon" />}>
     //   <Popup.Content >
     //     test
