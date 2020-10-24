@@ -118,11 +118,7 @@ function SearchFilter(props) {
 
   const handleChange = (event, { name, value }) => {    
     dispatch(editState({ ...appState.filterSettings, [name]: value }, 'filterSettings'))
-  }
-
-  function disableCalendar() {
-    if(appState.showEmptyDates === true) return <div onClick={() => dispatch(editState(!appState.showEmptyDates, 'showEmptyDates'))} style={{backgroundColor: '#ffffffba', width:'100%', height: '100%', position: 'absolute', zIndex: 50, left: 0, top: 0}}></div>
-  }
+  } 
 
   function timeRange(name, value) {
     return <Dropdown.Item onClick={(event) => {
@@ -207,6 +203,16 @@ function SearchFilter(props) {
         <label onClick={() => dispatch(editState(!appState.showEmptyDates, 'showEmptyDates'))} className={renderCheckBoxLabelStyle(appState.showEmptyDates)} >{t('Show empty dates')}</label>
       </div>
       {renderPrivateCheckBox()}
+      <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+        <Checkbox
+          onClick={() => dispatch(editState({ ...appState.filterSettings, hideDone: !appState.filterSettings.hideDone }, 'filterSettings'))}
+          checked={appState.filterSettings.hideDone}
+          slider
+          style={{ marginBottom: '-4px', }}
+        />
+        <label onClick={() => dispatch(editState({ ...appState.filterSettings, hideDone: !appState.filterSettings.hideDone }, 'hideDone'))} className={renderCheckBoxLabelStyle(appState.filterSettings.hideDone)} >{t('Hide done pulses')}</label>
+      </div>
+      
     </div>
   )
 }

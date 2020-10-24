@@ -147,7 +147,8 @@ export const resources = {
             "Move up":"Move up",
             "Move down":"Move down",
             "Edit Category":"Edit Category",
-            "Edit Board":"Edit Board"
+            "Edit Board":"Edit Board",
+            "Hide done pulses":"Hide done pulses"
 
         }
     },
@@ -298,7 +299,8 @@ export const resources = {
             "Move up":"Przesuń w górę",
             "Move down":"Przesuń w dół",
             "Edit Category":"Edytuj kategorię",
-            "Edit Board":"Edytuj tablicę"
+            "Edit Board":"Edytuj tablicę",
+            "Hide done pulses":"Ukryj zakończone"
         }
     }
 }

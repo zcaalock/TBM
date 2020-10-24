@@ -97,6 +97,7 @@ function Tbody() {
     const onlyArchived = appState.filterSettings.onlyArchived
     const future = appState.filterSettings.Future
     const past = appState.filterSettings.Past
+    const hideDone = appState.filterSettings.hideDone
 
     if (showArchived === false) {
       pulsesCol = _.chain(pulsesCol).reject({ archived: 'true' }).value()
@@ -116,6 +117,11 @@ function Tbody() {
 
     if (onlyArchived === true) {
       pulsesCol = _.filter(pulsesCol, { archived: 'true' })
+    }
+
+    if (hideDone === true) {
+      console.log('test')
+      pulsesCol = _.chain(pulsesCol).reject({ status: 'Done' }).value()
     }
 
     if (future !== '' && past !=='') {

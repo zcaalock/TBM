@@ -42,6 +42,7 @@ const appState = {
     searchPrivate:false, 
     onlyPrivate:false,
     onlyArchived:false,
+    hideDone:false,
     Future:'',
     Past:''
   },
