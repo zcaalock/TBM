@@ -4,10 +4,9 @@ import { editState } from './appState'
 import * as types from './types'
 
 export const createClient = (formValues, userId) => {
-  return async (dispatch) => {
-    //console.log('user: ', userId, formValues)
-    await axios.post('/client', { ...formValues, userId: userId, status: '#00A569' })
-      .then((response) => {
+  return async (dispatch) => {    
+    await axios.post('/client', { ...formValues, userId: userId, status: '#00A569', reminder:'' })
+      .then((response) => {        
         dispatch({ type: types.CREATE_CLIENT, payload: response.data.client })
         dispatch(editState(response.data.message, 'responseMessage'))
         dispatch(editState(response.status, 'responseStatus'))
@@ -20,7 +19,7 @@ export const createClient = (formValues, userId) => {
 }
 
 export const fetchClients = () => async dispatch => {
-  const response = await axios.get('/clients')
+  const response = await axios.get('/clients')  
   dispatch({ type: types.FETCH_CLIENTS, payload: response.data })
 }
 

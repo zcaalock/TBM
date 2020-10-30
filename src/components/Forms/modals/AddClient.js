@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
+import { DateInput } from 'semantic-ui-calendar-react'
 import { editState } from '../../../actions/appState'
 import { createClient } from '../../../actions/clients'
 import history from '../../../history'
 import { useTranslation } from "react-i18next"
+import { format } from 'date-fns'
 
 
 let leadArr = []
 
 function AddClient() {
   const { t } = useTranslation()
-  const clients = useSelector(state => Object.values(state.clients))  
+  const clients = useSelector(state => Object.values(state.clients))
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => Object.values(state.lead))
 
@@ -23,19 +25,24 @@ function AddClient() {
   const [project, setProject] = useState('')
   const [unit, setUnit] = useState('')
   const [price, setPrice] = useState('')
+  const [filingDate, setFillingdate] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [userId, setUserid] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
-  const [newUnit, setnewUnit] = useState(false) 
+  const [newUnit, setnewUnit] = useState(false)
 
   const dispatch = useDispatch()
 
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }  
+  useEffect(() => {
+    generateLeadList()
+  }, [])
+
+  // const isEmpty = (obj) => {
+  //   for (var key in obj) {
+  //     if (obj.hasOwnProperty(key))
+  //       return false;
+  //   }
+  //   return true;
+  // }  
 
   const handleSubmit = () => {
     const userData = {
@@ -45,24 +52,25 @@ function AddClient() {
       project,
       unit,
       price,
-      userId: userId
+      userId: userId,
+      filingDate
     }
     dispatch(createClient(userData, userId))
     dispatch(editState(false, 'modalOpen'))
-    history.push('/clients/All/all')    
+    history.push('/clients/All/all')
   }
 
-  const generateLeadList = () => {    
+  const generateLeadList = () => {
     if (lead.length > 0)
       lead.map(leadItems => {
-        leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems })
+        leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
         return leadArr
       })
     return leadArr = _.uniqBy(leadArr, 'text')
   }
 
   const generateProjectList = () => {
-    let projectArr = [{ key: t('Create new project'), text: t('Create new project'), value: t('Create new project'), icon: 'edit', 'onClick': ()=>setNewproject(true) }]
+    let projectArr = [{ key: t('Create new project'), text: t('Create new project'), value: t('Create new project'), icon: 'edit', 'onClick': () => setNewproject(true) }]
     if (clients.length > 0)
       clients.map(client => {
         projectArr.push({ key: client.id, text: client.project, value: client.project })
@@ -72,7 +80,7 @@ function AddClient() {
   }
 
   const generateUnitList = () => {
-    let unitArr = [{ key: t('Create new unit'), text: t('Create new unit'), value: t('Create new unit'), icon: 'edit', 'onClick': ()=>setnewUnit(true) }]
+    let unitArr = [{ key: t('Create new unit'), text: t('Create new unit'), value: t('Create new unit'), icon: 'edit', 'onClick': () => setnewUnit(true) }]
     if (clients.length > 0)
       clients.map(client => {
         unitArr.push({ key: client.id, text: client.unit, value: client.unit })
@@ -101,7 +109,7 @@ function AddClient() {
         name='project'
         control={Input}
         label={t('Project')}
-        placeholder={t('New project name' )}       
+        placeholder={t('New project name')}
         onChange={(e, { value }) => setProject(value)}
       />
     )
@@ -127,26 +135,36 @@ function AddClient() {
         name='unit'
         control={Input}
         label={t('Unit')}
-        placeholder={t("New unit name (fe. 'A2')")}        
+        placeholder={t("New unit name (fe. 'A2')")}
         onChange={(e, { value }) => setUnit(value)}
       />
     )
-  }  
-  
-  if (isEmpty(leadArr)) generateLeadList()  
-  return (
+  }
+  if (leadArr.length > 0) return (
     <>
       <Modal.Header>{t('Create new Client')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form
             onSubmit={handleSubmit}>
+            <DateInput
+              style={{ marginTop: '-.28571429rem' }}
+              label={t('Filing Date')}
+              clearable
+              closable
+              name="date"
+              placeholder="Date"
+              value={filingDate}
+              iconPosition="left"
+              onChange={(e, { value }) => { setFillingdate(value) }}
+              dateFormat={'YYYY-MM-DD'}
+            />
             <Form.Field
               id='name'
               name='name'
               control={Input}
               label={t('Client name')}
-              placeholder={t('Client name')}              
+              placeholder={t('Client name')}
               onChange={(e, { value }) => setName(value)}
             />
             <Form.Field
@@ -154,7 +172,7 @@ function AddClient() {
               name='phone'
               control={Input}
               label={t('Client phone')}
-              placeholder={t('Client phone')}             
+              placeholder={t('Client phone')}
               onChange={(e, { value }) => setPhone(value)}
             />
             <Form.Field
@@ -162,7 +180,7 @@ function AddClient() {
               name='mail'
               control={Input}
               label={t('Client email')}
-              placeholder={t('Client email')}              
+              placeholder={t('Client email')}
               onChange={(e, { value }) => setMail(value)}
             />
             {projectOptions()}
@@ -172,14 +190,14 @@ function AddClient() {
               name='price'
               control={Input}
               label={t('Proposed price')}
-              placeholder={t('Proposed price')}              
+              placeholder={t('Proposed price')}
               onChange={(e, { value }) => setPrice(value)}
             />
             <Form.Field
-              search              
+              search
               defaultValue={leadArr.length > 0 ? _.find(leadArr, { key: privateId }).value : ''}
               name='lead'
-              control={Select}              
+              control={Select}
               options={leadArr}
               label={t('Lead Person')}
               placeholder={t('Lead Person')}
@@ -192,9 +210,9 @@ function AddClient() {
       <Modal.Actions>
         <Button onClick={() => dispatch(editState(false, 'modalOpen'))}>
           {t('Cancel')}
-            </Button>
+        </Button>
         <Button
-          disabled={name !== '' || mail !== '' || phone !== '' ? false : true}
+          disabled={(name !== '' || mail !== '' || phone !== '') && (project !== '' && filingDate !== '') ? false : true}
           form='my-form'
           onClick={() => handleSubmit()}
           icon='checkmark'
@@ -204,6 +222,7 @@ function AddClient() {
       </Modal.Actions>
     </>
   )
+  return <div></div>
 }
 
 export default AddClient
