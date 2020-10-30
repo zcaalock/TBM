@@ -18,10 +18,10 @@ function Tbody(props) {
   const details = useSelector(state => Object.values(state.details));
   const privateId = useSelector(state => state.user.credentials.userId);
   const appState = useSelector(state => state.appState)
-  const lead = useSelector(state => _.find(state.lead, {userId: privateId}))
+  const lead = useSelector(state => _.find(state.lead, { userId: privateId }))
 
   const dispatch = useDispatch();
-const { t } = useTranslation() 
+  const { t } = useTranslation()
   useEffect(() => {
     if (isEmpty(pulses)) dispatch(fetchDetails())
   }, [])
@@ -46,7 +46,7 @@ const { t } = useTranslation()
   const renderSelect = (pulseId) => {
     if (appState.pulseId === pulseId)
       return { backgroundColor: '#F5F5F5' }
-  }  
+  }
 
   const renderPulses = () => {
 
@@ -57,7 +57,7 @@ const { t } = useTranslation()
       if (pulse.privateId === '' || pulse.privateId === privateId)
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse)}>
-            <td style={{ paddingLeft: '10px', width: '' }} data-label="Name">
+            <td style={{ paddingLeft: '20px', width: '' }} data-label="Name">
               <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={privateId} />
             </td>
             <td data-label="LeadPerson" style={{ overflow: "visible", minWidth: '100px' }}>
@@ -69,9 +69,14 @@ const { t } = useTranslation()
             <td style={{ width: '165px' }}>
               <Deadline pulse={pulse} />
             </td>
-            <td style={{ width: '10%' }} >
-              <DetailProgrsBar details={details} pulse={pulse} />
-              {renderPulseNotification(pulse)}
+            <td style={{ width: '10%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <DetailProgrsBar details={details} pulse={pulse} />
+                <div style={{marginRight: '30px'}}>
+                  {renderPulseNotification(pulse)}
+                  {renderPrivateIcon(pulse)}
+                </div>
+              </div>
             </td>
           </tr>
         )
@@ -79,10 +84,20 @@ const { t } = useTranslation()
     })
   }
 
+  const renderPrivateIcon = (pulse) => {
+    if (pulse.privateId === lead.userId) {
+      return (
+        <div style={{ color: '#00A569' }}>
+          <i className="privacy icon" />
+        </div>)
+    }
+  }
+
   const renderPulseNotification = (pulse) => {
     let findUser = undefined
     if (pulse.readed) pulse.readed.forEach(read => { if (read === privateId) return findUser = true })
     if (pulse.readed && pulse.readed.length > 0 && findUser === undefined && lead.settings.notifications === true && pulse.privateId === '' && pulse.archived === 'false') return <div className='notification' data-tooltip={t("Unreaded content")}>i</div>
+
   }
 
   return (

@@ -99,7 +99,8 @@ export const resources = {
             "Enter notes here":"Enter notes here",
             "Notepad":"Notepad",
             "New Note":"New Note",
-            "Flag detail":"Flag detail",
+            "Add flag":"Add flag",
+            "Remove flag":"Remove flag",
             "Created by":"Created by",
             "Edited by":"Edited by",
             "Edited at":"Edited at",
@@ -136,13 +137,25 @@ export const resources = {
             "Done":"Done",
             "Canceled":"Canceled",
             "On Hold":"On Hold",
-            "Continous":"Continous"
-
-
-
-
-
-
+            "Continous":"Continous",
+            "Time range":"Time range",
+            "Future":"Future",
+            "Past":"Past",
+            "Show status":"Show status",
+            "Filters":"Filters",
+            "Move":"Move",
+            "Move up":"Move up",
+            "Move down":"Move down",
+            "Edit Category":"Edit Category",
+            "Edit Board":"Edit Board",
+            "Hide done pulses":"Hide done pulses",
+            "Reminder":"Reminder",
+            "Filing Date":"Filing Date",
+            "Edit Client":"Edit Client",
+            "Client menu":"Client menu",
+            "Select Company":"Select Company",
+            "New name":"New name",
+            "Edit Contact":"Edit Contact"
 
         }
     },
@@ -237,7 +250,7 @@ export const resources = {
             "New Private Pulse":"Utwórz prywatny Puls",
             "Unarchive":"Przyróć",
             "Archive":"Archiwizuj",
-            "Archived":"Zarchiwizowane",
+            "Archived":"Zarchiwizowany",
             "Save":"Zapisz",
             "Make public":"Upublicznij",            
             "Private":"Prywatny",
@@ -245,7 +258,8 @@ export const resources = {
             "Enter notes here":"Pisz tutaj",
             "Notepad":"Notatnik",
             "New Note":"Dodaj notatnik",
-            "Flag detail":"Dodaj flagę",
+            "Add flag":"Dodaj flagę",
+            "Remove flag":"Usuń flagę",
             "Created by":"Utworzone przez",
             "Edited by":"Edytowane przez",
             "Edited at":"Edytowane dnia",
@@ -282,14 +296,25 @@ export const resources = {
             "Done":"Zakończone",
             "Canceled":"Anulowane",
             "On Hold":"Wstrzymane",
-            "Continous":"Ciągły"
-
-
-
-
-
-
-
+            "Continous":"Ciągły",
+            "Time range":"Zakres dat",
+            "Future":"Górny zakres",
+            "Past":"Dolny zakres",
+            "Show status":"Pokaż status",
+            "Filters":"Filtry",
+            "Move":"Przesuń",
+            "Move up":"Przesuń w górę",
+            "Move down":"Przesuń w dół",
+            "Edit Category":"Edytuj kategorię",
+            "Edit Board":"Edytuj tablicę",
+            "Hide done pulses":"Ukryj zakończone",
+            "Reminder":"Przypomnienie",
+            "Filing Date":"Zgłoszenie",
+            "Edit Client":"Edytuj klienta",
+            "Client menu":"Klient menu",
+            "Select Company":"Wybierz firmę",
+            "New name":"Nowa nazwa",
+            "Edit Contact":"Edytuj kontakt"
         }
     }
 }

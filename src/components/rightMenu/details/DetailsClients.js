@@ -3,23 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import { editDetail } from '../../../actions/details'
-import DetailIconsClient from './DetailIconsClient'
+import { editClient } from '../../../actions/clients'
+import DetailMenuClient from './DetailMenuClient'
 import EditDetailNameClient from './EditDetailNameClient'
-import { editClient } from '../../../actions/clients';
 
-function DetailsClients(props) {
+function Details(props) {
   const [state, defState] = useState({});
   const dispatch = useDispatch();
-  const details = useSelector(state => Object.values(state.details));
-  const userId = useSelector(state => state.user.credentials.userId);
-  
+  const details = useSelector(state => Object.values(state.details))
+  const lead = useSelector(state => state.lead)
+  const userId = useSelector(state => state.user.credentials.userId)
+  const detailArr = []
+
   const removeEdit = (id) => {
     defState({ [`itemEditable${id}`]: false })
   }
 
   const showEdit = (id) => {
     defState({ [`itemEditable${id}`]: true })
-  }  
+  }
 
   const renderCrossOut = (bool) => {
     if (bool === 'true') {
@@ -30,12 +32,12 @@ function DetailsClients(props) {
 
   const handleOnClick = (id, bool) => {
     if (bool === 'false') {
-      dispatch(editDetail(id, { check: 'true' }))
       dispatch(editClient(props.clientId, { readed: [userId] }))
+      dispatch(editDetail(id, { check: 'true' }, userId, true))
     }
     if (bool === 'true') {
-      dispatch(editDetail(id, { check: 'false' }))
       dispatch(editClient(props.clientId, { readed: [userId] }))
+      dispatch(editDetail(id, { check: 'false' }, userId, true))
     }
   }
 
@@ -44,14 +46,16 @@ function DetailsClients(props) {
       return false
     if (bool === 'true')
       return true
-  }  
+  }
 
   const renderDetails = () => {
     const id = props.clientId
-    const detailsFiltered = _.filter(details, { pulseId: id })
+    const detailsFiltered = _.filter(details, { pulseId: id })    
 
-    return detailsFiltered.map(detail => {
-      //key={detail.id} basic='very'
+    return _.sortBy(detailsFiltered, 'createdAt').map(detail => {
+      detailArr.push({ number: detailArr.length, id: detail.id, createdAt: detail.createdAt })
+      const createdUser = _.find(lead, { userId: detail.userId })
+      const editedUser = _.find(lead, { userId: detail.editedId })
       return (
         <Table.Row key={detail.id}>
           <Table.Cell style={{ width: '25px' }}>
@@ -61,7 +65,10 @@ function DetailsClients(props) {
               style={{ marginBottom: '-4px' }} />
           </Table.Cell>
           <Table.Cell>
-            <div className="blackHover" style={renderCrossOut(detail.check)}>
+            <div
+              className="blackHover"
+              style={renderCrossOut(detail.check)}
+            >
               <EditDetailNameClient
                 title={detail.title}
                 detail={detail}
@@ -72,10 +79,10 @@ function DetailsClients(props) {
                 removeEdit={() => removeEdit(detail.id)} />
             </div>
           </Table.Cell>
-          <Table.Cell style={{ 
-            width: '52px' 
-            }}>
-            <DetailIconsClient showEdit={() => showEdit(detail.id)} detailId={detail.id} detailTitle={detail.title}  />
+          <Table.Cell style={{
+            width: '92px'
+          }}>
+            <DetailMenuClient detail={detail} showEdit={() => showEdit(detail.id)} clientId={detail.id} editedAt={detail.editedAt} detailTitle={detail.title} createdUser={createdUser} editedUser={editedUser} detailArr={detailArr} />
           </Table.Cell>
         </Table.Row>
       )
@@ -86,13 +93,11 @@ function DetailsClients(props) {
     <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%', paddingLeft: '10px' }}>
       <Table basic='very' >
         <Table.Body>
-          {renderDetails()}          
+          {renderDetails()}
         </Table.Body>
       </Table>
     </div>
   )
-
 }
 
-
-export default DetailsClients
+export default Details

@@ -6,8 +6,11 @@ const appState = {
   showPrivate: false,
   refreshed: 'false',
   addPulseOpen: 'false',
-  editPulseOpen: 'false',
-  editClientOpen: 'false',
+  editPulseOpen: false,
+  editCategoryOpen: false,
+  editBoardOpen: false,
+  editClientOpen: false,
+  editContactOpen: false,
   modalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
@@ -22,7 +25,10 @@ const appState = {
     showPrice: true,
     showDate: true,
     showStatus: true,
-    onlyPromising: false
+    onlyPromising: false,
+    showFilingDate: true,
+    showReminder: true
+
   },
   contactsSettings: {
     showLead: true,
@@ -39,14 +45,21 @@ const appState = {
     searchArchived:false,
     searchPrivate:false, 
     onlyPrivate:false,
-    onlyArchived:false
+    onlyArchived:false,
+    hideDone:false,
+    Future:'',
+    Past:''
   },
   reminderSettings: {
     pastDays:-4,
-    futureDays:12
+    futureDays:12, 
+    showContinous: true,
+    showClients: true
   },
   expandCategory: '',
   detailId: '',
+  categoryId: '',
+  boardId: '',
   detailName: '',
   error: '',
   asyncCheck: '',

@@ -11,8 +11,8 @@ function UserName(props) {
   const [state, defState] = useState(
     { itemEditable: false })
   const contacts = useSelector(state => Object.values(state.contacts))
-  const dispatch = useDispatch(); 
-const { t } = useTranslation() 
+  const dispatch = useDispatch();
+  const { t } = useTranslation()
   const saveField = (title) => {
     //console.log('title: ', title)
     if (title === 'Create name') defState({ itemEditable: true })
@@ -33,45 +33,37 @@ const { t } = useTranslation()
     if (state.itemEditable === false) return <div>{renderDropDown()}</div>
   }
 
-  function renderItems () {
+  function renderItems() {
     let projectList = []
     contacts.map(contact => {
 
       projectList.push({ key: contact.id, text: contact.project, icon: '', value: contact.project })
     })
-    
+
     return _.uniqBy(projectList, 'text').map(project => {
       return <Dropdown.Item
         key={project.key}
         onClick={() => saveField(project.text)}
-        style={{paddingLeft: '28px'}}
+        style={{ paddingLeft: '28px' }}
         text={project.text}
-        //floating
+      //floating
       />
     })
-
-    
-
   }
-
   const renderDropDown = () => {
     if (props.contact.archived === 'false') {
       //console.log('project: ', props.contact.project)
-      return (
-        <div>
-          <Dropdown
-            text={props.contact.project}
-            floating
-            labeled
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item icon='edit' content={t('Dodaj nowy projekt')} onClick={() => saveField('Create name')} />
-              <Dropdown.Divider />              
-              {renderItems()}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      )
+      return <Dropdown
+        text={props.contact.project}
+        floating
+        labeled
+      >
+        <Dropdown.Menu>
+          <Dropdown.Item icon='edit' content={t('Dodaj nowy projekt')} onClick={() => saveField('Create name')} />
+          <Dropdown.Divider />
+          {renderItems()}
+        </Dropdown.Menu>
+      </Dropdown>
     }
     if (props.contact.archived === 'true')
       return (

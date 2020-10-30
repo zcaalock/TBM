@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { editLead } from '../../../actions/settings'
 import _ from 'lodash'
 import { Checkbox, Button } from 'semantic-ui-react'
+import {fetchClients} from '../../../actions/clients'
 import { useTranslation } from "react-i18next"
 function AppSettings() {
 
@@ -23,7 +24,7 @@ function AppSettings() {
         <div className="head-vertical-segment" style={{ paddingBottom: '20px' }}></div>
         <h4>Debug:</h4>
         <Button
-        //onClick={()=>dispatch(fetchPulse())}
+        onClick={()=>dispatch(fetchClients())}
         >test</Button>
       </div>
     )

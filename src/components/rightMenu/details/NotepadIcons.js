@@ -12,7 +12,7 @@ function NotepadIcons(props) {
       <div
         onClick={() => { dispatch(deleteNotepad(props.notepadId)) }}
         className="articleIcon"
-        data-position="bottom center"
+        data-position="top right"
         data-tooltip={t("Delete")}
         style={{ display: 'inline-block', cursor: 'pointer' }}>
         <i className="trash icon" />

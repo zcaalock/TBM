@@ -94,7 +94,7 @@
 .head-vertical-segment{
   position: relative;    
     margin: 0em;    
-    padding-top: 20px;
+    padding-top: 6px;
     padding-bottom: 43px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
@@ -233,7 +233,7 @@
     height: 24px;
     background-color: #DC6969;
     text-align: center;
-    margin-left: -64px;
+    margin-left: -25px;
     margin-top: -13px;
     color: white;
     padding-top: 4px;
@@ -277,6 +277,15 @@
   scrollbar-width: none !important /* Firefox */
 }
 
+
+.removeScroll {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important /* Firefox */
+}
+.removeScroll::-webkit-scrollbar {
+  display: none;
+}
+
 .reminders:hover {
   width: 800px;
     padding-right: 590px;
@@ -298,3 +307,4 @@
 .DetailArrows:hover{
   color: black
 }
+

@@ -13,10 +13,10 @@ function BoardsList(props) {
   const pulses = useSelector(state => Object.values(state.pulses))
   const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => _.find(state.lead, {userId: userId}))
+  const lead = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch()
-const { t } = useTranslation() 
+  const { t } = useTranslation()
   const isEmpty = (obj) => {
     for (var key in obj) {
       if (obj.hasOwnProperty(key))
@@ -52,22 +52,18 @@ const { t } = useTranslation()
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return _.filter(boards, { privateId: props.privateId }).map(board => {
-
-      return (
-        <>
-          <div style={{position: 'absolute', textAlign: 'right', width: '210px'}}>{renderNotifications(board.id)}</div>
-          <Link
-            onClick={() => dispatch(editState('', 'pulseId'))}
-            to={`/boards/${board.id}`}
-            className={`item ${selectedCheck(board.id)}`}
-            key={board.id}
-            style={selectedStyle(board.id)}>
-            {board.title}
-          </Link>
-        </>
-      )
-    })
+    return _.filter(boards, { privateId: props.privateId }).map(board =>
+      <div key={board.id}>
+        <div style={{ position: 'absolute', textAlign: 'right', width: '210px' }}>{renderNotifications(board.id)}</div>
+        <Link
+          onClick={() => dispatch(editState('', 'pulseId'))}
+          to={`/boards/${board.id}`}
+          className={`item ${selectedCheck(board.id)}`}
+          style={selectedStyle(board.id)}>
+          {board.title}
+        </Link>
+      </div>
+    )
   }
 
   const renderNotifications = (boardId) => {
@@ -87,7 +83,7 @@ const { t } = useTranslation()
       return notoficationStorage
     })
     //console.log(notoficationStorage)
-    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div style={{zIndex:10}} key={new Date()} className='notificationBoard' data-position="left center" data-tooltip={t("Unreaded content")}>{notoficationStorage}</div>
+    if (notoficationStorage > 0 && lead.settings.notifications === true) return <div style={{ zIndex: 10 }} key={new Date()} className='notificationBoard' data-position="left center" data-tooltip={t("Unreaded content")}>{notoficationStorage}</div>
   }
 
   return (

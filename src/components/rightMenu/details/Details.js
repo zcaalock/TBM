@@ -4,9 +4,8 @@ import { Checkbox, Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import { editDetail } from '../../../actions/details'
 import { editPulse } from '../../../actions/pulses'
-import DetailIcons from './DetailIcons'
+import DetailMenu from './DetailMenu'
 import EditDetailName from './EditDetailName'
-import DetailIconsMove from './DetailIconsMove'
 
 function Details(props) {
   const [state, defState] = useState({});
@@ -49,25 +48,9 @@ function Details(props) {
       return true
   }
 
-  const moveUp = (id, created) => {
-    // dispatch(editDetail(_.find()))
-    //const current = detailArr[_.find(detailArr, { id: id }).number]
-    const prev = _.find(detailArr, { number: detailArr[_.find(detailArr, { id: id }).number].number - 1 })
-    if (prev) dispatch(editDetail(id, { createdAt: prev.createdAt }, userId, true))
-    if (prev) dispatch(editDetail(prev.id, { createdAt: created }, userId, true))
-  }
-
-  const moveDown = (id, created) => {
-    const next = _.find(detailArr, { number: detailArr[_.find(detailArr, { id: id }).number].number + 1 })
-    if (next) dispatch(editDetail(id, { createdAt: next.createdAt }, userId, true))
-    if (next) dispatch(editDetail(next.id, { createdAt: created }, userId, true))
-  }
-
   const renderDetails = () => {
     const id = props.pulseId
-    const detailsFiltered = _.filter(details, { pulseId: id })
-    //console.log(_.sortBy(detailsFiltered, 'createdAt'))
-    //console.log(detailsFiltered)
+    const detailsFiltered = _.filter(details, { pulseId: id })    
 
     return _.sortBy(detailsFiltered, 'createdAt').map(detail => {
       detailArr.push({ number: detailArr.length, id: detail.id, createdAt: detail.createdAt })
@@ -75,8 +58,7 @@ function Details(props) {
       const editedUser = _.find(lead, { userId: detail.editedId })
       return (
         <Table.Row key={detail.id}>
-          <Table.Cell style={{ width: '25px' }}>
-            <DetailIconsMove detailArr={detailArr} moveUp={() => moveUp(detail.id, detail.createdAt)} moveDown={() => moveDown(detail.id, detail.createdAt)} detailId={detail.id} detailTitle={detail.title} />
+          <Table.Cell style={{ width: '25px' }}>            
             <Checkbox
               onClick={() => handleOnClick(detail.id, detail.check)}
               defaultChecked={defaulCheck(detail.check)}
@@ -100,13 +82,13 @@ function Details(props) {
           <Table.Cell style={{
             width: '92px'
           }}>
-            <DetailIcons detail={detail} showEdit={() => showEdit(detail.id)} detailId={detail.id} editedAt={detail.editedAt} detailTitle={detail.title} createdUser={createdUser} editedUser={editedUser} />
+            <DetailMenu detail={detail} showEdit={() => showEdit(detail.id)} detailId={detail.id} editedAt={detail.editedAt} detailTitle={detail.title} createdUser={createdUser} editedUser={editedUser} detailArr={detailArr} />
           </Table.Cell>
         </Table.Row>
       )
     })
   }
-  //console.log(detailArr)
+
   return (
     <div className='ui vertical text menu' style={{ minHeight: '0', width: '100%', paddingLeft: '10px' }}>
       <Table basic='very' >
@@ -116,8 +98,6 @@ function Details(props) {
       </Table>
     </div>
   )
-
 }
-
 
 export default Details

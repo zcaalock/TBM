@@ -79,8 +79,7 @@ function GCalendarModal(props) {
   const inputEmail = (value) => {
     setEmail(value)
     setEmailadress([{ 'email': value }])
-  }
-
+  }  
   function handleSubmit() {
     calendar = {
       'summary': summary,

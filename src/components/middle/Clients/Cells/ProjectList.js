@@ -6,8 +6,6 @@ import { Dropdown } from 'semantic-ui-react'
 import EditClientProject from './EditClientProject'
 import { useTranslation } from "react-i18next"
 
-
-
 function UserName(props) {
 
   const [state, defState] = useState(
@@ -20,7 +18,6 @@ function UserName(props) {
     if (title === 'Create name') defState({ itemEditable: true })
     else dispatch(editClient(props.client.id, { project: title }))
   }
-
   const CreateNewProjectName = () => {
     if (state.itemEditable === true) return <div
       style={{ display: 'inline-block', width: '100%' }}>
@@ -51,17 +48,12 @@ function UserName(props) {
         //floating
       />
     })
-
-    
-
   }
 
   const renderDropDown = () => {
     if (props.client.archived === 'false') {
       //console.log('project: ', props.client.project)
-      return (
-        <div>
-          <Dropdown
+      return <Dropdown
             text={props.client.project}
             floating
             labeled
@@ -71,9 +63,7 @@ function UserName(props) {
               <Dropdown.Divider />              
               {renderItems()}
             </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      )
+          </Dropdown>       
     }
     if (props.client.archived === 'true')
       return (

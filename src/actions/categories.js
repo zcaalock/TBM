@@ -1,35 +1,38 @@
-//import history from '../history'
-//import categories from '../apis/server'
+import { editState } from './appState'
 import axios from 'axios'
 import * as types from './types'
 
-export const createCategory = (formValues, id) => {
-
+export const createCategory = (formValues, id, sendToAppState) => {  
   return async (dispatch) => {
-    const responce = await axios.post('/category', { ...formValues, boardId: id })
-    //console.log('responce category: ', responce.data.category)
-    dispatch({ type: types.CREATE_CATEGORY, payload: responce.data.category })
+    const response = await axios.post('/category', { ...formValues, boardId: id })
+    //console.log('response category: ', response.data.category)
+    dispatch({ type: types.CREATE_CATEGORY, payload: response.data.category })
+    if(sendToAppState === true) dispatch(editState(response.data.category, 'categoryId'))
+    dispatch(editState(response.data.message, 'responseMessage'))
+    dispatch(editState(response.status, 'responseStatus'))
   }
 }
 
-
 export const fetchCategories = () => async dispatch => {
-  const responce = await axios.get('/categories')
-  dispatch({ type: types.FETCH_CATEGORIES, payload: responce.data })
+  const response = await axios.get('/categories')
+  dispatch({ type: types.FETCH_CATEGORIES, payload: response.data })
 }
 
-export const editCategory = (id, formValues) => async dispatch => {
+export const editCategory = (id, formValues, fetch) => async dispatch => {
   //console.log(id, formValues)
-  axios.patch(`/category/${id}`, formValues)
+  await axios.patch(`/category/${id}`, formValues)
     .then(() => {
       axios
         .get(`/category/${id}`)
-        .then((res) => {
-          dispatch({ type: types.EDIT_CATEGORY, payload: res.data })
-          //console.log('cat: ', res.data)
-          //history.push(`/mypulses/${res.data.credentials.userId}`);
+        .then((response) => {
+          dispatch({ type: types.EDIT_CATEGORY, payload: response.data })
+          dispatch(editState(response.data.message, 'responseMessage'))
+          dispatch(editState(response.status, 'responseStatus'))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          dispatch(editState(404, 'responseStatus'))
+          console.log(err)
+        })
     })
 }
 

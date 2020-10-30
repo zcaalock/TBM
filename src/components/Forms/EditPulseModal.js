@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { editPulse} from '../../actions/pulses'
+import { editPulse } from '../../actions/pulses'
 import { fetchLead } from '../../actions/settings'
 import { fetchBoards } from '../../actions/boards'
 import history from '../../history'
@@ -24,7 +24,7 @@ function PulseModal() {
   const lead = useSelector(state => Object.values(state.lead))
   const leadKey = useSelector(state => _.keyBy(state.lead, 'userId'))
   const appState = useSelector(state => state.appState)
-  const [makePrivate, setMakeprivate] = useState(false)  
+  const [makePrivate, setMakeprivate] = useState(false)
 
   const privateId = useSelector(state => state.user.credentials.userId)
   const [name, setName] = useState('')
@@ -33,17 +33,19 @@ function PulseModal() {
   const [boardId, setBoardId] = useState('')
 
   const dispatch = useDispatch()
-const { t } = useTranslation()
+  const { t } = useTranslation()
   useEffect(() => {
     if (isEmpty(boards)) dispatch(fetchBoards())
     if (isEmpty(lead)) dispatch(fetchLead())
 
     setName(pulseKey[appState.pulseId].title)
-    //setUserName(leadKey[userId].title)
     setUserId(pulseKey[appState.pulseId].userId)
-    //setPrivateId(pulseKey[appState.pulseId].privateId)
     setCategoryId(pulseKey[appState.pulseId].categoryId)
     setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
+
+    generateBoardList()
+    generateCategoriesList()
+    generateLeadList()
 
   }, [])
 
@@ -55,7 +57,7 @@ const { t } = useTranslation()
     return true;
   }
 
-  const handleSubmit = () => {    
+  const handleSubmit = () => {
     const userData = {
       title: name,
       categoryId: categoryId,
@@ -63,13 +65,13 @@ const { t } = useTranslation()
       boardId: boardId,
       privateId: makePrivate === true ? userId : ''
     };
-    dispatch(editPulse(pulseIdSelected, userData))    
+    dispatch(editPulse(pulseIdSelected, userData))
     close()
     dispatch(editState(categoryId, 'expandCategory'))
-    history.push(`/boards/${boardId}/pulses/${categoryId}`)  
+    history.push(`/boards/${boardId}/pulses/${categoryId}`)
   }
 
-  const generateLeadList = () => {    
+  const generateLeadList = () => {
     if (lead.length > 0)
       lead.map(leadItems => {
         leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
@@ -104,28 +106,18 @@ const { t } = useTranslation()
 
   const activateSubmit = () => { return categoryId === '' ? true : false }
 
-  const defaulCheck = (bool) => {
-    if (bool === 'false')
-      return false
-    if (bool === 'true')
-      return true
-  }
-
   const close = () => {
-    dispatch(editState('false', 'editPulseOpen'))
+    dispatch(editState(false, 'editPulseOpen'))
+    dispatch(editState('', 'pulseId'))
     setName('')
     setBoardId('')
     setCategoryId('')
     setUserId('')
   }
 
-  generateBoardList()
-  generateCategoriesList()
-  generateLeadList()  
-  const { editPulseOpen } = appState  
   return (
     <div>
-      <Modal size='tiny' dimmer='inverted' open={defaulCheck(editPulseOpen)} onClose={close}>
+      <Modal size='tiny' dimmer='inverted' open={appState.editPulseOpen} onClose={close}>
         <Modal.Header>{t('Edit Pulse')}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
@@ -141,10 +133,10 @@ const { t } = useTranslation()
                 onChange={(e, { value }) => setName(value)}
               />
               <Form.Field
-                search                
+                search
                 name='userId'
-                control={Select}                
-                options={leadArr}                
+                control={Select}
+                options={leadArr}
                 label={t('Lead Person')}
                 placeholder={leadKey[userId] ? leadKey[userId].title : ''}
                 searchInput={{ id: 'userId' }}
@@ -156,7 +148,7 @@ const { t } = useTranslation()
                 control={Select}
                 options={boardsArr}
                 label={t('Board name')}
-                placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}                
+                placeholder={boardKey[boardId] ? boardKey[boardId].title : ''}
                 onChange={(e, { value }) => {
                   setBoardId(value)
                   generateCategoriesList()
@@ -189,7 +181,7 @@ const { t } = useTranslation()
           />
           <Button onClick={close}>
             {t('Cancel')}
-            </Button>
+          </Button>
           <Button
             disabled={activateSubmit()}
             form='my-form'

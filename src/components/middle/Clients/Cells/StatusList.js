@@ -6,10 +6,10 @@ import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 
 function StatusList(props) {
-  
+
   const dispatch = useDispatch();
 
-  const saveField = (title) => {    
+  const saveField = (title) => {
     dispatch(editClient(props.client.id, { status: title }))
   }
 
@@ -38,33 +38,34 @@ function StatusList(props) {
   const statusText = () => {
     if (props.client.status === 'Kupujący') return 'Kupujący'
     if (props.client.status === 'Pośrednik') return 'Pośrednik'
+    //return <i className="bullseye icon" style={{ color: props.client.status }} />
+  }
+
+  const statusIcon = () => {
     return <i className="bullseye icon" style={{ color: props.client.status }} />
   }
 
   const renderDropDown = () => {
     if (props.client.archived === 'false') {
       //console.log('project: ', props.client.project)
-      return (
-        <div>
-          <Dropdown
-            text={statusText()}
-            floating
-            labeled
-            style={{ marginLeft: '0px', marginRight: '10px' }}
-          >
-            <Dropdown.Menu>
-              {renderItems()}
-              <Dropdown.Divider />
-              <Dropdown.Item
-                icon='archive'
-                style={{ color: '#DC6969' }}
-                text='Archive'
-                onClick={() => { dispatch(editClient(props.client.id, { archived: 'true' })) }}
-              />
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      )
+      return <Dropdown
+          text={statusText()}
+          icon={props.client.status !== 'Pośrednik'&& props.client.status !== 'Kupujący'?<i className="bullseye icon" style={{ color: props.client.status }} />:''}
+          floating
+          labeled
+          style={{ marginLeft: '0px', marginRight: '10px' }}
+        >
+          <Dropdown.Menu>
+            {renderItems()}
+            <Dropdown.Divider />
+            <Dropdown.Item
+              icon='archive'
+              style={{ color: '#DC6969' }}
+              text='Archive'
+              onClick={() => { dispatch(editClient(props.client.id, { archived: 'true' })) }}
+            />
+          </Dropdown.Menu>
+        </Dropdown>      
     }
     if (props.client.archived === 'true')
       return (

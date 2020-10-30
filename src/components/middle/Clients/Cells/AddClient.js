@@ -32,7 +32,7 @@ const { t } = useTranslation()
     if (isHovering === true) {
       return (
         <div
-          data-position="top center"
+          data-position="top left"
           data-tooltip={t("Create Client")}>
           <i className="plus icon" />
         </div>)
@@ -72,7 +72,7 @@ const { t } = useTranslation()
 
   return (
     
-        <div className="tableNewPulse" style={{ paddingLeft: '26px', cursor: 'pointer', height: '40px' }} data-label="Name">
+        <div className="tableNewPulse" style={{ paddingTop: '12px', cursor: 'pointer', height: '40px' }} data-label="Name">
           {/* {this.renderNewPulse()} */}
           {renderNewPulse(t('Create Client'))}
         </div>

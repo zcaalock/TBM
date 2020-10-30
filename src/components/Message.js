@@ -68,7 +68,7 @@ function ResponceMessage() {
     }
 
     return (
-        <div style={{ position: 'absolute', width: '100%', zIndex: '100' }}>
+        <div style={{ position: 'fixed', width: '100%', zIndex: '100' }}>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
                 {renderMessage()}
             </div>

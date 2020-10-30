@@ -67,7 +67,7 @@ function AddBoard(props) {
           className="articleIcon" style={{ paddingTop: '15px', paddingBottom: '15px' }}
         >
           <div style={{ display: 'inline-block' }}>{showHover()}</div>
-          <div style={{ display: 'inline-block' }}>{props.name}</div>
+          <div style={{ display: 'inline-block' }}>{t(props.name)}</div>
         </div>
       )
     }
