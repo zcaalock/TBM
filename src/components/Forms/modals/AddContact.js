@@ -56,7 +56,7 @@ function AddContact() {
   const generateLeadList = () => {
     if (lead.length > 0)
       lead.map(leadItems => {
-        leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems })
+        leadArr.push({ key: leadItems.userId, text: leadItems.title, value: leadItems.userId })
         return leadArr
       })
     return leadArr = _.uniqBy(leadArr, 'text')
@@ -97,8 +97,8 @@ function AddContact() {
       />
     )
   }
-
-  if (isEmpty(leadArr)) generateLeadList()
+  
+  if (isEmpty(leadArr)) generateLeadList() 
   return (
     <>
       <Modal.Header>{t('Create new Contact')}</Modal.Header>

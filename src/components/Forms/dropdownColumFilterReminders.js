@@ -15,12 +15,13 @@ function DropdownColumnReminders(props) {
       onClick={(event) => {
         event.stopPropagation()
         event.nativeEvent.stopImmediatePropagation()
-        dispatch(editState({ ...appState.reminderSettings, [selector]: !appState.reminderSettings[selector] }, 'reminderSettings'))
+        if (appState.reminderSettings[selector]) dispatch(editState({ ...appState.reminderSettings, [selector]: !appState.reminderSettings[selector] }, 'reminderSettings'))
+        if (!appState.reminderSettings[selector])dispatch(editState({ ...appState.reminderSettings, [selector]: true }, 'reminderSettings'))
       }}
     >
       <Checkbox
         label={name}
-        checked={appState.reminderSettings[selector]}
+        checked={appState.reminderSettings[selector] ? appState.reminderSettings[selector] : false}
         style={{ zIndex: -1 }}
       />
     </Dropdown.Item>
@@ -54,26 +55,27 @@ function DropdownColumnReminders(props) {
           event.nativeEvent.stopImmediatePropagation()
         }}
       >
-        <Dropdown.Header icon='tags' content={t('Select days')} />        
+        <Dropdown.Header icon='tags' content={t('Select days')} />
         <Dropdown.Item >
           <Form >
             <Form.Field >
               <label>{t('Past days')}:</label>
-              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings')) }} value={-appState.reminderSettings.pastDays}  type="number" placeholder='12' />
+              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, pastDays: -Math.abs(v.target.value) }, 'reminderSettings')) }} value={-appState.reminderSettings.pastDays} type="number" placeholder='12' />
             </Form.Field>
           </Form>
-        </Dropdown.Item>        
+        </Dropdown.Item>
         <Dropdown.Item>
           <Form>
             <Form.Field >
               <label>{t('Future Days')}</label>
-              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(v.target.value) }, 'reminderSettings')) }} value={appState.reminderSettings.futureDays}  type="number" placeholder='12' />
+              <input onChange={(v) => { if (v.target.value >= 0) dispatch(editState({ ...appState.reminderSettings, futureDays: Math.abs(v.target.value) }, 'reminderSettings')) }} value={appState.reminderSettings.futureDays} type="number" placeholder='12' />
             </Form.Field>
           </Form>
         </Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Header icon='tags' content={`${t('Filters')}:`} />        
+        <Dropdown.Header icon='tags' content={`${t('Filters')}:`} />
         {dropDownSelectable(`${t('Show status')}: ${t(`Continous`)}`, 'showContinous')}
+        {dropDownSelectable(`${t('Show status')}: ${t(`Clients`)}`, 'showClients')}
       </Dropdown.Menu>
     </Dropdown>
   )

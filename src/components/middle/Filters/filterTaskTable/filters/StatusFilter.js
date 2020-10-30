@@ -76,6 +76,15 @@ function Tbody() {
     if (name === 'deadline' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
   }
 
+  const renderPrivateIcon = (pulse) => {    
+    if (pulse.privateId === userId) {
+      return (
+        <div style={{ color: '#00A569' }}>
+          <i className="privacy icon" />
+        </div>)
+    }
+  }
+
   const renderPulses = () => {
     let pulsesCol = []
     pulses.map(item => {
@@ -119,8 +128,7 @@ function Tbody() {
       pulsesCol = _.filter(pulsesCol, { archived: 'true' })
     }
 
-    if (hideDone === true) {
-      console.log('test')
+    if (hideDone === true) {      
       pulsesCol = _.chain(pulsesCol).reject({ status: 'Done' }).value()
     }
 
@@ -182,9 +190,13 @@ function Tbody() {
             <td >
               <Deadline pulse={pulse} />
             </td>
-            <td >
+            <td >              
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <DetailProgrsBar key={pulse.id} details={details} pulse={pulse} />
-              {/* {this.renderProgressBar(pulse.id)} */}
+                <div >                  
+                  {renderPrivateIcon(pulse)}
+                </div>
+              </div>
             </td>
           </tr>
         )
@@ -194,7 +206,7 @@ function Tbody() {
   return (
     <div>
       <table className="ui very basic table">
-        <thead>
+        <thead >
           <tr>
             <th style={{ paddingLeft: '10px', width: '30%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
             <th style={{ minWidth: '15%' }}>{t('Board')}</th>

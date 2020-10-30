@@ -148,7 +148,9 @@ export const resources = {
             "Move down":"Move down",
             "Edit Category":"Edit Category",
             "Edit Board":"Edit Board",
-            "Hide done pulses":"Hide done pulses"
+            "Hide done pulses":"Hide done pulses",
+            "Reminder":"Reminder",
+            "Filing Date":"Filing Date"
 
         }
     },
@@ -300,7 +302,9 @@ export const resources = {
             "Move down":"Przesuń w dół",
             "Edit Category":"Edytuj kategorię",
             "Edit Board":"Edytuj tablicę",
-            "Hide done pulses":"Ukryj zakończone"
+            "Hide done pulses":"Ukryj zakończone",
+            "Reminder":"Przypomnienie",
+            "Filing Date":"Zgłoszenie"
         }
     }
 }

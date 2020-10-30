@@ -10,8 +10,7 @@ const { t } = useTranslation()
         <th style={{ width: '10%',  }}>{t('Lead Person')}</th>
         <th style={{ width: '10%' }}>{t('Status')}</th>
         <th style={{ width: '10%' }}>{t('Deadline')}</th>
-        <th style={{ width: '10%' }}>{t('Details')}</th>
-        <th style={{ width: '10%' }}></th>
+        <th style={{ width: '10%' }}>{t('Details')}</th>        
       </tr>
     </thead>
   )

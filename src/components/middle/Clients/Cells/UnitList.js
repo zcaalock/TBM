@@ -18,7 +18,7 @@ function DropdownAdditions(props) {
   list = _.uniqBy(list, 'text')   
     if (props.item.archived === 'false') {      
       return (
-        <div style={{width: '120px'}}>
+        <div>
           <Dropdown
             value={list.currentValue}
             search

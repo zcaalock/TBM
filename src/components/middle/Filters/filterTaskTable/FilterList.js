@@ -186,7 +186,7 @@ function SearchFilter(props) {
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox
           onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))}
-          checked={leadUser.settings.showArchived}
+          checked={leadUser.settings?leadUser.settings.showArchived:false}
           slider
           style={{ marginBottom: '-4px', }}
         />

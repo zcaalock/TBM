@@ -69,13 +69,13 @@ function Tbody(props) {
             <td style={{ width: '165px' }}>
               <Deadline pulse={pulse} />
             </td>
-            <td style={{ width: '10%' }} >
-              <DetailProgrsBar details={details} pulse={pulse} />
-            </td>
             <td style={{ width: '10%' }}>
-              <div style={{textAlign: 'right', marginRight: '30px'}}>
-                {renderPulseNotification(pulse)}
-                {renderPrivateIcon(pulse)}
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <DetailProgrsBar details={details} pulse={pulse} />
+                <div style={{marginRight: '30px'}}>
+                  {renderPulseNotification(pulse)}
+                  {renderPrivateIcon(pulse)}
+                </div>
               </div>
             </td>
           </tr>

@@ -5,7 +5,7 @@ import AddClient from './Clients/Cells/AddClient'
 function Clients(props) {
   //console.log(props)
   return (
-    <div className="" style={{ width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <Head />
       <Body props={props} />
       <AddClient />

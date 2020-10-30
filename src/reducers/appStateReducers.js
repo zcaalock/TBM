@@ -24,7 +24,10 @@ const appState = {
     showPrice: true,
     showDate: true,
     showStatus: true,
-    onlyPromising: false
+    onlyPromising: false,
+    showFilingDate: true,
+    showReminder: true
+
   },
   contactsSettings: {
     showLead: true,
@@ -49,7 +52,8 @@ const appState = {
   reminderSettings: {
     pastDays:-4,
     futureDays:12, 
-    showContinous: true
+    showContinous: true,
+    showClients: true
   },
   expandCategory: '',
   detailId: '',
