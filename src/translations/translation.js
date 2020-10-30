@@ -150,7 +150,12 @@ export const resources = {
             "Edit Board":"Edit Board",
             "Hide done pulses":"Hide done pulses",
             "Reminder":"Reminder",
-            "Filing Date":"Filing Date"
+            "Filing Date":"Filing Date",
+            "Edit Client":"Edit Client",
+            "Client menu":"Client menu",
+            "Select Company":"Select Company",
+            "New name":"New name",
+            "Edit Contact":"Edit Contact"
 
         }
     },
@@ -304,7 +309,12 @@ export const resources = {
             "Edit Board":"Edytuj tablicę",
             "Hide done pulses":"Ukryj zakończone",
             "Reminder":"Przypomnienie",
-            "Filing Date":"Zgłoszenie"
+            "Filing Date":"Zgłoszenie",
+            "Edit Client":"Edytuj klienta",
+            "Client menu":"Klient menu",
+            "Select Company":"Wybierz firmę",
+            "New name":"Nowa nazwa",
+            "Edit Contact":"Edytuj kontakt"
         }
     }
 }

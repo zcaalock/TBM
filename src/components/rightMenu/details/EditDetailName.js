@@ -10,7 +10,7 @@ function EditDetailName(props) {
   const dispatch = useDispatch();
 
   const onSubmit = (formValues) => {
-    dispatch(editDetail(props.detail.id, formValues, userId, true))
+    dispatch(editDetail(props.detail.id, formValues))
     dispatch(props.removeEdit)
     dispatch(editPulse(props.pulseId, { readed: [props.userId] }))
   }

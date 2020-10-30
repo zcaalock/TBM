@@ -38,7 +38,7 @@ function AddDetail(props) {
   }
 
   const onSubmit = (formValues) => {
-    dispatch(createDetail(formValues, props.clientId))
+    dispatch(createDetail(formValues, props.clientId, userId))
     removeEdit()
     dispatch(editClient(props.clientId, { readed: [userId] }))
   }

@@ -42,7 +42,7 @@ function SearchFilter(props) {
     dispatch(editState(leadUser.title, 'pulseSearch'))
 
     dispatch(editState(userId, 'selectedUserId'))
-  }, [])  
+  }, [])
 
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)
@@ -65,8 +65,8 @@ function SearchFilter(props) {
     )
   }
 
-  function renderCloseMenu(){
-    if(menuOpen===true) return <div onClick={() => setMenuopen(false)} style={{ position: 'absolute', right: '22px', top: '14px', fontSize: '1em', cursor: 'pointer', color: 'rgba(0,0,0,.87)' }}><i aria-hidden="true" className="red remove link icon"/></div>      
+  function renderCloseMenu() {
+    if (menuOpen === true) return <div onClick={() => setMenuopen(false)} style={{ position: 'absolute', right: '22px', top: '14px', fontSize: '1em', cursor: 'pointer', color: 'rgba(0,0,0,.87)' }}><i aria-hidden="true" className="red remove link icon" /></div>
   }
 
   const renderDropdownFilter = () => {
@@ -95,7 +95,7 @@ function SearchFilter(props) {
             event.nativeEvent.stopImmediatePropagation()
           }}
         >
-          {renderCloseMenu()}    
+          {renderCloseMenu()}
           <Dropdown.Header icon='tags' content={`${t("Search in")}:`} />
           <Dropdown.Divider />
           {dropDownSelectable(t('Title'), 'searchTitle')}
@@ -110,42 +110,43 @@ function SearchFilter(props) {
 
           <Dropdown.Header icon='tags' content={`${t("Time range")}:`} />
           {timeRange(t('Past'), 'Past')}
-          {timeRange(t('Future'), 'Future')}          
+          {timeRange(t('Future'), 'Future')}
         </Dropdown.Menu>
       </Dropdown>
     )
   }
 
-  const handleChange = (event, { name, value }) => {    
+  const handleChange = (event, { name, value }) => {
     dispatch(editState({ ...appState.filterSettings, [name]: value }, 'filterSettings'))
-  } 
+  }
 
   function timeRange(name, value) {
     return <Dropdown.Item onClick={(event) => {
+      
       event.stopPropagation()
       event.nativeEvent.stopImmediatePropagation()
-    }}>          
-      <label>{name}:</label>      
-        <DateInput
-          dateFormat={'YYYY-MM-DD'}
-          //initialDate={format(new Date(),'dd-mm-yyyy')}          
-          name={value}
-          closable
-          //style={{color: 'red'}}
-          //pickerStyle={{color: 'red', zIndex: 99990 }}
-          startMode='year'
-          clearable
-          clearIcon={<Icon name="remove" color="red" />}
-          onClick={() => setMenuopen(true)}          
-          value={appState.filterSettings[value]}
-          onChange={handleChange}
-        //onBlur={()=>setMenuopen(false)}
-        />      
+    }}>
+      <label>{name}:</label>
+      <DateInput
+        dateFormat={'YYYY-MM-DD'}
+        //initialDate={format(new Date(),'dd-mm-yyyy')}          
+        name={value}
+        closable
+        //style={{color: 'red'}}
+        //pickerStyle={{color: 'red', zIndex: 99990 }}
+        startMode='year'
+        clearable
+        clearIcon={<Icon name="remove" color="red" />}
+        onClick={() => setMenuopen(true)}
+        value={appState.filterSettings[value]}
+        onChange={handleChange}
+      //onBlur={()=>setMenuopen(false)}
+      />
     </Dropdown.Item>
   }
 
   const dropDownSelectable = (name, selector) => {
-    return <Dropdown.Item      
+    return <Dropdown.Item
       style={{ zIndex: 10 }}
       onClick={(event) => {
         // event.stopPropagation()
@@ -186,7 +187,7 @@ function SearchFilter(props) {
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox
           onClick={() => dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))}
-          checked={leadUser.settings?leadUser.settings.showArchived:false}
+          checked={leadUser ? leadUser.settings.showArchived : false}
           slider
           style={{ marginBottom: '-4px', }}
         />
@@ -212,7 +213,7 @@ function SearchFilter(props) {
         />
         <label onClick={() => dispatch(editState({ ...appState.filterSettings, hideDone: !appState.filterSettings.hideDone }, 'hideDone'))} className={renderCheckBoxLabelStyle(appState.filterSettings.hideDone)} >{t('Hide done pulses')}</label>
       </div>
-      
+
     </div>
   )
 }
