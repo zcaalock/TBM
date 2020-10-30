@@ -3,7 +3,7 @@ import BoardMenu from './BoardMenu'
 
 function Header(props) {  
   return (
-    <div className="head-vertical-segment" style={{ width: '100%' }}>
+    <div className="head-vertical-segment" style={{ width: '100%', paddingTop: '21px' }}>
       
       <div style={{ float: 'left', width: '90%' }}>
         <div><h3>{props.title}</h3></div>

@@ -146,7 +146,7 @@ function AddClient(props) {
         name='unit'
         control={Input}
         label={t('Unit')}
-        value={price}
+        value={unit}
         placeholder={t("New unit name (fe. 'A2')")}
         onChange={(e, { value }) => setUnit(value)}
       />

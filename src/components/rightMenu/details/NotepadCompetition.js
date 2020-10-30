@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { Button } from 'semantic-ui-react'
-import { editClient } from '../../../actions/clients'
+import { editCompetition } from '../../../actions/competitions'
 import { isEmpty } from '../../../actions/helperFunctions'
 import { fetchNotepads } from '../../../actions/notepad'
 import { createNotepad, editNotepad, deleteNotepad } from '../../../actions/notepad'
@@ -25,9 +25,9 @@ function Notepad(props) {
   },[])
 
   const createNewNotepad = () => {
-    dispatch(createNotepad({ content: `<p>${t('Enter notes here')}...</p>` }, props.clientId))
+    dispatch(createNotepad({ content: `<p>${t('Enter notes here')}...</p>` }, props.competitionId))
     defState({ data: `<p>${t('Enter notes here')}...</p>` })
-    dispatch(editClient(appState.pulseId, { readed: [userId] }))
+    dispatch(editCompetition(appState.pulseId, { readed: [userId] }))
   }  
 
   const renderSaveButton = (notepadId) => {
@@ -41,7 +41,7 @@ function Notepad(props) {
   const CKEditorSaveToDB = (notepadId) => {
     if (state.data === '') dispatch(deleteNotepad(notepadId))
     dispatch(editNotepad(notepadId, { content: state.data }))
-    dispatch(editClient(appState.pulseId, { readed: [userId] }))
+    dispatch(editCompetition(appState.pulseId, { readed: [userId] }))
   }
 
   const submitNotepad = (data) => {

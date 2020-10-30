@@ -54,6 +54,11 @@ function Boards (props) {
     dispatch(editState('contacts', 'id'))     
   }
 
+  const handleCompetitionsOnClick = () => {
+    history.push('/competitions/')
+    dispatch(editState('competitions', 'id'))     
+  }
+
   const handleSelectedItem = (selector) => {
     if (appState.id === selector) return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer', backgroundColor: '#E9E9E9' }    
     return { paddingLeft: '0', paddingBottom: '5px', paddingTop: '5px', cursor: 'pointer' }
@@ -109,6 +114,13 @@ function Boards (props) {
                 style={handleSelectedItem('contacts')}>
                 {t('Contacts')}
               </div>
+              <div style={{ paddingLeft: '0', borderTop: '1px solid #DDDDDD' }}></div>
+              <div
+                onClick={() => handleCompetitionsOnClick()}
+                className="header item headerSelectable"
+                style={handleSelectedItem('competitions')}>
+                {t('Competitions')}
+              </div>
               <div
                 className="header item"
                 style={{ paddingLeft: '0', paddingTop: '20px', borderTop: '1px solid #DDDDDD' }}>
@@ -133,7 +145,7 @@ function Boards (props) {
                 {t('Reminders')}: 
                 <ReminderFilter />               
               </div> 
-              <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 680px)', overflowY: 'auto'}}><Reminders/></div>            
+              <div className="reminders" style={{paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 700px)', overflowY: 'auto'}}><Reminders/></div>            
             </div>
           </div>
         </div>

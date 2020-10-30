@@ -191,8 +191,16 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() =>
-          dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
+        <label onClick={() =>{
+           if(leadUser) dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))
+          }
+          } 
+           className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)}           
+          >
+            
+            {t('Show archived')}
+          
+        </label>
       </div>
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox

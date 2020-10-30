@@ -10,10 +10,12 @@ const appState = {
   editCategoryOpen: false,
   editBoardOpen: false,
   editClientOpen: false,
+  editCompetitionOpen: false,
   editContactOpen: false,
   modalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
+  competitionSearch: '',
   contactSearch: '',
   pulseSearch: '',
   filter: { selector: '', value: '' },
@@ -29,6 +31,11 @@ const appState = {
     showFilingDate: true,
     showReminder: true
 
+  },
+  competitionsSettings: {    
+    showProject: true,    
+    showDate: true,
+    showStatus: true 
   },
   contactsSettings: {
     showLead: true,

@@ -12,6 +12,7 @@ import { fetchLead } from '../../actions/settings'
 import { fetchDetails } from '../../actions/details'
 import { fetchNotepads } from '../../actions/notepad'
 import { fetchClients } from '../../actions/clients'
+import { fetchCompetitions } from '../../actions/competitions'
 import { fetchContacts } from '../../actions/contacts'
 
 function Loading () {  
@@ -25,6 +26,7 @@ function Loading () {
     dispatch(fetchCategories())
     dispatch(fetchNotepads())
     dispatch(fetchClients())
+    dispatch(fetchCompetitions())
     dispatch(fetchContacts())
     dispatch(editState('filters', 'id'))
     setTimeout(() => { history.push(`/filters`) }, 4000);

@@ -155,7 +155,11 @@ export const resources = {
             "Client menu":"Client menu",
             "Select Company":"Select Company",
             "New name":"New name",
-            "Edit Contact":"Edit Contact"
+            "Edit Contact":"Edit Contact",
+            "Competitions":"Competitions",
+            "Web page":"Web page",
+            "Create Competition":"Create Competition",
+            "New competition":"New competition"
 
         }
     },
@@ -314,7 +318,12 @@ export const resources = {
             "Client menu":"Klient menu",
             "Select Company":"Wybierz firmę",
             "New name":"Nowa nazwa",
-            "Edit Contact":"Edytuj kontakt"
+            "Edit Contact":"Edytuj kontakt",
+            "Competitions":"Konkurencja",
+            "Web page":"Strona internetowa",
+            "Create Competition":"Dodaj konkurencję",
+            "New competition":"Nowa konkurencja"
+            
         }
     }
 }

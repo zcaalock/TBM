@@ -8,6 +8,7 @@ function DropdownAdditions(props) {
   const dispatch = useDispatch()
   const saveField = (title) => {
     dispatch(props.dispatch(props.item.id, { [props.selector]: title }))
+    if(props.secondary)props.secondary()
   }
 
   let list = []
