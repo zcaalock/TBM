@@ -59,7 +59,7 @@ function Notepad(props) {
               {t('Notepad')}:
           </h3>
           </div>
-          <div style={{ display: 'inline-block', float: 'right', paddingRight: '4px' }}>
+          <div style={{ display: 'inline-block', float: 'right' }}>
             <NotepadIcons showEdit={() => this.showEdit(note.id)} notepadId={note.id} />
           </div>
         </div>

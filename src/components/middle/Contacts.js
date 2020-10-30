@@ -5,7 +5,7 @@ import AddContact from './Contacts/Cells/AddContact'
 function Contacts(props) {
   //console.log(props)
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", position: 'fixed' }}>
       <Head />
       <Body props={props} />
       <AddContact />

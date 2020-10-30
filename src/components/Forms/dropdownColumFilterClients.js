@@ -30,11 +30,10 @@ function DropdownColumnFilter(props) {
       style={{
         marginLeft: '-10px',
         color: '#cecece',
-        position: 'absolute'
-        //border: '1px solid rgba(34,36,38,.15)',
-        // borderRadius: '5px',
-        //padding: '.5833em .833em',
-        // margin: '0 .14285714em'
+        border: '1px solid rgba(34,36,38,.15)',
+        borderRadius: '5px',
+        padding: '.5833em .833em',
+        margin: '0 .14285714em'
       }}
       compact
       className='mouseHoverBlack'

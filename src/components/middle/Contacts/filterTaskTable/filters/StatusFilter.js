@@ -12,7 +12,7 @@ import ContactMail from '../../Cells/ContactMail'
 import ContactCompany from '../../Cells/ContactCompany'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 
-import DropdownColumnFilterContacts from '../../../../Forms/dropdownColumFilterContacts'
+
 
 import { useTranslation } from "react-i18next"
 import { editContact } from '../../../../../actions/contacts';
@@ -160,7 +160,7 @@ function Tbody(props) {
 
   return (
     <div>
-      <DropdownColumnFilterContacts />
+      
       <table className="ui very basic table" >
         <thead>
           <tr>

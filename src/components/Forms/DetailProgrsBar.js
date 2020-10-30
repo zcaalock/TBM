@@ -26,7 +26,7 @@ function DetailProgressBar(props) {
   if (details.length > 0 && props.pulse.archived === 'false') return (
     <div style={{ display: 'inline-block' }}>
       <div style={{ display: 'inline-block', width: '100px' }} >{renderProgressBar(props.pulse.id)} </div>
-      <div style={{ display: 'inline-block', position: 'absolute', marginLeft: '-60px', paddingTop: '3px' }}>{checked.length}/{details.length}</div>
+      <div style={{ display: 'inline-block', position: 'relative', marginLeft: '-60px', top: '-8px' }}>{checked.length}/{details.length}</div>
     </div>
   )
   if (props.pulse.archived === 'true') {

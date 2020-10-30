@@ -3,7 +3,7 @@ import StatusFilter from './filterTaskTable/filters/StatusFilter'
 
 function Body() {
   return (
-    <div style={{ paddingTop: '140px' }}>
+    <div className='removeScroll' style={{ width: 'calc(80% - 250px)', overflowY: 'scroll',  height: 'calc(100vh - 200px)' }}>
       <StatusFilter />
     </div>
   )

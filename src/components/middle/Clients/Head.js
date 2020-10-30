@@ -5,7 +5,7 @@ import FilterList from './filterTaskTable/FilterList'
 function Head() {
   const { t } = useTranslation()
   return (
-    <div style={{position: 'fixed', width: 'calc(80% - 250px)', backgroundColor: 'white', zIndex: 10, marginLeft: '-20px', paddingLeft: '20px'}}>
+    <div style={{width: 'calc(80% - 250px)', backgroundColor: 'white', marginLeft: '-20px', paddingLeft: '20px'}}>
       <div className="head-vertical-segment" style={{ paddingBottom: '20px' }}>
         <h3>{t('Clients')}: </h3>
       </div>

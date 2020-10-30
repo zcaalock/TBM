@@ -16,7 +16,7 @@ import StatusList from '../../Cells/StatusList'
 import ClientReminder from '../../Cells/Reminder'
 import ClientFilingDate from '../../Cells/FilingDate'
 
-import DropdownColumnFilter from '../../../../Forms/dropdownColumFilterClients'
+
 
 import { useTranslation } from "react-i18next"
 
@@ -138,7 +138,7 @@ function Tbody(props) {
 
   return (
     <div>
-      <DropdownColumnFilter />
+      
       <table className="ui very basic table">
         <thead>
           <tr >

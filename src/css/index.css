@@ -94,7 +94,7 @@
 .head-vertical-segment{
   position: relative;    
     margin: 0em;    
-    padding-top: 20px;
+    padding-top: 6px;
     padding-bottom: 43px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
@@ -275,6 +275,15 @@
 .reminders {
   -ms-overflow-style: none !important;  /* IE and Edge */
   scrollbar-width: none !important /* Firefox */
+}
+
+
+.removeScroll {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important /* Firefox */
+}
+.removeScroll::-webkit-scrollbar {
+  display: none;
 }
 
 .reminders:hover {

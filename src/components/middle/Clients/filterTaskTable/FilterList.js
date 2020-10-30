@@ -6,6 +6,8 @@ import { editState } from '../../../../actions/appState'
 import { fetchClients } from '../../../../actions/clients'
 import { editLead } from '../../../../actions/settings'
 import { useTranslation } from "react-i18next"
+import DropdownColumnFilter from '../../../Forms/dropdownColumFilterClients'
+
 
 
 function SearchFilter(props) {
@@ -38,8 +40,11 @@ function SearchFilter(props) {
    
   return (
     <div>
+      
       <div style={{ display: 'inline-block' }}>
+
         <Input icon placeholder={`${t('Search')}...`}>
+        <DropdownColumnFilter />
           <Label className='mouseHoverBlack' basic style={{ fontSize: '1.1rem', color: '#cecece', cursor: 'pointer' }} onClick={() => dispatch(editState('', 'clientSearch'))}>x</Label>
           <input value={appState.clientSearch} onChange={(v) => { dispatch(editState(v.target.value, 'clientSearch')) }} style={{ borderRadius: '0 25px 25px 0' }} />
           <Icon name='search' />

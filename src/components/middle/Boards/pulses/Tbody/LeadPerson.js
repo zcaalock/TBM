@@ -42,6 +42,7 @@ function UserName(props) {
       return (
         <div>
           <DropDownMenu
+            style={{zIndex: -10}}
             onSave={(title) => saveField(title)}
             id={props.pulse.id}
             values={lead}
