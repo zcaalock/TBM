@@ -77,7 +77,7 @@ function Tbody(props) {
   }
 
   function filterSettings(selector, item) {
-    if (appState.competitionsSettings[selector] === true) return item
+    if (appState.competitionsSettings && appState.competitionsSettings[selector] === true) return item
   }
 
   const renderCompetitions = () => {
