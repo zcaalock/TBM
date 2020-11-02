@@ -1,33 +1,36 @@
 import axios from 'axios'
-//import boards from '../apis/server'
+import { editState } from './appState'
 import history from '../history'
 import * as types from './types'
 
 export const createBoard = (formValues) => {  
   return async (dispatch) => {    
-    const responce = await axios.post('/board', {...formValues, privateId: ''})     
-    await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
-    await history.push(`/boards/${responce.data.board.id}`)    
+    const response = await axios.post('/board', {...formValues, privateId: ''})     
+    await dispatch({type: types.CREATE_BOARD, payload: response.data.board})
+    await history.push(`/boards/${response.data.board.id}`)    
   }
 }
 
 export const createPrivateBoard = (formValues, userId) => {  
   return async (dispatch) => {    
-    const responce = await axios.post('/board', {...formValues, privateId: userId})     
-    await dispatch({type: types.CREATE_BOARD, payload: responce.data.board})
-    await history.push(`/boards/${responce.data.board.id}`)    
+    const response = await axios.post('/board', {...formValues, privateId: userId})     
+    await dispatch({type: types.CREATE_BOARD, payload: response.data.board})
+    await history.push(`/boards/${response.data.board.id}`)    
   }
 }
 
-export const fetchBoards = () => async dispatch => {
-  const responce = await axios.get('/boards')    
-  dispatch({type: types.FETCH_BOARDS, payload: responce.data})
+export const fetchBoards = (loading) => async dispatch => {
+  await axios.get('/boards').then(response=>{
+    dispatch({type: types.FETCH_BOARDS, payload: response.data})
+    if(loading === 'loading') dispatch(editState(true, 'fetchedBoards'))//;console.log('boards fetched')    
+  })    
+  
   
 }
 
 export const editBoard = (id, formValues) => async dispatch => {
-  const responce = await axios.patch(`/board/${id}`, formValues)
-  dispatch({type: types.EDIT_BOARD, payload: responce.data.board})
+  const response = await axios.patch(`/board/${id}`, formValues)
+  dispatch({type: types.EDIT_BOARD, payload: response.data.board})
   
 }
 

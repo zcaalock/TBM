@@ -1,6 +1,18 @@
 import * as types from '../actions/types'
 
 const appState = {
+  // loading:{
+  //   boards: false,
+  //   categories: false,
+  //   clients: false,
+  //   competitions: false,
+  //   contacts: false,
+  //   details: false,
+  //   notepad: false,
+  //   pulses: false,
+  //   status: false, 
+  //   settings: false
+  // },
   showArchived: false,
   showEmptyDates: false,
   showPrivate: false,

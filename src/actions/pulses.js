@@ -29,14 +29,16 @@ export const createPrivatePulse = (formValues, categoryId, userId) => {
       })
       .catch((err) => {
         dispatch(editState(404, 'responseStatus'))
-        console.log(err)
+        //console.log(err)
       })
   }
 }
 
-export const fetchPulses = () => async dispatch => {
-  const response = await axios.get('/pulses')
-  dispatch({ type: types.FETCH_PULSES, payload: response.data })
+export const fetchPulses = (loading) => async dispatch => {
+  await axios.get('/pulses').then(response=>{
+    dispatch({ type: types.FETCH_PULSES, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedPulses'))//; console.log('pulses fetched')
+  })
 }
 
 export const fetchPulse = (id) => async dispatch => {
