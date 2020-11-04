@@ -202,7 +202,7 @@ function AddClient() {
               label={t('Lead Person')}
               placeholder={t('Lead Person')}
               searchInput={{ id: 'text1' }}
-              onChange={(e, { value }) => setUserid(value.userId)}
+              onChange={(e, { value }) => setUserid(value)}
             />
           </Form>
         </Modal.Description>
