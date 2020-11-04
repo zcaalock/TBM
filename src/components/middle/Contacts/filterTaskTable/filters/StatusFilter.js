@@ -81,9 +81,9 @@ function Tbody(props) {
     if (name === 'created' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
   }
 
-  const checkShowCollumns = (name, content) => {
-    if (appState.contactsSettings[name] === true) return content
-  }
+  // const checkShowCollumns = (name, content) => {
+  //   if (appState.contactsSettings[name] === true) return content
+  // }
 
   const renderArchivedIcon = (archived) => {
     if (archived === 'true')

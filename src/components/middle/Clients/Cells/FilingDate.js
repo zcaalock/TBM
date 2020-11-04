@@ -2,12 +2,12 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import { editClient } from '../../../../actions/clients'
 import { DateInput } from 'semantic-ui-calendar-react'
-import { useTranslation } from "react-i18next"
+//import { useTranslation } from "react-i18next"
 
 function FilingDate(props) {
   
   const dispatch = useDispatch();
-  const { t } = useTranslation()
+  //const { t } = useTranslation()
   const filingDate = props.client.filingDate
   const id = props.client.id  
 

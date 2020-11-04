@@ -41,9 +41,9 @@ function StatusList(props) {
     //return <i className="bullseye icon" style={{ color: props.client.status }} />
   }
 
-  const statusIcon = () => {
-    return <i className="bullseye icon" style={{ color: props.client.status }} />
-  }
+  // const statusIcon = () => {
+  //   return <i className="bullseye icon" style={{ color: props.client.status }} />
+  // }
 
   const renderDropDown = () => {
     if (props.client.archived === 'false') {

@@ -7,19 +7,16 @@ import { createCompetition } from '../../../actions/competitions'
 import history from '../../../history'
 import { useTranslation } from "react-i18next"
 
-
-
 function AddCompetition() {
   const { t } = useTranslation()
   const competitions = useSelector(state => Object.values(state.competitions))
-  const privateId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => Object.values(state.lead))
+  const privateId = useSelector(state => state.user.credentials.userId)  
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [web, setWeb] = useState('')
   const [project, setProject] = useState('')   
-  const [userId, setUserid] = useState(privateId)
+  const userId = privateId
   const [newProject, setNewproject] = useState(false) 
 
   const dispatch = useDispatch()

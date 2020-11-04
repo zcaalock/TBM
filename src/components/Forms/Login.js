@@ -66,7 +66,7 @@ const { t } = useTranslation()
         <div className='item leftMenu-main'><h3>Task Manager</h3></div>
       </div>
       <div className='login'>
-        <Form disable={disable} error onSubmit={handleSubmit} >
+        <Form error onSubmit={handleSubmit} >
           <Form.Input
             disabled={disable}
             id="email"

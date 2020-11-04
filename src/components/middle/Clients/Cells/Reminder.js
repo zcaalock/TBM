@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { editClient } from '../../../../actions/clients'
 import { DateInput } from 'semantic-ui-calendar-react'
 import DaysToDeadline from '../../../Forms/DaysToDeadline'
-import { useTranslation } from "react-i18next"
+//import { useTranslation } from "react-i18next"
 
 function Reminder(props) {
   
   const dispatch = useDispatch();
-  const { t } = useTranslation()
+  //const { t } = useTranslation()
   const reminder = props.client.reminder
   const id = props.client.id  
 

@@ -76,7 +76,7 @@ function Tbody() {
     if (name === 'deadline' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
   }
 
-  const renderPrivateIcon = (pulse) => {    
+  const renderPrivateIcon = (pulse) => {
     if (pulse.privateId === userId) {
       return (
         <div style={{ color: '#00A569' }}>
@@ -128,48 +128,48 @@ function Tbody() {
       pulsesCol = _.filter(pulsesCol, { archived: 'true' })
     }
 
-    if (hideDone === true) {      
+    if (hideDone === true) {
       pulsesCol = _.chain(pulsesCol).reject({ status: 'Done' }).value()
     }
 
-    if (future !== '' && past !=='') {
+    if (future !== '' && past !== '') {
       let newArr = []
-      pulsesCol.map(p=>{
-        if(new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()||p.deadline==='') newArr.push(p)
+      pulsesCol.map(p => {
+        if ((new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()) || p.deadline === '') newArr.push(p)
       })
       pulsesCol = newArr
     }
 
-    if (future !== '' && past ==='') {
+    if (future !== '' && past === '') {
       let newArr = []
-      pulsesCol.map(p=>{
-        if(new Date(p.deadline).getTime() < new Date(future).getTime()||p.deadline==='') newArr.push(p)
+      pulsesCol.map(p => {
+        if (new Date(p.deadline).getTime() < new Date(future).getTime() || p.deadline === '') newArr.push(p)
       })
       pulsesCol = newArr
     }
 
-    if (future === '' && past !=='') {
+    if (future === '' && past !== '') {
       let newArr = []
-      pulsesCol.map(p=>{
-        if(new Date(p.deadline).getTime() > new Date(past).getTime()||p.deadline==='') newArr.push(p)
+      pulsesCol.map(p => {
+        if (new Date(p.deadline).getTime() > new Date(past).getTime() || p.deadline === '') newArr.push(p)
       })
       pulsesCol = newArr
-    }  
+    }
 
     return sortPulsesBy(pulsesCol).map(pulse => {
       let category = _.find(categories, { id: pulse.categoryId })
       let board = _.find(boards, { id: category.boardId })
-      let leadCol = _.find(lead, { userId: pulse.userId })      
+      let leadCol = _.find(lead, { userId: pulse.userId })
 
       if (
         (_.includes(pulse.title.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchTitle === true)
         || (_.includes(board.title.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchBoard === true)
         || (_.includes(category.title.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchCategory === true)
         || (pulse.userId && _.includes(leadCol.title.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchLead === true)
-        || (_.includes(pulse.status.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchStatus === true)        
+        || (_.includes(pulse.status.toLowerCase(), appState.pulseSearch.toLowerCase()) === true && appState.filterSettings.searchStatus === true)
 
       )
-      
+
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
             <td data-label="Name" style={{ paddingLeft: '10px' }}>
@@ -181,7 +181,7 @@ function Tbody() {
             <td>
               {category.title}
             </td>
-            <td data-label="LeadPerson" style={{ overflow: "visible"}}>
+            <td data-label="LeadPerson" style={{ overflow: "visible" }}>
               <LeadPerson pulse={pulse} />
             </td>
             <td data-label="Status" style={{ overflow: "visible" }}>
@@ -190,10 +190,10 @@ function Tbody() {
             <td >
               <Deadline pulse={pulse} />
             </td>
-            <td >              
+            <td >
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <DetailProgrsBar key={pulse.id} details={details} pulse={pulse} />
-                <div >                  
+                <DetailProgrsBar key={pulse.id} details={details} pulse={pulse} />
+                <div >
                   {renderPrivateIcon(pulse)}
                 </div>
               </div>

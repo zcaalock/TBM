@@ -12,7 +12,7 @@ function AddCompetition(props) {
   const { t } = useTranslation()
   const competitions = useSelector(state => Object.values(state.competitions))
   const privateId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => Object.values(state.lead))
+  
   const appState = useSelector(state => state.appState)
   const competition = props.competition
 
@@ -20,7 +20,7 @@ function AddCompetition(props) {
   const [phone, setPhone] = useState('')  
   const [project, setProject] = useState('')
   const [status, setStatus] = useState('')  
-  const [userId, setUserid] = useState(privateId)
+  const userId = privateId
   const [newProject, setNewproject] = useState(false)
   const [newStatus, setNewStatus] = useState(false)
   const [web, setWeb] = useState('')

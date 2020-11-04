@@ -27,7 +27,7 @@ function ModalComponent() {
     if (activeItem === t('New Calendar Event')) return <GCalendarModal/>
   }
 
-  if(appState.modalOpen==true)return (
+  if(appState.modalOpen===true)return (
     <div>
       <Modal size='small' dimmer='inverted' open={appState.modalOpen} onClose={() => dispatch(editState(false, 'modalOpen'))}>
         <Menu pointing secondary>

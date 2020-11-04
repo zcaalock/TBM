@@ -24,7 +24,7 @@ function EditCompetitionNumber(props) {
   }
 
   if (state === false) {
-    return <td><a data-position="bottom center" data-tooltip={props.competition.web} href={props.competition.web} target="_blank">Link</a><i onClick={() => setstate(true)} aria-hidden="true" className="dropdown icon"></i></td>
+    return <td><a data-position="bottom center" data-tooltip={props.competition.web} href={props.competition.web} target="_blank" rel="noopener noreferrer">Link</a><i onClick={() => setstate(true)} aria-hidden="true" className="dropdown icon"></i></td>
   }
 
 
