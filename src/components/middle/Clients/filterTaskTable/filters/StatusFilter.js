@@ -112,7 +112,7 @@ function Tbody(props) {
             <ClientName clientId={client.id} clientName={client.title} client={client} />
           </td>
           <td >
-            <ClientNumber style={{width:'85px'}} clientId={client.id} clientName={client.phone} client={client} />
+            <ClientNumber clientId={client.id} clientName={client.phone} client={client} />
           </td>
           <td>
             <ClientMail clientId={client.id} clientName={client.phone} client={client} />
@@ -127,7 +127,7 @@ function Tbody(props) {
           {filterSettings('showPrice', <td><ClientPrice clientId={client.id} clientName={client.price} client={client} /></td>)}
           {filterSettings('showReminder', <td ><ClientReminder client={client} /></td>)}
           {filterSettings('showFilingDate', <td ><ClientFilingDate client={client} /></td>)}
-          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: '' }}>
+          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px' }}>
             <StatusList client={client} />
           </td>
         </tr>
@@ -141,16 +141,16 @@ function Tbody(props) {
       <table className="ui very basic table">
         <thead>
           <tr >
-            <th style={{ Width: '10%', paddingLeft: '10px'}}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ Width: '10%' }}>{t('Phone')} </th>
-            <th style={{ Width: '15%' }}>{t('Mail')}</th>
-            {filterSettings('showLead', <th style={{ Width: '10%' }}>{t('Lead Person')}</th>)}
-            <th style={{ Width: '15%' }}>{t('Project')}</th>
-            {filterSettings('showUnit', <th style={{ Width: '10%' }}>{t('Unit')}</th>)}
-            {filterSettings('showPrice', <th style={{ Width: '10%' }}>{t('Price')}</th>)}
-            {filterSettings('showReminder', <th style={{ Width: '10%' }}>{t('Reminder')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>)}
-            {filterSettings('showFilingDate', <th style={{ Width: '10%' }}>{t('Filing Date')}</th>)}
-            <th style={{ paddingLeft: '0px', Width: '10%' }}>{t('Status')}</th>
+            <th style={{ paddingLeft: '10px'}}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th >{t('Phone')} </th>
+            <th >{t('Mail')}</th>
+            {filterSettings('showLead', <th >{t('Lead Person')}</th>)}
+            <th >{t('Project')}</th>
+            {filterSettings('showUnit', <th >{t('Unit')}</th>)}
+            {filterSettings('showPrice', <th >{t('Price')}</th>)}
+            {filterSettings('showReminder', <th >{t('Reminder')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>)}
+            {filterSettings('showFilingDate', <th >{t('Filing Date')}</th>)}
+            <th style={{ paddingLeft: '0px' }}>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>

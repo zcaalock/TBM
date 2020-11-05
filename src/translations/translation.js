@@ -159,7 +159,8 @@ export const resources = {
             "Competitions":"Competitions",
             "Web page":"Web page",
             "Create Competition":"Create Competition",
-            "New competition":"New competition"
+            "New competition":"New competition",
+            "Copied":"Copied"
 
         }
     },
@@ -322,7 +323,8 @@ export const resources = {
             "Competitions":"Konkurencja",
             "Web page":"Strona internetowa",
             "Create Competition":"Dodaj konkurencję",
-            "New competition":"Nowa konkurencja"
+            "New competition":"Nowa konkurencja",
+            "Copied":"Skopiowano"
             
         }
     }

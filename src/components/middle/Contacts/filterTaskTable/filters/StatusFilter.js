@@ -160,17 +160,17 @@ function Tbody(props) {
 
   return (
     <div>
-      
+
       <table className="ui very basic table" >
         <thead>
           <tr>
-            <th style={{ paddingLeft: '20px', Width: '10%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ Width: '10%' }}>{t('Company')} </th>
-            <th style={{ Width: '10%' }}>{t('Phone')} </th>
-            <th style={{ Width: '20%' }}>{t('Mail')}</th>
-            <th style={{ Width: '10%' }}>{t('Lead Person')}</th>
-            <th style={{ Width: '20%' }}>{t('Project')}</th>
-            <th style={{ Width: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
+            <th style={{ paddingLeft: '20px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th >{t('Company')} </th>
+            <th >{t('Phone')} </th>
+            <th>{t('Mail')}</th>
+            <th >{t('Lead Person')}</th>
+            <th >{t('Project')}</th>
+            <th >{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
           </tr>
         </thead>
         <tbody>
