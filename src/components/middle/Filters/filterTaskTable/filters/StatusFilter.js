@@ -4,13 +4,13 @@ import history from '../../../../../history'
 import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
-import PulseName from '../../../Boards/pulses/Tbody/PulseName'
 import LeadPerson from '../../../Boards/pulses/Tbody/LeadPerson'
 import DetailProgrsBar from '../../../../Forms/DetailProgrsBar'
 import Deadline from '../../../Boards/pulses/Tbody/Deadline'
 import StatusList from '../../../Boards/pulses/Tbody/StatusList'
 
 import { useTranslation } from "react-i18next"
+import { editPulse } from '../../../../../actions/pulses';
 
 function Tbody() {
 
@@ -172,8 +172,15 @@ function Tbody() {
 
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse.id)}>
-            <td data-label="Name" style={{ paddingLeft: '10px' }}>
-              <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={userId} />
+            <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+              dispatch(editState(true, 'editFieldModalOpen'))
+              dispatch(editState(pulse.title, 'editFieldModalItem'))
+              dispatch(editState(pulse.id, 'editFieldModalId'))
+              dispatch(editState('title', 'editFieldModalSelector'))
+              dispatch(editState(editPulse, 'editFieldModalFunction'))
+              dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+            }}>
+              {pulse.title}
             </td>
             <td >
               {board.title}

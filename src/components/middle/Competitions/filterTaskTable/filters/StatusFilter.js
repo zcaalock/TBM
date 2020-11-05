@@ -2,11 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import history from '../../../../../history'
 import _ from 'lodash'
-
 import { editState } from '../../../../../actions/appState'
 import { editCompetition } from '../../../../../actions/competitions'
-import CompetitionName from '../../Cells/CompetitionName';
-import CompetitionNumber from '../../Cells/CompetitionNumber'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 import EditCompetitionWeb from '../../Cells/EditCompetitionWeb'
 
@@ -96,11 +93,25 @@ function Tbody(props) {
         || _.includes(competition.status.toLowerCase(), appState.competitionSearch.toLowerCase()) === true
       ) return (
         <tr key={competition.id} style={renderSelect(competition)} className='tableRow' onClick={() => goLink(competition.id)}>
-          <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <CompetitionName competitionId={competition.id} competitionName={competition.title} competition={competition} />
+          <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(competition.title, 'editFieldModalItem'))
+            dispatch(editState(competition.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editCompetition, 'editFieldModalFunction'))
+            dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+          }}>
+            {competition.title}
           </td>
-          <td >
-            <CompetitionNumber style={{ width: '85px' }} competitionId={competition.id} competitionName={competition.phone} competition={competition} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(competition.phone, 'editFieldModalItem'))
+            dispatch(editState(competition.id, 'editFieldModalId'))
+            dispatch(editState('phone', 'editFieldModalSelector'))
+            dispatch(editState(editCompetition, 'editFieldModalFunction'))
+            dispatch(editState(t('Phone'), 'editFieldModalFieldTitle'))
+          }}>
+            {competition.phone}
           </td>
           <EditCompetitionWeb
             competition={competition}
@@ -117,11 +128,11 @@ function Tbody(props) {
       <table className="ui very basic table">
         <thead>
           <tr >
-            <th style={{ Width: '10%', paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ Width: '10%' }}>{t('Phone')} </th>
-            <th style={{ Width: '10%' }}>{t('Web page')} </th>
-            {filterSettings('showProject', <th style={{ Width: '10%' }}>{t('Project')}</th>)}
-            <th style={{ Width: '10%' }}>{t('Status')}</th>
+            <th style={{paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '106px' }}>{t('Phone')} </th>
+            <th >{t('Web page')} </th>
+            {filterSettings('showProject', <th >{t('Project')}</th>)}
+            <th >{t('Status')}</th>
           </tr>
         </thead>
         <tbody>

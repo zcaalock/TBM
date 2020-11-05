@@ -6,14 +6,8 @@ import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
 import LeadPerson from '../../Cells/LeadPerson'
-import ContactName from '../../Cells/ContactName';
-import ContactNumber from '../../Cells/ContactNumber'
 import ContactMail from '../../Cells/ContactMail'
-import ContactCompany from '../../Cells/ContactCompany'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
-
-
-
 import { useTranslation } from "react-i18next"
 import { editContact } from '../../../../../actions/contacts';
 
@@ -128,17 +122,38 @@ function Tbody(props) {
         || (contact.company && _.includes(contact.company.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
       ) return (
         <tr key={contact.id} style={renderSelect(contact)} className='tableRow' onClick={() => goLink(contact.id)}>
-          <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <ContactName contactId={contact.id} contactName={contact.title} contact={contact} />
+          <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.title, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.title}
           </td>
-          <td >
-            <ContactCompany contactId={contact.id} contactName={contact.phone} contact={contact} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.company, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Company'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.company}
           </td>
-          <td >
-            <ContactNumber contactId={contact.id} contactName={contact.phone} contact={contact} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.phone, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('phone', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Phone'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.phone}
           </td>
           <td>
-            <ContactMail contactId={contact.id} contactName={contact.phone} contact={contact} />
+            <ContactMail contact={contact} />
           </td>
 
           <td >
@@ -164,7 +179,7 @@ function Tbody(props) {
       <table className="ui very basic table" >
         <thead>
           <tr>
-            <th style={{ paddingLeft: '20px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
             <th >{t('Company')} </th>
             <th >{t('Phone')} </th>
             <th>{t('Mail')}</th>

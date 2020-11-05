@@ -6,16 +6,11 @@ import _ from 'lodash'
 import { editState } from '../../../../../actions/appState'
 import { editClient } from '../../../../../actions/clients'
 import LeadPerson from '../../Cells/LeadPerson'
-import ClientName from '../../Cells/ClientName';
-import ClientNumber from '../../Cells/ClientNumber'
 import ClientMail from '../../Cells/ClientMail'
-import ClientPrice from '../../Cells/ClientPrice'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 import StatusList from '../../Cells/StatusList'
 import ClientReminder from '../../Cells/Reminder'
 import ClientFilingDate from '../../Cells/FilingDate'
-
-
 
 import { useTranslation } from "react-i18next"
 
@@ -81,10 +76,10 @@ function Tbody(props) {
     if (name === 'created' && sortBy.name === 'createdAt') return 'articleIcon sort numeric down icon'
     if (name === 'created' && sortBy.direction === 'asc' && sortBy.name === name) return 'articleIconSelected sort numeric down icon'
     if (name === 'created' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
-  }  
+  }
 
-  function filterSettings(selector, item){
-    if(appState.clientsSettings[selector]===true) return item
+  function filterSettings(selector, item) {
+    if (appState.clientsSettings[selector] === true) return item
   }
 
   const renderClients = () => {
@@ -108,23 +103,44 @@ function Tbody(props) {
         || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
       ) return (
         <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
-          <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <ClientName clientId={client.id} clientName={client.title} client={client} />
+          <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.title, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+          }}>
+            {client.title}
           </td>
-          <td >
-            <ClientNumber clientId={client.id} clientName={client.phone} client={client} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.phone, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('phone', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Phone'), 'editFieldModalFieldTitle'))
+          }}>
+            {client.phone}
           </td>
           <td>
-            <ClientMail clientId={client.id} clientName={client.phone} client={client} />
+            <ClientMail client={client} />
           </td>
-          
-            {filterSettings('showLead', <td><LeadPerson client={client} /></td>)}
-          
+
+          {filterSettings('showLead', <td><LeadPerson client={client} /></td>)}
+
           <td >
             <DropdownAdditions item={client} items={clients} selector='project' dispatch={editClient} />
           </td>
           {filterSettings('showUnit', <td ><DropdownAdditions item={client} items={clients} selector='unit' dispatch={editClient} /></td>)}
-          {filterSettings('showPrice', <td><ClientPrice clientId={client.id} clientName={client.price} client={client} /></td>)}
+          {filterSettings('showPrice', <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.price, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('price', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Price'), 'editFieldModalFieldTitle'))
+          }}>{client.price}</td>)}
           {filterSettings('showReminder', <td ><ClientReminder client={client} /></td>)}
           {filterSettings('showFilingDate', <td ><ClientFilingDate client={client} /></td>)}
           <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px' }}>
@@ -137,13 +153,13 @@ function Tbody(props) {
 
   return (
     <div>
-      
+
       <table className="ui very basic table">
         <thead>
           <tr >
-            <th style={{ paddingLeft: '10px'}}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th >{t('Phone')} </th>
-            <th >{t('Mail')}</th>
+            <th style={{ paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '106px' }}>{t('Phone')} </th>
+            <th style={{ minWidth: '65px' }}>{t('Mail')}</th>
             {filterSettings('showLead', <th >{t('Lead Person')}</th>)}
             <th >{t('Project')}</th>
             {filterSettings('showUnit', <th >{t('Unit')}</th>)}

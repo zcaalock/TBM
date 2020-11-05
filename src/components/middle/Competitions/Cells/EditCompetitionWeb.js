@@ -1,34 +1,27 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { useDispatch } from "react-redux"
 import { editCompetition } from '../../../../actions/competitions'
-import SingleInput from '../../../Forms/SingleInput'
+import { editState } from '../../../../actions/appState'
+import { useTranslation } from "react-i18next"
+
 
 function EditCompetitionNumber(props) {
-  
-  const dispatch = useDispatch();
-  const [state, setstate] = useState(false)
-  const onSubmit = (formValues) => {
-    
-    dispatch(editCompetition(props.competition.id, { web: formValues.title }))
-    setstate(false)
-  }
 
-  if (state === true) {
-    return <td><SingleInput
-      propStyle={{ padding: '0' }}
-      propChildStyle={{ padding: '5px' }}
-      initialValues={{ title: props.competition.web }}
-      removeEdit={() => setstate(false)}
-      onSubmit={onSubmit} /></td>
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
 
-  }
+  return <td>
+    <a data-position="bottom center" data-tooltip={props.competition.web} href={props.competition.web} target="_blank" rel="noopener noreferrer">Link</a>
+    <i onClick={() => {
 
-  if (state === false) {
-    return <td><a data-position="bottom center" data-tooltip={props.competition.web} href={props.competition.web} target="_blank" rel="noopener noreferrer">Link</a><i onClick={() => setstate(true)} aria-hidden="true" className="dropdown icon"></i></td>
-  }
+      dispatch(editState(true, 'editFieldModalOpen'))
+      dispatch(editState(props.competition.web, 'editFieldModalItem'))
+      dispatch(editState(props.competition.id, 'editFieldModalId'))
+      dispatch(editState('web', 'editFieldModalSelector'))
+      dispatch(editState(editCompetition, 'editFieldModalFunction'))
+      dispatch(editState(t('Web'), 'editFieldModalFieldTitle'))
+    }} className="dropdown icon"></i></td>
 
-
-  return <td></td>
 }
 
 export default EditCompetitionNumber

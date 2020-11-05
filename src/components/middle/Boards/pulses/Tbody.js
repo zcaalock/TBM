@@ -5,7 +5,6 @@ import history from '../../../../history'
 import { editPulse } from '../../../../actions/pulses'
 import { fetchDetails } from '../../../../actions/details'
 import { editState } from '../../../../actions/appState'
-import PulseName from './Tbody/PulseName'
 import LeadPerson from './Tbody/LeadPerson'
 import StatusList from './Tbody/StatusList'
 import DetailProgrsBar from '../../../Forms/DetailProgrsBar'
@@ -57,8 +56,18 @@ function Tbody(props) {
       if (pulse.privateId === '' || pulse.privateId === privateId)
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse)}>
-            <td style={{ paddingLeft: '20px', width: '' }} data-label="Name">
-              <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={privateId} />
+            <td onDoubleClick={() => {
+              dispatch(editState(true, 'editFieldModalOpen'))
+              dispatch(editState(pulse.title, 'editFieldModalItem'))
+              dispatch(editState(pulse.id, 'editFieldModalId'))
+              dispatch(editState('title', 'editFieldModalSelector'))
+              dispatch(editState(editPulse, 'editFieldModalFunction'))
+              dispatch(editState(t('Title'), 'editFieldModalFieldTitle')) 
+            }
+
+            } style={{ paddingLeft: '20px', width: '' }} data-label="Name">
+              {/* <PulseName pulseId={pulse.id} pulseName={pulse.pulseName} pulse={pulse} privateId={privateId} /> */}
+              {pulse.title}
             </td>
             <td data-label="LeadPerson" style={{ overflow: "visible", minWidth: '100px' }}>
               <LeadPerson pulse={pulse} />
@@ -72,7 +81,7 @@ function Tbody(props) {
             <td style={{ width: '10%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <DetailProgrsBar details={details} pulse={pulse} />
-                <div style={{marginRight: '30px'}}>
+                <div style={{ marginRight: '30px' }}>
                   {renderPulseNotification(pulse)}
                   {renderPrivateIcon(pulse)}
                 </div>

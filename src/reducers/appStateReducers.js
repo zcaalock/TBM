@@ -25,6 +25,7 @@ const appState = {
   editCompetitionOpen: false,
   editContactOpen: false,
   modalOpen: false,
+  editFieldModalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
   competitionSearch: '',

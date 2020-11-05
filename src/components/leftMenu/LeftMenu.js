@@ -12,6 +12,7 @@ import ModalComponent from '../Forms/modals/Modal'
 import EditBoardModal from '../Forms/EditBoardModal'
 import Reminders from '../middle/Boards/pulses/Tbody/Reminder'
 import ReminderFilter from '../Forms/dropdownColumFilterReminders'
+import EditFieldModal from '../Forms/modals/EditFieldModal'
 
 
 function Boards(props) {
@@ -26,8 +27,14 @@ function Boards(props) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   useEffect(() => {
+    dispatch(editState(false, 'editFieldModalOpen'))
+    dispatch(editState('', 'editFieldModalItem'))
+    dispatch(editState('', 'editFieldModalId'))
+    dispatch(editState('', 'editFieldModalSelector'))
+    dispatch(editState('', 'editFieldModalFunction'))
+    dispatch(editState('', 'editFieldModalFieldTitle')) 
     handleAuth()
-  })
+  },[])
 
   const showMobileMenu = () => {
     return MHide === 'false' ? '' : 'MHide'
@@ -77,6 +84,10 @@ function Boards(props) {
 
   const showEditBoardModal = () => {
     return appState.editBoardOpen === true ? <EditBoardModal /> : null
+  }
+
+  const showEditFieldModal = () => {
+    return appState.editFieldModalOpen === true ? <EditFieldModal /> : null
   }
 
   function showPrivateBoard() {
@@ -157,12 +168,13 @@ function Boards(props) {
               {t('Reminders')}:
                 <ReminderFilter />
             </div>
-            <div className="reminders" style={{ paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 700px)', overflowY: 'auto' }}><Reminders /></div>
+            <div className="reminders" style={{ paddingLeft: '20px', marginLeft: '-20px', height: 'calc(100vh - 660px)', overflowY: 'auto' }}><Reminders /></div>
           </div>
         </div>
       </div>
       <ModalComponent className={showMobileMenu()} />
       {showEditBoardModal()}
+      {showEditFieldModal()}
     </div>
   )
 }
