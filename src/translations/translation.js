@@ -160,7 +160,9 @@ export const resources = {
             "Web page":"Web page",
             "Create Competition":"Create Competition",
             "New competition":"New competition",
-            "Copied":"Copied"
+            "Copied":"Copied",
+            "This name already exists":"This name already exists",
+            "This number already exists":"This number already exists"
 
         }
     },
@@ -324,7 +326,9 @@ export const resources = {
             "Web page":"Strona internetowa",
             "Create Competition":"Dodaj konkurencję",
             "New competition":"Nowa konkurencja",
-            "Copied":"Skopiowano"
+            "Copied":"Skopiowano",
+            "This name already exists":"Ta nazwa już istnieje",
+            "This number already exists":"Ten numer już istnieje"
             
         }
     }
