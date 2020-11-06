@@ -24,7 +24,7 @@ function Tbody(props) {
   const dispatch = useDispatch();
   const { t } = useTranslation()
   useEffect(() => {
-    dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
+    dispatch(editState({ name: 'filingDate', direction: 'asc' }, 'sortBy'))
   }, [])
 
   const goLink = (id) => {
