@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import './css/index.css'
 import './translations/i18n'
+import 'semantic-ui-css/semantic.min.css'
 
 import axios from 'axios'
 
