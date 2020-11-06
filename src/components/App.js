@@ -11,6 +11,7 @@ import DetailsContacts from './rightMenu/DetailsContacts'
 import LandingPage from './middle/LandingPage'
 import Filters from './middle/Filters'
 import Clients from './middle/Clients'
+import Charts from './middle/Charts'
 import Competitions from './middle/Competitions'
 import Contacts from './middle/Contacts'
 import Signup from './Forms/Signup'
@@ -35,7 +36,7 @@ const App = () => {
             <Route exact path="/settings" component={(props) => (<><LeftMenu {...props} /> <Settings {...props} /></>)} />
             <Route path='/filters/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Filters {...props} /></div></>)} />
             <Route path='/filters/pulse/:id' component={Details} />
-            <Route path='/clients/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /></div></>)} />
+            <Route path='/clients/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /></div></>)} />            
             <Route path='/clients/client/:id' component={DetailsClients} />
             <Route path='/competitions/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Competitions {...props} /></div></>)} />
             <Route path='/competitions/competition/:id' component={DetailsCompetitions} />
@@ -43,6 +44,7 @@ const App = () => {
             <Route path='/contacts/contact/:id' component={DetailsContacts} />
             <Route path="/boards/:id" component={(props) => (<><LeftMenu {...props} /> <Boards {...props} /></>)} />
             <Route path="/boards/:id/pulses/:id" component={Details} />
+            <Route path='/charts/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Charts {...props} /></div></>)} />
           </Route>
         </div>
       </Router>
