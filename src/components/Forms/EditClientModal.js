@@ -8,7 +8,6 @@ import { editState } from '../../actions/appState'
 import { editClient } from '../../actions/clients'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
-import { format } from 'date-fns'
 
 
 let leadArr = []
@@ -146,7 +145,7 @@ function AddClient(props) {
         name='unit'
         control={Input}
         label={t('Unit')}
-        value={price}
+        value={unit}
         placeholder={t("New unit name (fe. 'A2')")}
         onChange={(e, { value }) => setUnit(value)}
       />

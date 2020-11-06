@@ -2,20 +2,23 @@ import { editState } from './appState'
 import axios from 'axios'
 import * as types from './types'
 
-export const createCategory = (formValues, id, sendToAppState) => {  
+export const createCategory = (formValues, id, sendToAppState) => {
   return async (dispatch) => {
     const response = await axios.post('/category', { ...formValues, boardId: id })
     //console.log('response category: ', response.data.category)
     dispatch({ type: types.CREATE_CATEGORY, payload: response.data.category })
-    if(sendToAppState === true) dispatch(editState(response.data.category, 'categoryId'))
+    if (sendToAppState === true) dispatch(editState(response.data.category, 'categoryId'))
     dispatch(editState(response.data.message, 'responseMessage'))
     dispatch(editState(response.status, 'responseStatus'))
   }
 }
 
-export const fetchCategories = () => async dispatch => {
-  const response = await axios.get('/categories')
-  dispatch({ type: types.FETCH_CATEGORIES, payload: response.data })
+export const fetchCategories = (loading) => async dispatch => {
+  await axios.get('/categories').then(response => {
+    dispatch({ type: types.FETCH_CATEGORIES, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedCategories'))//; console.log('categories fetched')   
+  })
+
 }
 
 export const editCategory = (id, formValues, fetch) => async dispatch => {
@@ -36,7 +39,7 @@ export const editCategory = (id, formValues, fetch) => async dispatch => {
     })
 }
 
-export const deleteCategory = (id, boardId) => async dispatch => {
+export const deleteCategory = (id) => async dispatch => {
   await axios.delete(`/category/${id}`)
   dispatch({ type: types.DELETE_CATEGORY, payload: id })
 }

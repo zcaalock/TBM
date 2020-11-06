@@ -1,12 +1,11 @@
-//import client from '../apis/server'
 import axios from 'axios'
 import { editState } from './appState'
 import * as types from './types'
 
 export const createClient = (formValues, userId) => {
-  return async (dispatch) => {    
-    await axios.post('/client', { ...formValues, userId: userId, status: '#00A569', reminder:'' })
-      .then((response) => {        
+  return async (dispatch) => {
+    await axios.post('/client', { ...formValues, userId: userId, status: '#00A569', reminder: '' })
+      .then((response) => {
         dispatch({ type: types.CREATE_CLIENT, payload: response.data.client })
         dispatch(editState(response.data.message, 'responseMessage'))
         dispatch(editState(response.status, 'responseStatus'))
@@ -18,9 +17,11 @@ export const createClient = (formValues, userId) => {
   }
 }
 
-export const fetchClients = () => async dispatch => {
-  const response = await axios.get('/clients')  
-  dispatch({ type: types.FETCH_CLIENTS, payload: response.data })
+export const fetchClients = (loading) => async dispatch => {
+  await axios.get('/clients').then(response => {
+    dispatch({ type: types.FETCH_CLIENTS, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedClients'))//; console.log('clients fetched')
+  })
 }
 
 

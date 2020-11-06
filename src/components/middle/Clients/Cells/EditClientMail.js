@@ -1,42 +1,35 @@
 import React from 'react'
 import { useDispatch } from "react-redux"
-import { editClient } from '../../../../actions/clients'
-import SingleInput from '../../../Forms/SingleInput'
+import { editState } from '../../../../actions/appState'
+import { useTranslation } from "react-i18next"
+
 
 function EditClientMail(props) {
-  //console.log(props)
   const dispatch = useDispatch();
+  const { t } = useTranslation()
 
-  const onSubmit = (formValues) => {
-    //console.log(formValues)
-    dispatch(editClient(props.client.id, {mail: formValues.title}))
-    props.removeEdit()
+  function copyToClipboard() {
+    navigator.clipboard.writeText(props.client.mail)
+    dispatch(editState(`${t('Copied')}: ${props.client.mail}`, 'responseMessage'))
+    dispatch(editState(200, 'responseStatus'))
   }
 
   const renderEditClient = () => {
+    var re = /\S+@\S+\.\S+/
 
-    if (props.editState.itemEditable === true) {
+    if (re.test(props.client.mail)) {
       return (
-        <SingleInput
-          propStyle={{ padding: '0' }}
-          propChildStyle={{ padding: '5px' }}
-          initialValues={{title: props.client.mail}}
-          removeEdit={() => props.removeEdit()}
-          onSubmit={onSubmit} />
-      )
-    }
-
-    if (props.editState.itemEditable === false) {
-      return (
-        <div >
-          <div>{props.client.mail}</div>
+        <div data-position="top center" data-tooltip={props.client.mail}>
+          <i onClick={() => copyToClipboard()} className="articleIcon clipboard icon"></i>
         </div>
       )
     }
+    return <div>{props.client.mail}</div>
   }
-  
+
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }}
+    >
       {renderEditClient()}
     </div>
   )

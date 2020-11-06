@@ -155,7 +155,14 @@ export const resources = {
             "Client menu":"Client menu",
             "Select Company":"Select Company",
             "New name":"New name",
-            "Edit Contact":"Edit Contact"
+            "Edit Contact":"Edit Contact",
+            "Competitions":"Competitions",
+            "Web page":"Web page",
+            "Create Competition":"Create Competition",
+            "New competition":"New competition",
+            "Copied":"Copied",
+            "This name already exists":"This name already exists",
+            "This number already exists":"This number already exists"
 
         }
     },
@@ -314,7 +321,15 @@ export const resources = {
             "Client menu":"Klient menu",
             "Select Company":"Wybierz firmę",
             "New name":"Nowa nazwa",
-            "Edit Contact":"Edytuj kontakt"
+            "Edit Contact":"Edytuj kontakt",
+            "Competitions":"Konkurencja",
+            "Web page":"Strona internetowa",
+            "Create Competition":"Dodaj konkurencję",
+            "New competition":"Nowa konkurencja",
+            "Copied":"Skopiowano",
+            "This name already exists":"Ta nazwa już istnieje",
+            "This number already exists":"Ten numer już istnieje"
+            
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Label, Icon, Checkbox, Dropdown, Form } from 'semantic-ui-react'
+import { Input, Label, Icon, Checkbox, Dropdown } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react'
 import _ from 'lodash'
 
@@ -20,7 +20,7 @@ function SearchFilter(props) {
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const appState = useSelector(state => state.appState);
   const [menuOpen, setMenuopen] = useState(undefined)
-  const [state, setState] = useState({ past: '', future: '' })
+  
 
   const dispatch = useDispatch();
 
@@ -191,8 +191,16 @@ function SearchFilter(props) {
           slider
           style={{ marginBottom: '-4px', }}
         />
-        <label onClick={() =>
-          dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))} className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)} >{t('Show archived')}</label>
+        <label onClick={() =>{
+           if(leadUser) dispatch(editLead(leadUser.id, { settings: { ...leadUser.settings, showArchived: !leadUser.settings.showArchived } }))
+          }
+          } 
+           className={renderCheckBoxLabelStyle(leadUser.settings.showArchived)}           
+          >
+            
+            {t('Show archived')}
+          
+        </label>
       </div>
       <div style={{ display: 'inline-block', marginLeft: '10px' }}>
         <Checkbox

@@ -1,6 +1,18 @@
 import * as types from '../actions/types'
 
 const appState = {
+  // loading:{
+  //   boards: false,
+  //   categories: false,
+  //   clients: false,
+  //   competitions: false,
+  //   contacts: false,
+  //   details: false,
+  //   notepad: false,
+  //   pulses: false,
+  //   status: false, 
+  //   settings: false
+  // },
   showArchived: false,
   showEmptyDates: false,
   showPrivate: false,
@@ -10,10 +22,13 @@ const appState = {
   editCategoryOpen: false,
   editBoardOpen: false,
   editClientOpen: false,
+  editCompetitionOpen: false,
   editContactOpen: false,
   modalOpen: false,
+  editFieldModalOpen: false,
   gCalendarOpen: 'false',
   clientSearch: '',
+  competitionSearch: '',
   contactSearch: '',
   pulseSearch: '',
   filter: { selector: '', value: '' },
@@ -29,6 +44,11 @@ const appState = {
     showFilingDate: true,
     showReminder: true
 
+  },
+  competitionsSettings: {    
+    showProject: true,    
+    showDate: true,
+    showStatus: true 
   },
   contactsSettings: {
     showLead: true,

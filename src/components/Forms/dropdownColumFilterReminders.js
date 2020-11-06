@@ -75,7 +75,7 @@ function DropdownColumnReminders(props) {
         <Dropdown.Divider />
         <Dropdown.Header icon='tags' content={`${t('Filters')}:`} />
         {dropDownSelectable(`${t('Show status')}: ${t(`Continous`)}`, 'showContinous')}
-        {dropDownSelectable(`${t('Show status')}: ${t(`Clients`)}`, 'showClients')}
+        {dropDownSelectable(`${t(`Clients`)}`, 'showClients')}
       </Dropdown.Menu>
     </Dropdown>
   )

@@ -4,21 +4,33 @@ import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { loginUser } from '../../actions/users'
 import { useTranslation } from "react-i18next"
+import { editState } from '../../actions/appState'
 
 function Login(props) {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
+  const [disable, setDisable] = useState(false)
 
   useEffect(() => {
     localStorage.removeItem("state")
+    dispatch(editState(false, 'fetchedBoards'))
+    dispatch(editState(false, 'fetchedCategories'))
+    dispatch(editState(false, 'fetchedClients'))
+    dispatch(editState(false, 'fetchedCompetitions'))
+    dispatch(editState(false, 'fetchedContacts'))
+    dispatch(editState(false, 'fetchedDetails'))
+    dispatch(editState(false, 'fetchedNotepad'))
+    dispatch(editState(false, 'fetchedPulses'))
+    dispatch(editState(false, 'fetchedSettings'))
+    dispatch(editState(false, 'fetchedStatus'))
   }, [])
 
   useEffect(() => {    
     if (props.UI.errors) {
-      setErrors(props.UI.errors )
-      
+      setErrors(props.UI.errors )  
+      setDisable(false)    
     }
   }, [props.UI])
 
@@ -32,6 +44,7 @@ const { t } = useTranslation()
     };
 
     dispatch(loginUser(userData, props.history))
+    setDisable(true)
 
   };
   const handleChange = (event) => {
@@ -55,6 +68,7 @@ const { t } = useTranslation()
       <div className='login'>
         <Form error onSubmit={handleSubmit} >
           <Form.Input
+            disabled={disable}
             id="email"
             name="email"
             type="email"
@@ -67,6 +81,7 @@ const { t } = useTranslation()
             onChange={handleChange}
           />
           <Form.Input
+          disabled={disable}
             id="password"
             name="password"
             type="password"
@@ -79,6 +94,7 @@ const { t } = useTranslation()
           />
           {handleCredentialError()}
           <Button
+            disabled={disable}
             type="submit"
           >
             {t('Login')}

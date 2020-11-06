@@ -6,6 +6,7 @@ import { editState } from '../../../actions/appState'
 
 import AddPulseModal from './AddPulseModal'
 import AddClient from './AddClient'
+import AddCompetition from './AddCompetition'
 import AddContact from './AddContact'
 import GCalendarModal from './GCalendarModal'
 
@@ -22,12 +23,13 @@ function ModalComponent() {
     if (activeItem === t('New pulse')) return <AddPulseModal/>
     if (activeItem === t('New client')) return <AddClient/>
     if (activeItem === t('New contact')) return <AddContact/>
+    if (activeItem === t('New competition')) return <AddCompetition/>
     if (activeItem === t('New Calendar Event')) return <GCalendarModal/>
   }
 
-  if(appState.modalOpen==true)return (
+  if(appState.modalOpen===true)return (
     <div>
-      <Modal size='tiny' dimmer='inverted' open={appState.modalOpen} onClose={() => dispatch(editState(false, 'modalOpen'))}>
+      <Modal size='small' dimmer='inverted' open={appState.modalOpen} onClose={() => dispatch(editState(false, 'modalOpen'))}>
         <Menu pointing secondary>
           <Menu.Item
             name={t('New pulse')}
@@ -43,6 +45,11 @@ function ModalComponent() {
             name={t('New contact')}
             active={activeItem === t('New contact')}
             onClick={() => setActive(t('New contact'))}
+          />
+          <Menu.Item
+            name={t('New competition')}
+            active={activeItem === t('New competition')}
+            onClick={() => setActive(t('New competition'))}
           />
           <Menu.Item
             name={t('New Calendar Event')}

@@ -1,12 +1,12 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 
 import { editClient } from '../../../../actions/clients'
 import { Dropdown } from 'semantic-ui-react'
 
 function StatusList(props) {
-
+  const userId = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch();
 
   const saveField = (title) => {
@@ -41,43 +41,54 @@ function StatusList(props) {
     //return <i className="bullseye icon" style={{ color: props.client.status }} />
   }
 
-  const statusIcon = () => {
-    return <i className="bullseye icon" style={{ color: props.client.status }} />
+  // const statusIcon = () => {
+  //   return <i className="bullseye icon" style={{ color: props.client.status }} />
+  // }
+
+  const renderPrivacy = () => {
+    if (props.client.privateId === userId)
+      return (
+        <div
+          data-position="bottom center"
+          data-tooltip="Private"
+          style={{ color: 'rgb(0, 165, 105)', textAlign: 'left' }}>
+          <i className=" privacy icon" />
+        </div>
+      )
   }
 
   const renderDropDown = () => {
-    if (props.client.archived === 'false') {
-      //console.log('project: ', props.client.project)
+    if (props.client.archived === 'false') 
       return <Dropdown
-          text={statusText()}
-          icon={props.client.status !== 'Pośrednik'&& props.client.status !== 'Kupujący'?<i className="bullseye icon" style={{ color: props.client.status }} />:''}
-          floating
-          labeled
-          style={{ marginLeft: '0px', marginRight: '10px' }}
-        >
-          <Dropdown.Menu>
-            {renderItems()}
-            <Dropdown.Divider />
-            <Dropdown.Item
-              icon='archive'
-              style={{ color: '#DC6969' }}
-              text='Archive'
-              onClick={() => { dispatch(editClient(props.client.id, { archived: 'true' })) }}
-            />
-          </Dropdown.Menu>
-        </Dropdown>      
-    }
+        text={statusText()}
+        icon={props.client.status !== 'Pośrednik' && props.client.status !== 'Kupujący' ? <i className="bullseye icon" style={{ color: props.client.status }} /> : null}
+        floating
+        labeled
+        style={{ marginLeft: '0px', marginRight: '10px' }}
+      >
+        <Dropdown.Menu>
+          {renderItems()}
+          <Dropdown.Divider />
+          <Dropdown.Item
+            icon='archive'
+            style={{ color: '#DC6969' }}
+            text='Archive'
+            onClick={() => { dispatch(editClient(props.client.id, { archived: 'true' })) }}
+          />
+        </Dropdown.Menu>
+      </Dropdown>
+    
     if (props.client.archived === 'true')
       return (
         <div
           data-position="bottom center"
           data-tooltip="Archived"
-          style={{ color: '#DC6969', textAlign: 'left', paddingLeft: '6.5px' }}>
+          style={{ color: '#DC6969', textAlign: 'left' }}>
           <i className=" archive icon" />
         </div>
-      )
+      )    
   }
-  return <div>{renderDropDown()}</div>
+return <div style={{display: 'flex'}}>{renderDropDown()}{renderPrivacy()}</div>
 }
 
 export default StatusList

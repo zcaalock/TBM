@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { format } from 'date-fns'
+import { useDispatch, useSelector } from "react-redux"
 import history from '../../../../../history'
 import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
 import { editClient } from '../../../../../actions/clients'
 import LeadPerson from '../../Cells/LeadPerson'
-import ClientName from '../../Cells/ClientName';
-import ClientNumber from '../../Cells/ClientNumber'
 import ClientMail from '../../Cells/ClientMail'
-import ClientPrice from '../../Cells/ClientPrice'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
 import StatusList from '../../Cells/StatusList'
 import ClientReminder from '../../Cells/Reminder'
 import ClientFilingDate from '../../Cells/FilingDate'
-
-
 
 import { useTranslation } from "react-i18next"
 
@@ -30,7 +24,7 @@ function Tbody(props) {
   const dispatch = useDispatch();
   const { t } = useTranslation()
   useEffect(() => {
-    dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
+    dispatch(editState({ name: 'filingDate', direction: 'asc' }, 'sortBy'))
   }, [])
 
   const goLink = (id) => {
@@ -56,7 +50,7 @@ function Tbody(props) {
 
   const renderRemoveSortIcon = (name) => {
     const sortBy = appState.sortBy
-    if (sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={() => dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{ paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer' }}>x</label>
+    if (sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={() => dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{ paddingLeft: '5px', color: '#DC6969', cursor: 'pointer' }}>x</label>
     // if(sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={()=> this.props.editState({ name: 'createdAt', direction: 'asc' }, 'sortBy')} style={{paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer'}}>x</label>  
   }
 
@@ -82,10 +76,10 @@ function Tbody(props) {
     if (name === 'created' && sortBy.name === 'createdAt') return 'articleIcon sort numeric down icon'
     if (name === 'created' && sortBy.direction === 'asc' && sortBy.name === name) return 'articleIconSelected sort numeric down icon'
     if (name === 'created' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
-  }  
+  }
 
-  function filterSettings(selector, item){
-    if(appState.clientsSettings[selector]===true) return item
+  function filterSettings(selector, item) {
+    if (appState.clientsSettings[selector] === true) return item
   }
 
   const renderClients = () => {
@@ -109,26 +103,47 @@ function Tbody(props) {
         || _.includes(client.status.toLowerCase(), appState.clientSearch.toLowerCase()) === true
       ) return (
         <tr key={client.id} style={renderSelect(client)} className='tableRow' onClick={() => goLink(client.id)}>
-          <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <ClientName clientId={client.id} clientName={client.title} client={client} />
+          <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.title, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+          }}>
+            {client.title}
           </td>
-          <td >
-            <ClientNumber style={{width:'85px'}} clientId={client.id} clientName={client.phone} client={client} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.phone, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('phone', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Phone'), 'editFieldModalFieldTitle'))
+          }}>
+            {client.phone}
           </td>
           <td>
-            <ClientMail clientId={client.id} clientName={client.phone} client={client} />
+            <ClientMail client={client} />
           </td>
-          
-            {filterSettings('showLead', <td><LeadPerson client={client} /></td>)}
-          
+
+          {filterSettings('showLead', <td><LeadPerson client={client} /></td>)}
+
           <td >
             <DropdownAdditions item={client} items={clients} selector='project' dispatch={editClient} />
           </td>
           {filterSettings('showUnit', <td ><DropdownAdditions item={client} items={clients} selector='unit' dispatch={editClient} /></td>)}
-          {filterSettings('showPrice', <td><ClientPrice clientId={client.id} clientName={client.price} client={client} /></td>)}
+          {filterSettings('showPrice', <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(client.price, 'editFieldModalItem'))
+            dispatch(editState(client.id, 'editFieldModalId'))
+            dispatch(editState('price', 'editFieldModalSelector'))
+            dispatch(editState(editClient, 'editFieldModalFunction'))
+            dispatch(editState(t('Price'), 'editFieldModalFieldTitle'))
+          }}>{client.price}</td>)}
           {filterSettings('showReminder', <td ><ClientReminder client={client} /></td>)}
           {filterSettings('showFilingDate', <td ><ClientFilingDate client={client} /></td>)}
-          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px', textAlign: '' }}>
+          <td data-label="Status" style={{ overflow: "visible", paddingLeft: '0px' }}>
             <StatusList client={client} />
           </td>
         </tr>
@@ -138,20 +153,20 @@ function Tbody(props) {
 
   return (
     <div>
-      
+
       <table className="ui very basic table">
         <thead>
           <tr >
-            <th style={{ Width: '10%', paddingLeft: '10px'}}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ Width: '10%' }}>{t('Phone')} </th>
-            <th style={{ Width: '15%' }}>{t('Mail')}</th>
-            {filterSettings('showLead', <th style={{ Width: '10%' }}>{t('Lead Person')}</th>)}
-            <th style={{ Width: '15%' }}>{t('Project')}</th>
-            {filterSettings('showUnit', <th style={{ Width: '10%' }}>{t('Unit')}</th>)}
-            {filterSettings('showPrice', <th style={{ Width: '10%' }}>{t('Price')}</th>)}
-            {filterSettings('showReminder', <th style={{ Width: '10%' }}>{t('Reminder')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>)}
-            {filterSettings('showFilingDate', <th style={{ Width: '10%' }}>{t('Filing Date')}</th>)}
-            <th style={{ paddingLeft: '0px', Width: '10%' }}>{t('Status')}</th>
+            <th style={{ paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th style={{ minWidth: '106px' }}>{t('Phone')} </th>
+            <th style={{ minWidth: '65px' }}>{t('Mail')}</th>
+            {filterSettings('showLead', <th >{t('Lead Person')}</th>)}
+            <th >{t('Project')}</th>
+            {filterSettings('showUnit', <th >{t('Unit')}</th>)}
+            {filterSettings('showPrice', <th >{t('Price')}</th>)}
+            {filterSettings('showReminder', <th >{t('Reminder')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>)}
+            {filterSettings('showFilingDate', <th >{t('Filing Date')}</th>)}
+            <th style={{ paddingLeft: '0px' }}>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>

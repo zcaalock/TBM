@@ -12,6 +12,8 @@ import { format } from 'date-fns'
 
 
 let leadArr = []
+let clientNames = []
+let clientPhones = []
 
 function AddClient() {
   const { t } = useTranslation()
@@ -30,10 +32,15 @@ function AddClient() {
   const [newProject, setNewproject] = useState(false)
   const [newUnit, setnewUnit] = useState(false)
 
+  const [clientNameExists, setClientnameexists] = useState(false)
+  const [clientPhoneExists, setClientphoneexists] = useState(false)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
     generateLeadList()
+    clientNames = generateClientNames()
+    clientPhones = generateClientPhones()
   }, [])
 
   // const isEmpty = (obj) => {
@@ -79,6 +86,26 @@ function AddClient() {
     return projectArr = _.uniqBy(projectArr, 'text')
   }
 
+  const generateClientNames = () => {
+    let clientNames = []
+    if (clients.length > 0)
+      clients.map(client => {
+        clientNames.push(client.title.toLowerCase())
+        return clientNames
+      })
+    return clientNames = _.uniq(clientNames)
+  }
+
+  const generateClientPhones = () => {
+    let clientPhones = []
+    if (clients.length > 0)
+      clients.map(client => {
+        clientPhones.push(client.phone)
+        return clientPhones
+      })
+    return clientPhones = _.uniq(clientPhones)
+  }
+
   const generateUnitList = () => {
     let unitArr = [{ key: t('Create new unit'), text: t('Create new unit'), value: t('Create new unit'), icon: 'edit', 'onClick': () => setnewUnit(true) }]
     if (clients.length > 0)
@@ -92,6 +119,7 @@ function AddClient() {
   const projectOptions = () => {
     if (newProject === false) return (
       <Form.Field
+        required
         search
         name='project'
         control={Select}
@@ -140,6 +168,7 @@ function AddClient() {
       />
     )
   }
+
   if (leadArr.length > 0) return (
     <>
       <Modal.Header>{t('Create new Client')}</Modal.Header>
@@ -148,6 +177,7 @@ function AddClient() {
           <Form
             onSubmit={handleSubmit}>
             <DateInput
+              required
               style={{ marginTop: '-.28571429rem' }}
               label={t('Filing Date')}
               clearable
@@ -160,20 +190,34 @@ function AddClient() {
               dateFormat={'YYYY-MM-DD'}
             />
             <Form.Field
+              error={clientNameExists === true ? {
+                content: t('This name already exists'),
+                pointing: 'below',
+              } : false}
               id='name'
               name='name'
               control={Input}
               label={t('Client name')}
               placeholder={t('Client name')}
-              onChange={(e, { value }) => setName(value)}
+              onChange={(e, { value }) => {
+                setName(value)
+                _.includes(clientNames, value.toLowerCase()) === true ? setClientnameexists(true) : setClientnameexists(false)
+              }}
             />
             <Form.Field
+              error={clientPhoneExists === true ? {
+                content: t('This number already exists'),
+                pointing: 'below',
+              } : false}
               id='phone'
               name='phone'
               control={Input}
               label={t('Client phone')}
               placeholder={t('Client phone')}
-              onChange={(e, { value }) => setPhone(value)}
+              onChange={(e, { value }) => {
+                setPhone(value)
+                _.includes(clientPhones, value) === true ? setClientphoneexists(true) : setClientphoneexists(false)
+              }}
             />
             <Form.Field
               id='mail'
@@ -202,7 +246,7 @@ function AddClient() {
               label={t('Lead Person')}
               placeholder={t('Lead Person')}
               searchInput={{ id: 'text1' }}
-              onChange={(e, { value }) => setUserid(value.userId)}
+              onChange={(e, { value }) => setUserid(value)}
             />
           </Form>
         </Modal.Description>
@@ -212,7 +256,7 @@ function AddClient() {
           {t('Cancel')}
         </Button>
         <Button
-          disabled={(name !== '' || mail !== '' || phone !== '') && (project !== '' && filingDate !== '') ? false : true}
+          disabled={(name !== '' || mail !== '' || phone !== '') && (project !== '' && filingDate !== '') && clientNameExists === false && clientPhoneExists === false ? false : true}
           form='my-form'
           onClick={() => handleSubmit()}
           icon='checkmark'

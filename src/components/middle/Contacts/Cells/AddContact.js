@@ -40,14 +40,14 @@ const { t } = useTranslation()
   }
 
   const onSubmit = (formValues) => {
-    dispatch(createContact({title: formValues.title, mail: '', phone: '', project: '', archived: 'false', privateId: ''}, userId))    
+    dispatch(createContact({title: formValues.title, mail: '', phone: '', project: '', privateId: '', company: ''}, userId))    
     removeEdit()
   }
 
   const renderNewPulse = (name) => {
     if (itemEditable === true) {
       return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '30%' }}>
           <SingleInput
             propStyle={{}}
             propChildStyle={{ padding: '5px' }}

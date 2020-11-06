@@ -22,7 +22,7 @@ function AddContact() {
   const [phone, setPhone] = useState('')
   const [mail, setMail] = useState('')
   const [project, setProject] = useState('')
-  const [userId, setUserid] = useState(privateId)
+  const [userId, setUserId] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
 
@@ -48,6 +48,7 @@ function AddContact() {
       userId: userId,
       privateId: isPrivate === true ? privateId : ''
     }
+    //console.log(userData)
     dispatch(createContact(userData, userId))
     dispatch(editState(false, 'modalOpen'))
     history.push('/contacts/All/all')
@@ -148,7 +149,7 @@ function AddContact() {
               label={t('Lead Person')}
               placeholder={t('Lead Person')}
               searchInput={{ id: 'text1' }}
-              onChange={(e, { value }) => setUserid(value.userId)}
+              onChange={(e, { value }) => setUserId(value)}
             />
           </Form>
         </Modal.Description>

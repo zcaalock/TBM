@@ -1,4 +1,3 @@
-//import details from '../apis/server'
 import axios from 'axios'
 import * as types from './types'
 import { editState } from './appState'
@@ -11,9 +10,11 @@ export const createDetail = (formValues, id, userId) => {
   }
 }
 
-export const fetchDetails = () => async dispatch => {
-  const response = await axios.get('/details')
-  dispatch({ type: types.FETCH_DETAILS, payload: response.data })
+export const fetchDetails = (loading) => async dispatch => {
+  await axios.get('/details').then(response=>{
+    dispatch({ type: types.FETCH_DETAILS, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedDetails'))//; console.log('details fetched')
+  })
 }
 
 export const fetchDetail = (id) => async dispatch => {

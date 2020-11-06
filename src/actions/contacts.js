@@ -1,4 +1,3 @@
-//import client from '../apis/server'
 import axios from 'axios'
 import { editState } from './appState'
 import * as types from './types'
@@ -19,11 +18,12 @@ export const createContact = (formValues, userId) => {
   }
 }
 
-export const fetchContacts = () => async dispatch => {
-  const response = await axios.get('/contacts')
-  dispatch({ type: types.FETCH_CONTACTS, payload: response.data })
+export const fetchContacts = (loading) => async dispatch => {
+  await axios.get('/contacts').then(response=>{
+    dispatch({ type: types.FETCH_CONTACTS, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedContacts'))//; console.log('contacts fetched')
+  })  
 }
-
 
 export const editContact = (id, formValues) => async dispatch => {
   //console.log('edit client value: ', id, formValues)

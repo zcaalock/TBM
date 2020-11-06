@@ -6,14 +6,8 @@ import _ from 'lodash'
 
 import { editState } from '../../../../../actions/appState'
 import LeadPerson from '../../Cells/LeadPerson'
-import ContactName from '../../Cells/ContactName';
-import ContactNumber from '../../Cells/ContactNumber'
 import ContactMail from '../../Cells/ContactMail'
-import ContactCompany from '../../Cells/ContactCompany'
 import DropdownAdditions from '../../../../Forms/DropdownAdditions'
-
-
-
 import { useTranslation } from "react-i18next"
 import { editContact } from '../../../../../actions/contacts';
 
@@ -53,7 +47,7 @@ function Tbody(props) {
 
   const renderRemoveSortIcon = (name) => {
     const sortBy = appState.sortBy
-    if (sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={() => dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{ paddingLeft: '5px', color: '#DC6969', position: 'absolute', cursor: 'pointer' }}>x</label>
+    if (sortBy.name === name) return <label data-position="bottom center" data-tooltip="Remove filter" onClick={() => dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))} style={{ paddingLeft: '5px', color: '#DC6969', cursor: 'pointer' }}>x</label>
 
   }
 
@@ -81,9 +75,9 @@ function Tbody(props) {
     if (name === 'created' && sortBy.direction === 'desc' && sortBy.name === name) return 'articleIconSelected sort numeric up icon'
   }
 
-  const checkShowCollumns = (name, content) => {
-    if (appState.contactsSettings[name] === true) return content
-  }
+  // const checkShowCollumns = (name, content) => {
+  //   if (appState.contactsSettings[name] === true) return content
+  // }
 
   const renderArchivedIcon = (archived) => {
     if (archived === 'true')
@@ -128,17 +122,38 @@ function Tbody(props) {
         || (contact.company && _.includes(contact.company.toLowerCase(), appState.contactSearch.toLowerCase()) === true)
       ) return (
         <tr key={contact.id} style={renderSelect(contact)} className='tableRow' onClick={() => goLink(contact.id)}>
-          <td style={{ paddingLeft: '10px' }} data-label="Name">
-            <ContactName contactId={contact.id} contactName={contact.title} contact={contact} />
+          <td style={{ paddingLeft: '10px' }} data-label="Name" onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.title, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Title'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.title}
           </td>
-          <td >
-            <ContactCompany contactId={contact.id} contactName={contact.phone} contact={contact} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.company, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Company'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.company}
           </td>
-          <td >
-            <ContactNumber contactId={contact.id} contactName={contact.phone} contact={contact} />
+          <td onDoubleClick={() => {
+            dispatch(editState(true, 'editFieldModalOpen'))
+            dispatch(editState(contact.phone, 'editFieldModalItem'))
+            dispatch(editState(contact.id, 'editFieldModalId'))
+            dispatch(editState('phone', 'editFieldModalSelector'))
+            dispatch(editState(editContact, 'editFieldModalFunction'))
+            dispatch(editState(t('Phone'), 'editFieldModalFieldTitle'))
+          }}>
+            {contact.phone}
           </td>
           <td>
-            <ContactMail contactId={contact.id} contactName={contact.phone} contact={contact} />
+            <ContactMail contact={contact} />
           </td>
 
           <td >
@@ -160,17 +175,17 @@ function Tbody(props) {
 
   return (
     <div>
-      
+
       <table className="ui very basic table" >
         <thead>
           <tr>
-            <th style={{ paddingLeft: '20px', Width: '10%' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
-            <th style={{ Width: '10%' }}>{t('Company')} </th>
-            <th style={{ Width: '10%' }}>{t('Phone')} </th>
-            <th style={{ Width: '20%' }}>{t('Mail')}</th>
-            <th style={{ Width: '10%' }}>{t('Lead Person')}</th>
-            <th style={{ Width: '20%' }}>{t('Project')}</th>
-            <th style={{ Width: '10%' }}>{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
+            <th style={{ paddingLeft: '10px' }}>{t('Title')}<i onClick={() => handleFilterClick('title')} className={sortIconClass('title')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('title')}</th>
+            <th >{t('Company')} </th>
+            <th >{t('Phone')} </th>
+            <th>{t('Mail')}</th>
+            <th >{t('Lead Person')}</th>
+            <th >{t('Project')}</th>
+            <th >{t('Date')} <i onClick={() => handleFilterClick('created')} className={sortIconClass('created')} style={{ cursor: 'pointer' }} />{renderRemoveSortIcon('created')}</th>
           </tr>
         </thead>
         <tbody>

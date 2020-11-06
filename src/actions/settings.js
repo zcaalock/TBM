@@ -3,10 +3,11 @@ import * as types from './types'
 import { editState } from './appState'
 
 
-export const fetchLead = () => async dispatch => {
-  const response = await axios.get('/lead')
-  dispatch({ type: types.FETCH_LEAD, payload: response.data })
-
+export const fetchLead = (loading) => async dispatch => {
+  await axios.get('/lead').then(response=>{
+    dispatch({ type: types.FETCH_LEAD, payload: response.data })
+    if (loading === 'loading') dispatch(editState(true, 'fetchedSettings'))//; console.log('settings fetched')
+  })
 }
 
 export const createLead = (formValues, id) => {

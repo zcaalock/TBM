@@ -48,7 +48,7 @@ function Reminder() {
   const renderIcon = (arr) => {
     let findFlag = _.filter(details, { pulseId: arr.id, flag: true })//.map(a=>{return `${a.title}, `})
     let flagArr = []
-    if (findFlag.length > 0) findFlag.map(a => { return flagArr.push(`${a.title}t | `) })
+    if (findFlag.length > 0) findFlag.map(a => { return flagArr.push(`${a.title} | `) })
 
     if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
     if (_.find(details, { pulseId: arr.id, flag: true })) return <div data-position="right center" data-tooltip={flagArr} style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller' }}><i className=" flag icon" /></div>
@@ -57,6 +57,17 @@ function Reminder() {
     //     test
     //   </Popup.Content>
     // </Popup>
+  }
+
+  const renderClientIcon = (arr) => {
+    let findFlag = _.filter(details, { pulseId: arr.id, flag: true })//.map(a=>{return `${a.title}, `})
+    let flagArr = []
+    if (findFlag.length > 0) findFlag.map(a => { return flagArr.push(`${a.title} | `) })
+
+    //if (arr.privateId === user.userId) return <div style={{ position: 'absolute', color: '#00A569', left: '-17px', fontSize: 'smaller' }}><i className=" privacy icon" /></div>
+    if (_.find(details, { pulseId: arr.id, flag: true })) return <div data-position="right center" data-tooltip={flagArr} style={{ position: 'absolute', color: 'rgb(220, 105, 105)', left: '-17px', fontSize: 'smaller' }}><i className="user icon" /></div>
+
+    return <div data-position="right center" style={{ position: 'absolute', left: '-17px', fontSize: 'smaller' }}><i className="user icon" /></div>
   }
 
   function makeContinousColection() {
@@ -163,7 +174,7 @@ function Reminder() {
             key={item.name}
             style={selectedStyle(item.id)}
           >
-            <div data-position="right center" style={{ position: 'absolute', left: '-17px', fontSize: 'smaller' }}><i className="user icon" /></div>
+            {renderClientIcon(item)}
             <div
               data-position="right center"
               data-tooltip={`Klient: "${item.name}" | data: ${item.date}`}

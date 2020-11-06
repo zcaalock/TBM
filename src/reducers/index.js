@@ -7,6 +7,7 @@ import appStateReducers from './appStateReducers'
 import categoriesReducers from './categoriesReducers'
 import pulsesReducers from './pulsesReducers'
 import clientReducers from './clientReducers'
+import competitionsReducers from './competitionsReducers'
 import detailsReducers from './detailsReducers'
 import usersReducers from './usersReducers'
 import notepadReducers from './notepadReducers'
@@ -47,6 +48,7 @@ const reducers = combineReducers({
   categories: categoriesReducers,
   pulses: pulsesReducers,
   clients: clientReducers,
+  competitions: competitionsReducers,
   contacts: contactsReducers,
   details: detailsReducers,
   notepad: notepadReducers,
