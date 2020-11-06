@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
@@ -16,24 +16,16 @@ function AddCompetition(props) {
   const appState = useSelector(state => state.appState)
   const competition = props.competition
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')  
-  const [project, setProject] = useState('')
-  const [status, setStatus] = useState('')  
+  const [name, setName] = useState(competition.title)
+  const [phone, setPhone] = useState(competition.phone)  
+  const [project, setProject] = useState(competition.project)
+  const [status, setStatus] = useState(competition.status)  
   const userId = privateId
   const [newProject, setNewproject] = useState(false)
   const [newStatus, setNewStatus] = useState(false)
-  const [web, setWeb] = useState('')
+  const [web, setWeb] = useState(competition.web)
 
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    setName(competition.title)
-    setPhone(competition.phone)
-    setProject(competition.project)
-    setStatus(competition.status)
-    setWeb(competition.web)
-  }, [])
+  const dispatch = useDispatch()  
 
   // const isEmpty = (obj) => {
   //   for (var key in obj) {
@@ -192,8 +184,7 @@ function AddCompetition(props) {
         />
       </Modal.Actions>
     </Modal>
-  )
-  return <div></div>
+  )  
 }
 
 export default AddCompetition

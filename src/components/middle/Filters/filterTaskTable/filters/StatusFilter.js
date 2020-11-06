@@ -28,7 +28,7 @@ function Tbody() {
 
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
-  }, [])
+  }, [dispatch])
 
   const goLink = (id) => {
     dispatch(editState(id, 'pulseId'))
@@ -88,13 +88,15 @@ function Tbody() {
   const renderPulses = () => {
     let pulsesCol = []
     pulses.map(item => {
-      if (item.privateId === '') pulsesCol.push(item)
+      if (item.privateId === '') return pulsesCol.push(item)
+      return null
     })
 
     let pulseColPrivate = []
 
     pulses.map(item => {
-      if (item.privateId === userId) pulseColPrivate.push(item)
+      if (item.privateId === userId) return pulseColPrivate.push(item)
+      return null
     })
 
     pulsesCol = pulsesCol.concat(pulseColPrivate)
@@ -135,7 +137,8 @@ function Tbody() {
     if (future !== '' && past !== '') {
       let newArr = []
       pulsesCol.map(p => {
-        if ((new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()) || p.deadline === '') newArr.push(p)
+        if ((new Date(p.deadline).getTime() < new Date(future).getTime() && new Date(p.deadline).getTime() > new Date(past).getTime()) || p.deadline === '') return newArr.push(p)
+        return null
       })
       pulsesCol = newArr
     }
@@ -143,7 +146,8 @@ function Tbody() {
     if (future !== '' && past === '') {
       let newArr = []
       pulsesCol.map(p => {
-        if (new Date(p.deadline).getTime() < new Date(future).getTime() || p.deadline === '') newArr.push(p)
+        if (new Date(p.deadline).getTime() < new Date(future).getTime() || p.deadline === '') return newArr.push(p)
+        return null
       })
       pulsesCol = newArr
     }
@@ -151,7 +155,8 @@ function Tbody() {
     if (future === '' && past !== '') {
       let newArr = []
       pulsesCol.map(p => {
-        if (new Date(p.deadline).getTime() > new Date(past).getTime() || p.deadline === '') newArr.push(p)
+        if (new Date(p.deadline).getTime() > new Date(past).getTime() || p.deadline === '') return newArr.push(p)
+        return null
       })
       pulsesCol = newArr
     }
@@ -207,7 +212,9 @@ function Tbody() {
             </td>
           </tr>
         )
+        return null
     })
+    
   }
 
   return (

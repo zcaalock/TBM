@@ -27,6 +27,12 @@ function Boards(props) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   useEffect(() => {
+    const handleAuth = () => {
+      if (user.loading === false) {
+        if (user.authenticated === false)
+          history.push('/unAuth')
+      }
+    }
     dispatch(editState(false, 'editFieldModalOpen'))
     dispatch(editState('', 'editFieldModalItem'))
     dispatch(editState('', 'editFieldModalId'))
@@ -34,18 +40,11 @@ function Boards(props) {
     dispatch(editState('', 'editFieldModalFunction'))
     dispatch(editState('', 'editFieldModalFieldTitle')) 
     handleAuth()
-  },[])
+  },[dispatch, user.loading, user.authenticated])
 
   const showMobileMenu = () => {
     return MHide === 'false' ? '' : 'MHide'
-  }
-
-  const handleAuth = () => {
-    if (user.loading === false) {
-      if (user.authenticated === false)
-        history.push('/unAuth')
-    }
-  }
+  }  
 
   const handleFiltersOnClick = () => {
     dispatch(editState('filters', 'id'))

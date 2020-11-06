@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
@@ -19,34 +19,25 @@ function AddContact(props) {
   const appState = useSelector(state => state.appState)
   const contact = props.contact
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [mail, setMail] = useState('')
-  const [project, setProject] = useState('')
-  const [company, setCompany] = useState('')
+  const [name, setName] = useState(contact.title)
+  const [phone, setPhone] = useState(contact.phone)
+  const [mail, setMail] = useState(contact.mail)
+  const [project, setProject] = useState(contact.project)
+  const [company, setCompany] = useState(contact.company)
   const [newcompany, setNewCompany] = useState('')
   const [userId, setUserid] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
 
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch()  
 
-  useEffect(() => {
-    setName(contact.title)
-    setPhone(contact.phone)
-    setMail(contact.mail)
-    setProject(contact.project)
-    setCompany(contact.company)
-    generateLeadList()
-  }, [])
-
-  // const isEmpty = (obj) => {
-  //   for (var key in obj) {
-  //     if (obj.hasOwnProperty(key))
-  //       return false;
-  //   }
-  //   return true;
-  // }  
+  const isEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }  
 
   const handleSubmit = () => {
     const userData = {
@@ -154,6 +145,8 @@ function AddContact(props) {
     setProject('')
     setCompany('')    
   }
+
+  isEmpty(generateLeadList())
   if (leadArr.length > 0) return (
     <Modal size='tiny' dimmer='inverted' open={appState.editContactOpen} onClose={close}>
       <Modal.Header>{t('Edit Contact')}</Modal.Header>

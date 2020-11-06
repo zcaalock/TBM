@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import history from '../../../../history'
 import { editPulse } from '../../../../actions/pulses'
-import { fetchDetails } from '../../../../actions/details'
 import { editState } from '../../../../actions/appState'
 import LeadPerson from './Tbody/LeadPerson'
 import StatusList from './Tbody/StatusList'
@@ -20,18 +19,7 @@ function Tbody(props) {
   const lead = useSelector(state => _.find(state.lead, { userId: privateId }))
 
   const dispatch = useDispatch();
-  const { t } = useTranslation()
-  useEffect(() => {
-    if (isEmpty(pulses)) dispatch(fetchDetails())
-  }, [])
-
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
+  const { t } = useTranslation()  
 
   const goLink = (pulse) => {
     dispatch(editState(pulse.id, 'pulseId'))

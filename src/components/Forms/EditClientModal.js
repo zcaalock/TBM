@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
@@ -20,37 +20,26 @@ function AddClient(props) {
   const appState = useSelector(state => state.appState)
   const client = props.client
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [mail, setMail] = useState('')
-  const [project, setProject] = useState('')
-  const [unit, setUnit] = useState('')
-  const [price, setPrice] = useState('')
-  const [filingDate, setFillingdate] = useState('')
+  const [name, setName] = useState(client.title)
+  const [phone, setPhone] = useState(client.phone)
+  const [mail, setMail] = useState(client.mail)
+  const [project, setProject] = useState(client.project)
+  const [unit, setUnit] = useState(client.unit)
+  const [price, setPrice] = useState(client.price)
+  const [filingDate, setFillingdate] = useState(client.filingDate)
   const [userId, setUserid] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
   const [newUnit, setnewUnit] = useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch()  
 
-  useEffect(() => {
-    setName(client.title)
-    setFillingdate(client.filingDate)
-    setPhone(client.phone)
-    setMail(client.mail)
-    setProject(client.project)
-    setUnit(client.unit)
-    setPrice(client.price)
-    generateLeadList()
-  }, [])
-
-  // const isEmpty = (obj) => {
-  //   for (var key in obj) {
-  //     if (obj.hasOwnProperty(key))
-  //       return false;
-  //   }
-  //   return true;
-  // }  
+  const isEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }  
 
   const handleSubmit = () => {
     const userData = {
@@ -161,6 +150,8 @@ function AddClient(props) {
     setUnit('')
     setPrice('')
   }
+
+  isEmpty(generateLeadList())
   if (leadArr.length > 0) return (
     <Modal size='tiny' dimmer='inverted' open={appState.editClientOpen} onClose={close}>
       <Modal.Header>{t('Edit Client')}</Modal.Header>

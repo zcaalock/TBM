@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { format } from 'date-fns'
-import { fetchLead, createLead, deleteLead } from '../../../../actions/settings'
+import { createLead, deleteLead } from '../../../../actions/settings'
 import { editState } from '../../../../actions/appState'
-import { fetchPulses } from '../../../../actions/pulses'
 import { Item, Button } from 'semantic-ui-react'
 import { useTranslation } from "react-i18next"
 import LeadName from './leadName/LeadName'
@@ -17,19 +16,17 @@ function UserSettings() {
   const lead = useSelector(state => state.lead);
   const pulses = useSelector(state => state.pulses);
   const { t } = useTranslation()
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
+  // const isEmpty = (obj) => {
+  //   for (var key in obj) {
+  //     if (obj.hasOwnProperty(key))
+  //       return false;
+  //   }
+  //   return true;
+  // }
 
   useEffect(() => {
-    dispatch(editState('settings', 'id')) //selected board to appState    
-    if (isEmpty(lead)) dispatch(fetchLead())
-    if (isEmpty(pulses)) dispatch(fetchPulses())
-  }, [])
+    dispatch(editState('settings', 'id'))      
+  }, [dispatch])
 
   const handleCreateLead = () => {
     dispatch(createLead({ title: user.handle }, user.userId))

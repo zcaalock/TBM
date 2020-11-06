@@ -1,45 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-//import _ from 'lodash'
 import { Button, Modal, Form, Input } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { fetchLead } from '../../actions/settings'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
 import { editBoard } from '../../actions/boards'
 
 function BoardModal() {
-
-  const lead = useSelector(state => Object.values(state.lead))
-  const appState = useSelector(state => state.appState)
-  const [makePrivate, setMakeprivate] = useState(false)
+  
+  const appState = useSelector(state => state.appState) 
 
   const id = appState.boardId.id
   const board = appState.boardId
 
   const privateId = useSelector(state => state.user.credentials.userId)
-  const [name, setName] = useState('')
-  const [userId, setUserId] = useState('')
-  const [boardId, setBoardId] = useState('')
+  const [name, setName] = useState(board.title)
+  const [userId, setUserId] = useState(board.id)
+  const [boardId, setBoardId] = useState(privateId)
+  const [makePrivate, setMakeprivate] = useState(board.privateId === privateId?true:false)
 
   const dispatch = useDispatch()
-  const { t } = useTranslation()
-  useEffect(() => {
-    if (isEmpty(lead)) dispatch(fetchLead())
-    setName(board.title)
-    setBoardId(board.id)
-    setUserId(privateId)
-    setMakeprivate(board.privateId === privateId?true:false)
+  const { t } = useTranslation()  
 
-  }, [])
-
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
+  // const isEmpty = (obj) => {
+  //   for (var key in obj) {
+  //     if (obj.hasOwnProperty(key))
+  //       return false;
+  //   }
+  //   return true;
+  // }
 
   const handleSubmit = () => {
     const userData = {

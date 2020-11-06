@@ -32,7 +32,7 @@ function Loading() {
     dispatch(fetchContacts('loading', true))
     dispatch(editState('filters', 'id'))
 
-  }, [])
+  }, [dispatch])
   
   if (appState
     && appState.fetchedBoards === true

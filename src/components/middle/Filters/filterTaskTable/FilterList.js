@@ -5,13 +5,7 @@ import { DateInput } from 'semantic-ui-calendar-react'
 import _ from 'lodash'
 
 import { editState } from '../../../../actions/appState'
-import { fetchStatus } from '../../../../actions/status'
-import { fetchPulses } from '../../../../actions/pulses'
 import { editLead } from '../../../../actions/settings'
-import { fetchCategories } from '../../../../actions/categories'
-import { fetchBoards } from '../../../../actions/boards'
-import { fetchLead } from '../../../../actions/settings'
-import { fetchDetails } from '../../../../actions/details'
 import { useTranslation } from "react-i18next"
 
 function SearchFilter(props) {
@@ -19,30 +13,14 @@ function SearchFilter(props) {
   const userId = useSelector(state => state.user.credentials.userId);
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
   const appState = useSelector(state => state.appState);
-  const [menuOpen, setMenuopen] = useState(undefined)
-  
+  const [menuOpen, setMenuopen] = useState(undefined)  
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()  
 
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  useEffect(() => {
-    if (isEmpty(props.boards)) dispatch(fetchBoards())
-    if (isEmpty(props.status)) dispatch(fetchStatus())
-    if (isEmpty(props.pulses)) dispatch(fetchPulses())
-    if (isEmpty(props.details)) dispatch(fetchDetails())
-    if (isEmpty(props.lead)) dispatch(fetchLead())
-    if (isEmpty(props.categories)) dispatch(fetchCategories())
+  useEffect(() => {    
     dispatch(editState(leadUser.title, 'pulseSearch'))
-
     dispatch(editState(userId, 'selectedUserId'))
-  }, [])
+  }, [dispatch, leadUser.title, userId])
 
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)

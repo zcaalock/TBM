@@ -20,7 +20,7 @@ function Tbody(props) {
   const { t } = useTranslation()
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
-  }, [])
+  }, [dispatch])
 
   const goLink = (id) => {
     dispatch(editState(id, 'pulseId'))
@@ -84,7 +84,7 @@ function Tbody(props) {
     competitionsCol = competitions
 
     if (showArchived === false) competitionsCol = _.reject(competitionsCol, { archived: 'true' })
-
+    
     return sortCompetitionsBy(competitionsCol).map(competition => {
       if (
         _.includes(competition.title.toLowerCase(), appState.competitionSearch.toLowerCase()) === true
@@ -120,7 +120,8 @@ function Tbody(props) {
           <td ><DropdownAdditions item={competition} items={competitions} selector='status' dispatch={editCompetition} /></td>
         </tr>
       )
-    })
+      return null
+    }) 
   }
 
   return (

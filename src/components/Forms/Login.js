@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
 import { connect } from 'react-redux'
 import { Button, Form, Message } from 'semantic-ui-react'
 import { loginUser } from '../../actions/users'
@@ -12,7 +12,7 @@ function Login(props) {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
   const [disable, setDisable] = useState(false)
-
+  const dispatch = useDispatch();
   useEffect(() => {
     localStorage.removeItem("state")
     dispatch(editState(false, 'fetchedBoards'))
@@ -25,17 +25,17 @@ function Login(props) {
     dispatch(editState(false, 'fetchedPulses'))
     dispatch(editState(false, 'fetchedSettings'))
     dispatch(editState(false, 'fetchedStatus'))
-  }, [])
+  }, [dispatch])
 
-  useEffect(() => {    
+  useEffect(() => {
     if (props.UI.errors) {
-      setErrors(props.UI.errors )  
-      setDisable(false)    
+      setErrors(props.UI.errors)
+      setDisable(false)
     }
   }, [props.UI])
 
-  const dispatch = useDispatch();
-const { t } = useTranslation()
+
+  const { t } = useTranslation()
   const handleSubmit = (event) => {
     event.preventDefault();
     const userData = {
@@ -48,18 +48,18 @@ const { t } = useTranslation()
 
   };
   const handleChange = (event) => {
-    
+
     if (event.target.name === 'email') setEmail(event.target.value)
-    if (event.target.name === 'password') setPassword(event.target.value)    
+    if (event.target.name === 'password') setPassword(event.target.value)
   };
 
-  function handleCredentialError () {
+  function handleCredentialError() {
     if (errors.general) return <Message
-        error
-        header={t('Wrong Credentials')}
-        content={t('Wrong email or password please try again')}
-      />
-  } 
+      error
+      header={t('Wrong Credentials')}
+      content={t('Wrong email or password please try again')}
+    />
+  }
   return (
     <div>
       <div style={{ width: '100%', textAlign: 'center', position: "fixed", height: '', padding: '20px', display: 'inline-block' }} className="leftMenu header">
@@ -81,7 +81,7 @@ const { t } = useTranslation()
             onChange={handleChange}
           />
           <Form.Input
-          disabled={disable}
+            disabled={disable}
             id="password"
             name="password"
             type="password"
@@ -98,7 +98,7 @@ const { t } = useTranslation()
             type="submit"
           >
             {t('Login')}
-        </Button>
+          </Button>
         </Form>
       </div>
     </div>

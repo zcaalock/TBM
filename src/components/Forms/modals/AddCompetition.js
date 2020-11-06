@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
@@ -19,11 +19,7 @@ function AddCompetition() {
   const userId = privateId
   const [newProject, setNewproject] = useState(false) 
 
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    generateProjectList()    
-  }, []) 
+  const dispatch = useDispatch() 
 
   const handleSubmit = () => {
     const userData = {
@@ -74,6 +70,16 @@ function AddCompetition() {
     )
   }
 
+  const isEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
+  isEmpty(generateProjectList())
+
   return (
     <>
       <Modal.Header>{t('Create Competition')}</Modal.Header>
@@ -123,8 +129,7 @@ function AddCompetition() {
         />
       </Modal.Actions>
     </>
-  )
-  return <div></div>
+  )  
 }
 
 export default AddCompetition
