@@ -1,0 +1,24 @@
+<svg width="585" height="501" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#000000" id="canvas_background" height="503" width="587" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text stroke="#000" transform="matrix(17.194211959838867,0,0,17.194211959838867,-1951.4025411605835,-3068.044062703848) " xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="24" id="svg_1" y="201.17562" x="114.99677" stroke-width="0" fill="#ffffff">1000</text>
+  <rect stroke="#000" id="svg_2" height="88" width="611.99999" y="1.95313" x="-3" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+  <rect stroke="#000" id="svg_4" height="116" width="605.00002" y="386.95312" x="-4" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+  <rect stroke="#000" id="svg_5" height="344.99999" width="51.99997" y="84.95314" x="-23.00001" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+  <rect stroke="#000" id="svg_6" height="344.99999" width="49" y="70.95314" x="538" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+  <rect id="svg_7" height="93" width="65" y="50.95313" x="509" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ffffff"/>
+  <rect id="svg_8" height="0" width="1" y="158.95313" x="725" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ffffff"/>
+  <rect id="svg_9" height="93" width="65" y="338.95313" x="499" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ffffff"/>
+  <rect stroke="#000" id="svg_10" height="97.00001" width="65" y="394.95312" x="39" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+  <text stroke="#000" transform="matrix(1.6822991309408053,0,0,1.6822991309408053,-216.9626101943066,-329.5597888293936) " xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="24" id="svg_11" y="463.02389" x="281.16714" stroke-opacity="null" stroke-width="0" fill="#000000">Pulses</text>
+  <rect stroke="#000" id="svg_12" height="71.00001" width="65" y="9.95312" x="87" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
+ </g>
+</svg>

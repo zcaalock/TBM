@@ -162,7 +162,10 @@ export const resources = {
             "New competition":"New competition",
             "Copied":"Copied",
             "This name already exists":"This name already exists",
-            "This number already exists":"This number already exists"
+            "This number already exists":"This number already exists",
+            "Active":"Active",
+            "Pulses":"Pulses",
+            "Charts":"Charts"
 
         }
     },
@@ -328,7 +331,10 @@ export const resources = {
             "New competition":"Nowa konkurencja",
             "Copied":"Skopiowano",
             "This name already exists":"Ta nazwa już istnieje",
-            "This number already exists":"Ten numer już istnieje"
+            "This number already exists":"Ten numer już istnieje",
+            "Active":"Aktywne",
+            "Pulses":"Pulsy",
+            "Charts":"Wykresy"
             
         }
     }
