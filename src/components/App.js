@@ -33,7 +33,7 @@ const App = () => {
             <Route exact path="/unAuth" component={unAuth} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/settings" component={(props) => (<><LeftMenu {...props} /> <Settings {...props} /></>)} />
+            
             <Route path='/filters/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Filters {...props} /></div></>)} />
             <Route path='/filters/pulse/:id' component={Details} />
             <Route path='/clients/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Clients {...props} /></div></>)} />            
@@ -45,6 +45,7 @@ const App = () => {
             <Route path="/boards/:id" component={(props) => (<><LeftMenu {...props} /> <Boards {...props} /></>)} />
             <Route path="/boards/:id/pulses/:id" component={Details} />
             <Route path='/charts/' component={(props) => (<><LeftMenu {...props} /> <div className='article'><Charts {...props} /></div></>)} />
+            <Route path="/settings" component={(props) => (<><LeftMenu {...props} /> <div className='article'><Settings {...props} /></div></>)} />
           </Route>
         </div>
       </Router>
