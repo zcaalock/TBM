@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { editState } from '../../actions/appState'
 import { deletePulse, editPulse } from '../../actions/pulses'
+import { isEmpty} from '../../actions/helperFunctions'
 import EditPulseModal from '../Forms/EditPulseModal'
 import { useTranslation } from "react-i18next"
 import { Dropdown } from 'semantic-ui-react'
+
+let pulseArr = []
 
 function HeaderIcons(props) {
     const dispatch = useDispatch()
     const { t } = useTranslation()
     const appState = useSelector(state => state.appState)
     const details = useSelector(state => Object.values(state.details))
-    const notepad = useSelector(state => Object.values(state.notepad))    
+    const pulses = useSelector(state => Object.values(state.pulses))
+    const notepad = useSelector(state => Object.values(state.notepad))
+    const lead = useSelector(state => Object.values(state.lead))
     const user = useSelector(state => state.user.credentials)
 
     const archived = props.pulse.archived
@@ -20,6 +25,9 @@ function HeaderIcons(props) {
     const userId = user.userId
     const id = props.pulse.id
     const editPulseOpen = appState.editPulseOpen
+
+    let findPulses = _.sortBy(_.filter(pulses, { categoryId: props.pulse.categoryId }), 'createdAt')
+    let showArchived = _.find(lead, { userId: user.userId }).settings.showArchived
 
 
     const ShowEditPulseModal = () => {
@@ -69,9 +77,50 @@ function HeaderIcons(props) {
                 style={{ color: '#00A569', paddingRight: '5px', cursor: 'pointer' }}>
                 <i className=" privacy icon" />
             </div>)
+    }   
+    
+    
+
+    const moveUp = (id, created, arr) => {
+        const prev = _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 })
+        if (prev) dispatch(editPulse(id, { createdAt: prev.createdAt }))
+        if (prev) dispatch(editPulse(prev.id, { createdAt: created }))
     }
 
-        return (
+    const moveDown = (id, created, arr) => {
+        const next = _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 })        
+        if (next) dispatch(editPulse(id, { createdAt: next.createdAt }))
+        if (next) dispatch(editPulse(next.id, { createdAt: created }))
+    }
+
+    pulseArr = []
+        findPulses.map(pulse => {
+            pulseArr.push({ number: pulseArr.length, id: pulse.id, createdAt: pulse.createdAt, archived: pulse.archived, privateId: pulse.privateId })
+            if (showArchived === false) pulseArr = _.chain(pulseArr).reject({ archived: 'true' }).value() 
+            return pulseArr = _.uniqBy(pulseArr, 'id' )
+        })
+
+    const renderUp = () => {        
+
+        const prev = pulseArr.length > 0 ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number - 1 }) : null
+        if (prev) return <Dropdown.Item
+            icon='chevron up'
+            content={t('Move up')}
+            onClick={() => moveUp(id, props.pulse.createdAt, pulseArr)}
+        />
+    }
+
+    const renderDown = () => {          
+
+        const next = pulseArr.length > 0 ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number + 1 }) : null
+        if (next) return <Dropdown.Item
+            icon='chevron down'
+            content={t('Move down')}
+            onClick={() => moveDown(id, props.pulse.createdAt, pulseArr)}
+        />
+    }    
+   
+    return (
         <div style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
 
             {renderArchived()}
@@ -97,6 +146,9 @@ function HeaderIcons(props) {
                         icon={privateId === userId ? <i className="privacy icon" style={{ color: '#00A569' }} /> : 'privacy'}
                     />
                     {renderDelete()}
+                    <Dropdown.Header content={`${t('Move')}:`} />
+                    {renderUp()}
+                    {renderDown()}
                 </Dropdown.Menu>
             </Dropdown>
             {ShowEditPulseModal()}
