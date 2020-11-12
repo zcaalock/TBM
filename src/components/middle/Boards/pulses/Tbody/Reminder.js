@@ -41,9 +41,9 @@ function Reminder() {
         && days < appState.reminderSettings.futureDays
         && days >= appState.reminderSettings.pastDays
       ) return reminderArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, difference: renderDifs(days), categoryId: pulse.categoryId, privateId: pulse.privateId, color: days < 0 ? '#DC6969' : '', status: pulse.status === 'Done' ? 'line-through' : '' })
-      return
+      return null
     })
-    return
+    return null
   }
   const renderIcon = (arr) => {
     let findFlag = _.filter(details, { pulseId: arr.id, flag: true })//.map(a=>{return `${a.title}, `})
@@ -77,6 +77,7 @@ function Reminder() {
         pulse.status === 'Continous' &&
         pulse.archived === 'false'
       ) return continousArr.push({ id: pulse.id, name: pulse.title, date: pulse.deadline, categoryId: pulse.categoryId, privateId: pulse.privateId, status: pulse.status === 'Done' ? 'line-through' : '' })
+      return null
     })
   }
 
@@ -97,9 +98,9 @@ function Reminder() {
         && days < appState.reminderSettings.futureDays
         && days >= appState.reminderSettings.pastDays
       ) return clientsArr.push({ id: client.id, name: client.title, date: client.reminder, difference: renderDifs(days), color: days < 0 ? '#DC6969' : '' })
-      return
+      return null
     })
-    return
+    return null
   }
 
   const renderReminders = (arr) => {

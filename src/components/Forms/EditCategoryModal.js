@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
-import { fetchLead } from '../../actions/settings'
-import { fetchBoards } from '../../actions/boards'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
 import { editCategory } from '../../actions/categories';
@@ -24,24 +22,13 @@ function CategoryModal() {
   const category = appState.categoryId
 
   const privateId = useSelector(state => state.user.credentials.userId)
-  const [name, setName] = useState('')
-  const [userId, setUserId] = useState('')
-  const [categoryId, setCategoryId] = useState('')
-  const [boardId, setBoardId] = useState('')
+  const [name, setName] = useState(category.title)
+  const [userId, setUserId] = useState(privateId)
+  const [categoryId, setCategoryId] = useState(category.id)
+  const [boardId, setBoardId] = useState(category.boardId)
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  useEffect(() => {
-    if (isEmpty(boards)) dispatch(fetchBoards())
-    if (isEmpty(lead)) dispatch(fetchLead())
-
-    setName(category.title)
-    setCategoryId(category.id)
-    setBoardId(category.boardId)
-    setUserId(privateId)
-    generateBoardList()
-    generateLeadList()
-  }, [])
 
   const isEmpty = (obj) => {
     for (var key in obj) {
@@ -94,7 +81,8 @@ function CategoryModal() {
     setUserId('')
   }
 
-
+  isEmpty(generateBoardList())
+  isEmpty(generateLeadList())
 
   return (
     <div>

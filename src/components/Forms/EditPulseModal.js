@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../actions/appState'
 import { editPulse } from '../../actions/pulses'
-import { fetchLead } from '../../actions/settings'
-import { fetchBoards } from '../../actions/boards'
 import history from '../../history'
 import { useTranslation } from "react-i18next"
 let boardsArr = []
@@ -27,27 +25,13 @@ function PulseModal() {
   const [makePrivate, setMakeprivate] = useState(false)
 
   const privateId = useSelector(state => state.user.credentials.userId)
-  const [name, setName] = useState('')
-  const [userId, setUserId] = useState('')
-  const [categoryId, setCategoryId] = useState('')
-  const [boardId, setBoardId] = useState('')
+  const [name, setName] = useState(pulseKey[appState.pulseId].title)
+  const [userId, setUserId] = useState(pulseKey[appState.pulseId].userId)
+  const [categoryId, setCategoryId] = useState(pulseKey[appState.pulseId].categoryId)
+  const [boardId, setBoardId] = useState(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
 
   const dispatch = useDispatch()
-  const { t } = useTranslation()
-  useEffect(() => {
-    if (isEmpty(boards)) dispatch(fetchBoards())
-    if (isEmpty(lead)) dispatch(fetchLead())
-
-    setName(pulseKey[appState.pulseId].title)
-    setUserId(pulseKey[appState.pulseId].userId)
-    setCategoryId(pulseKey[appState.pulseId].categoryId)
-    setBoardId(categoryKey[pulseKey[appState.pulseId].categoryId].boardId)
-
-    generateBoardList()
-    generateCategoriesList()
-    generateLeadList()
-
-  }, [])
+  const { t } = useTranslation()  
 
   const isEmpty = (obj) => {
     for (var key in obj) {
@@ -64,7 +48,7 @@ function PulseModal() {
       userId: userId,
       boardId: boardId,
       privateId: makePrivate === true ? userId : ''
-    };
+    }
     dispatch(editPulse(pulseIdSelected, userData))
     close()
     dispatch(editState(categoryId, 'expandCategory'))
@@ -114,6 +98,10 @@ function PulseModal() {
     setCategoryId('')
     setUserId('')
   }
+
+  isEmpty(generateBoardList())
+  isEmpty(generateCategoriesList())
+  isEmpty(generateLeadList())    
 
   return (
     <div>

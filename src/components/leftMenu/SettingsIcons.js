@@ -20,15 +20,16 @@ function SettingsIcons(props) {
 
   const appState = useSelector(state => state.appState)
   const dispatch = useDispatch()
-  useEffect(() => {
-    changeLanguage(appState.language)
-  }, [appState.language])
-
   const { t, i18n } = useTranslation()
-  const changeLanguage = (language) => {
-    i18n.changeLanguage(language);
-  }
+  useEffect(() => {
+    const changeLanguage = (language) => {
+      i18n.changeLanguage(language);
+    }
+    changeLanguage(appState.language)
+  }, [appState.language, i18n])
 
+  
+  
   const handleSelectedIcon = () => {
     if (appState.id === 'settings')
       return ""

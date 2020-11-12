@@ -25,7 +25,7 @@ function Tbody(props) {
   const { t } = useTranslation()
   useEffect(() => {
     dispatch(editState({ name: 'filingDate', direction: 'asc' }, 'sortBy'))
-  }, [])
+  }, [dispatch])
 
   const goLink = (id) => {
     dispatch(editState(id, 'pulseId'))
@@ -148,6 +148,7 @@ function Tbody(props) {
           </td>
         </tr>
       )
+      return null
     })
   }
 

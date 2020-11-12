@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
-import { fetchCategories } from '../../../../actions/categories'
-import { fetchPulses } from '../../../../actions/pulses'
 import EditCategoryModal from '../../../Forms/EditCategoryModal'
 import Header from './Header'
 import Table from '../pulses/Table'
@@ -18,20 +16,7 @@ function Categories() {
   const privateId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => _.find(state.lead, { userId: privateId }))
 
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (isEmpty(categories)) dispatch(fetchCategories())
-    if (isEmpty(pulses)) dispatch(fetchPulses())
-  }, [])
-
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
+  const dispatch = useDispatch()  
 
   const renderProgressBar = (id) => {
     let detailStorage = []

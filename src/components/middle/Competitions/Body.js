@@ -1,5 +1,4 @@
 import React from 'react'
-import FilterList from './filterTaskTable/FilterList'
 import StatusFilter from './filterTaskTable/filters/StatusFilter'
 
 function Body() {

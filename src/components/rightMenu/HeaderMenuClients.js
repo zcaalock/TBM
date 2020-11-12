@@ -55,7 +55,7 @@ function HeaderIcons(props) {
                 onClick={() => dispatch(editClient(id, { archived: 'false' }))}
                 data-position="left center"
                 data-tooltip={t("Unarchive")}
-                style={{ color: '#DC6969', paddingRight: '5px', cursor: 'pointer' }}>
+                style={{ color: '#DC6969', cursor: 'pointer' }}>
                 <i className=" archive icon" />
             </div>)
     }
@@ -66,7 +66,7 @@ function HeaderIcons(props) {
                 onClick={() => dispatch(editClient(id, { privateId: '' }))}
                 data-position="left center"
                 data-tooltip={t("Make public")}
-                style={{ color: '#00A569', paddingRight: '5px', cursor: 'pointer' }}>
+                style={{ color: '#00A569', cursor: 'pointer' }}>
                 <i className=" privacy icon" />
             </div>)
     }

@@ -1,34 +1,21 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, Checkbox, Input, Label } from 'semantic-ui-react'
 import _ from 'lodash'
 import { editState } from '../../../../actions/appState'
-import { fetchCompetitions } from '../../../../actions/competitions'
 import { editLead } from '../../../../actions/settings'
 import { useTranslation } from "react-i18next"
 import DropdownColumnFilter from '../../../Forms/dropdownColumFilterCompetitions'
 
 
 
-function SearchFilter(props) {
-  const competitions = useSelector(state => Object.values(state.competitions))
+function SearchFilter(props) {  
   const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-  const { t } = useTranslation()
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  useEffect(() => {
-    if (isEmpty(competitions)) dispatch(fetchCompetitions())    
-  }, [])  
+  const { t } = useTranslation()  
 
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)
@@ -36,7 +23,6 @@ function SearchFilter(props) {
     if (selector === false)
       return 'archivedColor'
   }
-
    
   return (
     <div>      

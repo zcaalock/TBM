@@ -23,7 +23,7 @@ function Tbody(props) {
   const { t } = useTranslation()
   useEffect(() => {
     dispatch(editState({ name: 'createdAt', direction: 'asc' }, 'sortBy'))
-  }, [])
+  }, [dispatch])
 
   const goLink = (id) => {
     dispatch(editState(id, 'pulseId'))
@@ -85,8 +85,20 @@ function Tbody(props) {
         <div
           data-position="bottom center"
           data-tooltip="Archived"
-          style={{ color: '#DC6969', paddingLeft: '36.5px', marginTop: '-2px', position: 'absolute', display: 'inline-block' }}>
+          style={{ color: '#DC6969', display: 'inline-block' }}>
           <i className=" archive icon" />
+        </div>
+      )
+  }
+
+  const renderPrivateIcon = (privateId) => {
+    if (privateId === userId)
+      return (
+        <div
+          data-position="bottom center"
+          data-tooltip="Private"
+          style={{ color: 'rgb(0, 165, 105)', display: 'inline-block' }}>
+          <i className=" privacy icon" />
         </div>
       )
   }
@@ -96,12 +108,14 @@ function Tbody(props) {
     let contactsCol = []
     contacts.map(item => {
       if (item.privateId === '') return contactsCol.push(item)
+      return null
     })
 
     let constactsColPrivate = []
 
     contacts.map(item => {
       if (item.privateId === userId) return constactsColPrivate.push(item)
+      return null
     })
 
     contactsCol = contactsCol.concat(constactsColPrivate)
@@ -155,7 +169,6 @@ function Tbody(props) {
           <td>
             <ContactMail contact={contact} />
           </td>
-
           <td >
             <LeadPerson contact={contact} />
           </td>
@@ -165,11 +178,12 @@ function Tbody(props) {
           </td>
           <td >
             {format(new Date(contact.createdAt), 'yyyy/MM/dd')}
-            {renderArchivedIcon(contact.archived)}
+            <div style={{marginLeft: '5px', display: 'inline-block'}}>{renderArchivedIcon(contact.archived)}
+            {renderPrivateIcon(contact.privateId)}</div>
           </td>
         </tr>
       )
-      return
+      return null
     })
   }
 

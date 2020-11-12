@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBoards } from '../../actions/boards'
+import { useDispatch, useSelector } from "react-redux"
 import { editState } from '../../actions/appState'
 import { useTranslation } from "react-i18next"
 
@@ -17,18 +16,6 @@ function BoardsList(props) {
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  useEffect(() => {
-    if (isEmpty(boards)) dispatch(fetchBoards())
-  }, [])
-
 
   const selectedCheck = (id) => {
     if (id === appState.id) {

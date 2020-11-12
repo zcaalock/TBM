@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 
@@ -35,21 +35,15 @@ function AddClient() {
   const [clientNameExists, setClientnameexists] = useState(false)
   const [clientPhoneExists, setClientphoneexists] = useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch()  
 
-  useEffect(() => {
-    generateLeadList()
-    clientNames = generateClientNames()
-    clientPhones = generateClientPhones()
-  }, [])
-
-  // const isEmpty = (obj) => {
-  //   for (var key in obj) {
-  //     if (obj.hasOwnProperty(key))
-  //       return false;
-  //   }
-  //   return true;
-  // }  
+  const isEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }    
 
   const handleSubmit = () => {
     const userData = {
@@ -168,6 +162,10 @@ function AddClient() {
       />
     )
   }
+
+  clientNames = generateClientNames()
+  isEmpty(generateLeadList())
+  clientPhones = generateClientPhones()
 
   if (leadArr.length > 0) return (
     <>

@@ -1,34 +1,20 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, Checkbox, Input, Label } from 'semantic-ui-react'
 import _ from 'lodash'
 import { editState } from '../../../../actions/appState'
-import { fetchContacts } from '../../../../actions/contacts'
+
 import { editLead } from '../../../../actions/settings'
 import { useTranslation } from "react-i18next"
 import DropdownColumnFilterContacts from '../../../Forms/dropdownColumFilterContacts'
 
-
-
-function SearchFilter(props) {
-  const contacts = useSelector(state => Object.values(state.contacts))
+function SearchFilter(props) {  
   const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
   const leadUser = useSelector(state => _.find(state.lead, { userId: userId }))
 
   const dispatch = useDispatch();
-  const { t } = useTranslation()
-  const isEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  useEffect(() => {
-    if (isEmpty(contacts)) dispatch(fetchContacts())    
-  }, [])  
+  const { t } = useTranslation()  
 
   const renderCheckBoxLabelStyle = (selector) => {
     if (selector === true)

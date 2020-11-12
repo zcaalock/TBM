@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
 import { editPulse } from '../../../../../actions/pulses'
 import Calendar from '../../../../Forms/Calendar'
@@ -7,12 +7,9 @@ import { useTranslation } from "react-i18next"
 
 function Deadline(props) {
 
-  const [date, setDate] = useState('');  
-  const dispatch = useDispatch();
-  const { t } = useTranslation()
-  useEffect(() => {
-    setDate(props.pulse.deadline)
-  }, [])
+  const [date, setDate] = useState(props.pulse.deadline);  
+  const dispatch = useDispatch()
+  const { t } = useTranslation()  
 
   const submitCalendar = (content) => {
     if (date !== content) setDate(content)

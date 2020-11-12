@@ -69,7 +69,7 @@ function GCalendarModal(props) {
   useEffect(() => {    
     dispatch(editState('', 'error'))
     dispatch(editState('', 'submited'))
-  }, [])
+  }, [dispatch])
 
   var gapi = window.gapi
 

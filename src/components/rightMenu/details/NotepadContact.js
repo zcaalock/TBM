@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import _ from 'lodash'
 import { Button } from 'semantic-ui-react'
 import { editContact } from '../../../actions/contacts'
-import { isEmpty } from '../../../actions/helperFunctions'
-import { fetchNotepads } from '../../../actions/notepad'
 import { createNotepad, editNotepad, deleteNotepad } from '../../../actions/notepad'
 import NotepadIcons from './NotepadIcons'
 import Editor from '../../Forms/Editor'
@@ -13,18 +11,13 @@ import { useTranslation } from "react-i18next"
 
 function Notepad(props) {
   const { t } = useTranslation() 
-  const [state, defState] = useState({});
-  const dispatch = useDispatch();
-  const notepad = useSelector(state => Object.values(state.notepad));  
-  const appState = useSelector(state => state.appState);
-  const userId = useSelector(state => state.user.credentials.userId);
-
-  useEffect(() => {
-    if (isEmpty(notepad)) dispatch(fetchNotepads())
-    const note = _.find(notepad, { pulseId: appState.pulseId })
-    if (note) defState({ data: note.content })
-  },[])
-
+  const notepad = useSelector(state => Object.values(state.notepad)) 
+  const appState = useSelector(state => state.appState)
+  const note = _.find(notepad, { pulseId: appState.pulseId })
+  const [state, defState] = useState(note?{ data: note.content }:{})
+  const dispatch = useDispatch()   
+  const userId = useSelector(state => state.user.credentials.userId)
+  
   const createNewNotepad = () => {
     dispatch(createNotepad({ content: `<p>${t('Enter notes here')}...</p>` }, props.contactId))
     defState({ data: `<p>${t('Enter notes here')}...</p>` })
@@ -49,7 +42,7 @@ function Notepad(props) {
     if (state.data !== data) defState({ data: data })
   }
 
-  const note = _.find(notepad, { pulseId: appState.pulseId })
+ 
   if (note) {
     return (
       <div>

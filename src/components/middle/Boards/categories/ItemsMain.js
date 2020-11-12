@@ -4,23 +4,26 @@ import { useSelector } from "react-redux";
 import Header from '../../../items/Header'
 import Body from './Body'
 
-function ItemsMain (ownProps) {  
+function ItemsMain(ownProps) {
   const board = useSelector(state => state.boards[ownProps.match.params.id]);
   const renderHeader = () => {
-    if (!board) {
+    if (board) {
       return (
         <div className="article">
-          <div className="ui active inline loader"></div>
+          <Header board={board} />
+          <Body />
         </div>
+
       )
-    }    
+    }
     return (
       <div className="article">
-        <Header board={board}  />
-        <Body />
+        <div className="ui active inline loader"></div>
       </div>
     )
   }
-  return renderHeader()
+
+
+  return <>{renderHeader()}</> 
 }
 export default ItemsMain

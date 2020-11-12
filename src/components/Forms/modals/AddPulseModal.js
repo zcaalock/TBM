@@ -5,8 +5,6 @@ import history from '../../../history'
 import { Button, Modal, Form, Input, Select } from 'semantic-ui-react'
 import { editState } from '../../../actions/appState'
 import { createPulse, createPrivatePulse } from '../../../actions/pulses'
-import { fetchLead } from '../../../actions/settings'
-import { fetchBoards } from '../../../actions/boards'
 import { createCategory } from '../../../actions/categories'
 import { useTranslation } from "react-i18next"
 
@@ -41,9 +39,7 @@ function PulseModal() {
     return true;
   }
 
-  useEffect(() => {
-    if (isEmpty(boards)) dispatch(fetchBoards())
-    if (isEmpty(lead)) dispatch(fetchLead())  
+  useEffect(() => {    
     categoriesArr = []  
   }, [categories])
 
@@ -152,8 +148,7 @@ function PulseModal() {
               placeholder={t('Cateogry name')}
               searchInput={{ id: 'categoryId' }}
               onChange={(e, { value }) => setCategoryid(value)}
-              allowAdditions
-              placeholder='Dodaj'
+              allowAdditions              
               value={categoriesArr.currentValue}
               onAddItem={(e, { value },d) => dispatch(createCategory({ title: value, privateId: isPrivate === true ? privateId : '' }, boardId))}
             />
