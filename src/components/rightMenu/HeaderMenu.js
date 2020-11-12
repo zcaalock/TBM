@@ -82,13 +82,13 @@ function HeaderIcons(props) {
     
 
     const moveUp = (id, created, arr) => {
-        const prev = _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 })
+        const prev = arr? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
         if (prev) dispatch(editPulse(id, { createdAt: prev.createdAt }))
         if (prev) dispatch(editPulse(prev.id, { createdAt: created }))
     }
 
     const moveDown = (id, created, arr) => {
-        const next = _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 })        
+        const next = arr? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null        
         if (next) dispatch(editPulse(id, { createdAt: next.createdAt }))
         if (next) dispatch(editPulse(next.id, { createdAt: created }))
     }
