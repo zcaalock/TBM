@@ -30,8 +30,8 @@ function SettingsIcons(props) {
 
   
   
-  const handleSelectedIcon = () => {
-    if (appState.id === 'settings')
+  const handleSelectedIcon = (selection) => {
+    if (appState.id === selection)
       return ""
     return "articleIcon"
   }
@@ -66,9 +66,17 @@ function SettingsIcons(props) {
         onClick={() => history.push('/settings')}
         data-position="bottom center"
         data-tooltip={t("Settings")}
-        className={handleSelectedIcon()}
+        className={handleSelectedIcon('settings')}
         style={{ display: 'inline-block' }}>
         <h3><i className="setting icon" /></h3>
+      </div>
+      <div
+        onClick={() => history.push('/charts')}
+        data-position="bottom center"
+        data-tooltip={t("Charts")}
+        className={handleSelectedIcon('charts')}
+        style={{ display: 'inline-block' }}>
+        <h3><i className="chart pie icon" /></h3>
       </div>
       <Dropdown
         className='articleIcon'

@@ -150,7 +150,7 @@ function Tbody(props) {
             dispatch(editState(true, 'editFieldModalOpen'))
             dispatch(editState(contact.company, 'editFieldModalItem'))
             dispatch(editState(contact.id, 'editFieldModalId'))
-            dispatch(editState('title', 'editFieldModalSelector'))
+            dispatch(editState('company', 'editFieldModalSelector'))
             dispatch(editState(editContact, 'editFieldModalFunction'))
             dispatch(editState(t('Company'), 'editFieldModalFieldTitle'))
           }}>

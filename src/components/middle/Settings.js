@@ -4,7 +4,7 @@ import Body from './Settings/Body'
 
 function Settings() {
   return (
-    <div className="article" style={{ width: "calc(100% - 270px)" }}>
+    <div style={{ width: "100%", position: 'fixed' }}>
       <Head />
       <Body />
     </div>

@@ -24,12 +24,12 @@ function AddContact(props) {
   const [mail, setMail] = useState(contact.mail)
   const [project, setProject] = useState(contact.project)
   const [company, setCompany] = useState(contact.company)
-  const [newcompany, setNewCompany] = useState('')
+  //const [newcompany, setNewCompany] = useState('')
   const [userId, setUserid] = useState(privateId)
   const [newProject, setNewproject] = useState(false)
 
 
-  const dispatch = useDispatch()  
+  const dispatch = useDispatch()
 
   const isEmpty = (obj) => {
     for (var key in obj) {
@@ -37,7 +37,7 @@ function AddContact(props) {
         return false;
     }
     return true;
-  }  
+  }
 
   const handleSubmit = () => {
     const userData = {
@@ -73,15 +73,15 @@ function AddContact(props) {
     return projectArr = _.uniqBy(projectArr, 'text')
   }
 
-  const generatecompanyList = () => {
-    let companyArr = [{ key: t('Create new company'), text: t('Create new company'), value: t('Create new company'), icon: 'edit', 'onClick': () => setNewCompany(true) }]
-    if (contacts.length > 0)
-      contacts.map(contact => {
-        companyArr.push({ key: contact.id, text: contact.company, value: contact.company })
-        return companyArr
-      })
-    return companyArr = _.uniqBy(companyArr, 'text')
-  }
+  // const generatecompanyList = () => {
+  //   let companyArr = [{ key: t('Create new company'), text: t('Create new company'), value: t('Create new company'), icon: 'edit', 'onClick': () => setNewCompany(true) }]
+  //   if (contacts.length > 0)
+  //     contacts.map(contact => {
+  //       companyArr.push({ key: contact.id, text: contact.company, value: contact.company })
+  //       return companyArr
+  //     })
+  //   return companyArr = _.uniqBy(companyArr, 'text')
+  // }
 
   const projectOptions = () => {
     if (newProject === false) return (
@@ -110,40 +110,40 @@ function AddContact(props) {
     )
   }
 
-  const companyOptions = () => {
-    if (newcompany === false) return (
-      <Form.Field
-        search
-        name='company'
-        defaultValue={company}
-        control={Select}
-        options={generatecompanyList()}
-        label={t('Company')}
-        placeholder={t('Select Company')}
-        searchInput={{ id: 'text' }}
-        onChange={(e, { value }) => setCompany(value)}
-      />
-    )
+  // const companyOptions = () => {
+  //   if (newcompany === false) return (
+  //     <Form.Field
+  //       search
+  //       name='company'
+  //       defaultValue={company}
+  //       control={Select}
+  //       options={generatecompanyList()}
+  //       label={t('Company')}
+  //       placeholder={t('Select Company')}
+  //       searchInput={{ id: 'text' }}
+  //       onChange={(e, { value }) => setCompany(value)}
+  //     />
+  //   )
 
-    if (newcompany === true) return (
-      <Form.Field
-        id='company'
-        name='company'
-        control={Input}
-        label={t('Company')}
-        value={company}
-        placeholder={t("New name")}
-        onChange={(e, { value }) => setCompany(value)}
-      />
-    )
-  }
+  //   if (newcompany === true) return (
+  //     <Form.Field
+  //       id='company'
+  //       name='company'
+  //       control={Input}
+  //       label={t('Company')}
+  //       value={company}
+  //       placeholder={t("New name")}
+  //       onChange={(e, { value }) => setCompany(value)}
+  //     />
+  //   )
+  // }
   const close = () => {
     dispatch(editState(false, 'editContactOpen'))
-    setName('')    
+    setName('')
     setPhone('')
     setMail('')
     setProject('')
-    setCompany('')    
+    setCompany('')
   }
 
   isEmpty(generateLeadList())
@@ -153,7 +153,7 @@ function AddContact(props) {
       <Modal.Content>
         <Modal.Description>
           <Form
-            onSubmit={handleSubmit}>            
+            onSubmit={handleSubmit}>
             <Form.Field
               id='name'
               name='name'
@@ -182,7 +182,15 @@ function AddContact(props) {
               onChange={(e, { value }) => setMail(value)}
             />
             {projectOptions()}
-            {companyOptions()}            
+            <Form.Field
+              id='company'
+              name='company'
+              control={Input}
+              label={t('Company')}
+              value={company}
+              placeholder={t("New name")}
+              onChange={(e, { value }) => setCompany(value)}
+            />
             <Form.Field
               search
               defaultValue={leadArr.length > 0 ? _.find(leadArr, { key: privateId }).value : ''}
@@ -202,7 +210,7 @@ function AddContact(props) {
           {t('Cancel')}
         </Button>
         <Button
-          disabled={name !== '' || mail !== '' || phone !== ''? false : true}
+          disabled={name !== '' || mail !== '' || phone !== '' ? false : true}
           form='my-form'
           onClick={() => handleSubmit()}
           icon='checkmark'

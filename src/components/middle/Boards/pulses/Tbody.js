@@ -40,7 +40,7 @@ function Tbody(props) {
     const id = props.categoryId
     let pulsesFiltered = _.filter(pulses, (lead.settings.showArchived === false) ? { categoryId: id, archived: 'false' } : { categoryId: id })
 
-    return pulsesFiltered.map(pulse => {
+    return _.sortBy(pulsesFiltered, 'createdAt').map(pulse => {
       if (pulse.privateId === '' || pulse.privateId === privateId)
         return (
           <tr key={pulse.id} style={renderSelect(pulse.id)} className='tableRow' onClick={() => goLink(pulse)}>
