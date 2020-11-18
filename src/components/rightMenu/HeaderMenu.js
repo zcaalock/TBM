@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash'
 import { editState } from '../../actions/appState'
 import { deletePulse, editPulse } from '../../actions/pulses'
-import { isEmpty} from '../../actions/helperFunctions'
 import EditPulseModal from '../Forms/EditPulseModal'
 import { useTranslation } from "react-i18next"
 import { Dropdown } from 'semantic-ui-react'

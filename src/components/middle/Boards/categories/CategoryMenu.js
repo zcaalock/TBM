@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from "react-redux"
 import _ from 'lodash'
 import { useTranslation } from "react-i18next"
 import { Dropdown } from 'semantic-ui-react'
-import { editCategory,deleteCategory } from '../../../../actions/categories'
+import { editCategory, deleteCategory } from '../../../../actions/categories'
 import { editState } from '../../../../actions/appState'
 
-
+let categoryArr = []
 function HeaderIcons(props) {
 
   const pulses = useSelector(state => Object.values(state.pulses))
-  const userId = useSelector(state => state.user.credentials.userId)  
+  const appState = useSelector(state => state.appState)
+  const categories = useSelector(state => Object.values(state.categories))
+  const userId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => _.find(state.lead, { userId: userId }))
+  const user = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch()
 
   const archived = props.category.archived
@@ -21,7 +24,50 @@ function HeaderIcons(props) {
   const notifications = props.notifications
   const showNotifications = lead.settings.notifications
 
+  let findCategories = _.sortBy(_.filter(categories, { boardId: appState.id }), 'createdAt')
+  let showArchived = false //lead ? _.find(lead, { userId: user.userId }).settings.showArchived : false
+
+
   const { t } = useTranslation()
+
+  const moveUp = (id, created, arr) => {
+    const prev = arr ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
+    if (prev) dispatch(editCategory(id, { createdAt: prev.createdAt }))
+    if (prev) dispatch(editCategory(prev.id, { createdAt: created }))
+  }
+
+  const moveDown = (id, created, arr) => {
+    const next = arr ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null
+    if (next) dispatch(editCategory(id, { createdAt: next.createdAt }))
+    if (next) dispatch(editCategory(next.id, { createdAt: created }))
+  }
+
+  categoryArr = []
+  findCategories.map(category => {
+    categoryArr.push({ number: categoryArr.length, id: category.id, createdAt: category.createdAt, archived: category.archived, privateId: category.privateId })
+    if (showArchived === false) categoryArr = _.chain(categoryArr).reject({ archived: 'true' }).value()
+    return categoryArr = _.uniqBy(categoryArr, 'id')
+  })
+
+  const renderUp = () => {
+
+    const prev = categoryArr.length > 0 ? _.find(categoryArr, { number: categoryArr[_.find(categoryArr, { id: id }).number].number - 1 }) : null
+    if (prev) return <Dropdown.Item
+      icon='chevron up'
+      content={t('Move up')}
+      onClick={() => moveUp(id, props.category.createdAt, categoryArr)}
+    />
+  }
+
+  const renderDown = () => {
+
+    const next = categoryArr.length > 0 ? _.find(categoryArr, { number: categoryArr[_.find(categoryArr, { id: id }).number].number + 1 }) : null
+    if (next) return <Dropdown.Item
+      icon='chevron down'
+      content={t('Move down')}
+      onClick={() => moveDown(id, props.category.createdAt, categoryArr)}
+    />
+  }
 
   const renderDelete = () => {
     const puls = _.filter(pulses, { categoryId: id })
@@ -85,7 +131,7 @@ function HeaderIcons(props) {
 
       {renderArchived()}
       {renderPrivate()}
-      {renderNotifications()}      
+      {renderNotifications()}
       <Dropdown icon='bars' pointing='right' className='articleIcon'>
         <Dropdown.Menu>
           <Dropdown.Header icon='bars' content={`${t('Category')} menu:`} />
@@ -93,7 +139,7 @@ function HeaderIcons(props) {
           <Dropdown.Item
             onClick={() => {
               dispatch(editState(props.category, 'categoryId'))
-              dispatch(editState(true, 'editCategoryOpen'))              
+              dispatch(editState(true, 'editCategoryOpen'))
             }
             }
             content={t("Edit")}
@@ -110,6 +156,9 @@ function HeaderIcons(props) {
             icon={privateId === userId ? <i className="privacy icon" style={{ color: '#00A569' }} /> : 'privacy'}
           />
           {renderDelete()}
+          <Dropdown.Header content={`${t('Move')}:`} />
+          {renderUp()}
+          {renderDown()}
         </Dropdown.Menu>
       </Dropdown>
     </div>

@@ -21,14 +21,14 @@ export const fetchCategories = (loading) => async dispatch => {
 
 }
 
-export const editCategory = (id, formValues, fetch) => async dispatch => {
+export const editCategory = (id, formValues) => async dispatch => {
   //console.log(id, formValues)
   await axios.patch(`/category/${id}`, formValues)
     .then(() => {
       axios
         .get(`/category/${id}`)
         .then((response) => {
-          dispatch({ type: types.EDIT_CATEGORY, payload: response.data })
+          dispatch({ type: types.EDIT_CATEGORY, payload: response.data })          
           dispatch(editState(response.data.message, 'responseMessage'))
           dispatch(editState(response.status, 'responseStatus'))
         })
