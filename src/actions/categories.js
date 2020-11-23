@@ -23,8 +23,7 @@ export const fetchCategories = (loading) => async dispatch => {
 export const fetchCategory = (id) => async dispatch => {
   await axios.get(`/category/${id}`)
     .then((response) => {
-      dispatch({ type: types.FETCH_CATEGORY, payload: response.data })
-      console.log(response.data)
+      dispatch({ type: types.FETCH_CATEGORY, payload: response.data })      
     })
     .catch((err) => {
       console.log(err)
