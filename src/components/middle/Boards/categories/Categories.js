@@ -77,7 +77,7 @@ function Categories() {
     catArr = catArr.concat(privateArr)
 
     if (showArchived === false) catArr = _.reject(catArr, { archived: 'true' })    
-    return _.filter(catArr, _.size).map(category => {
+    return _.filter(_.sortBy(catArr, 'createdAt'), _.size).map(category => {
       return (
         <div key={category.id}>
           {renderProgressBar(category.id)}

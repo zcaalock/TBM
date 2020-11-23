@@ -18,17 +18,30 @@ export const fetchCategories = (loading) => async dispatch => {
     dispatch({ type: types.FETCH_CATEGORIES, payload: response.data })
     if (loading === 'loading') dispatch(editState(true, 'fetchedCategories'))//; console.log('categories fetched')   
   })
-
 }
 
-export const editCategory = (id, formValues) => async dispatch => {
+export const fetchCategory = (id) => async dispatch => {
+  await axios.get(`/category/${id}`)
+    .then((response) => {
+      dispatch({ type: types.FETCH_CATEGORY, payload: response.data })
+      console.log(response.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+
+
+export const editCategory = (id, formValues, fetch) => async dispatch => {
   //console.log(id, formValues)
   await axios.patch(`/category/${id}`, formValues)
     .then(() => {
       axios
         .get(`/category/${id}`)
         .then((response) => {
-          dispatch({ type: types.EDIT_CATEGORY, payload: response.data })          
+          dispatch({ type: types.EDIT_CATEGORY, payload: response.data })  
+          if (fetch === true) dispatch(fetchCategory(id))                           
           dispatch(editState(response.data.message, 'responseMessage'))
           dispatch(editState(response.status, 'responseStatus'))
         })

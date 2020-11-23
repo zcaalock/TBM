@@ -4,8 +4,8 @@ import _ from 'lodash'
 export default (state = {}, action) => {
   switch (action.type) {
     
-    // case types.FETCH_BOARD:
-    //   return {...state, [action.payload.id]: action.payload}
+    case types.FETCH_CATEGORY:
+      return {...state, [action.payload.id]: action.payload}
     
     case types.CREATE_CATEGORY:
        return {...state, [action.payload.id]: action.payload}

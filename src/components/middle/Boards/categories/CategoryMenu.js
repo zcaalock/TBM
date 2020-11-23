@@ -31,15 +31,15 @@ function HeaderIcons(props) {
   const { t } = useTranslation()
 
   const moveUp = (id, created, arr) => {
-    const prev = arr ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
-    if (prev) dispatch(editCategory(id, { createdAt: prev.createdAt }))
-    if (prev) dispatch(editCategory(prev.id, { createdAt: created }))
+    const prev = arr && props.category.archived === 'false' ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
+    if (prev) dispatch(editCategory(id, { createdAt: prev.createdAt }, true))
+    if (prev) dispatch(editCategory(prev.id, { createdAt: created }, true))
   }
 
   const moveDown = (id, created, arr) => {
-    const next = arr ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null
-    if (next) dispatch(editCategory(id, { createdAt: next.createdAt }))
-    if (next) dispatch(editCategory(next.id, { createdAt: created }))
+    const next = arr && props.category.archived === 'false' ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null
+    if (next) dispatch(editCategory(id, { createdAt: next.createdAt }, true))
+    if (next) dispatch(editCategory(next.id, { createdAt: created }, true))
   }
 
   categoryArr = []

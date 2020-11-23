@@ -15,6 +15,7 @@ export const EDIT_STATE = 'EDIT_STATE'
 // categories
 export const CREATE_CATEGORY = 'CREATE_CATEGORY'
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
+export const FETCH_CATEGORY = 'FETCH_CATEGORY'
 export const EDIT_CATEGORY = 'EDIT_CATEGORY'
 export const DELETE_CATEGORY = 'DELETE_CATEGORY'
 
