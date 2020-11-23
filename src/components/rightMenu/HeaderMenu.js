@@ -101,7 +101,7 @@ function HeaderIcons(props) {
 
     const renderUp = () => {        
 
-        const prev = pulseArr.length > 0 ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number - 1 }) : null
+        const prev = pulseArr.length > 0 && props.pulse.archived === 'false' ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number - 1 }) : null
         if (prev) return <Dropdown.Item
             icon='chevron up'
             content={t('Move up')}
@@ -111,7 +111,7 @@ function HeaderIcons(props) {
 
     const renderDown = () => {          
 
-        const next = pulseArr.length > 0 ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number + 1 }) : null
+        const next = pulseArr.length > 0  && props.pulse.archived === 'false' ? _.find(pulseArr, { number: pulseArr[_.find(pulseArr, { id: id }).number].number + 1 }) : null
         if (next) return <Dropdown.Item
             icon='chevron down'
             content={t('Move down')}
