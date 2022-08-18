@@ -19,6 +19,18 @@ function BoardMenu(props) {
 
   const { t } = useTranslation()
 
+  const moveUp = (id, created, arr) => {
+    const prev = arr && props.board.archived === 'false' ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
+    if (prev) dispatch(editBoard(id, { createdAt: prev.createdAt }, true))
+    if (prev) dispatch(editBoard(prev.id, { createdAt: created }, true))
+  }
+
+  const moveDown = (id, created, arr) => {
+    const next = arr && props.board.archived === 'false' ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null
+    if (next) dispatch(editBoard(id, { createdAt: next.createdAt }, true))
+    if (next) dispatch(editBoard(next.id, { createdAt: created }, true))
+  }
+
   const renderDelete = () => {
     const cat = _.filter(categories, { boardId: id })
 
