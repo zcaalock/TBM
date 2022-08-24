@@ -31,6 +31,35 @@ function BoardMenu(props) {
     if (next) dispatch(editBoard(next.id, { createdAt: created }, true))
   }
 
+  boardArr = []
+  findBoards.map(board => {
+    boardArr.push({ number: boardArr.length, id: board.id, createdAt: board.createdAt, archived: board.archived, privateId: board.privateId })
+    if (showArchived === false) boardArr = _.chain(boardArr).reject({ archived: 'true' }).value()
+    return boardArr = _.uniqBy(boardArr, 'id')
+  })
+
+  const renderUp = () => {
+
+    const prev = boardArr.length > 0 ? _.find(boardArr, { number: boardArr[_.find(boardArr, { id: id }).number].number - 1 }) : null
+    if (prev) return <Dropdown.Item
+      icon='chevron up'
+      content={t('Move up')}
+      onClick={() => moveUp(id, props.board.createdAt, boardArr)}
+    />
+  }
+
+  const renderDown = () => {
+
+    const next = boardArr.length > 0 ? _.find(boardArr, { number: boardArr[_.find(boardArr, { id: id }).number].number + 1 }) : null
+    if (next) return <Dropdown.Item
+      icon='chevron down'
+      content={t('Move down')}
+      onClick={() => moveDown(id, props.board.createdAt, boardArr)}
+    />
+  }
+
+
+
   const renderDelete = () => {
     const cat = _.filter(categories, { boardId: id })
 
@@ -87,6 +116,9 @@ function BoardMenu(props) {
             icon={privateId === userId ? <i className="privacy icon" style={{ color: '#00A569' }} /> : 'privacy'}
           />
           {renderDelete()}
+          <Dropdown.Header content={`${t('Move')}:`} />
+          {renderUp()}
+          {renderDown()}
         </Dropdown.Menu>
       </Dropdown>
     </div>
