@@ -31,6 +31,7 @@ const appState = {
   competitionSearch: '',
   contactSearch: '',
   pulseSearch: '',
+  refresh:'go',
   filter: { selector: '', value: '' },
   sortBy: { name: '', direction: 'asc' },
   clientsSettings: {

@@ -18,7 +18,7 @@ function Boards(props) {
     if (board) {
       return (
         <div className="article">
-          <Header board={board.title} delete={() => dispatch(deleteBoard(board.id))} title={board.title} />
+          <Header boardContent={board} board={board.title} delete={() => dispatch(deleteBoard(board.id))} title={board.title} />
           <Body />
         </div>
       )

@@ -39,7 +39,7 @@ function BoardsList(props) {
       )
     }
     //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return _.filter(boards, { privateId: props.privateId }).map(board =>
+    return _.filter(_.sortBy(boards, 'createdAt'), { privateId: props.privateId }).map(board =>
       <div key={board.id}>
         <div style={{ position: 'absolute', textAlign: 'right', width: '210px' }}>{renderNotifications(board.id)}</div>
         <Link

@@ -6,18 +6,67 @@ import { Dropdown } from 'semantic-ui-react'
 import { editBoard, deleteBoard} from '../../../actions/boards'
 import { editState } from '../../../actions/appState'
 
+let boardArr = []
 
 function BoardMenu(props) {
 
   const categories = useSelector(state => Object.values(state.categories))
+  const boards = useSelector(state => Object.values(state.boards))
   const userId = useSelector(state => state.user.credentials.userId)  
+  const appState = useSelector(state => state.appState)
   const dispatch = useDispatch()
   
-  const privateId = props.board.privateId
+  const privateId = props.boardContent.privateId
 
-  const id = props.board.id  
+  const id = props.boardContent.id  
+
+  let findBoards = _.sortBy(_.filter(boards, { archived: 'false', privateId: '' }), 'createdAt')
+  let showArchived = false
+  //console.log(findBoards)
 
   const { t } = useTranslation()
+
+  const moveUp = (id, created, arr) => {
+    const prev = (arr && props.boardContent.archived === 'false' && props.boardContent.privateId=== '') ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
+    //console.log('prev: ', prev)
+    if (prev) dispatch(editBoard(id, { createdAt: prev.createdAt }, true))
+    if (prev) dispatch(editBoard(prev.id, { createdAt: created }, true))
+  }
+
+  const moveDown = (id, created, arr) => {
+    const next = (arr && props.boardContent.archived === 'false' && props.boardContent.privateId=== '') ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number + 1 }) : null
+    //console.log('next: ', next)
+    if (next) dispatch(editBoard(id, { createdAt: next.createdAt }, true))
+    if (next) dispatch(editBoard(next.id, { createdAt: created }, true))
+  }
+ boardArr = []
+  findBoards.map(board => {
+    boardArr.push({ number: boardArr.length, id: board.id, createdAt: board.createdAt, archived: board.archived, privateId: board.privateId })
+    if (showArchived === false) boardArr = _.chain(boardArr).reject({ archived: 'true' }).value()
+    return boardArr = _.uniqBy(boardArr, 'id')
+  })
+
+  const renderUp = () => {
+
+    const prev = (boardArr.length > 0 && props.boardContent.privateId=== '') ? _.find(boardArr, { number: boardArr[_.find(boardArr, { id: id }).number].number - 1 }) : null
+    if (prev) return <Dropdown.Item
+      icon='chevron up'
+      content={t('Move up')}
+      onClick={() => moveUp(id, props.boardContent.createdAt, boardArr)}
+    />
+  }
+
+  const renderDown = () => {
+
+    const next = (boardArr.length > 0 && props.boardContent.privateId=== '') ? _.find(boardArr, { number: boardArr[_.find(boardArr, { id: id }).number].number + 1 }) : null
+    if (next) return <Dropdown.Item
+      icon='chevron down'
+      content={t('Move down')}
+      onClick={() => moveDown(id, props.boardContent.createdAt, boardArr)}
+    />
+  }
+
+
 
   const renderDelete = () => {
     const cat = _.filter(categories, { boardId: id })
@@ -51,7 +100,7 @@ function BoardMenu(props) {
         <i className=" privacy icon" />
       </div>)
   }  
-
+  
   return (
 
     <div style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
@@ -75,6 +124,9 @@ function BoardMenu(props) {
             icon={privateId === userId ? <i className="privacy icon" style={{ color: '#00A569' }} /> : 'privacy'}
           />
           {renderDelete()}
+          <Dropdown.Header content={`${t('Move')}:`} />
+          {renderUp()}
+          {renderDown()}
         </Dropdown.Menu>
       </Dropdown>
     </div>
