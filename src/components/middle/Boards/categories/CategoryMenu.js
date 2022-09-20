@@ -14,7 +14,7 @@ function HeaderIcons(props) {
   const categories = useSelector(state => Object.values(state.categories))
   const userId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => _.find(state.lead, { userId: userId }))
-  const user = useSelector(state => state.user.credentials.userId)
+  //const user = useSelector(state => state.user.credentials.userId)
   const dispatch = useDispatch()
 
   const archived = props.category.archived

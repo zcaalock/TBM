@@ -12,7 +12,7 @@ function Header(props) {
         <div
           className="articleIcon"
           style={{ display: 'inline-block' }}>
-          <BoardMenu board={props.board} />
+          <BoardMenu boardContent={props.boardContent} board={props.board} />
         </div>
       </div>
     </div>
