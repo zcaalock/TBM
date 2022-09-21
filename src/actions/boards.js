@@ -37,7 +37,7 @@ export const fetchBoard = (id) => async dispatch => {
 }
 
 export const editBoard = (id, formValues, userId, link) => async dispatch => {
-  console.log(id, formValues, userId, link)
+  //console.log(id, formValues, userId, link)
   await axios.patch(`/board/${id}`, formValues)  
   //dispatch({type: types.EDIT_BOARD, payload: response.data.board})
   .then((response) => {
