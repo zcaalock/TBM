@@ -36,11 +36,12 @@ export const fetchBoard = (id) => async dispatch => {
     })
 }
 
-export const editBoard = (id, formValues) => async dispatch => {
-  console.log(id, formValues)
+export const editBoard = (id, formValues, userId, link) => async dispatch => {
+  console.log(id, formValues, userId, link)
   await axios.patch(`/board/${id}`, formValues)  
   //dispatch({type: types.EDIT_BOARD, payload: response.data.board})
   .then((response) => {
+    if (link === false) history.push(`/filters/LeadPerson/${userId}`)
     dispatch({ type: types.EDIT_BOARD, payload: response.data.board })
     dispatch(fetchBoards())
     dispatch(editState(response.data.message, 'responseMessage'))
