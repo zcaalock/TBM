@@ -13,8 +13,8 @@ function HeaderIcons(props) {
   const appState = useSelector(state => state.appState)
   const categories = useSelector(state => Object.values(state.categories))
   const userId = useSelector(state => state.user.credentials.userId)
-  const lead = useSelector(state => _.find(state.lead, { userId: userId }))
-  //const user = useSelector(state => state.user.credentials.userId)
+  const lead = useSelector(state => _.find(state.lead, { userId: userId }))  
+  //const user = useSelector(state => state.user.credentials)
   const dispatch = useDispatch()
 
   const archived = props.category.archived
@@ -24,12 +24,11 @@ function HeaderIcons(props) {
   const notifications = props.notifications
   const showNotifications = lead.settings.notifications
 
-  let findCategories = _.sortBy(_.filter(categories, { boardId: appState.id }), 'createdAt')
-  let showArchived = false //lead ? _.find(lead, { userId: user.userId }).settings.showArchived : false
+  let findCategories = _.sortBy(_.filter(categories, { boardId: appState.id }), 'createdAt')  
+  let showArchived = lead.settings.showArchived
 
-
+  
   const { t } = useTranslation()
-
   const moveUp = (id, created, arr) => {
     const prev = arr && props.category.archived === 'false' ? _.find(arr, { number: arr[_.find(arr, { id: id }).number].number - 1 }) : null
     if (prev) dispatch(editCategory(id, { createdAt: prev.createdAt }, true))
@@ -42,6 +41,7 @@ function HeaderIcons(props) {
     if (next) dispatch(editCategory(next.id, { createdAt: created }, true))
   }
 
+  
   categoryArr = []
   findCategories.map(category => {
     categoryArr.push({ number: categoryArr.length, id: category.id, createdAt: category.createdAt, archived: category.archived, privateId: category.privateId })

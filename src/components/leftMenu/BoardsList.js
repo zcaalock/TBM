@@ -13,6 +13,7 @@ function BoardsList(props) {
   const appState = useSelector(state => state.appState)
   const userId = useSelector(state => state.user.credentials.userId)
   const lead = useSelector(state => _.find(state.lead, { userId: userId }))
+  let showArchived = lead.settings.showArchived
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
@@ -38,8 +39,8 @@ function BoardsList(props) {
         </div>
       )
     }
-    //var sort = _.sortBy(this.props.boards, 'createdAt')
-    return _.filter(_.sortBy(boards, 'createdAt'), { privateId: props.privateId }).map(board =>
+    //var sort = _.sortBy(this.props.boards, 'createdAt') 
+    if (showArchived === false) return _.filter(_.sortBy(boards, 'createdAt'), { privateId: props.privateId, archived: 'false'  }).map(board =>
       <div key={board.id}>
         <div style={{ position: 'absolute', textAlign: 'right', width: '210px' }}>{renderNotifications(board.id)}</div>
         <Link
@@ -47,6 +48,21 @@ function BoardsList(props) {
           to={`/boards/${board.id}`}
           className={`item ${selectedCheck(board.id)}`}
           style={selectedStyle(board.id)}>
+          {board.title}
+        </Link>
+      </div>      
+    )
+
+    return _.filter(_.sortBy(boards, 'createdAt'), { privateId: props.privateId }).map(board =>
+      <div key={board.id}>
+        <div style={{ position: 'absolute', textAlign: 'right', width: '210px' }}>{renderNotifications(board.id)}</div>
+        <Link
+          onClick={() => dispatch(editState('', 'pulseId'))}
+          to={`/boards/${board.id}`}
+          
+          className={`item ${selectedCheck(board.id)}`}
+          style={selectedStyle(board.id)}>
+          {board.archived === 'true' ? <i className=" archive icon" style={{ color: '#DC6969' }} /> : ''} 
           {board.title}
         </Link>
       </div>

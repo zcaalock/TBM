@@ -13,15 +13,17 @@ function BoardMenu(props) {
   const categories = useSelector(state => Object.values(state.categories))
   const boards = useSelector(state => Object.values(state.boards))
   const userId = useSelector(state => state.user.credentials.userId)  
-  const appState = useSelector(state => state.appState)
+  //const appState = useSelector(state => state.appState)
+  const lead = useSelector(state => _.find(state.lead, { userId: userId })) 
   const dispatch = useDispatch()
   
+  const archived = props.boardContent.archived
   const privateId = props.boardContent.privateId
 
   const id = props.boardContent.id  
 
-  let findBoards = _.sortBy(_.filter(boards, { archived: 'false', privateId: '' }), 'createdAt')
-  let showArchived = false
+  let findBoards = _.sortBy(_.filter(boards, { privateId: '' }), 'createdAt')
+  let showArchived = lead.settings.showArchived
   //console.log(findBoards)
 
   const { t } = useTranslation()
@@ -42,18 +44,20 @@ function BoardMenu(props) {
  boardArr = []
   findBoards.map(board => {
     boardArr.push({ number: boardArr.length, id: board.id, createdAt: board.createdAt, archived: board.archived, privateId: board.privateId })
-    if (showArchived === false) boardArr = _.chain(boardArr).reject({ archived: 'true' }).value()
-    return boardArr = _.uniqBy(boardArr, 'id')
-  })
+    return showArchived === true ? boardArr = _.uniqBy(boardArr, 'id') :boardArr = _.chain(boardArr).reject({ archived: 'true' }).value()
+  })  
+
+  //console.log('showArcjoved: ', showArchived)
+  //console.log('boardArr',boardArr)
 
   const renderUp = () => {
-
     const prev = (boardArr.length > 0 && props.boardContent.privateId=== '') ? _.find(boardArr, { number: boardArr[_.find(boardArr, { id: id }).number].number - 1 }) : null
     if (prev) return <Dropdown.Item
       icon='chevron up'
       content={t('Move up')}
       onClick={() => moveUp(id, props.boardContent.createdAt, boardArr)}
     />
+    return <div></div>
   }
 
   const renderDown = () => {
@@ -64,6 +68,7 @@ function BoardMenu(props) {
       content={t('Move down')}
       onClick={() => moveDown(id, props.boardContent.createdAt, boardArr)}
     />
+    return <div></div>
   }
 
 
@@ -100,10 +105,22 @@ function BoardMenu(props) {
         <i className=" privacy icon" />
       </div>)
   }  
+
+  function renderArchived() {
+    if (archived === 'true') return (
+      <div
+        onClick={() => dispatch(editBoard(id, { archived: 'false' }))}
+        data-position="left center"
+        data-tooltip={t("Unarchive")}
+        style={{ color: '#DC6969', paddingRight: '5px', cursor: 'pointer' }}>
+        <i className=" archive icon" />
+      </div>)
+  }
   
   return (
 
     <div style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
+      {renderArchived()}
       {renderPrivate()}            
       <Dropdown icon='bars' pointing='right' className='articleIcon'>
         <Dropdown.Menu>
@@ -117,6 +134,11 @@ function BoardMenu(props) {
             }
             content={t("Edit")}
             icon='edit'
+          />
+          <Dropdown.Item
+            content={archived === 'true' ? t('Unarchive') : t('Archive')}
+            icon={archived === 'true' ? <i className=" archive icon" style={{ color: '#DC6969' }} /> : 'archive'}
+            onClick={() => archived === 'true' ? dispatch(editBoard(id, { archived: 'false'}, userId, showArchived )) : dispatch(editBoard(id, { archived: 'true' }, userId, showArchived))}
           />          
           <Dropdown.Item
             content={privateId === userId ? t('Make public') : t('Make private')}
