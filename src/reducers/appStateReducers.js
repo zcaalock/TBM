@@ -19,6 +19,7 @@ const appState = {
   refreshed: 'false',
   addPulseOpen: 'false',
   editPulseOpen: false,
+  pulseOpen: false,
   editCategoryOpen: false,
   editBoardOpen: false,
   editClientOpen: false,

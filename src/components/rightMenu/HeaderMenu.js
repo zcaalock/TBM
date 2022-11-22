@@ -4,6 +4,7 @@ import _ from 'lodash'
 import { editState } from '../../actions/appState'
 import { deletePulse, editPulse } from '../../actions/pulses'
 import EditPulseModal from '../Forms/EditPulseModal'
+import PulseModal from '../Forms/PulseModal'
 import { useTranslation } from "react-i18next"
 import { Dropdown } from 'semantic-ui-react'
 
@@ -24,6 +25,7 @@ function HeaderIcons(props) {
     const userId = user.userId
     const id = props.pulse.id
     const editPulseOpen = appState.editPulseOpen
+    const pulseOpen = appState.pulseOpen
 
     let findPulses = _.sortBy(_.filter(pulses, { categoryId: props.pulse.categoryId }), 'createdAt')
     let showArchived = _.find(lead, { userId: user.userId }).settings.showArchived
@@ -32,6 +34,11 @@ function HeaderIcons(props) {
     const ShowEditPulseModal = () => {
         return editPulseOpen === true ? <EditPulseModal /> : null
     }
+
+    const ShowPulseModal = () => {
+        return pulseOpen === true ? <PulseModal /> : null
+    }
+
 
     const renderDelete = () => {
         const detailsFiltered = _.filter(details, { pulseId: id })
@@ -130,6 +137,11 @@ function HeaderIcons(props) {
                     <Dropdown.Header icon='bars' content='Puls menu:' />
                     <Dropdown.Divider />
                     <Dropdown.Item
+                        onClick={() => dispatch(editState(true, 'pulseOpen'))}
+                        content={t("StopWatch")}
+                        icon='time'
+                    />
+                    <Dropdown.Item
                         onClick={() => dispatch(editState(true, 'editPulseOpen'))}
                         content={t("Edit")}
                         icon='edit'
@@ -151,6 +163,7 @@ function HeaderIcons(props) {
                 </Dropdown.Menu>
             </Dropdown>
             {ShowEditPulseModal()}
+            {ShowPulseModal()}
         </div>
     )
 }

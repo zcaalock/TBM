@@ -255,6 +255,7 @@ export const resources = {
             "Price":"Cena",
             //pulses
             "Edit":"Edytuj",
+            "Open":"Otwórz",
             "Remove all items before delete":"Najpierw usuń wszystkie pozycje",
             "Delete":"Usuń",
             "New Private Pulse":"Utwórz prywatny Puls",

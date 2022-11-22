@@ -13,7 +13,7 @@
     "cross-env": "^7.0.3",
     "date-fns": "^2.29.2",
     "firebase": "^9.9.4",
-    "firebase-tools": "^11.9.0",
+    "firebase-tools": "^11.16.1",
     "googleapis": "^107.0.0",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
