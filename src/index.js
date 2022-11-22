@@ -13,16 +13,13 @@ import { SET_AUTHENTICATED } from './actions/types'
 import { logoutUser, getUserData } from './actions/users'
 import jwtDecode from 'jwt-decode'
 
-
 axios.defaults.baseURL = 'https://europe-west2-quickstart-1561998550467.cloudfunctions.net/api'
 
 const token = localStorage.FBIdToken;
-
 if (token) {
   const decodedToken = jwtDecode(token);
-  //console.log(store.getState().appState.pulseOpen)
-  if (decodedToken.exp * 1000 < Date.now() && store.getState().appState.pulseOpen === false) {
-    
+  if (decodedToken.exp * 1000 < Date.now() && store.getState().appState.pulseOpen && store.getState().appState.pulseOpen === false) {
+    store.dispatch(logoutUser());
     window.location.href = '/login';
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });
@@ -41,4 +38,3 @@ if (token) {
   
   , document.querySelector('#root')
 )
-
