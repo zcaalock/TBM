@@ -10,11 +10,16 @@ import { useTranslation } from "react-i18next"
 function PulseModal() {
   const appState = useSelector(state => state.appState)
   const pulse = useSelector(state => state.pulses[appState.pulseId])
-  const [time, setTime] = useState(pulse.duration ? pulse.duration : 0);
-  const [running, setRunning] = useState(false);
+
   const name = pulse.title
   const { t } = useTranslation()   
   const dispatch = useDispatch();
+
+  //const [time, setTime] = useState(pulse.duration ? pulse.duration : 0);
+  const [time, setTime] = useState(pulse.duration ? pulse.duration : 0);  
+  const [currentTime, setCurrentTime] = useState(0)
+  const [startTime, setStartTime] = useState(pulse.duration ? pulse.duration : 0)
+  const [running, setRunning] = useState(false);
 
   const onSubmit = (pulse, value) => {
     
@@ -26,12 +31,14 @@ function PulseModal() {
     dispatch(editPulse(pulse.id, { duration: value }))    
   }
 
+  //console.log('time:',time)
+
   useEffect(() => {
     let interval;
     if (running) {
       interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
+        setTime((Date.now()-currentTime+startTime) );
+      }, 1000);
     } else if (!running) {
       clearInterval(interval);
     }
@@ -47,14 +54,14 @@ function PulseModal() {
             StopWatch
             <div className="stopwatch">
               <div className="numbers">
-                <span>{("0" + Math.floor((time / (1000 * 60 * 60)) % 24)).slice(-2)}h:</span>
+                <span>{("0" + Math.floor((time/ (1000 * 60 * 60)) % 24)).slice(-2)}h:</span>
                 <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}m:</span>
                 <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}s:</span>
 
               </div>
               <div className="buttons">
-                <button onClick={() => setRunning(true)}>Start</button>
-                <button onClick={() => { setRunning(false); onSubmit(pulse, time);}}>Stop</button>
+                <button onClick={() => { setCurrentTime(Date.now()); setRunning(true)}}>Start</button>
+                <button onClick={() => { setStartTime(time); setRunning(false); setCurrentTime(Date.now()) }}>Stop</button>
                 <button onClick={() => { setTime(0); onSubmit(pulse, 0) }}>Reset</button>
               </div>
             </div>

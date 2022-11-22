@@ -21,7 +21,7 @@ const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
   //console.log(store.getState().appState.pulseOpen)
-  if (decodedToken.exp * 1000 < Date.now() && console.log(store.getState().appState.pulseOpen)) {
+  if (decodedToken.exp * 1000 < Date.now() && store.getState().appState.pulseOpen === false) {
     
     window.location.href = '/login';
   } else {
